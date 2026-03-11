@@ -1,0 +1,176 @@
+import 'package:athar/core/presentation/cubit/celebration_cubit.dart';
+import 'package:athar/features/assets/presentation/cubit/assets_cubit.dart';
+import 'package:athar/features/auth/presentation/pages/complete_profile_page.dart';
+import 'package:athar/features/settings/presentation/cubit/category_cubit.dart';
+import 'package:athar/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:athar/features/prayer/presentation/cubit/prayer_cubit.dart';
+import 'package:athar/features/habits/presentation/cubit/habit_cubit.dart';
+import 'package:athar/features/space/presentation/cubit/list_cubit.dart'; // ✅ استيراد القائمة
+import 'package:athar/features/space/presentation/cubit/module_cubit.dart';
+import 'package:athar/features/space/presentation/pages/join_space_screen.dart';
+import 'package:athar/features/sync/presentation/cubit/sync_cubit.dart';
+import 'package:confetti/confetti.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'core/design_system/themes/app_theme.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'features/home/presentation/pages/splash_page.dart';
+import 'core/di/injection.dart';
+import 'dart:math';
+import 'package:athar/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:athar/features/space/presentation/cubit/space_cubit.dart';
+import 'package:athar/features/task/presentation/cubit/task_cubit.dart';
+import 'features/home/presentation/pages/main_page.dart';
+import 'features/auth/presentation/pages/login_page.dart';
+// ✅ استيراد خدمة الروابط للوصول للمفتاح
+import 'package:athar/core/services/deep_link_service.dart';
+
+class AtharApp extends StatefulWidget {
+  const AtharApp({super.key});
+
+  @override
+  State<AtharApp> createState() => _AtharAppState();
+}
+
+class _AtharAppState extends State<AtharApp> {
+  late ConfettiController _confettiController;
+
+  @override
+  void initState() {
+    super.initState();
+    _confettiController = ConfettiController(
+      duration: const Duration(seconds: 1),
+    );
+  }
+
+  @override
+  void dispose() {
+    _confettiController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        // 1. الأساسيات والأنظمة العامة
+        BlocProvider(create: (_) => getIt<CelebrationCubit>()),
+        BlocProvider(create: (_) => getIt<SettingsCubit>()..loadSettings()),
+        BlocProvider(create: (_) => getIt<SyncCubit>()..triggerSync()),
+        BlocProvider(create: (_) => getIt<AuthCubit>()),
+
+        // 2. الميزات الرئيسية (إسلاميات، عادات)
+        BlocProvider(create: (_) => getIt<PrayerCubit>()..loadPrayerTimes()),
+        BlocProvider(create: (_) => getIt<HabitCubit>()..loadHabits()),
+        BlocProvider(create: (_) => getIt<CategoryCubit>()),
+
+        // 3. إدارة المساحات والمشاريع
+        BlocProvider(create: (_) => getIt<SpaceCubit>()),
+        BlocProvider(create: (_) => getIt<ModuleCubit>()),
+
+        // 4. المهام (تحميل مهام اليوم افتراضياً)
+        BlocProvider(
+          create: (_) => getIt<TaskCubit>()..watchTasks(DateTime.now()),
+        ),
+
+        // 5. الميزات الجديدة (الأصول والقوائم)
+        BlocProvider(create: (context) => getIt<AssetsCubit>()), // ✅ الأصول
+        BlocProvider(
+          create: (context) => getIt<ListCubit>(),
+        ), // ✅ القوائم (المقاضي)
+      ],
+      child: ScreenUtilInit(
+        designSize: const Size(375, 812),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) {
+          return MaterialApp(
+            // ✅✅✅ الإضافة الهامة هنا: ربط مفتاح التنقل
+            navigatorKey: DeepLinkService.navigatorKey,
+            debugShowCheckedModeBanner: false,
+            title: 'Athar | أثر',
+            theme: AppTheme.lightTheme,
+            locale: const Locale('ar', 'SA'),
+            supportedLocales: const [Locale('ar', 'SA'), Locale('en', 'US')],
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            home: const SplashPage(),
+            routes: {
+              '/join-space': (context) {
+                final token =
+                    ModalRoute.of(context)!.settings.arguments as String;
+                return JoinSpaceScreen(token: token);
+              },
+              '/home': (context) => const MainPage(),
+              '/login': (context) => const LoginPage(),
+              '/complete_profile': (context) => const CompleteProfilePage(),
+            },
+            builder: (context, widget) {
+              return Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  if (widget != null) widget,
+                  BlocListener<CelebrationCubit, CelebrationState>(
+                    listener: (context, state) {
+                      if (state is CelebrationTriggered) {
+                        _confettiController.play();
+                      }
+                    },
+                    child: const SizedBox.shrink(),
+                  ),
+                  Positioned(
+                    top: -20,
+                    child: ConfettiWidget(
+                      confettiController: _confettiController,
+                      blastDirectionality: BlastDirectionality.explosive,
+                      shouldLoop: false,
+                      colors: const [
+                        Colors.green,
+                        Colors.blue,
+                        Colors.pink,
+                        Colors.orange,
+                        Colors.purple,
+                      ],
+                      createParticlePath: drawStar,
+                      numberOfParticles: 20,
+                      gravity: 0.2,
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Path drawStar(Size size) {
+    double degToRad(double deg) => deg * (3.141592653589793 / 180.0);
+    const numberOfPoints = 5;
+    final halfWidth = size.width / 2;
+    final externalRadius = halfWidth;
+    final internalRadius = halfWidth / 2.5;
+    final degreesPerStep = degToRad(360 / numberOfPoints);
+    final halfDegreesPerStep = degreesPerStep / 2;
+    final path = Path();
+    final fullAngle = degToRad(360);
+    path.moveTo(size.width, halfWidth);
+    for (double step = 0; step < fullAngle; step += degreesPerStep) {
+      path.lineTo(
+        halfWidth + externalRadius * cos(step),
+        halfWidth + externalRadius * sin(step),
+      );
+      path.lineTo(
+        halfWidth + internalRadius * cos(step + halfDegreesPerStep),
+        halfWidth + internalRadius * sin(step + halfDegreesPerStep),
+      );
+    }
+    path.close();
+    return path;
+  }
+}
