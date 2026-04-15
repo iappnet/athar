@@ -238,7 +238,6 @@ class HomeHeader extends StatelessWidget {
 //               ),
 //           ),
 //           child: IconButton(
-//               // TODO: فتح صفحة الإعدادات لاحقاً
 //               ScaffoldMessenger.of(context).showSnackBar(
 //             },
 //             icon: const Icon(Icons.settings_outlined, color: Colors.black87),
@@ -404,7 +403,6 @@ class HomeHeader extends StatelessWidget {
 //           ),
 //           child: IconButton(
 //             onPressed: () {
-//               // TODO: فتح صفحة الإعدادات لاحقاً
 //               ScaffoldMessenger.of(context).showSnackBar(
 //                 const SnackBar(content: Text("الإعدادات قادمة قريباً...")),
 //               );

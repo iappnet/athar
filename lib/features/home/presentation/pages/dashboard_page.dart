@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 // ✅ NEW: Unified Design System Import
 import 'package:athar/core/design_system/tokens.dart';
 import 'package:athar/core/design_system/organisms/app_bar/athar_app_bar.dart';
+import 'package:athar/core/utils/responsive_helper.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 
 import '../../../../core/di/injection.dart';
@@ -168,7 +169,13 @@ class DashboardPage extends StatelessWidget {
                   ),
                 ],
               ),
-              body: SafeArea(
+              body: Align(
+                alignment: Alignment.topCenter,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: context.isTablet ? ResponsiveHelper.maxContentWidth : double.infinity,
+                  ),
+                  child: SafeArea(
                 child: SingleChildScrollView(
                   padding: EdgeInsets.only(bottom: AtharSpacing.xl),
                   child: Column(
@@ -211,6 +218,8 @@ class DashboardPage extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+              ),
                 ),
               ),
             );

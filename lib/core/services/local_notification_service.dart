@@ -3,9 +3,14 @@
 import 'dart:io';
 import 'dart:ui';
 import 'package:athar/core/di/injection.dart';
+import 'package:athar/core/services/deep_link_service.dart';
 import 'package:athar/core/services/notification_id_manager.dart';
+import 'package:athar/features/habits/presentation/pages/habit_page.dart';
 import 'package:athar/features/notifications/data/models/notification_model.dart';
+import 'package:athar/features/prayer/presentation/pages/prayer_page.dart';
+import 'package:athar/features/task/presentation/pages/task_page.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:isar/isar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -85,7 +90,7 @@ class LocalNotificationService {
 
       // 6. تهيئة Plugin
       await _notifications.initialize(
-        initSettings,
+        settings: initSettings,
         onDidReceiveNotificationResponse: _onNotificationTapped,
         onDidReceiveBackgroundNotificationResponse:
             _onBackgroundNotificationTapped,
@@ -177,27 +182,42 @@ class LocalNotificationService {
     return payload.startsWith('auto_reschedule_');
   }
 
-  /// ✅ معالجة الإشعارات العادية
+  /// ✅ معالجة الإشعارات العادية — التنقل عبر DeepLinkService
   void _handleRegularNotification(String payload) {
-    // TODO: التنقل حسب نوع الإشعار
-    if (payload.startsWith('prayer:')) {
-      print('📿 Prayer notification');
-      // navigatorKey.currentState?.pushNamed('/prayer');
-    } else if (payload.startsWith('medication:')) {
-      print('💊 Medication notification');
-      // navigatorKey.currentState?.pushNamed('/medication');
-    } else if (payload.startsWith('task:')) {
-      print('📋 Task notification');
-      // navigatorKey.currentState?.pushNamed('/task');
-    } else if (payload.startsWith('appointment:')) {
-      print('🏥 Appointment notification');
-      // navigatorKey.currentState?.pushNamed('/appointment');
-    } else if (payload.startsWith('habit:')) {
-      print('💪 Habit notification');
-      // navigatorKey.currentState?.pushNamed('/habit');
-    } else if (payload.startsWith('athkar:')) {
-      print('📿 Athkar notification');
-      // navigatorKey.currentState?.pushNamed('/athkar');
+    final navigator = DeepLinkService.navigatorKey.currentState;
+    if (navigator == null) {
+      if (kDebugMode) print('⚠️ Navigator not ready for payload: $payload');
+      return;
+    }
+
+    // استخراج النوع (مثال: "task:uuid-123" → "task")
+    final type = payload.split(':').first;
+
+    // الوصول للشاشة الرئيسية أولاً ثم فتح التفاصيل (إن أمكن)
+    void openHomeThen(Widget page) {
+      navigator.pushNamedAndRemoveUntil('/home', (route) => false);
+      navigator.push(MaterialPageRoute(builder: (_) => page));
+    }
+
+    switch (type) {
+      case 'prayer':
+        openHomeThen(const PrayerPage());
+        break;
+      case 'task':
+        openHomeThen(const TasksPage());
+        break;
+      case 'habit':
+        openHomeThen(const HabitsPage());
+        break;
+      // medication / appointment يحتاجان moduleId — نفتح الصفحة الرئيسية
+      // ليختار المستخدم المساحة الصحية من هناك.
+      case 'medication':
+      case 'medicine':
+      case 'appointment':
+      case 'athkar':
+      default:
+        navigator.pushNamedAndRemoveUntil('/home', (route) => false);
+        break;
     }
   }
 
@@ -270,16 +290,16 @@ class LocalNotificationService {
 
     try {
       await _notifications.zonedSchedule(
-        id,
-        title,
-        body,
-        tz.TZDateTime.from(scheduledDate, tz.local),
-        _getNotificationDetails(category),
+        id: id,
+        title: title,
+        body: body,
+        scheduledDate: tz.TZDateTime.from(scheduledDate, tz.local),
+        notificationDetails: _getNotificationDetails(category),
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         payload: payload,
       );
 
-      print('✅ Scheduled notification #$id at $scheduledDate');
+      // print('✅ Scheduled notification #$id at $scheduledDate');
     } catch (e) {
       print('❌ Error scheduling notification #$id: $e');
     }
@@ -300,10 +320,10 @@ class LocalNotificationService {
 
     try {
       await _notifications.show(
-        id,
-        title,
-        body,
-        _getNotificationDetails(category),
+        id: id,
+        title: title,
+        body: body,
+        notificationDetails: _getNotificationDetails(category),
         payload: payload,
       );
 
@@ -330,11 +350,11 @@ class LocalNotificationService {
 
     try {
       await _notifications.zonedSchedule(
-        id,
-        title,
-        body,
-        _nextInstanceOfTime(hour, minute),
-        _getNotificationDetails(category),
+        id: id,
+        title: title,
+        body: body,
+        scheduledDate: _nextInstanceOfTime(hour, minute),
+        notificationDetails: _getNotificationDetails(category),
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         matchDateTimeComponents: DateTimeComponents.time,
         payload: payload,
@@ -372,9 +392,15 @@ class LocalNotificationService {
   // ═══════════════════════════════════════════════════════════
 
   /// ✅ إلغاء إشعار محدد
-  Future<void> cancel(int id) async {
-    await _notifications.cancel(id);
-    print('🗑️ Cancelled notification #$id');
+  // Future<void> cancel(int id) async {
+  //   await _notifications.cancel(id);
+  //   print('🗑️ Cancelled notification #$id');
+  // }
+  Future<void> cancel(int id, {bool silent = false}) async {
+    await _notifications.cancel(id: id);
+    if (!silent && kDebugMode) {
+      print('🗑️ Cancelled notification #$id');
+    }
   }
 
   /// ✅ إلغاء جميع الإشعارات
@@ -384,14 +410,45 @@ class LocalNotificationService {
   }
 
   /// ✅ إلغاء نطاق من الإشعارات
-  Future<void> cancelRange(int startId, int endId) async {
-    print('🗑️ Cancelling notifications from $startId to $endId');
+  // Future<void> cancelRange(int startId, int endId) async {
+  //   print('🗑️ Cancelling notifications from $startId to $endId');
 
-    for (int id = startId; id <= endId; id++) {
-      await cancel(id);
+  //   for (int id = startId; id <= endId; id++) {
+  //     await cancel(id);
+  //   }
+
+  //   print('✅ Cancelled ${endId - startId + 1} notifications');
+  // }
+
+  /// ✅ إلغاء نطاق من الإشعارات (المجدولة فعلياً فقط)
+  Future<void> cancelRange(int startId, int endId) async {
+    if (kDebugMode) {
+      print('🗑️ Cancelling notifications in range $startId-$endId...');
     }
 
-    print('✅ Cancelled ${endId - startId + 1} notifications');
+    // 1. جلب الإشعارات المجدولة فعلياً
+    final pending = await getPendingNotifications();
+
+    // 2. تصفية فقط الإشعارات في النطاق المحدد
+    final toCancel = pending
+        .where((n) => n.id >= startId && n.id <= endId)
+        .toList();
+
+    if (toCancel.isEmpty) {
+      if (kDebugMode) {
+        print('ℹ️ No notifications to cancel in this range');
+      }
+      return;
+    }
+
+    // 3. إلغاء فقط الإشعارات الموجودة (بدون طباعة لكل واحد)
+    for (final notification in toCancel) {
+      await _notifications.cancel(id: notification.id);
+    }
+
+    if (kDebugMode) {
+      print('✅ Cancelled ${toCancel.length} notifications');
+    }
   }
 
   /// إلغاء جميع إشعارات المهام

@@ -7,6 +7,7 @@
 import 'package:athar/core/design_system/tokens.dart';
 
 import 'package:athar/core/di/injection.dart';
+import 'package:athar/features/auth/presentation/pages/complete_profile_page.dart';
 import 'package:athar/features/health/presentation/cubit/health_cubit.dart';
 import 'package:athar/features/health/presentation/cubit/health_state.dart';
 import 'package:athar/features/health/data/models/appointment_model.dart';
@@ -186,7 +187,12 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
                   IconButton(
                     icon: const Icon(Icons.edit, color: Colors.white),
                     onPressed: () {
-                      // TODO: فتح صفحة تعديل البروفايل
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const CompleteProfilePage(),
+                        ),
+                      );
                     },
                   ),
                 ],
@@ -757,7 +763,6 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
 //                   IconButton(
 //                     icon: const Icon(Icons.edit, color: Colors.white),
 //                     onPressed: () {
-//                       // TODO: فتح صفحة تعديل البروفايل
 //                     },
 //                   ),
 //                 ],
@@ -1048,7 +1053,6 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
 //           IconButton(
 //             icon: const Icon(Icons.check_circle_outline, color: Colors.grey),
 //             onPressed: () {
-//               // TODO: تسجيل الجرعة
 //               _cubit.takeDose(widget.module.uuid, medicine);
 //             },
 //           ),

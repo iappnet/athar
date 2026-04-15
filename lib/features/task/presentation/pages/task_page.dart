@@ -1,6 +1,7 @@
 // ————-————— code start ————————-
 import 'package:athar/core/design_system/tokens.dart';
 import 'package:athar/core/design_system/widgets/athar_button.dart';
+import 'package:athar/core/utils/responsive_helper.dart';
 import 'package:athar/core/design_system/widgets/athar_feedback.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:athar/core/design_system/molecules/cards/smart_prayer_wrapper.dart';
@@ -95,7 +96,13 @@ class _TasksPageViewState extends State<TasksPageView> {
         ),
         actions: null,
       ),
-      body: Column(
+      body: Align(
+        alignment: Alignment.topCenter,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: context.isTablet ? ResponsiveHelper.maxContentWidth : double.infinity,
+          ),
+          child: Column(
         children: [
           const SmartPrayerCardWrapper(pageType: PageType.tasks),
 
@@ -307,6 +314,8 @@ class _TasksPageViewState extends State<TasksPageView> {
             ),
           ),
         ],
+      ),
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         heroTag: 'tasks_page_fab',

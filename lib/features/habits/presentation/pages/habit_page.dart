@@ -3,6 +3,7 @@
 // ✅ MIGRATED - Phase 5 | Part 1 | File 1
 // ═══════════════════════════════════════════════════════════════════════════════
 
+import 'package:athar/core/utils/responsive_helper.dart';
 import 'package:athar/features/dhikr/presentation/widgets/dhikr_bottom_sheet.dart';
 import 'package:athar/features/settings/data/models/user_settings.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
@@ -72,7 +73,13 @@ class _HabitsPageState extends State<HabitsPage> {
       child: Scaffold(
         // ✅ AppColors.background → colors.background
         backgroundColor: colorScheme.surface,
-        body: Stack(
+        body: Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: context.isTablet ? ResponsiveHelper.maxContentWidth : double.infinity,
+            ),
+            child: Stack(
           alignment: Alignment.topCenter,
           children: [
             CustomScrollView(
@@ -142,6 +149,8 @@ class _HabitsPageState extends State<HabitsPage> {
               ],
             ),
           ],
+        ),
+          ),
         ),
       ),
     );
