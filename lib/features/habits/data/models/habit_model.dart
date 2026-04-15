@@ -315,9 +315,11 @@ class HabitModel {
   }
 
   /// الفترة المرتبطة بنظام أثر الموحّد (للاستخدام مع TimeSlotMixin وحسابات المواقيت).
+  @ignore
   AtharTimePeriod get atharPeriod => period.toAtharPeriod();
 
   /// هل الفترة مرتبطة بصلاة/وقت شرعي محدد؟
+  @ignore
   bool get hasPrayerAnchorPeriod => period.hasPrayerAnchor;
 }
 
