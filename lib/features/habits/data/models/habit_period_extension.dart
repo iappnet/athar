@@ -66,6 +66,9 @@ extension AtharPeriodToHabit on AtharTimePeriod {
         return HabitPeriod.night;
       case AtharTimePeriod.lastThird:
         return HabitPeriod.lastThird;
+      case AtharTimePeriod.duha:
+        // لا يوجد مقابل مباشر في HabitPeriod — نرجع للبكور كأقرب فترة
+        return HabitPeriod.bakur;
       case AtharTimePeriod.undefined:
         return HabitPeriod.anyTime;
     }

@@ -2,6 +2,8 @@ import 'package:isar/isar.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../features/settings/data/models/category_model.dart';
 import '../../../../core/constants/athkar_data.dart'; // ✅ ضروري جداً لربط النصوص
+import '../../../../core/time_engine/athar_time_periods.dart';
+import 'habit_period_extension.dart';
 
 part 'habit_model.g.dart';
 
@@ -311,6 +313,12 @@ class HabitModel {
       reminderDays: reminderDays ?? this.reminderDays,
     );
   }
+
+  /// الفترة المرتبطة بنظام أثر الموحّد (للاستخدام مع TimeSlotMixin وحسابات المواقيت).
+  AtharTimePeriod get atharPeriod => period.toAtharPeriod();
+
+  /// هل الفترة مرتبطة بصلاة/وقت شرعي محدد؟
+  bool get hasPrayerAnchorPeriod => period.hasPrayerAnchor;
 }
 
 // ---------------------------------------------------------

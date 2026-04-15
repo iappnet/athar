@@ -8,6 +8,7 @@ import '../../../../core/di/injection.dart';
 import '../../../../core/design_system/molecules/tiles/task_tile.dart';
 import '../../../task/presentation/cubit/task_cubit.dart';
 import '../../../task/presentation/cubit/task_state.dart';
+import '../../../../core/utils/responsive_helper.dart';
 import '../widgets/dual_calendar_widget.dart';
 
 class CalendarPage extends StatefulWidget {
@@ -40,7 +41,15 @@ class _CalendarPageState extends State<CalendarPage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        body: Column(
+        body: Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: context.isTablet
+                  ? ResponsiveHelper.maxContentWidth
+                  : double.infinity,
+            ),
+            child: Column(
           children: [
             // Calendar widget
             Builder(
@@ -120,6 +129,8 @@ class _CalendarPageState extends State<CalendarPage> {
               ),
             ),
           ],
+            ),
+          ),
         ),
       ),
     );

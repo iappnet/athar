@@ -36,6 +36,19 @@ class FCMService {
 
   Future<void> init() async {
     try {
+      // ✅ 1. فحص APNS أولاً (مطلوب لـ iOS)
+      if (Platform.isIOS) {
+        final apnsToken = await _fcm.getAPNSToken();
+        if (apnsToken == null) {
+          if (kDebugMode) {
+            print(
+              '⚠️ FCM: APNS token not available (Simulator or not configured)',
+            );
+            print('ℹ️ FCM will work on real device with proper setup');
+          }
+          return; // خروج بدون خطأ
+        }
+      }
       // 1. طلب الأذونات
       await _requestPermissions();
 
@@ -63,7 +76,16 @@ class FCMService {
 
       if (kDebugMode) print('✅ FCMService initialized successfully');
     } catch (e) {
-      if (kDebugMode) print('❌ Error initializing FCMService: $e');
+      // ✅ تجاهل أخطاء FCM في Simulator
+      if (kDebugMode) {
+        print('⚠️ FCM init skipped: $e');
+        if (Platform.isIOS) {
+          print(
+            'ℹ️ This is normal on iOS Simulator - FCM requires real device',
+          );
+        }
+      }
+      // if (kDebugMode) print('❌ Error initializing FCMService: $e');
     }
   }
 
@@ -205,7 +227,6 @@ class FCMService {
 //       _fcm.onTokenRefresh.listen((newToken) {
 //         _fcmToken = newToken;
 //         print('🔄 FCM Token refreshed: $newToken');
-//         // TODO: حفظ Token الجديد في Supabase
 //       });
 
 //       // 4. معالجة الرسائل
@@ -280,7 +301,6 @@ class FCMService {
 
 //     final data = message.data;
 
-//     // TODO: التنقل حسب نوع الإشعار
 //     if (data['type'] == 'prayer') {
 //       // navigatorKey.currentState?.pushNamed('/prayer');
 //     } else if (data['type'] == 'medication') {
@@ -338,7 +358,6 @@ class FCMService {
 //   Future<void> saveFCMTokenToSupabase(String userId) async {
 //     if (_fcmToken == null) return;
 
-//     // TODO: حفظ في Supabase
 //     // await _supabase.from('user_fcm_tokens').upsert({
 //     //   'user_id': userId,
 //     //   'token': _fcmToken,
@@ -351,7 +370,6 @@ class FCMService {
 
 //   /// ✅ حذف FCM Token من Supabase (عند تسجيل الخروج)
 //   Future<void> deleteFCMTokenFromSupabase(String userId) async {
-//     // TODO: حذف من Supabase
 //     // await _supabase
 //     //     .from('user_fcm_tokens')
 //     //     .delete()
