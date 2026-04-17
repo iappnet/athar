@@ -431,7 +431,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                       color: colorScheme.surfaceContainerHighest.withOpacity(
                         0.5,
                       ),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: AtharRadii.radiusMd,
                       border: Border.all(color: colorScheme.outlineVariant),
                     ),
                     child: Row(

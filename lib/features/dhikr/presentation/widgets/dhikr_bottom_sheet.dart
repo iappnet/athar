@@ -1,3 +1,4 @@
+import 'package:athar/core/design_system/tokens/athar_radii.dart';
 import 'package:athar/core/presentation/cubit/celebration_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
@@ -91,7 +92,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
       height: 0.85.sh,
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: AtharRadii.bottomSheet,
       ),
       child: Column(
         children: [
@@ -419,7 +420,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
 //       height: 0.85.sh,
 //       decoration: BoxDecoration(
 //         color: Theme.of(context).scaffoldBackgroundColor,
-//         borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+//         borderRadius: AtharRadii.bottomSheet,
 //       ),
 //       child: Column(
 //         children: [
