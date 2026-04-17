@@ -29,9 +29,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// Semantic colors (not in ColorScheme)
-const _successColor = Color(0xFF00B894);
-
 class UnifiedTasksPage extends StatelessWidget {
   const UnifiedTasksPage({super.key});
 
@@ -292,7 +289,7 @@ class _UnifiedTasksViewState extends State<UnifiedTasksView> {
       controller: _pageController,
       children: [
         _buildKanbanColumn(l10n.dueAndOperations, Colors.blue, todo, context),
-        _buildKanbanColumn(l10n.completedToday, _successColor, done, context),
+        _buildKanbanColumn(l10n.completedToday, context.colors.success, done, context),
       ],
     );
   }
