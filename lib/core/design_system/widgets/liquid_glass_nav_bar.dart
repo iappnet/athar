@@ -16,6 +16,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:athar/core/design_system/tokens/athar_animations.dart';
 
 /// عنصر التنقل
 class LiquidNavItem {
@@ -94,7 +95,7 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
     super.initState();
 
     _hideController = AnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: AtharAnimations.normalSlow,
       vsync: this,
     );
 
@@ -103,7 +104,7 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
       end: const Offset(0, 1.5),
     ).animate(CurvedAnimation(
       parent: _hideController,
-      curve: Curves.easeInOutCubic,
+      curve: AtharAnimations.smooth,
     ));
 
     if (widget.hideOnScroll && widget.scrollController != null) {
