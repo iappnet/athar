@@ -1,3 +1,4 @@
+import 'package:athar/core/design_system/tokens/athar_colors.dart';
 import 'package:athar/core/design_system/tokens/athar_radii.dart';
 import 'package:athar/core/design_system/tokens/athar_spacing.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
@@ -39,12 +40,12 @@ class StatisticsCard extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(12.w),
               decoration: BoxDecoration(
-                color: Colors.purple.withValues(alpha: 0.1),
+                color: context.colors.primary.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.bar_chart_rounded,
-                color: Colors.purple,
+                color: context.colors.primary,
                 size: 24.sp,
               ),
             ),
