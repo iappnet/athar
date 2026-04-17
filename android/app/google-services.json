@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1064705163166",
+    "project_id": "ather-8888",
+    "storage_bucket": "ather-8888.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1064705163166:android:1efe817a4cc4ea00bde08f",
+        "android_client_info": {
+          "package_name": "com.example.athar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5rweugwKppgoKUhm9gNkzyCzod_iQwi0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1064705163166:android:e4f996856990e3dbbde08f",
+        "android_client_info": {
+          "package_name": "com.iappsnet.athar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5rweugwKppgoKUhm9gNkzyCzod_iQwi0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

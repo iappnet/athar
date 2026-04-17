@@ -24,7 +24,7 @@ class FileService {
       );
       return image != null ? File(image.path) : null;
     } else {
-      final result = await FilePicker.platform.pickFiles(type: FileType.any);
+      final result = await FilePicker.pickFiles(type: FileType.any);
       return result != null ? File(result.files.single.path!) : null;
     }
   }

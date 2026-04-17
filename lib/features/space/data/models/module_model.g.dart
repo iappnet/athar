@@ -63,78 +63,83 @@ const ModuleModelSchema = CollectionSchema(
       name: r'iconCode',
       type: IsarType.long,
     ),
-    r'isSynced': PropertySchema(
+    r'isSampleData': PropertySchema(
       id: 9,
+      name: r'isSampleData',
+      type: IsarType.bool,
+    ),
+    r'isSynced': PropertySchema(
+      id: 10,
       name: r'isSynced',
       type: IsarType.bool,
     ),
     r'name': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'name',
       type: IsarType.string,
     ),
     r'position': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'position',
       type: IsarType.double,
     ),
     r'progressPercentage': PropertySchema(
-      id: 12,
+      id: 13,
       name: r'progressPercentage',
       type: IsarType.double,
     ),
     r'reminderDaysBefore': PropertySchema(
-      id: 13,
+      id: 14,
       name: r'reminderDaysBefore',
       type: IsarType.long,
     ),
     r'reminderEnabled': PropertySchema(
-      id: 14,
+      id: 15,
       name: r'reminderEnabled',
       type: IsarType.bool,
     ),
     r'reminderHoursBefore': PropertySchema(
-      id: 15,
+      id: 16,
       name: r'reminderHoursBefore',
       type: IsarType.long,
     ),
     r'reminderTime': PropertySchema(
-      id: 16,
+      id: 17,
       name: r'reminderTime',
       type: IsarType.dateTime,
     ),
     r'spaceId': PropertySchema(
-      id: 17,
+      id: 18,
       name: r'spaceId',
       type: IsarType.string,
     ),
     r'startDate': PropertySchema(
-      id: 18,
+      id: 19,
       name: r'startDate',
       type: IsarType.dateTime,
     ),
     r'status': PropertySchema(
-      id: 19,
+      id: 20,
       name: r'status',
       type: IsarType.string,
     ),
     r'type': PropertySchema(
-      id: 20,
+      id: 21,
       name: r'type',
       type: IsarType.string,
     ),
     r'updatedAt': PropertySchema(
-      id: 21,
+      id: 22,
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
     r'uuid': PropertySchema(
-      id: 22,
+      id: 23,
       name: r'uuid',
       type: IsarType.string,
     ),
     r'visibility': PropertySchema(
-      id: 23,
+      id: 24,
       name: r'visibility',
       type: IsarType.string,
     )
@@ -262,21 +267,22 @@ void _moduleModelSerialize(
   writer.writeString(offsets[6], object.description);
   writer.writeDateTime(offsets[7], object.endDate);
   writer.writeLong(offsets[8], object.iconCode);
-  writer.writeBool(offsets[9], object.isSynced);
-  writer.writeString(offsets[10], object.name);
-  writer.writeDouble(offsets[11], object.position);
-  writer.writeDouble(offsets[12], object.progressPercentage);
-  writer.writeLong(offsets[13], object.reminderDaysBefore);
-  writer.writeBool(offsets[14], object.reminderEnabled);
-  writer.writeLong(offsets[15], object.reminderHoursBefore);
-  writer.writeDateTime(offsets[16], object.reminderTime);
-  writer.writeString(offsets[17], object.spaceId);
-  writer.writeDateTime(offsets[18], object.startDate);
-  writer.writeString(offsets[19], object.status);
-  writer.writeString(offsets[20], object.type);
-  writer.writeDateTime(offsets[21], object.updatedAt);
-  writer.writeString(offsets[22], object.uuid);
-  writer.writeString(offsets[23], object.visibility);
+  writer.writeBool(offsets[9], object.isSampleData);
+  writer.writeBool(offsets[10], object.isSynced);
+  writer.writeString(offsets[11], object.name);
+  writer.writeDouble(offsets[12], object.position);
+  writer.writeDouble(offsets[13], object.progressPercentage);
+  writer.writeLong(offsets[14], object.reminderDaysBefore);
+  writer.writeBool(offsets[15], object.reminderEnabled);
+  writer.writeLong(offsets[16], object.reminderHoursBefore);
+  writer.writeDateTime(offsets[17], object.reminderTime);
+  writer.writeString(offsets[18], object.spaceId);
+  writer.writeDateTime(offsets[19], object.startDate);
+  writer.writeString(offsets[20], object.status);
+  writer.writeString(offsets[21], object.type);
+  writer.writeDateTime(offsets[22], object.updatedAt);
+  writer.writeString(offsets[23], object.uuid);
+  writer.writeString(offsets[24], object.visibility);
 }
 
 ModuleModel _moduleModelDeserialize(
@@ -298,21 +304,22 @@ ModuleModel _moduleModelDeserialize(
   object.endDate = reader.readDateTimeOrNull(offsets[7]);
   object.iconCode = reader.readLongOrNull(offsets[8]);
   object.id = id;
-  object.isSynced = reader.readBool(offsets[9]);
-  object.name = reader.readString(offsets[10]);
-  object.position = reader.readDouble(offsets[11]);
-  object.progressPercentage = reader.readDouble(offsets[12]);
-  object.reminderDaysBefore = reader.readLong(offsets[13]);
-  object.reminderEnabled = reader.readBool(offsets[14]);
-  object.reminderHoursBefore = reader.readLong(offsets[15]);
-  object.reminderTime = reader.readDateTimeOrNull(offsets[16]);
-  object.spaceId = reader.readString(offsets[17]);
-  object.startDate = reader.readDateTimeOrNull(offsets[18]);
-  object.status = reader.readString(offsets[19]);
-  object.type = reader.readString(offsets[20]);
-  object.updatedAt = reader.readDateTime(offsets[21]);
-  object.uuid = reader.readString(offsets[22]);
-  object.visibility = reader.readString(offsets[23]);
+  object.isSampleData = reader.readBool(offsets[9]);
+  object.isSynced = reader.readBool(offsets[10]);
+  object.name = reader.readString(offsets[11]);
+  object.position = reader.readDouble(offsets[12]);
+  object.progressPercentage = reader.readDouble(offsets[13]);
+  object.reminderDaysBefore = reader.readLong(offsets[14]);
+  object.reminderEnabled = reader.readBool(offsets[15]);
+  object.reminderHoursBefore = reader.readLong(offsets[16]);
+  object.reminderTime = reader.readDateTimeOrNull(offsets[17]);
+  object.spaceId = reader.readString(offsets[18]);
+  object.startDate = reader.readDateTimeOrNull(offsets[19]);
+  object.status = reader.readString(offsets[20]);
+  object.type = reader.readString(offsets[21]);
+  object.updatedAt = reader.readDateTime(offsets[22]);
+  object.uuid = reader.readString(offsets[23]);
+  object.visibility = reader.readString(offsets[24]);
   return object;
 }
 
@@ -346,32 +353,34 @@ P _moduleModelDeserializeProp<P>(
     case 9:
       return (reader.readBool(offset)) as P;
     case 10:
-      return (reader.readString(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 11:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 12:
       return (reader.readDouble(offset)) as P;
     case 13:
-      return (reader.readLong(offset)) as P;
+      return (reader.readDouble(offset)) as P;
     case 14:
-      return (reader.readBool(offset)) as P;
-    case 15:
       return (reader.readLong(offset)) as P;
+    case 15:
+      return (reader.readBool(offset)) as P;
     case 16:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 17:
-      return (reader.readString(offset)) as P;
-    case 18:
       return (reader.readDateTimeOrNull(offset)) as P;
-    case 19:
+    case 18:
       return (reader.readString(offset)) as P;
+    case 19:
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 20:
       return (reader.readString(offset)) as P;
     case 21:
-      return (reader.readDateTime(offset)) as P;
-    case 22:
       return (reader.readString(offset)) as P;
+    case 22:
+      return (reader.readDateTime(offset)) as P;
     case 23:
+      return (reader.readString(offset)) as P;
+    case 24:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1728,6 +1737,16 @@ extension ModuleModelQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ModuleModel, ModuleModel, QAfterFilterCondition>
+      isSampleDataEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isSampleData',
+        value: value,
       ));
     });
   }
@@ -3114,6 +3133,19 @@ extension ModuleModelQuerySortBy
     });
   }
 
+  QueryBuilder<ModuleModel, ModuleModel, QAfterSortBy> sortByIsSampleData() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isSampleData', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ModuleModel, ModuleModel, QAfterSortBy>
+      sortByIsSampleDataDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isSampleData', Sort.desc);
+    });
+  }
+
   QueryBuilder<ModuleModel, ModuleModel, QAfterSortBy> sortByIsSynced() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isSynced', Sort.asc);
@@ -3427,6 +3459,19 @@ extension ModuleModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<ModuleModel, ModuleModel, QAfterSortBy> thenByIsSampleData() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isSampleData', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ModuleModel, ModuleModel, QAfterSortBy>
+      thenByIsSampleDataDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isSampleData', Sort.desc);
+    });
+  }
+
   QueryBuilder<ModuleModel, ModuleModel, QAfterSortBy> thenByIsSynced() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isSynced', Sort.asc);
@@ -3676,6 +3721,12 @@ extension ModuleModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<ModuleModel, ModuleModel, QDistinct> distinctByIsSampleData() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isSampleData');
+    });
+  }
+
   QueryBuilder<ModuleModel, ModuleModel, QDistinct> distinctByIsSynced() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isSynced');
@@ -3838,6 +3889,12 @@ extension ModuleModelQueryProperty
   QueryBuilder<ModuleModel, int?, QQueryOperations> iconCodeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'iconCode');
+    });
+  }
+
+  QueryBuilder<ModuleModel, bool, QQueryOperations> isSampleDataProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isSampleData');
     });
   }
 

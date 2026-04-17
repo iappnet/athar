@@ -1,3 +1,8 @@
+// lib/core/design_system/organisms/app_bar/athar_app_bar.dart
+// ═══════════════════════════════════════════════════════════════════════════════
+// ✅ FIXED - حل مشكلة Row Overflow
+// ═══════════════════════════════════════════════════════════════════════════════
+
 import 'package:athar/core/design_system/tokens/athar_radii.dart';
 import 'package:athar/core/design_system/tokens/athar_spacing.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
@@ -75,24 +80,38 @@ class AtharAppBar extends StatelessWidget implements PreferredSizeWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
-                      color: colorScheme.onSurface,
+              // ✅ FIX: استخدام ConstrainedBox + Flexible لمنع overflow
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth:
+                      MediaQuery.sizeOf(context).width *
+                      0.5, // 50% من عرض الشاشة
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // ✅ FIX: لف النص بـ Flexible
+                    Flexible(
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onSurface,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                  ),
-                  AtharGap.hXxs,
-                  Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    size: 14.sp,
-                    color: colorScheme.primary.withValues(alpha: 0.7),
-                  ),
-                ],
+                    AtharGap.hXxs,
+                    Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      size: 14.sp,
+                      color: colorScheme.primary.withValues(alpha: 0.7),
+                    ),
+                  ],
+                ),
               ),
               if (subtitle != null) ...[
                 AtharGap.xxs,
@@ -102,6 +121,8 @@ class AtharAppBar extends StatelessWidget implements PreferredSizeWidget {
                     fontSize: 10.sp,
                     color: colorScheme.onSurfaceVariant,
                   ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ],
@@ -150,6 +171,161 @@ class AtharAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(70.h);
 }
+
+//-----------------------------------------------------------------------
+
+// import 'package:athar/core/design_system/tokens/athar_radii.dart';
+// import 'package:athar/core/design_system/tokens/athar_spacing.dart';
+// import 'package:athar/l10n/generated/app_localizations.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+// import '../../../../features/focus/presentation/pages/focus_page.dart';
+// import '../../../../features/calendar/presentation/pages/calendar_page.dart';
+// import '../../../../features/settings/presentation/pages/general_settings_page.dart';
+
+// class AtharAppBar extends StatelessWidget implements PreferredSizeWidget {
+//   final String title;
+//   final String? subtitle;
+//   final Widget? leading;
+//   final bool showActions;
+
+//   const AtharAppBar({
+//     super.key,
+//     required this.title,
+//     this.subtitle,
+//     this.leading,
+//     this.showActions = true,
+//     required actions,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final colorScheme = Theme.of(context).colorScheme;
+//     final l10n = AppLocalizations.of(context);
+//     final canPop = Navigator.canPop(context);
+
+//     return AppBar(
+//       backgroundColor: Colors.transparent,
+//       elevation: 0,
+//       centerTitle: true,
+
+//       leading:
+//           leading ??
+//           (canPop
+//               ? BackButton(
+//                   color: colorScheme.onSurface,
+//                   onPressed: () => Navigator.pop(context),
+//                 )
+//               : IconButton(
+//                   onPressed: () {
+//                     Navigator.push(
+//                       context,
+//                       MaterialPageRoute(
+//                         builder: (context) => const GeneralSettingsPage(),
+//                       ),
+//                     );
+//                   },
+//                   icon: Icon(
+//                     Icons.settings_outlined,
+//                     color: colorScheme.onSurface,
+//                     size: 24.sp,
+//                   ),
+//                   tooltip: l10n.appBarSettingsTooltip,
+//                 )),
+
+//       title: InkWell(
+//         onTap: () {
+//           Navigator.push(
+//             context,
+//             MaterialPageRoute(builder: (context) => const CalendarPage()),
+//           );
+//         },
+//         borderRadius: AtharRadii.radiusMd,
+//         child: Padding(
+//           padding: EdgeInsets.symmetric(
+//             horizontal: AtharSpacing.lg,
+//             vertical: AtharSpacing.sm,
+//           ),
+//           child: Column(
+//             mainAxisSize: MainAxisSize.min,
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//             children: [
+//               Row(
+//                 mainAxisSize: MainAxisSize.min,
+//                 children: [
+//                   Text(
+//                     title,
+//                     style: TextStyle(
+//                       fontSize: 18.sp,
+//                       fontWeight: FontWeight.bold,
+//                       color: colorScheme.onSurface,
+//                     ),
+//                   ),
+//                   AtharGap.hXxs,
+//                   Icon(
+//                     Icons.keyboard_arrow_down_rounded,
+//                     size: 14.sp,
+//                     color: colorScheme.primary.withValues(alpha: 0.7),
+//                   ),
+//                 ],
+//               ),
+//               if (subtitle != null) ...[
+//                 AtharGap.xxs,
+//                 Text(
+//                   subtitle!,
+//                   style: TextStyle(
+//                     fontSize: 10.sp,
+//                     color: colorScheme.onSurfaceVariant,
+//                   ),
+//                 ),
+//               ],
+//             ],
+//           ),
+//         ),
+//       ),
+
+//       actions: showActions
+//           ? [
+//               IconButton(
+//                 onPressed: () {
+//                   Navigator.push(
+//                     context,
+//                     MaterialPageRoute(
+//                       builder: (context) => const CalendarPage(),
+//                     ),
+//                   );
+//                 },
+//                 icon: Icon(
+//                   Icons.calendar_month_rounded,
+//                   color: colorScheme.onSurface,
+//                   size: 22.sp,
+//                 ),
+//                 tooltip: l10n.appBarCalendarTooltip,
+//               ),
+//               IconButton(
+//                 onPressed: () {
+//                   Navigator.push(
+//                     context,
+//                     MaterialPageRoute(builder: (context) => const FocusPage()),
+//                   );
+//                 },
+//                 icon: Icon(
+//                   Icons.timer_outlined,
+//                   color: colorScheme.onSurface,
+//                   size: 22.sp,
+//                 ),
+//                 tooltip: l10n.appBarFocusTooltip,
+//               ),
+//               AtharGap.hSm,
+//             ]
+//           : null,
+//     );
+//   }
+
+//   @override
+//   Size get preferredSize => Size.fromHeight(70.h);
+// }
 //-----------------------------------------------------------------------
 // // lib/core/design_system/organisms/app_bar/athar_app_bar.dart
 // // ═══════════════════════════════════════════════════════════════════════════════

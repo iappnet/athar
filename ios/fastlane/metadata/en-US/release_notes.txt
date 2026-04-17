@@ -1,0 +1,10 @@
+Version 1.0.0 - Official Launch 🎉
+
+- Task management with custom categories
+- Build and track daily habits
+- Multiple spaces to organize your life
+- Smart reminders linked to daily events
+- Prayer times and athkar support
+- Medication and appointment tracking
+- Arabic and English interface
+- Dark and light mode

@@ -83,11 +83,23 @@ class NotificationIdManager {
   /// Example:
   /// - Fajr on day 25 = 100,000 + (25 * 10) + 0 = 100,250
   /// - Dhuhr on day 25 = 100,000 + (25 * 10) + 2 = 100,252
+  // ═══════════════════════════════════════════════════════════
+  // 🕌 PRAYER NOTIFICATIONS (100,000 - 199,999)
+  // ═══════════════════════════════════════════════════════════
+
+  /// ✅ ID للصلاة في يوم محدد (مُصحح)
+  ///
+  /// Formula: prayerBase + (dayOfYear * 20) + (prayerIndex * 2)
+  ///
+  /// كل يوم له 20 slot (10 صلوات × 2 لكل واحدة)
+  /// كل صلاة لها 2 IDs: إشعار رئيسي + تذكير
   int forPrayer(PrayerType type, DateTime date) {
     final dayOfYear = date.difference(DateTime(date.year, 1, 1)).inDays;
-    final prayerIndex = type.index; // 0-5 (6 صلوات مع الشروق)
+    final prayerIndex = type.index; // 0-5
 
-    final id = NotificationIdRanges.prayerBase + (dayOfYear * 10) + prayerIndex;
+    // ✅ مُصحح: dayOfYear * 20 بدلاً من 10
+    final id =
+        NotificationIdRanges.prayerBase + (dayOfYear * 20) + (prayerIndex * 2);
 
     assert(
       id <= NotificationIdRanges.prayerMax,
@@ -97,13 +109,15 @@ class NotificationIdManager {
     return id;
   }
 
+  /// ✅ ID لتذكير قبل الصلاة (مُصحح)
+
   /// ✅ ID لتذكير قبل الصلاة (15 دقيقة قبل)
   ///
   /// Formula: forPrayer() + 6
   ///
   /// نضيف 6 لأن لدينا 6 أوقات (فجر، شروق، ظهر، عصر، مغرب، عشاء)
   int forPrayerReminder(PrayerType type, DateTime date) {
-    return forPrayer(type, date) + 6;
+    return forPrayer(type, date) + 1; // ✅ +1 بدلاً من +6
   }
 
   // ═══════════════════════════════════════════════════════════

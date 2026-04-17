@@ -2,12 +2,14 @@ class SearchResultDto {
   final String uuid;
   final String username;
   final String fullName;
+  final String? email; // ✅ إضافة
   final String? avatarUrl;
 
   SearchResultDto({
     required this.uuid,
     required this.username,
     required this.fullName,
+    this.email,
     this.avatarUrl,
   });
 
@@ -21,6 +23,8 @@ class SearchResultDto {
 
       // مطابقة لاسم العمود في قاعدة البيانات (full_name)
       fullName: json['full_name'] ?? '',
+
+      email: json['email'], // ✅ إضافة
 
       avatarUrl: json['avatar_url'],
     );

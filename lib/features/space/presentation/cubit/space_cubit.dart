@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'package:athar/features/space/data/repositories/space_repository_impl.dart';
 import 'package:athar/features/space/domain/repositories/space_repository.dart';
 import 'package:athar/features/space/presentation/cubit/space_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../data/models/space_model.dart';
 
 // --- Cubit ---
@@ -55,16 +57,43 @@ class SpaceCubit extends Cubit<SpaceState> {
   }
 
   // إنشاء مساحة جديدة
+  // Future<void> createSpace(String name, {bool isShared = false}) async {
+  //   try {
+  //     await _repository.createSpace(
+  //       name: name,
+  //       type: isShared ? 'shared' : 'personal',
+  //     );
+  //     // لا نحتاج لعمل emit لأن الـ Stream سيحدث القائمة تلقائياً
+  //   } catch (e) {
+  //     emit(SpaceError("فشل إنشاء المساحة"));
+  //     // نعيد تحميل الحالة السابقة
+  //     loadSpaces();
+  //   }
+  // }
+
   Future<void> createSpace(String name, {bool isShared = false}) async {
     try {
+      // ✅ التحقق من تسجيل الدخول للمساحات المشتركة
+      if (isShared) {
+        final currentUser = Supabase.instance.client.auth.currentUser;
+        if (currentUser == null) {
+          emit(SpaceError("يجب تسجيل الدخول لإنشاء مساحة مشتركة"));
+          loadSpaces(); // إعادة تحميل الحالة السابقة
+          return;
+        }
+      }
+
       await _repository.createSpace(
         name: name,
         type: isShared ? 'shared' : 'personal',
       );
       // لا نحتاج لعمل emit لأن الـ Stream سيحدث القائمة تلقائياً
     } catch (e) {
-      emit(SpaceError("فشل إنشاء المساحة"));
-      // نعيد تحميل الحالة السابقة
+      if (e is SharedSpaceException) {
+        emit(SpaceError(e.message));
+      } else {
+        emit(SpaceError("فشل إنشاء المساحة"));
+      }
       loadSpaces();
     }
   }

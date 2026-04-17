@@ -2,6 +2,8 @@ import 'package:isar/isar.dart';
 
 part 'invitation_model.g.dart';
 
+enum InvitationStatus { pending, accepted, rejected, expired }
+
 @Collection()
 class InvitationModel {
   Id id = Isar.autoIncrement; // محلي
@@ -21,10 +23,34 @@ class InvitationModel {
   late String type; // 'link' or 'direct_user'
 
   @Index()
-  String status = 'pending'; // 'pending', 'accepted', 'expired'
+  // String status = 'pending'; // 'pending', 'accepted', 'expired'
+  late String status;
+
+  @ignore
+  InvitationStatus get statusEnum {
+    switch (status) {
+      case 'accepted':
+        return InvitationStatus.accepted;
+      case 'rejected':
+        return InvitationStatus.rejected;
+      case 'expired':
+        return InvitationStatus.expired;
+      default:
+        return InvitationStatus.pending;
+    }
+  }
+
+  set statusEnum(InvitationStatus value) {
+    status = value.name;
+  }
 
   DateTime? expiresAt;
   DateTime? createdAt;
+
+  String? spaceName;
+  int? spaceColor;
+  String? inviterName;
+  String? inviterAvatar;
 
   bool isSynced = false;
 
@@ -39,6 +65,14 @@ class InvitationModel {
       ..token = json['token']
       ..type = json['type'] ?? 'direct_user'
       ..status = json['status'] ?? 'pending'
+      ..spaceName =
+          json['space_name'] // ✅
+      ..spaceColor =
+          json['space_color'] // ✅
+      ..inviterName =
+          json['inviter_name'] // ✅
+      ..inviterAvatar =
+          json['inviter_avatar'] // ✅
       ..expiresAt = json['expires_at'] != null
           ? DateTime.parse(json['expires_at'])
           : null

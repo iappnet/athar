@@ -3,6 +3,7 @@
 
 import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
 import 'athar_time_periods.dart';
 import 'athar_time_calculator.dart';
 import 'relative_time_parser.dart';
@@ -186,6 +187,7 @@ enum PeriodPosition {
 /// Mixin يضيف دعم الأوقات الشرعية لأي Model
 mixin TimeSlotMixin {
   /// إعدادات الوقت
+  @ignore
   TimeSlotSettings? get timeSlotSettings;
 
   /// حساب الوقت الفعلي

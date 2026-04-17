@@ -1,5 +1,6 @@
 import 'package:athar/core/design_system/tokens/athar_radii.dart';
 import 'package:athar/core/design_system/tokens/athar_spacing.dart';
+import 'package:athar/features/prayer/presentation/widgets/prayer_month_view.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -61,7 +62,8 @@ class PrayerDetailsPage extends StatelessWidget {
                 children: [
                   PrayerDayView(date: DateTime.now()),
                   const PrayerWeekView(),
-                  Center(child: Text(l10n.prayerMonthComingSoon)),
+                  const PrayerMonthView(),
+                  // Center(child: Text(l10n.prayerMonthComingSoon)),
                 ],
               ),
             ),

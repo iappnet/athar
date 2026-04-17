@@ -17,47 +17,47 @@ import '../../features/assets/data/repositories/assets_repository_impl.dart'
     as _i36;
 import '../../features/assets/domain/repositories/assets_repository.dart'
     as _i35;
-import '../../features/assets/presentation/cubit/assets_cubit.dart' as _i79;
+import '../../features/assets/presentation/cubit/assets_cubit.dart' as _i80;
 import '../../features/auth/data/repositories/auth_repository_impl.dart'
     as _i38;
 import '../../features/auth/domain/repositories/auth_repository.dart' as _i37;
-import '../../features/auth/presentation/cubit/auth_cubit.dart' as _i65;
-import '../../features/dhikr/data/repositories/dhikr_repository.dart' as _i41;
-import '../../features/dhikr/presentation/cubit/dhikr_cubit.dart' as _i67;
-import '../../features/focus/data/repositories/focus_repository.dart' as _i44;
-import '../../features/focus/presentation/cubit/focus_cubit.dart' as _i68;
+import '../../features/auth/presentation/cubit/auth_cubit.dart' as _i66;
+import '../../features/dhikr/data/repositories/dhikr_repository.dart' as _i42;
+import '../../features/dhikr/presentation/cubit/dhikr_cubit.dart' as _i68;
+import '../../features/focus/data/repositories/focus_repository.dart' as _i45;
+import '../../features/focus/presentation/cubit/focus_cubit.dart' as _i69;
 import '../../features/habits/data/repositories/habit_repository_impl.dart'
-    as _i46;
-import '../../features/habits/domain/repositories/habit_repository.dart'
-    as _i45;
-import '../../features/habits/presentation/cubit/habit_cubit.dart' as _i69;
-import '../../features/health/data/repositories/health_repository_impl.dart'
-    as _i48;
-import '../../features/health/domain/repositories/health_repository.dart'
     as _i47;
-import '../../features/health/presentation/cubit/health_cubit.dart' as _i80;
-import '../../features/home/presentation/cubit/timeline_cubit.dart' as _i62;
+import '../../features/habits/domain/repositories/habit_repository.dart'
+    as _i46;
+import '../../features/habits/presentation/cubit/habit_cubit.dart' as _i70;
+import '../../features/health/data/repositories/health_repository_impl.dart'
+    as _i49;
+import '../../features/health/domain/repositories/health_repository.dart'
+    as _i48;
+import '../../features/health/presentation/cubit/health_cubit.dart' as _i81;
+import '../../features/home/presentation/cubit/timeline_cubit.dart' as _i63;
 import '../../features/notifications/data/repositories/notifications_repository_impl.dart'
     as _i17;
 import '../../features/notifications/domain/repositories/notifications_repository.dart'
     as _i16;
 import '../../features/notifications/presentation/cubit/notifications_cubit.dart'
-    as _i50;
-import '../../features/prayer/data/repositories/prayer_repository_impl.dart'
-    as _i52;
-import '../../features/prayer/domain/repositories/prayer_repository.dart'
     as _i51;
-import '../../features/prayer/presentation/cubit/prayer_cubit.dart' as _i75;
+import '../../features/prayer/data/repositories/prayer_repository_impl.dart'
+    as _i53;
+import '../../features/prayer/domain/repositories/prayer_repository.dart'
+    as _i52;
+import '../../features/prayer/presentation/cubit/prayer_cubit.dart' as _i76;
 import '../../features/settings/data/repositories/category_repository.dart'
-    as _i40;
+    as _i41;
 import '../../features/settings/data/repositories/settings_repository_impl.dart'
     as _i23;
 import '../../features/settings/domain/repositories/settings_repository.dart'
     as _i22;
-import '../../features/settings/presentation/cubit/category_cubit.dart' as _i66;
-import '../../features/settings/presentation/cubit/settings_cubit.dart' as _i56;
+import '../../features/settings/presentation/cubit/category_cubit.dart' as _i67;
+import '../../features/settings/presentation/cubit/settings_cubit.dart' as _i57;
 import '../../features/space/data/repositories/invitation_repository_impl.dart'
-    as _i72;
+    as _i73;
 import '../../features/space/data/repositories/list_repository_impl.dart'
     as _i9;
 import '../../features/space/data/repositories/module_repository_impl.dart'
@@ -67,19 +67,19 @@ import '../../features/space/data/repositories/space_member_repository_impl.dart
 import '../../features/space/data/repositories/space_repository_impl.dart'
     as _i26;
 import '../../features/space/domain/repositories/invitation_repository.dart'
-    as _i71;
+    as _i72;
 import '../../features/space/domain/repositories/list_repository.dart' as _i8;
 import '../../features/space/domain/repositories/module_repository.dart'
     as _i12;
 import '../../features/space/domain/repositories/space_repository.dart' as _i25;
-import '../../features/space/presentation/cubit/inbox_cubit.dart' as _i81;
-import '../../features/space/presentation/cubit/join_space_cubit.dart' as _i73;
-import '../../features/space/presentation/cubit/list_cubit.dart' as _i82;
-import '../../features/space/presentation/cubit/module_cubit.dart' as _i83;
-import '../../features/space/presentation/cubit/space_cubit.dart' as _i57;
+import '../../features/space/presentation/cubit/inbox_cubit.dart' as _i82;
+import '../../features/space/presentation/cubit/join_space_cubit.dart' as _i74;
+import '../../features/space/presentation/cubit/list_cubit.dart' as _i83;
+import '../../features/space/presentation/cubit/module_cubit.dart' as _i84;
+import '../../features/space/presentation/cubit/space_cubit.dart' as _i58;
 import '../../features/space/presentation/cubit/space_members_cubit.dart'
-    as _i77;
-import '../../features/stats/presentation/cubit/stats_cubit.dart' as _i58;
+    as _i78;
+import '../../features/stats/presentation/cubit/stats_cubit.dart' as _i59;
 import '../../features/subscription/data/repositories/subscription_repository_impl.dart'
     as _i28;
 import '../../features/subscription/domain/repositories/subscription_repository.dart'
@@ -87,39 +87,40 @@ import '../../features/subscription/domain/repositories/subscription_repository.
 import '../../features/sync/data/repositories/sync_repository_impl.dart'
     as _i31;
 import '../../features/sync/domain/repositories/sync_repository.dart' as _i30;
-import '../../features/sync/presentation/cubit/sync_cubit.dart' as _i59;
+import '../../features/sync/presentation/cubit/sync_cubit.dart' as _i60;
 import '../../features/task/data/repositories/task_repository_impl.dart'
     as _i33;
 import '../../features/task/domain/repositories/task_repository.dart' as _i32;
-import '../../features/task/presentation/cubit/task_cubit.dart' as _i78;
+import '../../features/task/presentation/cubit/task_cubit.dart' as _i79;
 import '../iam/permission_cache.dart' as _i18;
-import '../iam/permission_service.dart' as _i74;
-import '../iam/role_service.dart' as _i55;
+import '../iam/permission_service.dart' as _i75;
+import '../iam/role_service.dart' as _i56;
 import '../presentation/cubit/celebration_cubit.dart' as _i4;
-import '../services/appointment_notification_scheduler.dart' as _i63;
-import '../services/asset_notification_scheduler.dart' as _i64;
+import '../services/appointment_notification_scheduler.dart' as _i64;
+import '../services/asset_notification_scheduler.dart' as _i65;
 import '../services/automation_service.dart' as _i39;
 import '../services/biometric_service.dart' as _i3;
+import '../services/category_migration_service.dart' as _i40;
 import '../services/deep_link_service.dart' as _i5;
-import '../services/fcm_service.dart' as _i42;
-import '../services/file_service.dart' as _i43;
-import '../services/habit_notification_scheduler.dart' as _i70;
+import '../services/fcm_service.dart' as _i43;
+import '../services/file_service.dart' as _i44;
+import '../services/habit_notification_scheduler.dart' as _i71;
 import '../services/hijri_service.dart' as _i6;
 import '../services/local_notification_service.dart' as _i10;
 import '../services/location_service.dart' as _i11;
-import '../services/medication_notification_scheduler.dart' as _i49;
+import '../services/medication_notification_scheduler.dart' as _i50;
 import '../services/notification_id_manager.dart' as _i14;
 import '../services/notification_service.dart' as _i15;
 import '../services/prayer_conflict_service.dart' as _i19;
-import '../services/prayer_notification_scheduler.dart' as _i76;
+import '../services/prayer_notification_scheduler.dart' as _i77;
 import '../services/prayer_service.dart' as _i20;
 import '../services/prayer_timer_service.dart' as _i21;
-import '../services/project_notification_scheduler.dart' as _i53;
-import '../services/push_notification_service.dart' as _i54;
-import '../services/sync_service.dart' as _i60;
-import '../services/task_notification_scheduler.dart' as _i61;
+import '../services/project_notification_scheduler.dart' as _i54;
+import '../services/push_notification_service.dart' as _i55;
+import '../services/sync_service.dart' as _i61;
+import '../services/task_notification_scheduler.dart' as _i62;
 import '../services/time_conflict_service.dart' as _i34;
-import 'register_module.dart' as _i84;
+import 'register_module.dart' as _i85;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -185,160 +186,162 @@ extension GetItInjectableX on _i1.GetIt {
           gh<_i8.ListRepository>(),
           gh<_i7.Isar>(),
         ));
-    gh.lazySingleton<_i40.CategoryRepository>(
-        () => _i40.CategoryRepository(gh<_i7.Isar>()));
-    gh.lazySingleton<_i41.DhikrRepository>(
-        () => _i41.DhikrRepository(gh<_i7.Isar>()));
-    gh.lazySingleton<_i42.FCMService>(
-        () => _i42.FCMService(gh<_i10.LocalNotificationService>()));
-    gh.lazySingleton<_i43.FileService>(() => _i43.FileService(gh<_i7.Isar>()));
-    gh.lazySingleton<_i44.FocusRepository>(
-        () => _i44.FocusRepository(gh<_i7.Isar>()));
-    gh.lazySingleton<_i45.HabitRepository>(
-        () => _i46.HabitRepositoryImpl(gh<_i7.Isar>()));
-    gh.lazySingleton<_i47.HealthRepository>(
-        () => _i48.HealthRepositoryImpl(gh<_i7.Isar>()));
-    gh.singleton<_i49.MedicationNotificationScheduler>(
-        () => _i49.MedicationNotificationScheduler(
-              gh<_i47.HealthRepository>(),
+    gh.lazySingleton<_i40.CategoryMigrationService>(
+        () => _i40.CategoryMigrationService(gh<_i7.Isar>()));
+    gh.lazySingleton<_i41.CategoryRepository>(
+        () => _i41.CategoryRepository(gh<_i7.Isar>()));
+    gh.lazySingleton<_i42.DhikrRepository>(
+        () => _i42.DhikrRepository(gh<_i7.Isar>()));
+    gh.lazySingleton<_i43.FCMService>(
+        () => _i43.FCMService(gh<_i10.LocalNotificationService>()));
+    gh.lazySingleton<_i44.FileService>(() => _i44.FileService(gh<_i7.Isar>()));
+    gh.lazySingleton<_i45.FocusRepository>(
+        () => _i45.FocusRepository(gh<_i7.Isar>()));
+    gh.lazySingleton<_i46.HabitRepository>(
+        () => _i47.HabitRepositoryImpl(gh<_i7.Isar>()));
+    gh.lazySingleton<_i48.HealthRepository>(
+        () => _i49.HealthRepositoryImpl(gh<_i7.Isar>()));
+    gh.singleton<_i50.MedicationNotificationScheduler>(
+        () => _i50.MedicationNotificationScheduler(
+              gh<_i48.HealthRepository>(),
               gh<_i22.SettingsRepository>(),
               gh<_i10.LocalNotificationService>(),
               gh<_i14.NotificationIdManager>(),
             ));
-    gh.factory<_i50.NotificationsCubit>(
-        () => _i50.NotificationsCubit(gh<_i16.NotificationsRepository>()));
-    gh.lazySingleton<_i51.PrayerRepository>(
-        () => _i52.PrayerRepositoryImpl(gh<_i22.SettingsRepository>()));
-    gh.singleton<_i53.ProjectNotificationScheduler>(
-        () => _i53.ProjectNotificationScheduler(
+    gh.factory<_i51.NotificationsCubit>(
+        () => _i51.NotificationsCubit(gh<_i16.NotificationsRepository>()));
+    gh.lazySingleton<_i52.PrayerRepository>(
+        () => _i53.PrayerRepositoryImpl(gh<_i22.SettingsRepository>()));
+    gh.singleton<_i54.ProjectNotificationScheduler>(
+        () => _i54.ProjectNotificationScheduler(
               gh<_i7.Isar>(),
               gh<_i22.SettingsRepository>(),
               gh<_i10.LocalNotificationService>(),
               gh<_i14.NotificationIdManager>(),
             ));
-    gh.singleton<_i54.PushNotificationService>(
-        () => _i54.PushNotificationService(gh<_i29.SupabaseClient>()));
-    gh.lazySingleton<_i55.RoleService>(
-        () => _i55.RoleService(gh<_i24.SpaceMemberRepository>()));
-    gh.factory<_i56.SettingsCubit>(() => _i56.SettingsCubit(
+    gh.singleton<_i55.PushNotificationService>(
+        () => _i55.PushNotificationService(gh<_i29.SupabaseClient>()));
+    gh.lazySingleton<_i56.RoleService>(
+        () => _i56.RoleService(gh<_i24.SpaceMemberRepository>()));
+    gh.factory<_i57.SettingsCubit>(() => _i57.SettingsCubit(
           gh<_i22.SettingsRepository>(),
           gh<_i3.BiometricService>(),
         ));
-    gh.factory<_i57.SpaceCubit>(
-        () => _i57.SpaceCubit(gh<_i25.SpaceRepository>()));
-    gh.factory<_i58.StatsCubit>(
-        () => _i58.StatsCubit(gh<_i44.FocusRepository>()));
-    gh.factory<_i59.SyncCubit>(() => _i59.SyncCubit(
+    gh.factory<_i58.SpaceCubit>(
+        () => _i58.SpaceCubit(gh<_i25.SpaceRepository>()));
+    gh.factory<_i59.StatsCubit>(
+        () => _i59.StatsCubit(gh<_i45.FocusRepository>()));
+    gh.factory<_i60.SyncCubit>(() => _i60.SyncCubit(
           gh<_i30.SyncRepository>(),
           gh<_i22.SettingsRepository>(),
         ));
-    gh.lazySingleton<_i60.SyncService>(() => _i60.SyncService(
+    gh.lazySingleton<_i61.SyncService>(() => _i61.SyncService(
           gh<_i7.Isar>(),
-          gh<_i45.HabitRepository>(),
+          gh<_i46.HabitRepository>(),
         ));
-    gh.singleton<_i61.TaskNotificationScheduler>(
-        () => _i61.TaskNotificationScheduler(
+    gh.singleton<_i62.TaskNotificationScheduler>(
+        () => _i62.TaskNotificationScheduler(
               gh<_i32.TaskRepository>(),
               gh<_i22.SettingsRepository>(),
               gh<_i10.LocalNotificationService>(),
               gh<_i14.NotificationIdManager>(),
             ));
-    gh.factory<_i62.TimelineCubit>(() => _i62.TimelineCubit(
+    gh.factory<_i63.TimelineCubit>(() => _i63.TimelineCubit(
           gh<_i32.TaskRepository>(),
-          gh<_i47.HealthRepository>(),
+          gh<_i48.HealthRepository>(),
           gh<_i22.SettingsRepository>(),
           gh<_i7.Isar>(),
         ));
-    gh.singleton<_i63.AppointmentNotificationScheduler>(
-        () => _i63.AppointmentNotificationScheduler(
-              gh<_i47.HealthRepository>(),
+    gh.singleton<_i64.AppointmentNotificationScheduler>(
+        () => _i64.AppointmentNotificationScheduler(
+              gh<_i48.HealthRepository>(),
               gh<_i22.SettingsRepository>(),
               gh<_i10.LocalNotificationService>(),
               gh<_i14.NotificationIdManager>(),
             ));
-    gh.singleton<_i64.AssetNotificationScheduler>(
-        () => _i64.AssetNotificationScheduler(
+    gh.singleton<_i65.AssetNotificationScheduler>(
+        () => _i65.AssetNotificationScheduler(
               gh<_i35.AssetsRepository>(),
               gh<_i22.SettingsRepository>(),
               gh<_i10.LocalNotificationService>(),
               gh<_i14.NotificationIdManager>(),
             ));
-    gh.factory<_i65.AuthCubit>(() => _i65.AuthCubit(gh<_i37.AuthRepository>()));
-    gh.factory<_i66.CategoryCubit>(
-        () => _i66.CategoryCubit(gh<_i40.CategoryRepository>()));
-    gh.factory<_i67.DhikrCubit>(
-        () => _i67.DhikrCubit(gh<_i41.DhikrRepository>()));
-    gh.factory<_i68.FocusCubit>(
-        () => _i68.FocusCubit(gh<_i44.FocusRepository>()));
-    gh.factory<_i69.HabitCubit>(() => _i69.HabitCubit(
-          gh<_i45.HabitRepository>(),
-          gh<_i51.PrayerRepository>(),
+    gh.factory<_i66.AuthCubit>(() => _i66.AuthCubit(gh<_i37.AuthRepository>()));
+    gh.factory<_i67.CategoryCubit>(
+        () => _i67.CategoryCubit(gh<_i41.CategoryRepository>()));
+    gh.factory<_i68.DhikrCubit>(
+        () => _i68.DhikrCubit(gh<_i42.DhikrRepository>()));
+    gh.factory<_i69.FocusCubit>(
+        () => _i69.FocusCubit(gh<_i45.FocusRepository>()));
+    gh.factory<_i70.HabitCubit>(() => _i70.HabitCubit(
+          gh<_i46.HabitRepository>(),
+          gh<_i52.PrayerRepository>(),
           gh<_i22.SettingsRepository>(),
         ));
-    gh.singleton<_i70.HabitNotificationScheduler>(
-        () => _i70.HabitNotificationScheduler(
-              gh<_i45.HabitRepository>(),
+    gh.singleton<_i71.HabitNotificationScheduler>(
+        () => _i71.HabitNotificationScheduler(
+              gh<_i46.HabitRepository>(),
               gh<_i22.SettingsRepository>(),
               gh<_i10.LocalNotificationService>(),
               gh<_i14.NotificationIdManager>(),
             ));
-    gh.lazySingleton<_i71.InvitationRepository>(
-        () => _i72.InvitationRepositoryImpl(gh<_i60.SyncService>()));
-    gh.factory<_i73.JoinSpaceCubit>(
-        () => _i73.JoinSpaceCubit(gh<_i71.InvitationRepository>()));
-    gh.lazySingleton<_i74.PermissionService>(() => _i74.PermissionService(
-          gh<_i55.RoleService>(),
+    gh.lazySingleton<_i72.InvitationRepository>(
+        () => _i73.InvitationRepositoryImpl(gh<_i61.SyncService>()));
+    gh.factory<_i74.JoinSpaceCubit>(
+        () => _i74.JoinSpaceCubit(gh<_i72.InvitationRepository>()));
+    gh.lazySingleton<_i75.PermissionService>(() => _i75.PermissionService(
+          gh<_i56.RoleService>(),
           gh<_i18.PermissionCache>(),
         ));
-    gh.factory<_i75.PrayerCubit>(() => _i75.PrayerCubit(
-          prayerRepository: gh<_i51.PrayerRepository>(),
+    gh.factory<_i76.PrayerCubit>(() => _i76.PrayerCubit(
+          prayerRepository: gh<_i52.PrayerRepository>(),
           settingsRepository: gh<_i22.SettingsRepository>(),
         ));
-    gh.singleton<_i76.PrayerNotificationScheduler>(
-        () => _i76.PrayerNotificationScheduler(
-              gh<_i51.PrayerRepository>(),
+    gh.singleton<_i77.PrayerNotificationScheduler>(
+        () => _i77.PrayerNotificationScheduler(
+              gh<_i52.PrayerRepository>(),
               gh<_i22.SettingsRepository>(),
               gh<_i10.LocalNotificationService>(),
               gh<_i14.NotificationIdManager>(),
             ));
-    gh.factory<_i77.SpaceMembersCubit>(() => _i77.SpaceMembersCubit(
+    gh.factory<_i78.SpaceMembersCubit>(() => _i78.SpaceMembersCubit(
           gh<_i24.SpaceMemberRepository>(),
-          gh<_i71.InvitationRepository>(),
-          gh<_i74.PermissionService>(),
+          gh<_i72.InvitationRepository>(),
+          gh<_i75.PermissionService>(),
         ));
-    gh.factory<_i78.TaskCubit>(() => _i78.TaskCubit(
+    gh.factory<_i79.TaskCubit>(() => _i79.TaskCubit(
           gh<_i32.TaskRepository>(),
           gh<_i22.SettingsRepository>(),
-          gh<_i40.CategoryRepository>(),
+          gh<_i41.CategoryRepository>(),
           gh<_i25.SpaceRepository>(),
-          gh<_i74.PermissionService>(),
-          gh<_i61.TaskNotificationScheduler>(),
+          gh<_i75.PermissionService>(),
+          gh<_i62.TaskNotificationScheduler>(),
         ));
-    gh.factory<_i79.AssetsCubit>(() => _i79.AssetsCubit(
+    gh.factory<_i80.AssetsCubit>(() => _i80.AssetsCubit(
           gh<_i35.AssetsRepository>(),
-          gh<_i74.PermissionService>(),
+          gh<_i75.PermissionService>(),
         ));
-    gh.factory<_i80.HealthCubit>(() => _i80.HealthCubit(
-          gh<_i47.HealthRepository>(),
-          gh<_i74.PermissionService>(),
+    gh.factory<_i81.HealthCubit>(() => _i81.HealthCubit(
+          gh<_i48.HealthRepository>(),
+          gh<_i75.PermissionService>(),
           gh<_i39.AutomationService>(),
-          gh<_i49.MedicationNotificationScheduler>(),
-          gh<_i63.AppointmentNotificationScheduler>(),
+          gh<_i50.MedicationNotificationScheduler>(),
+          gh<_i64.AppointmentNotificationScheduler>(),
         ));
-    gh.factory<_i81.InboxCubit>(
-        () => _i81.InboxCubit(gh<_i71.InvitationRepository>()));
-    gh.factory<_i82.ListCubit>(() => _i82.ListCubit(
+    gh.factory<_i82.InboxCubit>(
+        () => _i82.InboxCubit(gh<_i72.InvitationRepository>()));
+    gh.factory<_i83.ListCubit>(() => _i83.ListCubit(
           gh<_i8.ListRepository>(),
-          gh<_i74.PermissionService>(),
+          gh<_i75.PermissionService>(),
           gh<_i39.AutomationService>(),
         ));
-    gh.factory<_i83.ModuleCubit>(() => _i83.ModuleCubit(
+    gh.factory<_i84.ModuleCubit>(() => _i84.ModuleCubit(
           gh<_i12.ModuleRepository>(),
-          gh<_i53.ProjectNotificationScheduler>(),
-          gh<_i74.PermissionService>(),
+          gh<_i54.ProjectNotificationScheduler>(),
+          gh<_i75.PermissionService>(),
         ));
     return this;
   }
 }
 
-class _$RegisterModule extends _i84.RegisterModule {}
+class _$RegisterModule extends _i85.RegisterModule {}

@@ -18,6 +18,7 @@ import 'package:uuid/uuid.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../domain/repositories/task_repository.dart';
 import '../../data/models/task_model.dart';
+import '../../../../core/time_engine/time_slot_mixin.dart';
 import 'task_state.dart';
 import 'package:athar/features/settings/data/models/user_settings.dart';
 import 'package:athar/features/settings/data/models/category_model.dart';
@@ -432,6 +433,63 @@ class TaskCubit extends Cubit<TaskState> {
           occurrenceReminderTime.isAfter(DateTime.now())) {
         await _taskNotificationScheduler.scheduleTask(task);
       }
+    }
+  }
+
+  /// ✅ إضافة مهمة مع إعدادات الوقت الشرعي
+  Future<void> addTaskWithTimeSlot({
+    required String title,
+    required DateTime date,
+    TimeSlotSettings? timeSettings,
+    bool isUrgent = false,
+    bool isImportant = false,
+    CategoryModel? category,
+    int duration = 30,
+    String? moduleId,
+    String? spaceId,
+    String? assigneeId,
+    DateTime? reminderTime,
+  }) async {
+    try {
+      final userId = Supabase.instance.client.auth.currentUser?.id ?? '';
+
+      final newTask = TaskModel(
+        title: title,
+        date: date,
+        isUrgent: isUrgent,
+        isImportant: isImportant,
+        durationMinutes: duration,
+        status: TaskStatus.todo,
+        isCompleted: false,
+        uuid: const Uuid().v4(),
+        userId: userId,
+        isSynced: false,
+        categoryId: category?.id,
+        moduleId: moduleId,
+        spaceId: spaceId,
+        assigneeId: assigneeId,
+        reminderTime: reminderTime,
+        position: _cachedTasks.length.toDouble(),
+        isRecurring: false,
+      );
+
+      if (timeSettings != null) {
+        newTask.applyTimeSettings(timeSettings);
+      }
+
+      if (category != null) {
+        newTask.category.value = category;
+      }
+
+      await _repository.addTask(newTask);
+
+      if (reminderTime != null && reminderTime.isAfter(DateTime.now())) {
+        await _taskNotificationScheduler.scheduleTask(newTask);
+      }
+    } catch (e, stackTrace) {
+      debugPrint("❌ Error adding task with time slot: $e");
+      debugPrint("Stack trace: $stackTrace");
+      emit(TaskError("فشل إضافة المهمة"));
     }
   }
 

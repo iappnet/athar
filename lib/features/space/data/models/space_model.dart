@@ -11,6 +11,11 @@ class SpaceModel {
 
   late String name;
 
+  /// ✅ هل هذه بيانات تجريبية (sample data)؟
+  /// - true: يتم حذفها نهائياً عند الحذف، ولا تُعاد إنشاؤها
+  /// - false: بيانات المستخدم الحقيقية
+  bool isSampleData = false;
+
   @Index()
   String type = 'personal'; // ✅ التعديل 1: قيمة افتراضية بدلاً من late لتجنب الأخطاء
 

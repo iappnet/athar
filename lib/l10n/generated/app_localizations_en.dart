@@ -352,7 +352,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get continueAsGuest => 'Continue as Guest';
 
   @override
-  String get createAccount => 'Create Account';
+  String get createAccount => 'Create one';
 
   @override
   String get alreadyHaveAccount => 'Already have an account?';
@@ -2760,7 +2760,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'No appointments today, you\'re all good! 🌟';
 
   @override
-  String get vitalSheetUnitLabel => 'الوحدة';
+  String get vitalSheetUnitLabel => 'Unit';
 
   @override
   String get healthRecords => 'Records';
@@ -2948,7 +2948,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get healthTimelineTitle => 'Complete Medical Record';
+  String get healthTimelineTitle => 'Health Timeline';
 
   @override
   String get healthTimelineAddRecord => 'Add Record';
@@ -2972,25 +2972,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get healthTimelineDoctorPrefix => 'Dr.';
 
   @override
-  String get healthTimelineNoteDoc => 'Note/Document';
+  String get healthTimelineNoteDoc => 'Document';
 
   @override
   String get healthTimelineVitalSign => 'Vital Sign';
 
   @override
-  String get healthTimelineNoTitle => 'Untitled';
+  String get healthTimelineNoTitle => 'No Title';
 
   @override
-  String get healthTimelineEmpty => 'Medical record is empty';
+  String get healthTimelineEmpty => 'No health records yet';
 
   @override
-  String get appointmentsTitle => 'Appointments Center';
+  String get appointmentsTitle => 'Appointments';
 
   @override
   String get appointmentsTabUpcoming => 'Upcoming';
 
   @override
-  String get appointmentsTabArchive => 'Previous (Archive)';
+  String get appointmentsTabArchive => 'Archive';
 
   @override
   String get appointmentsNewButton => 'New Appointment';
@@ -2999,22 +2999,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appointmentsEmptyUpcoming => 'No upcoming appointments';
 
   @override
-  String get appointmentsEmptyArchive => 'Visit history is empty';
+  String get appointmentsEmptyArchive => 'No archived appointments';
 
   @override
   String get appointmentsTypeLab => 'Lab Test';
 
   @override
-  String get appointmentsTypeVaccine => 'Vaccination';
+  String get appointmentsTypeVaccine => 'Vaccine';
 
   @override
-  String get appointmentsTypeProcedure => 'Procedure/Surgery';
+  String get appointmentsTypeProcedure => 'Procedure';
 
   @override
   String get appointmentsTypeCheckup => 'Checkup';
 
   @override
-  String get appointmentsDeleteAction => 'Delete Appointment';
+  String get appointmentsDeleteAction => 'Delete';
 
   @override
   String get medicinesPageTitle => 'Medicine Cabinet';
@@ -4272,4 +4272,107 @@ class AppLocalizationsEn extends AppLocalizations {
   String progressPercent(Object count) {
     return '$count% complete';
   }
+
+  @override
+  String get welcomeToAthar => 'Welcome to Athar';
+
+  @override
+  String get loginSubtitle => 'Sign in to sync your shared spaces';
+
+  @override
+  String get passwordTooShort => 'Password is too short';
+
+  @override
+  String get skipContinueAsGuest => 'Skip (continue as guest)';
+
+  @override
+  String get noAccountCreateNew => 'Don\'t have an account? Create one';
+
+  @override
+  String get dataSyncTitle => 'Data Sync';
+
+  @override
+  String get dataSyncConflictMessage =>
+      'You have data saved on your device and in the cloud.\nHow would you like to proceed?';
+
+  @override
+  String get restoreCloudData => 'Restore cloud (delete local)';
+
+  @override
+  String get syncKeepLocal => 'Keep local (delete cloud)';
+
+  @override
+  String get mergeDataBest => 'Merge data (recommended)';
+
+  @override
+  String get joinAtharFamily => 'Join the Athar family';
+
+  @override
+  String get minThreeChars => 'At least 3 characters';
+
+  @override
+  String get minSixChars => 'At least 6 characters';
+
+  @override
+  String get completeProfile => 'Complete Profile';
+
+  @override
+  String get welcomeCompleteProfile =>
+      'Welcome! Please complete your details to continue';
+
+  @override
+  String get saveAndContinue => 'Save & Continue';
+
+  @override
+  String get projects => 'Projects';
+
+  @override
+  String get kanbanComingSoon => 'Kanban system coming soon...';
+
+  @override
+  String get chooseIcon => 'Choose Icon';
+
+  @override
+  String get searchIcons => 'Search icons...';
+
+  @override
+  String get icon => 'Icon';
+
+  @override
+  String get color => 'Color';
+
+  @override
+  String get tapToChangeIcon => 'Tap to change icon';
+
+  @override
+  String get skipAsGuest => 'Skip (Continue as Guest)';
+
+  @override
+  String get noAccount => 'Don\'t have an account?';
+
+  @override
+  String get syncConflict => 'Data Sync';
+
+  @override
+  String get syncConflictMessage =>
+      'There is data on your device and in the cloud. How would you like to proceed?';
+
+  @override
+  String get keepLocal => 'Keep Local';
+
+  @override
+  String get keepCloud => 'Keep Cloud';
+
+  @override
+  String get mergeBoth => 'Merge (Recommended)';
+
+  @override
+  String get navigationSettings => 'Navigation';
+
+  @override
+  String get hideNavOnScroll => 'Hide navigation on scroll';
+
+  @override
+  String get hideNavOnScrollDesc =>
+      'Automatically hide bottom bar when scrolling down';
 }

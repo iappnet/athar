@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/core/iam/permission_service.dart';
 import 'package:athar/features/space/data/models/dto/search_result_dto.dart';
+import 'package:athar/features/space/data/models/invitation_model.dart';
 import 'package:athar/features/space/data/models/space_member_model.dart';
 import 'package:athar/features/space/data/repositories/space_member_repository_impl.dart';
 import 'package:athar/features/space/domain/repositories/invitation_repository.dart';
@@ -25,6 +26,21 @@ class SpaceMembersSearching extends SpaceMembersState {}
 class SpaceMembersSearchResults extends SpaceMembersState {
   final List<SearchResultDto> results;
   SpaceMembersSearchResults(this.results);
+}
+
+class SpaceMembersInviteSent extends SpaceMembersState {
+  final String userName;
+  SpaceMembersInviteSent(this.userName);
+}
+
+class SpacePendingInvitationsLoaded extends SpaceMembersState {
+  final List<InvitationModel> invitations;
+  SpacePendingInvitationsLoaded(this.invitations);
+}
+
+class SpaceMembersError extends SpaceMembersState {
+  final String message;
+  SpaceMembersError(this.message);
 }
 
 @injectable
@@ -117,20 +133,62 @@ class SpaceMembersCubit extends Cubit<SpaceMembersState> {
   }
 
   // إرسال دعوة
+  // Future<void> inviteUser(SearchResultDto user) async {
+  //   if (_currentSpaceId == null) return;
+  //   await _invitationRepository.sendDirectInvite(
+  //     spaceId: _currentSpaceId!,
+  //     userId: user.uuid,
+  //     userEmail: user.username, // مؤقتاً نرسل اليوزرنيم أو نبحث عن الإيميل
+  //   );
+  //   // العودة لقائمة الأعضاء
+  //   loadMembers(_currentSpaceId!);
+  // }
+
   Future<void> inviteUser(SearchResultDto user) async {
     if (_currentSpaceId == null) return;
-    await _invitationRepository.sendDirectInvite(
-      spaceId: _currentSpaceId!,
-      userId: user.uuid,
-      userEmail: user.username, // مؤقتاً نرسل اليوزرنيم أو نبحث عن الإيميل
-    );
-    // العودة لقائمة الأعضاء
-    loadMembers(_currentSpaceId!);
+
+    try {
+      await _invitationRepository.sendDirectInvite(
+        spaceId: _currentSpaceId!,
+        userId: user.uuid,
+        userEmail: user.email ?? user.username, // ✅ استخدام email إذا وُجد
+      );
+
+      // إظهار رسالة نجاح
+      emit(SpaceMembersInviteSent(user.fullName));
+
+      // العودة لقائمة الأعضاء
+      loadMembers(_currentSpaceId!);
+    } catch (e) {
+      emit(SpaceMembersError(e.toString()));
+      loadMembers(_currentSpaceId!);
+    }
   }
 
   // العودة من البحث للعرض
   void cancelSearch() {
     if (_currentSpaceId != null) loadMembers(_currentSpaceId!);
+  }
+
+  Future<void> loadPendingInvitations() async {
+    emit(SpaceMembersLoading());
+
+    try {
+      final invites = await _invitationRepository.getMyPendingInvites();
+      emit(SpacePendingInvitationsLoaded(invites));
+    } catch (e) {
+      emit(SpaceMembersError(e.toString()));
+    }
+  }
+
+  Future<void> acceptInvite(String token) async {
+    await _invitationRepository.acceptInvite(token);
+    loadPendingInvitations();
+  }
+
+  Future<void> rejectInvite(String token) async {
+    await _invitationRepository.rejectInvite(token);
+    loadPendingInvitations();
   }
 
   @override

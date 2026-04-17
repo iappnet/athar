@@ -9,6 +9,7 @@ import 'package:athar/features/space/presentation/cubit/list_cubit.dart'; // ✅
 import 'package:athar/features/space/presentation/cubit/module_cubit.dart';
 import 'package:athar/features/space/presentation/pages/join_space_screen.dart';
 import 'package:athar/features/sync/presentation/cubit/sync_cubit.dart';
+import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -93,7 +94,8 @@ class _AtharAppState extends State<AtharApp> {
             theme: AppTheme.lightTheme,
             locale: const Locale('ar', 'SA'),
             supportedLocales: const [Locale('ar', 'SA'), Locale('en', 'US')],
-            localizationsDelegates: const [
+            localizationsDelegates: [
+              AppLocalizations.delegate, // ← هذا كان مفقوداً!
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,

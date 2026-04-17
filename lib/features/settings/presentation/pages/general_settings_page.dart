@@ -440,8 +440,27 @@ class GeneralSettingsPage extends StatelessWidget {
 
                 SizedBox(height: 24.h),
 
-                // 5. قسم حول التطبيق
+                // ✅✅✅ 6. قسم التنقل - جديد ✅✅✅
+                _buildSectionHeader(context, l10n.navigationSettings),
+                _buildSettingsContainer([
+                  _buildSwitchTile(
+                    context,
+                    icon: Icons.swipe_vertical_rounded,
+                    color: Colors.indigo,
+                    title: l10n.hideNavOnScroll,
+                    subtitle: l10n.hideNavOnScrollDesc,
+                    value: settings.hideNavOnScroll,
+                    onChanged: (val) {
+                      cubit.toggleHideNavOnScroll(val);
+                    },
+                  ),
+                ]),
+
+                SizedBox(height: 24.h),
+
+                // 5. قسم حول التطبيق (موجود)
                 _buildSectionHeader(context, l10n.aboutApp),
+
                 _buildSettingsContainer([
                   _buildTile(
                     icon: Icons.info_outline_rounded,

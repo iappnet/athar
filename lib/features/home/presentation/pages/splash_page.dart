@@ -98,7 +98,33 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     // ✅ Get colors from context
     final colorScheme = Theme.of(context).colorScheme;
-    final l10n = AppLocalizations.of(context);
+    // final l10n = AppLocalizations.of(context);
+
+    // ✅ الحل: try-catch للتعامل مع عدم جاهزية الترجمات
+    late final AppLocalizations l10n;
+    try {
+      l10n = AppLocalizations.of(context);
+    } catch (e) {
+      // الترجمات لم تُحمّل بعد
+      return Scaffold(
+        backgroundColor: colorScheme.primary,
+        body: Center(
+          child: CircularProgressIndicator(color: colorScheme.onPrimary),
+        ),
+      );
+    }
+
+    // ✅ فحص وجود الترجمات
+    // final l10n = Localizations.of<AppLocalizations>(context, AppLocalizations);
+
+    // if (l10n == null) {
+    //   return Scaffold(
+    //     backgroundColor: colorScheme.primary,
+    //     body: Center(
+    //       child: CircularProgressIndicator(color: colorScheme.onPrimary),
+    //     ),
+    //   );
+    // }
 
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {

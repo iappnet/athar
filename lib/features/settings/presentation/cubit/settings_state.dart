@@ -26,5 +26,7 @@ class SettingsLoaded extends SettingsState {
     settings.isAthkarEnabled,
     settings.athkarDisplayMode,
     settings.athkarSessionViewMode, // ✅ إضافة الجديد
+    // ✅✅✅ الحقل الجديد - إخفاء شريط التنقل ✅✅✅
+    settings.hideNavOnScroll,
   ];
 }

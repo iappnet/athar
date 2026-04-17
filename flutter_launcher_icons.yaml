@@ -1,0 +1,23 @@
+flutter_launcher_icons:
+  image_path: "assets/icon/app_icon.png"
+
+  # ═══════════════════════════════════════════════════════
+  # 🍎 iOS
+  # ═══════════════════════════════════════════════════════
+  ios: true
+  remove_alpha_ios: true  # إزالة الشفافية (مطلوب من Apple)
+
+    # ═══════════════════════════════════════════════════════
+  # 🤖 Android
+  # ═══════════════════════════════════════════════════════
+  android: true
+  adaptive_icon_background: "#1565C0"
+  adaptive_icon_foreground: "assets/icon/app_icon.png"
+  # ═══════════════════════════════════════════════════════
+  # 🌐 Web (اختياري)
+  # ═══════════════════════════════════════════════════════
+  web:
+    generate: true
+    image_path: "assets/icon/app_icon.png"
+    background_color: "#1565C0"
+    theme_color: "#1565C0"

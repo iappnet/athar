@@ -1,3 +1,10 @@
+// lib/core/design_system/molecules/cards/next_prayer_card.dart
+// ═══════════════════════════════════════════════════════════════════════════════
+// ✅ FIXED - حل مشكلة Row Overflow (245px)
+// المشكلة: _buildHeaderRow كان يحتوي على Row بدون Flexible
+// الحل: لف النصوص بـ Flexible + استخدام IntrinsicWidth للعناصر الداخلية
+// ═══════════════════════════════════════════════════════════════════════════════
+
 import 'dart:ui' as ui;
 import 'package:athar/core/design_system/tokens/athar_radii.dart';
 import 'package:athar/core/design_system/tokens/athar_spacing.dart';
@@ -67,8 +74,6 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
         Color displayColor = status.statusColor;
         String timePrefix = l10n.prayerCardTimePrefix;
 
-        // NOTE: These compare against domain-level Arabic values.
-        // Should be refactored to use enum comparison at domain level.
         if (status.statusLabel.contains("حان الآن")) {
           displayColor = const Color(0xFF4CAF50);
           timePrefix = "";
@@ -83,7 +88,6 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
             vertical: AtharSpacing.xxs,
           ),
           decoration: BoxDecoration(
-            // Islamic gradient — intentionally hardcoded
             gradient: const LinearGradient(
               colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
               begin: Alignment.topLeft,
@@ -149,14 +153,19 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
                             size: 14.sp,
                           ),
                           AtharGap.hXs,
-                          Text(
-                            status.isDuhaTime
-                                ? l10n.prayerCardDuhaTime
-                                : l10n.prayerCardQiyamTime,
-                            style: TextStyle(
-                              fontSize: 11.sp,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                          // ✅ FIX: Flexible حول Text
+                          Flexible(
+                            child: Text(
+                              status.isDuhaTime
+                                  ? l10n.prayerCardDuhaTime
+                                  : l10n.prayerCardQiyamTime,
+                              style: TextStyle(
+                                fontSize: 11.sp,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ],
@@ -169,28 +178,36 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            status.statusLabel,
-                            style: TextStyle(
-                              color: displayColor,
-                              fontSize: 12.sp,
+                      // ✅ FIX: Expanded حول Column
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              status.statusLabel,
+                              style: TextStyle(
+                                color: displayColor,
+                                fontSize: 12.sp,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                          AtharGap.xxxs,
-                          Text(
-                            status.prayerName,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 26.sp,
-                              fontWeight: FontWeight.bold,
-                              height: 1.0,
+                            AtharGap.xxxs,
+                            Text(
+                              status.prayerName,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 26.sp,
+                                fontWeight: FontWeight.bold,
+                                height: 1.0,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
+                      AtharGap.hSm,
                       Text(
                         status.timeDisplay,
                         style: TextStyle(
@@ -216,6 +233,9 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
     );
   }
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ✅ FIXED: _buildHeaderRow - الإصلاح الرئيسي للـ overflow (245px)
+  // ═══════════════════════════════════════════════════════════════════════════
   Widget _buildHeaderRow(
     BuildContext context,
     PrayerTimerStatus status,
@@ -223,83 +243,108 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
   ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // Date (right)
-        InkWell(
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const CalendarPage()),
-          ),
-          borderRadius: AtharRadii.radiusSm,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.calendar_today_rounded,
-                color: Colors.white24,
-                size: 14.sp,
-              ),
-              AtharGap.hXxs,
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: AtharSpacing.xxxs),
-                child: Text(
-                  status.fullDate,
-                  style: TextStyle(color: Colors.white54, fontSize: 11.sp),
+        // ✅ FIX: Flexible حول InkWell التاريخ
+        Flexible(
+          flex: 1,
+          child: InkWell(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const CalendarPage()),
+            ),
+            borderRadius: AtharRadii.radiusSm,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.calendar_today_rounded,
+                  color: Colors.white24,
+                  size: 14.sp,
                 ),
-              ),
-            ],
-          ),
-        ),
-
-        // Location (left)
-        BlocBuilder<SettingsCubit, SettingsState>(
-          builder: (context, state) {
-            String cityName = l10n.prayerCardSetLocation;
-            if (state is SettingsLoaded && state.settings.cityName != null) {
-              cityName = state.settings.cityName!;
-            }
-
-            return InkWell(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const LocationSettingsPage()),
-              ),
-              borderRadius: AtharRadii.radiusSm,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: AtharSpacing.xxxs),
+                AtharGap.hXxs,
+                // ✅ FIX: Flexible حول النص
+                Flexible(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: AtharSpacing.xxxs),
                     child: Text(
-                      cityName,
-                      style: TextStyle(color: Colors.white54, fontSize: 10.sp),
+                      status.fullDate,
+                      style: TextStyle(color: Colors.white54, fontSize: 11.sp),
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  SizedBox(
-                    width: 24.w,
-                    height: 24.w,
-                    child: IconButton(
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const LocationSettingsPage(),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        AtharGap.hSm,
+
+        // ✅ FIX: Flexible حول InkWell الموقع
+        Flexible(
+          flex: 1,
+          child: BlocBuilder<SettingsCubit, SettingsState>(
+            builder: (context, state) {
+              String cityName = l10n.prayerCardSetLocation;
+              if (state is SettingsLoaded && state.settings.cityName != null) {
+                cityName = state.settings.cityName!;
+              }
+
+              return InkWell(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const LocationSettingsPage(),
+                  ),
+                ),
+                borderRadius: AtharRadii.radiusSm,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    // ✅ FIX: Flexible حول اسم المدينة
+                    Flexible(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: AtharSpacing.xxxs),
+                        child: Text(
+                          cityName,
+                          style: TextStyle(
+                            color: Colors.white54,
+                            fontSize: 10.sp,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.end,
                         ),
                       ),
-                      icon: Icon(
-                        Icons.edit_location_alt_rounded,
-                        color: Colors.white30,
-                        size: 16.sp,
-                      ),
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                      tooltip: l10n.prayerCardChangeLocation,
                     ),
-                  ),
-                ],
-              ),
-            );
-          },
+                    SizedBox(
+                      width: 24.w,
+                      height: 24.w,
+                      child: IconButton(
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const LocationSettingsPage(),
+                          ),
+                        ),
+                        icon: Icon(
+                          Icons.edit_location_alt_rounded,
+                          color: Colors.white30,
+                          size: 16.sp,
+                        ),
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        tooltip: l10n.prayerCardChangeLocation,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ],
     );
@@ -316,9 +361,14 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              "$timePrefix${status.timeLeft}",
-              style: TextStyle(color: Colors.white70, fontSize: 12.sp),
+            // ✅ FIX: Flexible حول النص
+            Flexible(
+              child: Text(
+                "$timePrefix${status.timeLeft}",
+                style: TextStyle(color: Colors.white70, fontSize: 12.sp),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),
@@ -386,6 +436,396 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
     );
   }
 }
+
+//-----------------------------------------------------------------------
+// import 'dart:ui' as ui;
+// import 'package:athar/core/design_system/tokens/athar_radii.dart';
+// import 'package:athar/core/design_system/tokens/athar_spacing.dart';
+// import 'package:athar/features/prayer/domain/entities/prayer_time.dart';
+// import 'package:athar/l10n/generated/app_localizations.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+// import 'package:athar/core/services/prayer_timer_service.dart';
+// import '../../../../core/di/injection.dart';
+
+// import 'package:athar/features/settings/presentation/cubit/settings_cubit.dart';
+// import 'package:athar/features/settings/presentation/cubit/settings_state.dart';
+// import '../../../../features/prayer/domain/models/prayer_timer_status.dart';
+// import '../../../../features/calendar/presentation/pages/calendar_page.dart';
+// import '../../../../features/prayer/presentation/pages/prayer_details_page.dart';
+// import '../../../../features/settings/presentation/pages/location_settings_page.dart';
+
+// import '../../../../features/dhikr/presentation/widgets/dhikr_bottom_sheet.dart';
+// import 'package:athar/features/habits/presentation/cubit/habit_cubit.dart';
+
+// class NextPrayerCard extends StatefulWidget {
+//   final List<PrayerTime>? allPrayers;
+//   const NextPrayerCard({super.key, this.allPrayers});
+
+//   @override
+//   State<NextPrayerCard> createState() => _NextPrayerCardState();
+// }
+
+// class _NextPrayerCardState extends State<NextPrayerCard> {
+//   late final PrayerTimerService _timerService;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _timerService = getIt<PrayerTimerService>();
+//     if (widget.allPrayers != null && widget.allPrayers!.isNotEmpty) {
+//       _timerService.startTimer(widget.allPrayers!);
+//     }
+//   }
+
+//   @override
+//   void didUpdateWidget(covariant NextPrayerCard oldWidget) {
+//     super.didUpdateWidget(oldWidget);
+//     if (widget.allPrayers != oldWidget.allPrayers &&
+//         widget.allPrayers != null) {
+//       _timerService.startTimer(widget.allPrayers!);
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final l10n = AppLocalizations.of(context);
+
+//     return StreamBuilder<PrayerTimerStatus>(
+//       stream: _timerService.timerStream,
+//       initialData: PrayerTimerStatus.initial(),
+//       builder: (context, snapshot) {
+//         final status = snapshot.data!;
+
+//         if (widget.allPrayers == null || widget.allPrayers!.isEmpty) {
+//           return const SizedBox.shrink();
+//         }
+
+//         // Color logic (Islamic card special design)
+//         Color displayColor = status.statusColor;
+//         String timePrefix = l10n.prayerCardTimePrefix;
+
+//         // NOTE: These compare against domain-level Arabic values.
+//         // Should be refactored to use enum comparison at domain level.
+//         if (status.statusLabel.contains("حان الآن")) {
+//           displayColor = const Color(0xFF4CAF50);
+//           timePrefix = "";
+//         } else if (status.statusLabel.contains("الحالية")) {
+//           displayColor = const Color(0xFF29B6F6);
+//           timePrefix = "";
+//         }
+
+//         return Container(
+//           margin: EdgeInsets.symmetric(
+//             horizontal: AtharSpacing.lg,
+//             vertical: AtharSpacing.xxs,
+//           ),
+//           decoration: BoxDecoration(
+//             // Islamic gradient — intentionally hardcoded
+//             gradient: const LinearGradient(
+//               colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
+//               begin: Alignment.topLeft,
+//               end: Alignment.bottomRight,
+//             ),
+//             borderRadius: AtharRadii.radiusXxl,
+//             boxShadow: [
+//               BoxShadow(
+//                 color: const Color(0xFF0F172A).withValues(alpha: 0.3),
+//                 blurRadius: 10,
+//                 offset: const Offset(0, 4),
+//               ),
+//             ],
+//           ),
+//           child: InkWell(
+//             onTap: () => Navigator.push(
+//               context,
+//               MaterialPageRoute(builder: (_) => const PrayerDetailsPage()),
+//             ),
+//             borderRadius: AtharRadii.radiusLg,
+//             child: Padding(
+//               padding: EdgeInsets.symmetric(
+//                 horizontal: AtharSpacing.lg,
+//                 vertical: AtharSpacing.md,
+//               ),
+//               child: Column(
+//                 mainAxisSize: MainAxisSize.min,
+//                 children: [
+//                   _buildHeaderRow(context, status, l10n),
+
+//                   AtharGap.md,
+
+//                   // Nafl alert (Duha / Qiyam)
+//                   if (status.isDuhaTime || status.isQiyamTime) ...[
+//                     Container(
+//                       margin: EdgeInsets.only(bottom: AtharSpacing.sm),
+//                       padding: EdgeInsets.symmetric(
+//                         horizontal: AtharSpacing.md,
+//                         vertical: AtharSpacing.xs,
+//                       ),
+//                       decoration: BoxDecoration(
+//                         color: status.isDuhaTime
+//                             ? Colors.orange.withValues(alpha: 0.2)
+//                             : Colors.indigo.withValues(alpha: 0.3),
+//                         borderRadius: AtharRadii.radiusXl,
+//                         border: Border.all(
+//                           color: status.isDuhaTime
+//                               ? Colors.orange.withValues(alpha: 0.5)
+//                               : Colors.indigo.withValues(alpha: 0.5),
+//                           width: 1,
+//                         ),
+//                       ),
+//                       child: Row(
+//                         mainAxisSize: MainAxisSize.min,
+//                         children: [
+//                           Icon(
+//                             status.isDuhaTime
+//                                 ? Icons.wb_sunny_rounded
+//                                 : Icons.nights_stay_rounded,
+//                             color: status.isDuhaTime
+//                                 ? Colors.orange
+//                                 : Colors.indigoAccent,
+//                             size: 14.sp,
+//                           ),
+//                           AtharGap.hXs,
+//                           Text(
+//                             status.isDuhaTime
+//                                 ? l10n.prayerCardDuhaTime
+//                                 : l10n.prayerCardQiyamTime,
+//                             style: TextStyle(
+//                               fontSize: 11.sp,
+//                               color: Colors.white,
+//                               fontWeight: FontWeight.bold,
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                   ],
+
+//                   // Status and time row
+//                   Row(
+//                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                     crossAxisAlignment: CrossAxisAlignment.end,
+//                     children: [
+//                       Column(
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: [
+//                           Text(
+//                             status.statusLabel,
+//                             style: TextStyle(
+//                               color: displayColor,
+//                               fontSize: 12.sp,
+//                             ),
+//                           ),
+//                           AtharGap.xxxs,
+//                           Text(
+//                             status.prayerName,
+//                             style: TextStyle(
+//                               color: Colors.white,
+//                               fontSize: 26.sp,
+//                               fontWeight: FontWeight.bold,
+//                               height: 1.0,
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                       Text(
+//                         status.timeDisplay,
+//                         style: TextStyle(
+//                           color: Colors.white,
+//                           fontSize: 26.sp,
+//                           fontWeight: FontWeight.w300,
+//                           height: 1.0,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+
+//                   AtharGap.md,
+
+//                   // Progress row with dhikr button
+//                   _buildProgressRow(context, status, displayColor, timePrefix),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         );
+//       },
+//     );
+//   }
+
+//   Widget _buildHeaderRow(
+//     BuildContext context,
+//     PrayerTimerStatus status,
+//     AppLocalizations l10n,
+//   ) {
+//     return Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: [
+//         // Date (right)
+//         InkWell(
+//           onTap: () => Navigator.push(
+//             context,
+//             MaterialPageRoute(builder: (_) => const CalendarPage()),
+//           ),
+//           borderRadius: AtharRadii.radiusSm,
+//           child: Row(
+//             mainAxisSize: MainAxisSize.min,
+//             children: [
+//               Icon(
+//                 Icons.calendar_today_rounded,
+//                 color: Colors.white24,
+//                 size: 14.sp,
+//               ),
+//               AtharGap.hXxs,
+//               Padding(
+//                 padding: EdgeInsets.symmetric(vertical: AtharSpacing.xxxs),
+//                 child: Text(
+//                   status.fullDate,
+//                   style: TextStyle(color: Colors.white54, fontSize: 11.sp),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+
+//         // Location (left)
+//         BlocBuilder<SettingsCubit, SettingsState>(
+//           builder: (context, state) {
+//             String cityName = l10n.prayerCardSetLocation;
+//             if (state is SettingsLoaded && state.settings.cityName != null) {
+//               cityName = state.settings.cityName!;
+//             }
+
+//             return InkWell(
+//               onTap: () => Navigator.push(
+//                 context,
+//                 MaterialPageRoute(builder: (_) => const LocationSettingsPage()),
+//               ),
+//               borderRadius: AtharRadii.radiusSm,
+//               child: Row(
+//                 mainAxisSize: MainAxisSize.min,
+//                 children: [
+//                   Padding(
+//                     padding: EdgeInsets.only(left: AtharSpacing.xxxs),
+//                     child: Text(
+//                       cityName,
+//                       style: TextStyle(color: Colors.white54, fontSize: 10.sp),
+//                       overflow: TextOverflow.ellipsis,
+//                     ),
+//                   ),
+//                   SizedBox(
+//                     width: 24.w,
+//                     height: 24.w,
+//                     child: IconButton(
+//                       onPressed: () => Navigator.push(
+//                         context,
+//                         MaterialPageRoute(
+//                           builder: (_) => const LocationSettingsPage(),
+//                         ),
+//                       ),
+//                       icon: Icon(
+//                         Icons.edit_location_alt_rounded,
+//                         color: Colors.white30,
+//                         size: 16.sp,
+//                       ),
+//                       padding: EdgeInsets.zero,
+//                       constraints: const BoxConstraints(),
+//                       tooltip: l10n.prayerCardChangeLocation,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             );
+//           },
+//         ),
+//       ],
+//     );
+//   }
+
+//   Widget _buildProgressRow(
+//     BuildContext context,
+//     PrayerTimerStatus status,
+//     Color displayColor,
+//     String timePrefix,
+//   ) {
+//     return Column(
+//       children: [
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             Text(
+//               "$timePrefix${status.timeLeft}",
+//               style: TextStyle(color: Colors.white70, fontSize: 12.sp),
+//             ),
+//           ],
+//         ),
+//         AtharGap.xs,
+//         Row(
+//           children: [
+//             Expanded(
+//               child: Directionality(
+//                 textDirection: ui.TextDirection.rtl,
+//                 child: ClipRRect(
+//                   borderRadius: AtharRadii.radiusXs,
+//                   child: LinearProgressIndicator(
+//                     value: status.progress,
+//                     minHeight: 6.h,
+//                     backgroundColor: Colors.white10,
+//                     valueColor: AlwaysStoppedAnimation<Color>(displayColor),
+//                   ),
+//                 ),
+//               ),
+//             ),
+
+//             // Dhikr button
+//             if (status.showDhikrButton) ...[
+//               AtharGap.hMd,
+//               GestureDetector(
+//                 onTap: () async {
+//                   final habitCubit = context.read<HabitCubit>();
+//                   final postPrayerHabit = await habitCubit
+//                       .getOrCreatePostPrayerHabit();
+
+//                   if (context.mounted) {
+//                     showModalBottomSheet(
+//                       context: context,
+//                       isScrollControlled: true,
+//                       backgroundColor: Colors.transparent,
+//                       builder: (_) => DhikrBottomSheet(habit: postPrayerHabit),
+//                     );
+//                   }
+//                 },
+//                 child: Container(
+//                   alignment: Alignment.center,
+//                   padding: EdgeInsets.all(AtharSpacing.xxxs),
+//                   decoration: BoxDecoration(
+//                     color: displayColor.withValues(alpha: 0.2),
+//                     shape: BoxShape.circle,
+//                     boxShadow: [
+//                       BoxShadow(
+//                         color: displayColor.withValues(alpha: 0.1),
+//                         blurRadius: 8,
+//                         offset: const Offset(0, 2),
+//                       ),
+//                     ],
+//                   ),
+//                   child: Text(
+//                     '🤲',
+//                     style: TextStyle(fontSize: 22.sp),
+//                     textAlign: TextAlign.center,
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ],
+//         ),
+//       ],
+//     );
+//   }
+// }
 //-----------------------------------------------------------------------
 // // lib/core/design_system/molecules/cards/next_prayer_card.dart
 // // ═══════════════════════════════════════════════════════════════════════════════

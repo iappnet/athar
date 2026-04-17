@@ -155,6 +155,23 @@ class UserSettings {
   /// إرسال تذكير أسبوعي بملخص المشاريع
   bool projectWeeklySummary = false;
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 📦 SAMPLE DATA CONTROL
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /// هل تم عرض البيانات التجريبية من قبل؟
+  bool sampleDataShown = false;
+
+  /// هل رفض المستخدم البيانات التجريبية؟
+  bool sampleDataDismissed = false;
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 🎨 NAVIGATION BAR
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /// إخفاء شريط التنقل عند التمرير
+  bool hideNavOnScroll = false;
+
   UserSettings({
     this.isDarkMode = false,
     this.isAutoModeEnabled = false,
@@ -170,6 +187,12 @@ class UserSettings {
     this.isHijriMode = false, // الافتراضي ميلادي
     this.isTasksKanbanView = false, // الافتراضي قائمة
     this.latitude,
+    // ✅ Sample Data
+    this.sampleDataShown = false,
+    this.sampleDataDismissed = false,
+
+    // ✅ Navigation Bar
+    this.hideNavOnScroll = false,
     this.workDays, // ✅ إضافتها للبناء
     this.longitude,
     this.cityName,

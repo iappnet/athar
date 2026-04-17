@@ -1,5 +1,7 @@
 // lib/main.dart
 
+import 'dart:io';
+
 import 'package:athar/app.dart';
 import 'package:athar/core/services/appointment_notification_scheduler.dart';
 import 'package:athar/core/services/fcm_service.dart';
@@ -16,16 +18,54 @@ import 'package:athar/features/space/domain/repositories/space_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:athar/core/di/injection.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:athar/core/services/deep_link_service.dart';
+import 'package:firebase_core/firebase_core.dart'; // ← أضف هذا
+import 'firebase_options.dart'; // ← أضف هذا السطر
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // قفل اتجاهات iPhone فقط، وترك iPad حراً
+  if (Platform.isIOS) {
+    final isTablet =
+        WidgetsBinding
+                .instance
+                .platformDispatcher
+                .views
+                .first
+                .physicalSize
+                .shortestSide /
+            WidgetsBinding
+                .instance
+                .platformDispatcher
+                .views
+                .first
+                .devicePixelRatio >=
+        600;
+
+    if (!isTablet) {
+      await SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.landscapeRight,
+      ]);
+    }
+  }
+
   // تحميل ملف البيئة (.env) أولاً
   await dotenv.load(fileName: ".env");
+
+  // ═══════════════════════════════════════════════════════════
+  // ✅ إضافة: تهيئة Firebase قبل أي شيء آخر
+  // ═══════════════════════════════════════════════════════════grep -r "cancelNotification\|cancel(" lib/core/services/
+
+  // ✅ تهيئة Firebase مع الخيارات
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform, // ← أضف هذا
+  );
 
   // تهيئة Supabase
   await Supabase.initialize(

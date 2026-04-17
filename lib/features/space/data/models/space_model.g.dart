@@ -32,33 +32,38 @@ const SpaceModelSchema = CollectionSchema(
       name: r'deletedAt',
       type: IsarType.dateTime,
     ),
-    r'isSynced': PropertySchema(
+    r'isSampleData': PropertySchema(
       id: 3,
+      name: r'isSampleData',
+      type: IsarType.bool,
+    ),
+    r'isSynced': PropertySchema(
+      id: 4,
       name: r'isSynced',
       type: IsarType.bool,
     ),
     r'name': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'name',
       type: IsarType.string,
     ),
     r'ownerId': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'ownerId',
       type: IsarType.string,
     ),
     r'type': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'type',
       type: IsarType.string,
     ),
     r'updatedAt': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
     r'uuid': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'uuid',
       type: IsarType.string,
     )
@@ -144,12 +149,13 @@ void _spaceModelSerialize(
   writer.writeBool(offsets[0], object.allowMemberDelegation);
   writer.writeDateTime(offsets[1], object.createdAt);
   writer.writeDateTime(offsets[2], object.deletedAt);
-  writer.writeBool(offsets[3], object.isSynced);
-  writer.writeString(offsets[4], object.name);
-  writer.writeString(offsets[5], object.ownerId);
-  writer.writeString(offsets[6], object.type);
-  writer.writeDateTime(offsets[7], object.updatedAt);
-  writer.writeString(offsets[8], object.uuid);
+  writer.writeBool(offsets[3], object.isSampleData);
+  writer.writeBool(offsets[4], object.isSynced);
+  writer.writeString(offsets[5], object.name);
+  writer.writeString(offsets[6], object.ownerId);
+  writer.writeString(offsets[7], object.type);
+  writer.writeDateTime(offsets[8], object.updatedAt);
+  writer.writeString(offsets[9], object.uuid);
 }
 
 SpaceModel _spaceModelDeserialize(
@@ -163,12 +169,13 @@ SpaceModel _spaceModelDeserialize(
   object.createdAt = reader.readDateTimeOrNull(offsets[1]);
   object.deletedAt = reader.readDateTimeOrNull(offsets[2]);
   object.id = id;
-  object.isSynced = reader.readBool(offsets[3]);
-  object.name = reader.readString(offsets[4]);
-  object.ownerId = reader.readStringOrNull(offsets[5]);
-  object.type = reader.readString(offsets[6]);
-  object.updatedAt = reader.readDateTimeOrNull(offsets[7]);
-  object.uuid = reader.readString(offsets[8]);
+  object.isSampleData = reader.readBool(offsets[3]);
+  object.isSynced = reader.readBool(offsets[4]);
+  object.name = reader.readString(offsets[5]);
+  object.ownerId = reader.readStringOrNull(offsets[6]);
+  object.type = reader.readString(offsets[7]);
+  object.updatedAt = reader.readDateTimeOrNull(offsets[8]);
+  object.uuid = reader.readString(offsets[9]);
   return object;
 }
 
@@ -188,14 +195,16 @@ P _spaceModelDeserializeProp<P>(
     case 3:
       return (reader.readBool(offset)) as P;
     case 4:
-      return (reader.readString(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 5:
-      return (reader.readStringOrNull(offset)) as P;
-    case 6:
       return (reader.readString(offset)) as P;
+    case 6:
+      return (reader.readStringOrNull(offset)) as P;
     case 7:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 8:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 9:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -705,6 +714,16 @@ extension SpaceModelQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<SpaceModel, SpaceModel, QAfterFilterCondition>
+      isSampleDataEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isSampleData',
+        value: value,
       ));
     });
   }
@@ -1377,6 +1396,18 @@ extension SpaceModelQuerySortBy
     });
   }
 
+  QueryBuilder<SpaceModel, SpaceModel, QAfterSortBy> sortByIsSampleData() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isSampleData', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SpaceModel, SpaceModel, QAfterSortBy> sortByIsSampleDataDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isSampleData', Sort.desc);
+    });
+  }
+
   QueryBuilder<SpaceModel, SpaceModel, QAfterSortBy> sortByIsSynced() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isSynced', Sort.asc);
@@ -1502,6 +1533,18 @@ extension SpaceModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<SpaceModel, SpaceModel, QAfterSortBy> thenByIsSampleData() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isSampleData', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SpaceModel, SpaceModel, QAfterSortBy> thenByIsSampleDataDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isSampleData', Sort.desc);
+    });
+  }
+
   QueryBuilder<SpaceModel, SpaceModel, QAfterSortBy> thenByIsSynced() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isSynced', Sort.asc);
@@ -1596,6 +1639,12 @@ extension SpaceModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<SpaceModel, SpaceModel, QDistinct> distinctByIsSampleData() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isSampleData');
+    });
+  }
+
   QueryBuilder<SpaceModel, SpaceModel, QDistinct> distinctByIsSynced() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isSynced');
@@ -1661,6 +1710,12 @@ extension SpaceModelQueryProperty
   QueryBuilder<SpaceModel, DateTime?, QQueryOperations> deletedAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'deletedAt');
+    });
+  }
+
+  QueryBuilder<SpaceModel, bool, QQueryOperations> isSampleDataProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isSampleData');
     });
   }
 

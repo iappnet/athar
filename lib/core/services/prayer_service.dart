@@ -5,7 +5,7 @@ import '../../features/prayer/domain/entities/prayer_time.dart';
 @lazySingleton
 class PrayerService {
   /// ✅ الحصول على مواقيت الصلاة ليوم محدد وموقع محدد
-  /// يُرجع List<PrayerTime> بدلاً من adhan.PrayerTimes
+  /// يُرجع List< Prayer Time > بدلاً من adhan.PrayerTimes
   List<PrayerTime> getPrayerTimes(
     DateTime date,
     adhan.Coordinates coordinates,

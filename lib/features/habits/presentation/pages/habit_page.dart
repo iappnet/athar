@@ -77,79 +77,83 @@ class _HabitsPageState extends State<HabitsPage> {
           alignment: Alignment.topCenter,
           child: ConstrainedBox(
             constraints: BoxConstraints(
-              maxWidth: context.isTablet ? ResponsiveHelper.maxContentWidth : double.infinity,
+              maxWidth: context.isTablet
+                  ? ResponsiveHelper.maxContentWidth
+                  : double.infinity,
             ),
             child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            CustomScrollView(
-              slivers: [
-                // 1. الرأس المتحرك (التاريخ + العبارة)
-                SliverPersistentHeader(
-                  pinned: true,
-                  floating: true,
-                  delegate: MinimalHeaderDelegate(
-                    dateStr: _formatHeaderDate(),
-                    // ✅ l10n: Quran verse
-                    quote: l10n.habitsHeaderQuote,
-                  ),
-                ),
-
-                // 2. شريط التقويم
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 16.h),
-                    child: CalendarStrip(
-                      selectedDate: _selectedDate,
-                      onDateSelected: (date) {
-                        setState(() => _selectedDate = date);
-                      },
+              alignment: Alignment.topCenter,
+              children: [
+                CustomScrollView(
+                  slivers: [
+                    // 1. الرأس المتحرك (التاريخ + العبارة)
+                    SliverPersistentHeader(
+                      pinned: true,
+                      floating: true,
+                      delegate: MinimalHeaderDelegate(
+                        dateStr: _formatHeaderDate(),
+                        // ✅ l10n: Quran verse
+                        quote: l10n.habitsHeaderQuote,
+                      ),
                     ),
-                  ),
-                ),
 
-                // 3. زر التبديل بين العرض المختصر والمفصل
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16.w,
-                      vertical: 8.h,
+                    // 2. شريط التقويم
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 16.h),
+                        child: CalendarStrip(
+                          selectedDate: _selectedDate,
+                          onDateSelected: (date) {
+                            setState(() => _selectedDate = date);
+                          },
+                        ),
+                      ),
                     ),
-                    child: _buildViewToggle(colorScheme, l10n),
-                  ),
+
+                    // 3. زر التبديل بين العرض المختصر والمفصل
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.w,
+                          vertical: 8.h,
+                        ),
+                        child: _buildViewToggle(colorScheme, l10n),
+                      ),
+                    ),
+
+                    // 4. بطاقة الصلاة الذكية
+                    const SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 8.0),
+                        child: SmartPrayerCardWrapper(
+                          pageType: PageType.habits,
+                        ),
+                      ),
+                    ),
+
+                    // 5. محتوى العادات (مقسم زمنياً)
+                    _buildHabitsContent(colorScheme, l10n),
+
+                    // مساحة سفلية
+                    SliverToBoxAdapter(child: SizedBox(height: 80.h)),
+                  ],
                 ),
 
-                // 4. بطاقة الصلاة الذكية
-                const SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 8.0),
-                    child: SmartPrayerCardWrapper(pageType: PageType.habits),
-                  ),
+                // تأثير الاحتفال
+                ConfettiWidget(
+                  confettiController: _confettiController,
+                  blastDirectionality: BlastDirectionality.explosive,
+                  shouldLoop: false,
+                  colors: const [
+                    Colors.green,
+                    Colors.blue,
+                    Colors.pink,
+                    Colors.orange,
+                    Colors.purple,
+                  ],
                 ),
-
-                // 5. محتوى العادات (مقسم زمنياً)
-                _buildHabitsContent(colorScheme, l10n),
-
-                // مساحة سفلية
-                SliverToBoxAdapter(child: SizedBox(height: 80.h)),
               ],
             ),
-
-            // تأثير الاحتفال
-            ConfettiWidget(
-              confettiController: _confettiController,
-              blastDirectionality: BlastDirectionality.explosive,
-              shouldLoop: false,
-              colors: const [
-                Colors.green,
-                Colors.blue,
-                Colors.pink,
-                Colors.orange,
-                Colors.purple,
-              ],
-            ),
-          ],
-        ),
           ),
         ),
       ),
@@ -480,48 +484,121 @@ class _HabitsPageState extends State<HabitsPage> {
             ),
           ],
         ),
+        // child: Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     Row(
+        //       children: [
+        //         Container(
+        //           padding: AtharSpacing.allSm,
+        //           decoration: BoxDecoration(
+        //             color: Colors.white.withValues(alpha: 0.2),
+        //             shape: BoxShape.circle,
+        //           ),
+        //           child: Icon(icon, color: Colors.white, size: 24.sp),
+        //         ),
+        //         AtharGap.hMd,
+        //         Column(
+        //           crossAxisAlignment: CrossAxisAlignment.start,
+        //           children: [
+        //             Text(
+        //               habit.title,
+        //               style: TextStyle(
+        //                 color: Colors.white,
+        //                 fontWeight: FontWeight.bold,
+        //                 fontSize: 16.sp,
+        //                 fontFamily: 'Cairo',
+        //               ),
+        //             ),
+        //             SizedBox(height: 4.h),
+        //             Text(
+        //               // ✅ l10n: "{current} / {target} منجز"
+        //               l.habitsProgressLabel(
+        //                 habit.currentProgress.toString(),
+        //                 habit.target.toString(),
+        //               ),
+        //               style: TextStyle(
+        //                 color: Colors.white.withValues(alpha: 0.9),
+        //                 fontSize: 12.sp,
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //       ],
+        //     ),
+        //     Container(
+        //       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+        //       decoration: BoxDecoration(
+        //         color: Colors.white24,
+        //         borderRadius: AtharRadii.radiusXl,
+        //       ),
+        //       child: Text(
+        //         // ✅ l10n: "ابدأ"
+        //         l.habitsStartButton,
+        //         style: const TextStyle(
+        //           color: Colors.white,
+        //           fontWeight: FontWeight.bold,
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                Container(
-                  padding: AtharSpacing.allSm,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.2),
-                    shape: BoxShape.circle,
+            // ✅ FIX: Expanded حول الـ Row الداخلي لمنع overflow
+            Expanded(
+              child: Row(
+                children: [
+                  Container(
+                    padding: AtharSpacing.allSm,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.2),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(icon, color: Colors.white, size: 24.sp),
                   ),
-                  child: Icon(icon, color: Colors.white, size: 24.sp),
-                ),
-                AtharGap.hMd,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      habit.title,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.sp,
-                        fontFamily: 'Cairo',
-                      ),
+                  AtharGap.hMd,
+                  // ✅ FIX: Expanded حول Column
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // ✅ FIX: maxLines + ellipsis
+                        Text(
+                          habit.title,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp,
+                            fontFamily: 'Cairo',
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(height: 4.h),
+                        // ✅ FIX: maxLines + ellipsis
+                        Text(
+                          l.habitsProgressLabel(
+                            habit.currentProgress.toString(),
+                            habit.target.toString(),
+                          ),
+                          style: TextStyle(
+                            color: Colors.white.withValues(alpha: 0.9),
+                            fontSize: 12.sp,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      // ✅ l10n: "{current} / {target} منجز"
-                      l.habitsProgressLabel(
-                        habit.currentProgress.toString(),
-                        habit.target.toString(),
-                      ),
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.9),
-                        fontSize: 12.sp,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
+            // ✅ FIX: إضافة مسافة بين Row الداخلي وزر البدء
+            AtharGap.hSm,
             Container(
               padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
               decoration: BoxDecoration(
@@ -529,7 +606,6 @@ class _HabitsPageState extends State<HabitsPage> {
                 borderRadius: AtharRadii.radiusXl,
               ),
               child: Text(
-                // ✅ l10n: "ابدأ"
                 l.habitsStartButton,
                 style: const TextStyle(
                   color: Colors.white,

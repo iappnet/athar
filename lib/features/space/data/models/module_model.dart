@@ -16,6 +16,8 @@ class ModuleModel {
   @Index()
   late String spaceId;
 
+  /// ✅ هل هذا موديول تجريبي؟
+  bool isSampleData = false;
   late String name;
   String? description;
   int? color;

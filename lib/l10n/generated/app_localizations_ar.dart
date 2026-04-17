@@ -351,7 +351,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get continueAsGuest => 'المتابعة كزائر';
 
   @override
-  String get createAccount => 'إنشاء حساب جديد';
+  String get createAccount => 'أنشئ حسابًا';
 
   @override
   String get alreadyHaveAccount => 'لديك حساب بالفعل؟';
@@ -1085,7 +1085,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get todayFocusTime => 'وقت التركيز اليوم';
 
   @override
-  String get sessionCompleted => 'تمت الجلسة';
+  String get sessionCompleted => '🎉 أحسنت! أنهيت الجلسة';
 
   @override
   String get takeABreak => 'خذ استراحة';
@@ -3987,19 +3987,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get weekdaySatAbbr => 'س';
 
   @override
-  String get focusNowOn => 'أنت تركز الآن على:';
+  String get focusNowOn => 'أركز الآن على';
 
   @override
-  String get focusStatusRunning => 'ركز الآن...';
+  String get focusStatusRunning => '⏱ جارٍ التركيز';
 
   @override
-  String get focusStatusPaused => 'مؤقت مؤقتاً';
+  String get focusStatusPaused => '⏸ متوقف مؤقتاً';
 
   @override
   String get focusStatusReady => 'جاهز للبدء';
 
   @override
-  String get focusPause => 'إيقاف';
+  String get focusPause => 'إيقاف مؤقت';
 
   @override
   String get focusStop => 'إنهاء';
@@ -4253,4 +4253,106 @@ class AppLocalizationsAr extends AppLocalizations {
   String progressPercent(Object count) {
     return '$count% مكتمل';
   }
+
+  @override
+  String get welcomeToAthar => 'أهلاً بك في أثر';
+
+  @override
+  String get loginSubtitle => 'سجل دخولك لتزامن مساحاتك المشتركة';
+
+  @override
+  String get passwordTooShort => 'كلمة المرور قصيرة';
+
+  @override
+  String get skipContinueAsGuest => 'تخطي (المتابعة كضيف)';
+
+  @override
+  String get noAccountCreateNew => 'ليس لديك حساب؟ أنشئ حساباً جديداً';
+
+  @override
+  String get dataSyncTitle => 'تزامن البيانات';
+
+  @override
+  String get dataSyncConflictMessage =>
+      'توجد بيانات محفوظة على جهازك وأخرى في السحابة.\nكيف تود المتابعة؟';
+
+  @override
+  String get restoreCloudData => 'استرجاع السحابة (مسح المحلي)';
+
+  @override
+  String get syncKeepLocal => 'اعتماد المحلي (مسح السحابة)';
+
+  @override
+  String get mergeDataBest => 'دمج البيانات (الأفضل)';
+
+  @override
+  String get joinAtharFamily => 'انضم لعائلة أثر';
+
+  @override
+  String get minThreeChars => '3 أحرف على الأقل';
+
+  @override
+  String get minSixChars => '6 خانات على الأقل';
+
+  @override
+  String get completeProfile => 'إكمال الملف الشخصي';
+
+  @override
+  String get welcomeCompleteProfile => 'مرحباً بك! يرجى إكمال بياناتك للمتابعة';
+
+  @override
+  String get saveAndContinue => 'حفظ ومتابعة';
+
+  @override
+  String get projects => 'المشاريع';
+
+  @override
+  String get kanbanComingSoon => 'نظام كانبان قريباً...';
+
+  @override
+  String get chooseIcon => 'اختر أيقونة';
+
+  @override
+  String get searchIcons => 'البحث في الأيقونات...';
+
+  @override
+  String get icon => 'الأيقونة';
+
+  @override
+  String get color => 'اللون';
+
+  @override
+  String get tapToChangeIcon => 'اضغط لتغيير الأيقونة';
+
+  @override
+  String get skipAsGuest => 'تخطي (المتابعة كضيف)';
+
+  @override
+  String get noAccount => 'ليس لديك حساب؟';
+
+  @override
+  String get syncConflict => 'تزامن البيانات';
+
+  @override
+  String get syncConflictMessage =>
+      'توجد بيانات على جهازك وأخرى في السحابة. كيف تود المتابعة؟';
+
+  @override
+  String get keepLocal => 'الاحتفاظ بالمحلي';
+
+  @override
+  String get keepCloud => 'الاحتفاظ بالسحابة';
+
+  @override
+  String get mergeBoth => 'دمج البيانات (الأفضل)';
+
+  @override
+  String get navigationSettings => 'التنقل';
+
+  @override
+  String get hideNavOnScroll => 'إخفاء شريط التنقل عند التمرير';
+
+  @override
+  String get hideNavOnScrollDesc =>
+      'إخفاء الشريط السفلي تلقائياً عند التمرير للأسفل';
 }

@@ -82,121 +82,166 @@ const TaskModelSchema = CollectionSchema(
       name: r'durationMinutes',
       type: IsarType.long,
     ),
-    r'isCompleted': PropertySchema(
+    r'fixedHour': PropertySchema(
       id: 13,
+      name: r'fixedHour',
+      type: IsarType.long,
+    ),
+    r'fixedMinute': PropertySchema(
+      id: 14,
+      name: r'fixedMinute',
+      type: IsarType.long,
+    ),
+    r'isCompleted': PropertySchema(
+      id: 15,
       name: r'isCompleted',
       type: IsarType.bool,
     ),
     r'isHidden': PropertySchema(
-      id: 14,
+      id: 16,
       name: r'isHidden',
       type: IsarType.bool,
     ),
     r'isImportant': PropertySchema(
-      id: 15,
+      id: 17,
       name: r'isImportant',
       type: IsarType.bool,
     ),
     r'isReassignable': PropertySchema(
-      id: 16,
+      id: 18,
       name: r'isReassignable',
       type: IsarType.bool,
     ),
     r'isRecurring': PropertySchema(
-      id: 17,
+      id: 19,
       name: r'isRecurring',
       type: IsarType.bool,
     ),
+    r'isSampleData': PropertySchema(
+      id: 20,
+      name: r'isSampleData',
+      type: IsarType.bool,
+    ),
     r'isSynced': PropertySchema(
-      id: 18,
+      id: 21,
       name: r'isSynced',
       type: IsarType.bool,
     ),
     r'isUrgent': PropertySchema(
-      id: 19,
+      id: 22,
       name: r'isUrgent',
       type: IsarType.bool,
     ),
     r'moduleId': PropertySchema(
-      id: 20,
+      id: 23,
       name: r'moduleId',
       type: IsarType.string,
     ),
     r'occurrenceDate': PropertySchema(
-      id: 21,
+      id: 24,
       name: r'occurrenceDate',
       type: IsarType.dateTime,
     ),
+    r'offsetMinutes': PropertySchema(
+      id: 25,
+      name: r'offsetMinutes',
+      type: IsarType.long,
+    ),
     r'parentRecurrenceId': PropertySchema(
-      id: 22,
+      id: 26,
       name: r'parentRecurrenceId',
       type: IsarType.string,
     ),
+    r'periodPositionIndex': PropertySchema(
+      id: 27,
+      name: r'periodPositionIndex',
+      type: IsarType.long,
+    ),
     r'position': PropertySchema(
-      id: 23,
+      id: 28,
       name: r'position',
       type: IsarType.double,
     ),
+    r'prayerRelationIndex': PropertySchema(
+      id: 29,
+      name: r'prayerRelationIndex',
+      type: IsarType.long,
+    ),
     r'priority': PropertySchema(
-      id: 24,
+      id: 30,
       name: r'priority',
       type: IsarType.byte,
       enumMap: _TaskModelpriorityEnumValueMap,
     ),
     r'recurrence': PropertySchema(
-      id: 25,
+      id: 31,
       name: r'recurrence',
       type: IsarType.object,
       target: r'RecurrencePattern',
     ),
+    r'referencePrayerIndex': PropertySchema(
+      id: 32,
+      name: r'referencePrayerIndex',
+      type: IsarType.long,
+    ),
     r'reminderTime': PropertySchema(
-      id: 26,
+      id: 33,
       name: r'reminderTime',
       type: IsarType.dateTime,
     ),
     r'spaceId': PropertySchema(
-      id: 27,
+      id: 34,
       name: r'spaceId',
       type: IsarType.string,
     ),
     r'status': PropertySchema(
-      id: 28,
+      id: 35,
       name: r'status',
       type: IsarType.byte,
       enumMap: _TaskModelstatusEnumValueMap,
     ),
     r'templateId': PropertySchema(
-      id: 29,
+      id: 36,
       name: r'templateId',
       type: IsarType.string,
     ),
     r'time': PropertySchema(
-      id: 30,
+      id: 37,
       name: r'time',
       type: IsarType.dateTime,
     ),
+    r'timePeriodIndex': PropertySchema(
+      id: 38,
+      name: r'timePeriodIndex',
+      type: IsarType.long,
+    ),
+    r'timeTypeIndex': PropertySchema(
+      id: 39,
+      name: r'timeTypeIndex',
+      type: IsarType.long,
+    ),
     r'title': PropertySchema(
-      id: 31,
+      id: 40,
       name: r'title',
       type: IsarType.string,
     ),
     r'updatedAt': PropertySchema(
-      id: 32,
+      id: 41,
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
     r'userId': PropertySchema(
-      id: 33,
+      id: 42,
       name: r'userId',
       type: IsarType.string,
     ),
     r'uuid': PropertySchema(
-      id: 34,
+      id: 43,
       name: r'uuid',
       type: IsarType.string,
     ),
     r'visibility': PropertySchema(
-      id: 35,
+      id: 44,
       name: r'visibility',
       type: IsarType.string,
     )
@@ -484,34 +529,43 @@ void _taskModelSerialize(
   writer.writeDateTime(offsets[10], object.deletedAt);
   writer.writeString(offsets[11], object.description);
   writer.writeLong(offsets[12], object.durationMinutes);
-  writer.writeBool(offsets[13], object.isCompleted);
-  writer.writeBool(offsets[14], object.isHidden);
-  writer.writeBool(offsets[15], object.isImportant);
-  writer.writeBool(offsets[16], object.isReassignable);
-  writer.writeBool(offsets[17], object.isRecurring);
-  writer.writeBool(offsets[18], object.isSynced);
-  writer.writeBool(offsets[19], object.isUrgent);
-  writer.writeString(offsets[20], object.moduleId);
-  writer.writeDateTime(offsets[21], object.occurrenceDate);
-  writer.writeString(offsets[22], object.parentRecurrenceId);
-  writer.writeDouble(offsets[23], object.position);
-  writer.writeByte(offsets[24], object.priority.index);
+  writer.writeLong(offsets[13], object.fixedHour);
+  writer.writeLong(offsets[14], object.fixedMinute);
+  writer.writeBool(offsets[15], object.isCompleted);
+  writer.writeBool(offsets[16], object.isHidden);
+  writer.writeBool(offsets[17], object.isImportant);
+  writer.writeBool(offsets[18], object.isReassignable);
+  writer.writeBool(offsets[19], object.isRecurring);
+  writer.writeBool(offsets[20], object.isSampleData);
+  writer.writeBool(offsets[21], object.isSynced);
+  writer.writeBool(offsets[22], object.isUrgent);
+  writer.writeString(offsets[23], object.moduleId);
+  writer.writeDateTime(offsets[24], object.occurrenceDate);
+  writer.writeLong(offsets[25], object.offsetMinutes);
+  writer.writeString(offsets[26], object.parentRecurrenceId);
+  writer.writeLong(offsets[27], object.periodPositionIndex);
+  writer.writeDouble(offsets[28], object.position);
+  writer.writeLong(offsets[29], object.prayerRelationIndex);
+  writer.writeByte(offsets[30], object.priority.index);
   writer.writeObject<RecurrencePattern>(
-    offsets[25],
+    offsets[31],
     allOffsets,
     RecurrencePatternSchema.serialize,
     object.recurrence,
   );
-  writer.writeDateTime(offsets[26], object.reminderTime);
-  writer.writeString(offsets[27], object.spaceId);
-  writer.writeByte(offsets[28], object.status.index);
-  writer.writeString(offsets[29], object.templateId);
-  writer.writeDateTime(offsets[30], object.time);
-  writer.writeString(offsets[31], object.title);
-  writer.writeDateTime(offsets[32], object.updatedAt);
-  writer.writeString(offsets[33], object.userId);
-  writer.writeString(offsets[34], object.uuid);
-  writer.writeString(offsets[35], object.visibility);
+  writer.writeLong(offsets[32], object.referencePrayerIndex);
+  writer.writeDateTime(offsets[33], object.reminderTime);
+  writer.writeString(offsets[34], object.spaceId);
+  writer.writeByte(offsets[35], object.status.index);
+  writer.writeString(offsets[36], object.templateId);
+  writer.writeDateTime(offsets[37], object.time);
+  writer.writeLong(offsets[38], object.timePeriodIndex);
+  writer.writeLong(offsets[39], object.timeTypeIndex);
+  writer.writeString(offsets[40], object.title);
+  writer.writeDateTime(offsets[41], object.updatedAt);
+  writer.writeString(offsets[42], object.userId);
+  writer.writeString(offsets[43], object.uuid);
+  writer.writeString(offsets[44], object.visibility);
 }
 
 TaskModel _taskModelDeserialize(
@@ -532,40 +586,49 @@ TaskModel _taskModelDeserialize(
     deletedAt: reader.readDateTimeOrNull(offsets[10]),
     description: reader.readStringOrNull(offsets[11]),
     durationMinutes: reader.readLongOrNull(offsets[12]) ?? 30,
-    isCompleted: reader.readBoolOrNull(offsets[13]) ?? false,
-    isHidden: reader.readBoolOrNull(offsets[14]) ?? false,
-    isImportant: reader.readBoolOrNull(offsets[15]) ?? false,
-    isReassignable: reader.readBoolOrNull(offsets[16]) ?? true,
-    isRecurring: reader.readBoolOrNull(offsets[17]) ?? false,
-    isSynced: reader.readBoolOrNull(offsets[18]) ?? false,
-    isUrgent: reader.readBoolOrNull(offsets[19]) ?? false,
-    moduleId: reader.readStringOrNull(offsets[20]),
-    occurrenceDate: reader.readDateTimeOrNull(offsets[21]),
-    parentRecurrenceId: reader.readStringOrNull(offsets[22]),
-    position: reader.readDoubleOrNull(offsets[23]) ?? 0.0,
+    fixedHour: reader.readLongOrNull(offsets[13]),
+    fixedMinute: reader.readLongOrNull(offsets[14]),
+    isCompleted: reader.readBoolOrNull(offsets[15]) ?? false,
+    isHidden: reader.readBoolOrNull(offsets[16]) ?? false,
+    isImportant: reader.readBoolOrNull(offsets[17]) ?? false,
+    isReassignable: reader.readBoolOrNull(offsets[18]) ?? true,
+    isRecurring: reader.readBoolOrNull(offsets[19]) ?? false,
+    isSynced: reader.readBoolOrNull(offsets[21]) ?? false,
+    isUrgent: reader.readBoolOrNull(offsets[22]) ?? false,
+    moduleId: reader.readStringOrNull(offsets[23]),
+    occurrenceDate: reader.readDateTimeOrNull(offsets[24]),
+    offsetMinutes: reader.readLongOrNull(offsets[25]) ?? 0,
+    parentRecurrenceId: reader.readStringOrNull(offsets[26]),
+    periodPositionIndex: reader.readLongOrNull(offsets[27]),
+    position: reader.readDoubleOrNull(offsets[28]) ?? 0.0,
+    prayerRelationIndex: reader.readLongOrNull(offsets[29]),
     priority:
-        _TaskModelpriorityValueEnumMap[reader.readByteOrNull(offsets[24])] ??
+        _TaskModelpriorityValueEnumMap[reader.readByteOrNull(offsets[30])] ??
             TaskPriority.medium,
     recurrence: reader.readObjectOrNull<RecurrencePattern>(
-      offsets[25],
+      offsets[31],
       RecurrencePatternSchema.deserialize,
       allOffsets,
     ),
-    reminderTime: reader.readDateTimeOrNull(offsets[26]),
-    spaceId: reader.readStringOrNull(offsets[27]),
-    status: _TaskModelstatusValueEnumMap[reader.readByteOrNull(offsets[28])] ??
+    referencePrayerIndex: reader.readLongOrNull(offsets[32]),
+    reminderTime: reader.readDateTimeOrNull(offsets[33]),
+    spaceId: reader.readStringOrNull(offsets[34]),
+    status: _TaskModelstatusValueEnumMap[reader.readByteOrNull(offsets[35])] ??
         TaskStatus.todo,
-    templateId: reader.readStringOrNull(offsets[29]),
-    time: reader.readDateTimeOrNull(offsets[30]),
-    title: reader.readString(offsets[31]),
-    updatedAt: reader.readDateTimeOrNull(offsets[32]),
-    userId: reader.readString(offsets[33]),
-    uuid: reader.readString(offsets[34]),
-    visibility: reader.readStringOrNull(offsets[35]) ?? 'public',
+    templateId: reader.readStringOrNull(offsets[36]),
+    time: reader.readDateTimeOrNull(offsets[37]),
+    timePeriodIndex: reader.readLongOrNull(offsets[38]),
+    timeTypeIndex: reader.readLongOrNull(offsets[39]) ?? 0,
+    title: reader.readString(offsets[40]),
+    updatedAt: reader.readDateTimeOrNull(offsets[41]),
+    userId: reader.readString(offsets[42]),
+    uuid: reader.readString(offsets[43]),
+    visibility: reader.readStringOrNull(offsets[44]) ?? 'public',
   );
   object.completedAt = reader.readDateTimeOrNull(offsets[5]);
   object.createdAt = reader.readDateTime(offsets[7]);
   object.id = id;
+  object.isSampleData = reader.readBool(offsets[20]);
   return object;
 }
 
@@ -603,56 +666,74 @@ P _taskModelDeserializeProp<P>(
     case 12:
       return (reader.readLongOrNull(offset) ?? 30) as P;
     case 13:
-      return (reader.readBoolOrNull(offset) ?? false) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 14:
-      return (reader.readBoolOrNull(offset) ?? false) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 15:
       return (reader.readBoolOrNull(offset) ?? false) as P;
     case 16:
-      return (reader.readBoolOrNull(offset) ?? true) as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 17:
       return (reader.readBoolOrNull(offset) ?? false) as P;
     case 18:
-      return (reader.readBoolOrNull(offset) ?? false) as P;
+      return (reader.readBoolOrNull(offset) ?? true) as P;
     case 19:
       return (reader.readBoolOrNull(offset) ?? false) as P;
     case 20:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 21:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 22:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 23:
-      return (reader.readDoubleOrNull(offset) ?? 0.0) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 24:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 25:
+      return (reader.readLongOrNull(offset) ?? 0) as P;
+    case 26:
+      return (reader.readStringOrNull(offset)) as P;
+    case 27:
+      return (reader.readLongOrNull(offset)) as P;
+    case 28:
+      return (reader.readDoubleOrNull(offset) ?? 0.0) as P;
+    case 29:
+      return (reader.readLongOrNull(offset)) as P;
+    case 30:
       return (_TaskModelpriorityValueEnumMap[reader.readByteOrNull(offset)] ??
           TaskPriority.medium) as P;
-    case 25:
+    case 31:
       return (reader.readObjectOrNull<RecurrencePattern>(
         offset,
         RecurrencePatternSchema.deserialize,
         allOffsets,
       )) as P;
-    case 26:
+    case 32:
+      return (reader.readLongOrNull(offset)) as P;
+    case 33:
       return (reader.readDateTimeOrNull(offset)) as P;
-    case 27:
+    case 34:
       return (reader.readStringOrNull(offset)) as P;
-    case 28:
+    case 35:
       return (_TaskModelstatusValueEnumMap[reader.readByteOrNull(offset)] ??
           TaskStatus.todo) as P;
-    case 29:
+    case 36:
       return (reader.readStringOrNull(offset)) as P;
-    case 30:
+    case 37:
       return (reader.readDateTimeOrNull(offset)) as P;
-    case 31:
+    case 38:
+      return (reader.readLongOrNull(offset)) as P;
+    case 39:
+      return (reader.readLongOrNull(offset) ?? 0) as P;
+    case 40:
       return (reader.readString(offset)) as P;
-    case 32:
+    case 41:
       return (reader.readDateTimeOrNull(offset)) as P;
-    case 33:
+    case 42:
       return (reader.readString(offset)) as P;
-    case 34:
+    case 43:
       return (reader.readString(offset)) as P;
-    case 35:
+    case 44:
       return (reader.readStringOrNull(offset) ?? 'public') as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -3215,6 +3296,149 @@ extension TaskModelQueryFilter
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> fixedHourIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'fixedHour',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      fixedHourIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'fixedHour',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> fixedHourEqualTo(
+      int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'fixedHour',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      fixedHourGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'fixedHour',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> fixedHourLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'fixedHour',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> fixedHourBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'fixedHour',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      fixedMinuteIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'fixedMinute',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      fixedMinuteIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'fixedMinute',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> fixedMinuteEqualTo(
+      int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'fixedMinute',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      fixedMinuteGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'fixedMinute',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> fixedMinuteLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'fixedMinute',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> fixedMinuteBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'fixedMinute',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> idEqualTo(
       Id value) {
     return QueryBuilder.apply(this, (query) {
@@ -3313,6 +3537,16 @@ extension TaskModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isRecurring',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> isSampleDataEqualTo(
+      bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isSampleData',
         value: value,
       ));
     });
@@ -3561,6 +3795,62 @@ extension TaskModelQueryFilter
   }
 
   QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      offsetMinutesEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'offsetMinutes',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      offsetMinutesGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'offsetMinutes',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      offsetMinutesLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'offsetMinutes',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      offsetMinutesBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'offsetMinutes',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
       parentRecurrenceIdIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -3714,6 +4004,80 @@ extension TaskModelQueryFilter
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      periodPositionIndexIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'periodPositionIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      periodPositionIndexIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'periodPositionIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      periodPositionIndexEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'periodPositionIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      periodPositionIndexGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'periodPositionIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      periodPositionIndexLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'periodPositionIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      periodPositionIndexBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'periodPositionIndex',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> positionEqualTo(
     double value, {
     double epsilon = Query.epsilon,
@@ -3772,6 +4136,80 @@ extension TaskModelQueryFilter
         upper: upper,
         includeUpper: includeUpper,
         epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      prayerRelationIndexIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'prayerRelationIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      prayerRelationIndexIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'prayerRelationIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      prayerRelationIndexEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'prayerRelationIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      prayerRelationIndexGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'prayerRelationIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      prayerRelationIndexLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'prayerRelationIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      prayerRelationIndexBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'prayerRelationIndex',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
       ));
     });
   }
@@ -3842,6 +4280,80 @@ extension TaskModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'recurrence',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      referencePrayerIndexIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'referencePrayerIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      referencePrayerIndexIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'referencePrayerIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      referencePrayerIndexEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'referencePrayerIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      referencePrayerIndexGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'referencePrayerIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      referencePrayerIndexLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'referencePrayerIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      referencePrayerIndexBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'referencePrayerIndex',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
       ));
     });
   }
@@ -4331,6 +4843,136 @@ extension TaskModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'time',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      timePeriodIndexIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'timePeriodIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      timePeriodIndexIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'timePeriodIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      timePeriodIndexEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'timePeriodIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      timePeriodIndexGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'timePeriodIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      timePeriodIndexLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'timePeriodIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      timePeriodIndexBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'timePeriodIndex',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      timeTypeIndexEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'timeTypeIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      timeTypeIndexGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'timeTypeIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      timeTypeIndexLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'timeTypeIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      timeTypeIndexBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'timeTypeIndex',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -5168,6 +5810,30 @@ extension TaskModelQuerySortBy on QueryBuilder<TaskModel, TaskModel, QSortBy> {
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByFixedHour() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fixedHour', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByFixedHourDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fixedHour', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByFixedMinute() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fixedMinute', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByFixedMinuteDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fixedMinute', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByIsCompleted() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isCompleted', Sort.asc);
@@ -5228,6 +5894,18 @@ extension TaskModelQuerySortBy on QueryBuilder<TaskModel, TaskModel, QSortBy> {
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByIsSampleData() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isSampleData', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByIsSampleDataDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isSampleData', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByIsSynced() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isSynced', Sort.asc);
@@ -5276,6 +5954,18 @@ extension TaskModelQuerySortBy on QueryBuilder<TaskModel, TaskModel, QSortBy> {
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByOffsetMinutes() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'offsetMinutes', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByOffsetMinutesDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'offsetMinutes', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByParentRecurrenceId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'parentRecurrenceId', Sort.asc);
@@ -5286,6 +5976,19 @@ extension TaskModelQuerySortBy on QueryBuilder<TaskModel, TaskModel, QSortBy> {
       sortByParentRecurrenceIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'parentRecurrenceId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByPeriodPositionIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'periodPositionIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy>
+      sortByPeriodPositionIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'periodPositionIndex', Sort.desc);
     });
   }
 
@@ -5301,6 +6004,19 @@ extension TaskModelQuerySortBy on QueryBuilder<TaskModel, TaskModel, QSortBy> {
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByPrayerRelationIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'prayerRelationIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy>
+      sortByPrayerRelationIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'prayerRelationIndex', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByPriority() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'priority', Sort.asc);
@@ -5310,6 +6026,20 @@ extension TaskModelQuerySortBy on QueryBuilder<TaskModel, TaskModel, QSortBy> {
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByPriorityDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'priority', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy>
+      sortByReferencePrayerIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'referencePrayerIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy>
+      sortByReferencePrayerIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'referencePrayerIndex', Sort.desc);
     });
   }
 
@@ -5370,6 +6100,30 @@ extension TaskModelQuerySortBy on QueryBuilder<TaskModel, TaskModel, QSortBy> {
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByTimeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'time', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByTimePeriodIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'timePeriodIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByTimePeriodIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'timePeriodIndex', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByTimeTypeIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'timeTypeIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByTimeTypeIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'timeTypeIndex', Sort.desc);
     });
   }
 
@@ -5581,6 +6335,30 @@ extension TaskModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByFixedHour() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fixedHour', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByFixedHourDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fixedHour', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByFixedMinute() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fixedMinute', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByFixedMinuteDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fixedMinute', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -5653,6 +6431,18 @@ extension TaskModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByIsSampleData() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isSampleData', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByIsSampleDataDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isSampleData', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByIsSynced() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isSynced', Sort.asc);
@@ -5701,6 +6491,18 @@ extension TaskModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByOffsetMinutes() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'offsetMinutes', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByOffsetMinutesDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'offsetMinutes', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByParentRecurrenceId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'parentRecurrenceId', Sort.asc);
@@ -5711,6 +6513,19 @@ extension TaskModelQuerySortThenBy
       thenByParentRecurrenceIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'parentRecurrenceId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByPeriodPositionIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'periodPositionIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy>
+      thenByPeriodPositionIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'periodPositionIndex', Sort.desc);
     });
   }
 
@@ -5726,6 +6541,19 @@ extension TaskModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByPrayerRelationIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'prayerRelationIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy>
+      thenByPrayerRelationIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'prayerRelationIndex', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByPriority() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'priority', Sort.asc);
@@ -5735,6 +6563,20 @@ extension TaskModelQuerySortThenBy
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByPriorityDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'priority', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy>
+      thenByReferencePrayerIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'referencePrayerIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy>
+      thenByReferencePrayerIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'referencePrayerIndex', Sort.desc);
     });
   }
 
@@ -5795,6 +6637,30 @@ extension TaskModelQuerySortThenBy
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByTimeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'time', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByTimePeriodIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'timePeriodIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByTimePeriodIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'timePeriodIndex', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByTimeTypeIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'timeTypeIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByTimeTypeIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'timeTypeIndex', Sort.desc);
     });
   }
 
@@ -5947,6 +6813,18 @@ extension TaskModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByFixedHour() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'fixedHour');
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByFixedMinute() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'fixedMinute');
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByIsCompleted() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isCompleted');
@@ -5977,6 +6855,12 @@ extension TaskModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByIsSampleData() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isSampleData');
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByIsSynced() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isSynced');
@@ -6002,11 +6886,24 @@ extension TaskModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByOffsetMinutes() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'offsetMinutes');
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByParentRecurrenceId(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'parentRecurrenceId',
           caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QDistinct>
+      distinctByPeriodPositionIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'periodPositionIndex');
     });
   }
 
@@ -6016,9 +6913,23 @@ extension TaskModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QDistinct>
+      distinctByPrayerRelationIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'prayerRelationIndex');
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByPriority() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'priority');
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QDistinct>
+      distinctByReferencePrayerIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'referencePrayerIndex');
     });
   }
 
@@ -6051,6 +6962,18 @@ extension TaskModelQueryWhereDistinct
   QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'time');
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByTimePeriodIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'timePeriodIndex');
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByTimeTypeIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'timeTypeIndex');
     });
   }
 
@@ -6177,6 +7100,18 @@ extension TaskModelQueryProperty
     });
   }
 
+  QueryBuilder<TaskModel, int?, QQueryOperations> fixedHourProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'fixedHour');
+    });
+  }
+
+  QueryBuilder<TaskModel, int?, QQueryOperations> fixedMinuteProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'fixedMinute');
+    });
+  }
+
   QueryBuilder<TaskModel, bool, QQueryOperations> isCompletedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isCompleted');
@@ -6207,6 +7142,12 @@ extension TaskModelQueryProperty
     });
   }
 
+  QueryBuilder<TaskModel, bool, QQueryOperations> isSampleDataProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isSampleData');
+    });
+  }
+
   QueryBuilder<TaskModel, bool, QQueryOperations> isSyncedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isSynced');
@@ -6232,6 +7173,12 @@ extension TaskModelQueryProperty
     });
   }
 
+  QueryBuilder<TaskModel, int, QQueryOperations> offsetMinutesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'offsetMinutes');
+    });
+  }
+
   QueryBuilder<TaskModel, String?, QQueryOperations>
       parentRecurrenceIdProperty() {
     return QueryBuilder.apply(this, (query) {
@@ -6239,9 +7186,23 @@ extension TaskModelQueryProperty
     });
   }
 
+  QueryBuilder<TaskModel, int?, QQueryOperations>
+      periodPositionIndexProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'periodPositionIndex');
+    });
+  }
+
   QueryBuilder<TaskModel, double, QQueryOperations> positionProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'position');
+    });
+  }
+
+  QueryBuilder<TaskModel, int?, QQueryOperations>
+      prayerRelationIndexProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'prayerRelationIndex');
     });
   }
 
@@ -6255,6 +7216,13 @@ extension TaskModelQueryProperty
       recurrenceProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'recurrence');
+    });
+  }
+
+  QueryBuilder<TaskModel, int?, QQueryOperations>
+      referencePrayerIndexProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'referencePrayerIndex');
     });
   }
 
@@ -6285,6 +7253,18 @@ extension TaskModelQueryProperty
   QueryBuilder<TaskModel, DateTime?, QQueryOperations> timeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'time');
+    });
+  }
+
+  QueryBuilder<TaskModel, int?, QQueryOperations> timePeriodIndexProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'timePeriodIndex');
+    });
+  }
+
+  QueryBuilder<TaskModel, int, QQueryOperations> timeTypeIndexProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'timeTypeIndex');
     });
   }
 

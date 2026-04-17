@@ -23,6 +23,15 @@ abstract class SpaceRepository {
     String? status,
   });
 
+  /// ✅ هل يوجد بيانات تجريبية؟
+  Future<bool> hasSampleData();
+
+  /// ✅ حذف جميع البيانات التجريبية نهائياً
+  Future<void> dismissSampleData();
+
+  /// ✅ إعادة تعيين حالة البيانات التجريبية (للتطوير)
+  Future<void> resetSampleDataState();
+
   Future<ProjectStats> getProjectStats(String moduleUuid);
   Future<List<Map<String, dynamic>>> getSpaceMembers(String spaceId);
   Future<void> updateSpaceDelegation(String uuid, bool allowDelegation);

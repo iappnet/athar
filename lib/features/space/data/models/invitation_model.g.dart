@@ -32,38 +32,58 @@ const InvitationModelSchema = CollectionSchema(
       name: r'inviteeEmail',
       type: IsarType.string,
     ),
-    r'inviterId': PropertySchema(
+    r'inviterAvatar': PropertySchema(
       id: 3,
+      name: r'inviterAvatar',
+      type: IsarType.string,
+    ),
+    r'inviterId': PropertySchema(
+      id: 4,
       name: r'inviterId',
       type: IsarType.string,
     ),
+    r'inviterName': PropertySchema(
+      id: 5,
+      name: r'inviterName',
+      type: IsarType.string,
+    ),
     r'isSynced': PropertySchema(
-      id: 4,
+      id: 6,
       name: r'isSynced',
       type: IsarType.bool,
     ),
+    r'spaceColor': PropertySchema(
+      id: 7,
+      name: r'spaceColor',
+      type: IsarType.long,
+    ),
     r'spaceId': PropertySchema(
-      id: 5,
+      id: 8,
       name: r'spaceId',
       type: IsarType.string,
     ),
+    r'spaceName': PropertySchema(
+      id: 9,
+      name: r'spaceName',
+      type: IsarType.string,
+    ),
     r'status': PropertySchema(
-      id: 6,
+      id: 10,
       name: r'status',
       type: IsarType.string,
     ),
     r'token': PropertySchema(
-      id: 7,
+      id: 11,
       name: r'token',
       type: IsarType.string,
     ),
     r'type': PropertySchema(
-      id: 8,
+      id: 12,
       name: r'type',
       type: IsarType.string,
     ),
     r'uuid': PropertySchema(
-      id: 9,
+      id: 13,
       name: r'uuid',
       type: IsarType.string,
     )
@@ -148,12 +168,30 @@ int _invitationModelEstimateSize(
     }
   }
   {
+    final value = object.inviterAvatar;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
     final value = object.inviterId;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
   }
+  {
+    final value = object.inviterName;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.spaceId.length * 3;
+  {
+    final value = object.spaceName;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.status.length * 3;
   bytesCount += 3 + object.token.length * 3;
   bytesCount += 3 + object.type.length * 3;
@@ -170,13 +208,17 @@ void _invitationModelSerialize(
   writer.writeDateTime(offsets[0], object.createdAt);
   writer.writeDateTime(offsets[1], object.expiresAt);
   writer.writeString(offsets[2], object.inviteeEmail);
-  writer.writeString(offsets[3], object.inviterId);
-  writer.writeBool(offsets[4], object.isSynced);
-  writer.writeString(offsets[5], object.spaceId);
-  writer.writeString(offsets[6], object.status);
-  writer.writeString(offsets[7], object.token);
-  writer.writeString(offsets[8], object.type);
-  writer.writeString(offsets[9], object.uuid);
+  writer.writeString(offsets[3], object.inviterAvatar);
+  writer.writeString(offsets[4], object.inviterId);
+  writer.writeString(offsets[5], object.inviterName);
+  writer.writeBool(offsets[6], object.isSynced);
+  writer.writeLong(offsets[7], object.spaceColor);
+  writer.writeString(offsets[8], object.spaceId);
+  writer.writeString(offsets[9], object.spaceName);
+  writer.writeString(offsets[10], object.status);
+  writer.writeString(offsets[11], object.token);
+  writer.writeString(offsets[12], object.type);
+  writer.writeString(offsets[13], object.uuid);
 }
 
 InvitationModel _invitationModelDeserialize(
@@ -190,13 +232,17 @@ InvitationModel _invitationModelDeserialize(
   object.expiresAt = reader.readDateTimeOrNull(offsets[1]);
   object.id = id;
   object.inviteeEmail = reader.readStringOrNull(offsets[2]);
-  object.inviterId = reader.readStringOrNull(offsets[3]);
-  object.isSynced = reader.readBool(offsets[4]);
-  object.spaceId = reader.readString(offsets[5]);
-  object.status = reader.readString(offsets[6]);
-  object.token = reader.readString(offsets[7]);
-  object.type = reader.readString(offsets[8]);
-  object.uuid = reader.readString(offsets[9]);
+  object.inviterAvatar = reader.readStringOrNull(offsets[3]);
+  object.inviterId = reader.readStringOrNull(offsets[4]);
+  object.inviterName = reader.readStringOrNull(offsets[5]);
+  object.isSynced = reader.readBool(offsets[6]);
+  object.spaceColor = reader.readLongOrNull(offsets[7]);
+  object.spaceId = reader.readString(offsets[8]);
+  object.spaceName = reader.readStringOrNull(offsets[9]);
+  object.status = reader.readString(offsets[10]);
+  object.token = reader.readString(offsets[11]);
+  object.type = reader.readString(offsets[12]);
+  object.uuid = reader.readString(offsets[13]);
   return object;
 }
 
@@ -216,16 +262,24 @@ P _invitationModelDeserializeProp<P>(
     case 3:
       return (reader.readStringOrNull(offset)) as P;
     case 4:
-      return (reader.readBool(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 5:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 6:
-      return (reader.readString(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 7:
-      return (reader.readString(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 8:
       return (reader.readString(offset)) as P;
     case 9:
+      return (reader.readStringOrNull(offset)) as P;
+    case 10:
+      return (reader.readString(offset)) as P;
+    case 11:
+      return (reader.readString(offset)) as P;
+    case 12:
+      return (reader.readString(offset)) as P;
+    case 13:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -921,6 +975,160 @@ extension InvitationModelQueryFilter
   }
 
   QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterAvatarIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'inviterAvatar',
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterAvatarIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'inviterAvatar',
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterAvatarEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'inviterAvatar',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterAvatarGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'inviterAvatar',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterAvatarLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'inviterAvatar',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterAvatarBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'inviterAvatar',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterAvatarStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'inviterAvatar',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterAvatarEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'inviterAvatar',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterAvatarContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'inviterAvatar',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterAvatarMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'inviterAvatar',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterAvatarIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'inviterAvatar',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterAvatarIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'inviterAvatar',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
       inviterIdIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1075,11 +1283,239 @@ extension InvitationModelQueryFilter
   }
 
   QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterNameIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'inviterName',
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterNameIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'inviterName',
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterNameEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'inviterName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterNameGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'inviterName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterNameLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'inviterName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterNameBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'inviterName',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterNameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'inviterName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterNameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'inviterName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterNameContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'inviterName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterNameMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'inviterName',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterNameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'inviterName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      inviterNameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'inviterName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
       isSyncedEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isSynced',
         value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      spaceColorIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'spaceColor',
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      spaceColorIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'spaceColor',
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      spaceColorEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'spaceColor',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      spaceColorGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'spaceColor',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      spaceColorLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'spaceColor',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      spaceColorBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'spaceColor',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
       ));
     });
   }
@@ -1215,6 +1651,160 @@ extension InvitationModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'spaceId',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      spaceNameIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'spaceName',
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      spaceNameIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'spaceName',
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      spaceNameEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'spaceName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      spaceNameGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'spaceName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      spaceNameLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'spaceName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      spaceNameBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'spaceName',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      spaceNameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'spaceName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      spaceNameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'spaceName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      spaceNameContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'spaceName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      spaceNameMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'spaceName',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      spaceNameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'spaceName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterFilterCondition>
+      spaceNameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'spaceName',
         value: '',
       ));
     });
@@ -1816,6 +2406,20 @@ extension InvitationModelQuerySortBy
   }
 
   QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy>
+      sortByInviterAvatar() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'inviterAvatar', Sort.asc);
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy>
+      sortByInviterAvatarDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'inviterAvatar', Sort.desc);
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy>
       sortByInviterId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'inviterId', Sort.asc);
@@ -1826,6 +2430,20 @@ extension InvitationModelQuerySortBy
       sortByInviterIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'inviterId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy>
+      sortByInviterName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'inviterName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy>
+      sortByInviterNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'inviterName', Sort.desc);
     });
   }
 
@@ -1843,6 +2461,20 @@ extension InvitationModelQuerySortBy
     });
   }
 
+  QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy>
+      sortBySpaceColor() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'spaceColor', Sort.asc);
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy>
+      sortBySpaceColorDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'spaceColor', Sort.desc);
+    });
+  }
+
   QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy> sortBySpaceId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'spaceId', Sort.asc);
@@ -1853,6 +2485,20 @@ extension InvitationModelQuerySortBy
       sortBySpaceIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'spaceId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy>
+      sortBySpaceName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'spaceName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy>
+      sortBySpaceNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'spaceName', Sort.desc);
     });
   }
 
@@ -1966,6 +2612,20 @@ extension InvitationModelQuerySortThenBy
   }
 
   QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy>
+      thenByInviterAvatar() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'inviterAvatar', Sort.asc);
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy>
+      thenByInviterAvatarDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'inviterAvatar', Sort.desc);
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy>
       thenByInviterId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'inviterId', Sort.asc);
@@ -1976,6 +2636,20 @@ extension InvitationModelQuerySortThenBy
       thenByInviterIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'inviterId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy>
+      thenByInviterName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'inviterName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy>
+      thenByInviterNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'inviterName', Sort.desc);
     });
   }
 
@@ -1993,6 +2667,20 @@ extension InvitationModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy>
+      thenBySpaceColor() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'spaceColor', Sort.asc);
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy>
+      thenBySpaceColorDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'spaceColor', Sort.desc);
+    });
+  }
+
   QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy> thenBySpaceId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'spaceId', Sort.asc);
@@ -2003,6 +2691,20 @@ extension InvitationModelQuerySortThenBy
       thenBySpaceIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'spaceId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy>
+      thenBySpaceName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'spaceName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QAfterSortBy>
+      thenBySpaceNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'spaceName', Sort.desc);
     });
   }
 
@@ -2082,10 +2784,25 @@ extension InvitationModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<InvitationModel, InvitationModel, QDistinct>
+      distinctByInviterAvatar({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'inviterAvatar',
+          caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<InvitationModel, InvitationModel, QDistinct> distinctByInviterId(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'inviterId', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QDistinct>
+      distinctByInviterName({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'inviterName', caseSensitive: caseSensitive);
     });
   }
 
@@ -2096,10 +2813,24 @@ extension InvitationModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<InvitationModel, InvitationModel, QDistinct>
+      distinctBySpaceColor() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'spaceColor');
+    });
+  }
+
   QueryBuilder<InvitationModel, InvitationModel, QDistinct> distinctBySpaceId(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'spaceId', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<InvitationModel, InvitationModel, QDistinct> distinctBySpaceName(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'spaceName', caseSensitive: caseSensitive);
     });
   }
 
@@ -2161,9 +2892,23 @@ extension InvitationModelQueryProperty
     });
   }
 
+  QueryBuilder<InvitationModel, String?, QQueryOperations>
+      inviterAvatarProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'inviterAvatar');
+    });
+  }
+
   QueryBuilder<InvitationModel, String?, QQueryOperations> inviterIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'inviterId');
+    });
+  }
+
+  QueryBuilder<InvitationModel, String?, QQueryOperations>
+      inviterNameProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'inviterName');
     });
   }
 
@@ -2173,9 +2918,21 @@ extension InvitationModelQueryProperty
     });
   }
 
+  QueryBuilder<InvitationModel, int?, QQueryOperations> spaceColorProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'spaceColor');
+    });
+  }
+
   QueryBuilder<InvitationModel, String, QQueryOperations> spaceIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'spaceId');
+    });
+  }
+
+  QueryBuilder<InvitationModel, String?, QQueryOperations> spaceNameProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'spaceName');
     });
   }
 

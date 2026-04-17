@@ -31,6 +31,9 @@ class TaskModel with TimeSlotMixin {
   DateTime? updatedAt;
   DateTime? deletedAt;
 
+  /// ✅ هل هذه مهمة تجريبية؟
+  bool isSampleData = false;
+
   DateTime createdAt = DateTime.now();
 
   // ✅ حقول التكرار
@@ -301,6 +304,7 @@ class TaskModel with TimeSlotMixin {
   }
 
   /// ✅ الحصول على نص عرض الوقت
+  @override
   String getTimeDisplayString() {
     final settings = timeSlotSettings;
     if (settings == null) return 'غير محدد';
@@ -315,9 +319,11 @@ class TaskModel with TimeSlotMixin {
       case TimeSpecificationType.relativeToprayer:
         final prayerName = _getPrayerName(settings.referencePrayer);
         if (settings.offsetMinutes == 0) {
-          return settings.prayerRelation == PrayerRelativeTime.atAdhan
-              ? 'عند أذان $prayerName'
-              : 'بعد $prayerName';
+          return settings.prayerRelation == PrayerRelativeTime.iqama
+              ? 'عند إقامة $prayerName'
+              : (settings.prayerRelation == PrayerRelativeTime.before
+                    ? 'قبل $prayerName'
+                    : 'بعد $prayerName');
         }
         final relation = settings.prayerRelation == PrayerRelativeTime.before
             ? 'قبل'
@@ -333,6 +339,8 @@ class TaskModel with TimeSlotMixin {
     switch (prayer) {
       case ReferencePrayer.fajr:
         return 'الفجر';
+      case ReferencePrayer.sunrise:
+        return 'الشروق';
       case ReferencePrayer.dhuhr:
         return 'الظهر';
       case ReferencePrayer.asr:
@@ -352,6 +360,8 @@ class TaskModel with TimeSlotMixin {
         return 'الفجر';
       case AtharTimePeriod.bakur:
         return 'البكور';
+      case AtharTimePeriod.duha:
+        return 'الضحى';
       case AtharTimePeriod.morning:
         return 'الصباح';
       case AtharTimePeriod.noon:

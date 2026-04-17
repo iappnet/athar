@@ -773,7 +773,7 @@ abstract class AppLocalizations {
   /// No description provided for @createAccount.
   ///
   /// In ar, this message translates to:
-  /// **'إنشاء حساب جديد'**
+  /// **'أنشئ حسابًا'**
   String get createAccount;
 
   /// No description provided for @alreadyHaveAccount.
@@ -2207,7 +2207,7 @@ abstract class AppLocalizations {
   /// No description provided for @sessionCompleted.
   ///
   /// In ar, this message translates to:
-  /// **'تمت الجلسة'**
+  /// **'🎉 أحسنت! أنهيت الجلسة'**
   String get sessionCompleted;
 
   /// No description provided for @takeABreak.
@@ -7655,19 +7655,19 @@ abstract class AppLocalizations {
   /// No description provided for @focusNowOn.
   ///
   /// In ar, this message translates to:
-  /// **'أنت تركز الآن على:'**
+  /// **'أركز الآن على'**
   String get focusNowOn;
 
   /// No description provided for @focusStatusRunning.
   ///
   /// In ar, this message translates to:
-  /// **'ركز الآن...'**
+  /// **'⏱ جارٍ التركيز'**
   String get focusStatusRunning;
 
   /// No description provided for @focusStatusPaused.
   ///
   /// In ar, this message translates to:
-  /// **'مؤقت مؤقتاً'**
+  /// **'⏸ متوقف مؤقتاً'**
   String get focusStatusPaused;
 
   /// No description provided for @focusStatusReady.
@@ -7679,7 +7679,7 @@ abstract class AppLocalizations {
   /// No description provided for @focusPause.
   ///
   /// In ar, this message translates to:
-  /// **'إيقاف'**
+  /// **'إيقاف مؤقت'**
   String get focusPause;
 
   /// No description provided for @focusStop.
@@ -8167,6 +8167,204 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'{count}% مكتمل'**
   String progressPercent(Object count);
+
+  /// No description provided for @welcomeToAthar.
+  ///
+  /// In ar, this message translates to:
+  /// **'أهلاً بك في أثر'**
+  String get welcomeToAthar;
+
+  /// No description provided for @loginSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجل دخولك لتزامن مساحاتك المشتركة'**
+  String get loginSubtitle;
+
+  /// No description provided for @passwordTooShort.
+  ///
+  /// In ar, this message translates to:
+  /// **'كلمة المرور قصيرة'**
+  String get passwordTooShort;
+
+  /// No description provided for @skipContinueAsGuest.
+  ///
+  /// In ar, this message translates to:
+  /// **'تخطي (المتابعة كضيف)'**
+  String get skipContinueAsGuest;
+
+  /// No description provided for @noAccountCreateNew.
+  ///
+  /// In ar, this message translates to:
+  /// **'ليس لديك حساب؟ أنشئ حساباً جديداً'**
+  String get noAccountCreateNew;
+
+  /// No description provided for @dataSyncTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تزامن البيانات'**
+  String get dataSyncTitle;
+
+  /// No description provided for @dataSyncConflictMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'توجد بيانات محفوظة على جهازك وأخرى في السحابة.\nكيف تود المتابعة؟'**
+  String get dataSyncConflictMessage;
+
+  /// No description provided for @restoreCloudData.
+  ///
+  /// In ar, this message translates to:
+  /// **'استرجاع السحابة (مسح المحلي)'**
+  String get restoreCloudData;
+
+  /// No description provided for @syncKeepLocal.
+  ///
+  /// In ar, this message translates to:
+  /// **'اعتماد المحلي (مسح السحابة)'**
+  String get syncKeepLocal;
+
+  /// No description provided for @mergeDataBest.
+  ///
+  /// In ar, this message translates to:
+  /// **'دمج البيانات (الأفضل)'**
+  String get mergeDataBest;
+
+  /// No description provided for @joinAtharFamily.
+  ///
+  /// In ar, this message translates to:
+  /// **'انضم لعائلة أثر'**
+  String get joinAtharFamily;
+
+  /// No description provided for @minThreeChars.
+  ///
+  /// In ar, this message translates to:
+  /// **'3 أحرف على الأقل'**
+  String get minThreeChars;
+
+  /// No description provided for @minSixChars.
+  ///
+  /// In ar, this message translates to:
+  /// **'6 خانات على الأقل'**
+  String get minSixChars;
+
+  /// No description provided for @completeProfile.
+  ///
+  /// In ar, this message translates to:
+  /// **'إكمال الملف الشخصي'**
+  String get completeProfile;
+
+  /// No description provided for @welcomeCompleteProfile.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرحباً بك! يرجى إكمال بياناتك للمتابعة'**
+  String get welcomeCompleteProfile;
+
+  /// No description provided for @saveAndContinue.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ ومتابعة'**
+  String get saveAndContinue;
+
+  /// No description provided for @projects.
+  ///
+  /// In ar, this message translates to:
+  /// **'المشاريع'**
+  String get projects;
+
+  /// No description provided for @kanbanComingSoon.
+  ///
+  /// In ar, this message translates to:
+  /// **'نظام كانبان قريباً...'**
+  String get kanbanComingSoon;
+
+  /// No description provided for @chooseIcon.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر أيقونة'**
+  String get chooseIcon;
+
+  /// No description provided for @searchIcons.
+  ///
+  /// In ar, this message translates to:
+  /// **'البحث في الأيقونات...'**
+  String get searchIcons;
+
+  /// No description provided for @icon.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأيقونة'**
+  String get icon;
+
+  /// No description provided for @color.
+  ///
+  /// In ar, this message translates to:
+  /// **'اللون'**
+  String get color;
+
+  /// No description provided for @tapToChangeIcon.
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط لتغيير الأيقونة'**
+  String get tapToChangeIcon;
+
+  /// No description provided for @skipAsGuest.
+  ///
+  /// In ar, this message translates to:
+  /// **'تخطي (المتابعة كضيف)'**
+  String get skipAsGuest;
+
+  /// No description provided for @noAccount.
+  ///
+  /// In ar, this message translates to:
+  /// **'ليس لديك حساب؟'**
+  String get noAccount;
+
+  /// No description provided for @syncConflict.
+  ///
+  /// In ar, this message translates to:
+  /// **'تزامن البيانات'**
+  String get syncConflict;
+
+  /// No description provided for @syncConflictMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'توجد بيانات على جهازك وأخرى في السحابة. كيف تود المتابعة؟'**
+  String get syncConflictMessage;
+
+  /// No description provided for @keepLocal.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاحتفاظ بالمحلي'**
+  String get keepLocal;
+
+  /// No description provided for @keepCloud.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاحتفاظ بالسحابة'**
+  String get keepCloud;
+
+  /// No description provided for @mergeBoth.
+  ///
+  /// In ar, this message translates to:
+  /// **'دمج البيانات (الأفضل)'**
+  String get mergeBoth;
+
+  /// No description provided for @navigationSettings.
+  ///
+  /// In ar, this message translates to:
+  /// **'التنقل'**
+  String get navigationSettings;
+
+  /// No description provided for @hideNavOnScroll.
+  ///
+  /// In ar, this message translates to:
+  /// **'إخفاء شريط التنقل عند التمرير'**
+  String get hideNavOnScroll;
+
+  /// No description provided for @hideNavOnScrollDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'إخفاء الشريط السفلي تلقائياً عند التمرير للأسفل'**
+  String get hideNavOnScrollDesc;
 }
 
 class _AppLocalizationsDelegate

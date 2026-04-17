@@ -18,6 +18,8 @@ abstract class InvitationRepository {
   /// جلب الدعوات المعلقة (لي كمستخدم)
   Future<List<InvitationModel>> getMyPendingInvites();
 
+  Future<void> rejectInvite(String token);
+
   /// قبول دعوة
   Future<void> acceptInvite(String token);
 }

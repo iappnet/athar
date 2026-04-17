@@ -1093,10 +1093,15 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
       onCancel: () => Navigator.pop(context),
       onConfirm: () {
         if (nameController.text.isNotEmpty) {
+          // context.read<CategoryCubit>().addCategory(
+          //   nameController.text,
+          //   0xFF9C27B0,
+          //   Icons.bookmark.codePoint,
+          // );
           context.read<CategoryCubit>().addCategory(
-            nameController.text,
-            0xFF9C27B0,
-            Icons.bookmark.codePoint,
+            name: nameController.text,
+            colorValue: 0xFF9C27B0,
+            iconKey: 'bookmark',
           );
           Navigator.pop(context);
         }

@@ -1,0 +1,166 @@
+# ios/fastlane/Fastfile
+# ═══════════════════════════════════════════════════════════════════════════════
+# 🚀 ATHAR APP - Fastlane Configuration
+# ═══════════════════════════════════════════════════════════════════════════════
+
+default_platform(:ios)
+
+platform :ios do
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # 🧪 BETA - رفع إلى TestFlight
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  desc "بناء ورفع إلى TestFlight"
+  lane :beta do
+    puts "🚀 بدء عملية Beta..."
+    
+    increment_build_number(
+      xcodeproj: "Runner.xcodeproj",
+      build_number: latest_testflight_build_number + 1
+    )
+    
+    Dir.chdir("..") do
+      sh("flutter pub get")
+    end
+    
+    cocoapods(clean_install: true, podfile: "Podfile")
+    
+    Dir.chdir("..") do
+      sh("flutter build ios --release --no-tree-shake-icons --no-codesign")
+    end
+    
+    build_app(
+      workspace: "Runner.xcworkspace",
+      scheme: "Runner",
+      export_method: "app-store",
+      output_directory: "./build",
+      output_name: "Athar.ipa",
+      clean: false,
+      include_bitcode: false
+    )
+    
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true,
+      skip_submission: true,
+      notify_external_testers: false
+    )
+    
+    puts "✅ تم الرفع إلى TestFlight بنجاح!"
+  end
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # 📝 METADATA - رفع البيانات الوصفية فقط
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  desc "رفع Metadata فقط (بدون Screenshots أو Binary)"
+  lane :metadata do
+    deliver(
+      skip_binary_upload: true,
+      skip_screenshots: true,
+      skip_metadata: false,
+      force: true,
+      automatic_release: false,
+      submit_for_review: false,
+      precheck_include_in_app_purchases: false
+    )
+    puts "✅ تم رفع Metadata بنجاح!"
+  end
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # 📸 SCREENSHOTS - رفع الصور فقط
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  desc "رفع Screenshots فقط"
+  lane :screenshots do
+    deliver(
+      skip_binary_upload: true,
+      skip_screenshots: false,
+      skip_metadata: true,
+      force: true,
+      overwrite_screenshots: true
+    )
+    puts "✅ تم رفع Screenshots بنجاح!"
+  end
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # 📦 UPLOAD_ALL - رفع Metadata + Screenshots معاً
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  desc "رفع Metadata والـ Screenshots معاً"
+  lane :upload_all do
+    deliver(
+      skip_binary_upload: true,
+      skip_screenshots: false,
+      skip_metadata: false,
+      force: true,
+      overwrite_screenshots: true,
+      automatic_release: false,
+      submit_for_review: false,
+      precheck_include_in_app_purchases: false
+    )
+    puts "✅ تم رفع Metadata والـ Screenshots بنجاح!"
+  end
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # 🚀 RELEASE - رفع كل شيء للـ App Store
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  desc "بناء ورفع إلى App Store"
+  lane :release do
+    puts "🚀 بدء عملية Release..."
+    
+    increment_build_number(
+      xcodeproj: "Runner.xcodeproj",
+      build_number: latest_testflight_build_number + 1
+    )
+    
+    Dir.chdir("..") do
+      sh("flutter pub get")
+    end
+    
+    cocoapods(clean_install: true, podfile: "Podfile")
+    
+    Dir.chdir("..") do
+      sh("flutter build ios --release --no-tree-shake-icons --no-codesign")
+    end
+    
+    build_app(
+      workspace: "Runner.xcworkspace",
+      scheme: "Runner",
+      export_method: "app-store",
+      clean: false,
+      include_bitcode: false
+    )
+    
+    deliver(
+      force: true,
+      skip_metadata: false,
+      skip_screenshots: true,
+      submit_for_review: false,
+      automatic_release: false,
+      precheck_include_in_app_purchases: false
+    )
+    
+    puts "✅ تم الرفع إلى App Store بنجاح!"
+  end
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # 📊 STATUS - حالة التطبيق
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  desc "عرض حالة التطبيق"
+  lane :status do
+    latest = latest_testflight_build_number
+    puts "🔢 آخر رقم بناء: #{latest}"
+  end
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # ❌ معالجة الأخطاء
+  # ═══════════════════════════════════════════════════════════════════════════
+  
+  error do |lane, exception|
+    puts "❌ فشل في #{lane}: #{exception.message}"
+  end
+
+end
