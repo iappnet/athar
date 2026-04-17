@@ -1,3 +1,4 @@
+import 'package:athar/core/design_system/tokens/athar_colors.dart';
 import 'package:athar/core/design_system/tokens/athar_spacing.dart';
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/features/space/domain/repositories/space_repository.dart';
@@ -71,7 +72,7 @@ class MemberSelectorSheet extends StatelessWidget {
                       ),
                       subtitle: Text(_getRoleName(l10n, member['role'])),
                       trailing: isSelected
-                          ? const Icon(Icons.check_circle, color: Colors.green)
+                          ? Icon(Icons.check_circle, color: context.colors.success)
                           : null,
                       onTap: () {
                         Navigator.pop(context, userId);
@@ -83,7 +84,7 @@ class MemberSelectorSheet extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.people_outline, color: Colors.orange),
+            leading: Icon(Icons.people_outline, color: context.colors.warning),
             title: Text(l10n.memberSelectorUnassign),
             onTap: () => Navigator.pop(context, 'unassign'),
           ),
