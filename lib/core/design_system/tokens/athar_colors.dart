@@ -101,6 +101,21 @@ class AtharColors extends ThemeExtension<AtharColors> {
   final LinearGradient secondaryGradient;
   final LinearGradient surfaceGradient;
 
+  // ─────────────────────────────────────────────────────────────────
+  // ISLAMIC CARD GRADIENTS - تدرجات البطاقات الإسلامية
+  // ثابتة دائماً (لا تتغير بين الوضع الفاتح والداكن)
+  // ─────────────────────────────────────────────────────────────────
+
+  /// تدرج بطاقة الصلاة — سماء الليل الإسلامية
+  static const LinearGradient prayerCardGradient = LinearGradient(
+    colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  /// ظل بطاقة الصلاة
+  static const Color prayerCardShadow = Color(0xFF0F172A);
+
   // ═══════════════════════════════════════════════════════════════════
   // CONSTRUCTOR
   // ═══════════════════════════════════════════════════════════════════

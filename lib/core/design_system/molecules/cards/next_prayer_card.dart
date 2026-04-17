@@ -75,10 +75,12 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
         String timePrefix = l10n.prayerCardTimePrefix;
 
         if (status.statusLabel.contains("حان الآن")) {
-          displayColor = const Color(0xFF4CAF50);
+          // Prayer is now — use dark-mode success (card always has dark background)
+          displayColor = AtharColors.dark.success;
           timePrefix = "";
         } else if (status.statusLabel.contains("الحالية")) {
-          displayColor = const Color(0xFF29B6F6);
+          // Current prayer period — use dark-mode info
+          displayColor = AtharColors.dark.info;
           timePrefix = "";
         }
 
@@ -88,15 +90,11 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
             vertical: AtharSpacing.xxs,
           ),
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+            gradient: AtharColors.prayerCardGradient,
             borderRadius: AtharRadii.radiusXxl,
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF0F172A).withValues(alpha: 0.3),
+                color: AtharColors.prayerCardShadow.withValues(alpha: 0.3),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
