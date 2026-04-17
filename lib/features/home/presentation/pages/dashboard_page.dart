@@ -30,8 +30,6 @@ import '../../../../features/sync/presentation/cubit/sync_state.dart';
 import '../../../../features/auth/presentation/cubit/auth_cubit.dart';
 import '../../../../features/auth/presentation/cubit/auth_state.dart';
 
-/// Semantic colors (not in ColorScheme)
-const _successColor = Color(0xFF00B894);
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -90,7 +88,7 @@ class DashboardPage extends StatelessWidget {
               SnackBar(
                 content: Text(l10n.syncSuccessful),
                 // ✅ Colors.green → colors.success
-                backgroundColor: _successColor,
+                backgroundColor: context.colors.success,
                 behavior: SnackBarBehavior.floating,
                 duration: const Duration(seconds: 2),
               ),
@@ -312,7 +310,7 @@ class DashboardPage extends StatelessWidget {
                                       ? colorScheme.error
                                       : state is SyncSuccess
                                       // ✅ Colors.green → colors.success
-                                      ? _successColor
+                                      ? context.colors.success
                                       // ✅ AppColors.primary → colors.primary
                                       : colorScheme.primary,
                                 ),
