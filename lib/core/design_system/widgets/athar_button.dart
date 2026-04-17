@@ -409,19 +409,19 @@ class _AtharButtonState extends State<AtharButton>
   }
 
   static const _buttonSmallStyle = TextStyle(
-    fontSize: 14,
+    fontSize: AtharTypography.sizeSm,
     fontWeight: FontWeight.w600,
     height: 1.0,
     letterSpacing: 0.25,
   );
   static const _buttonStyle = TextStyle(
-    fontSize: 16,
+    fontSize: AtharTypography.sizeMd,
     fontWeight: FontWeight.w600,
     height: 1.0,
     letterSpacing: 0.25,
   );
   static const _buttonLargeStyle = TextStyle(
-    fontSize: 18,
+    fontSize: AtharTypography.sizeLg,
     fontWeight: FontWeight.w600,
     height: 1.0,
     letterSpacing: 0.25,
