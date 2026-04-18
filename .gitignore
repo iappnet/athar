@@ -46,3 +46,4 @@ app.*.map.json
 .env
 # Claude Code worktrees
 .claude/worktrees/
+.claude/
