@@ -6,6 +6,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import 'dart:ui' as ui;
+import 'package:athar/core/design_system/tokens/athar_colors.dart';
 import 'package:athar/core/design_system/tokens/athar_radii.dart';
 import 'package:athar/core/design_system/tokens/athar_spacing.dart';
 import 'package:athar/features/prayer/domain/entities/prayer_time.dart';
