@@ -226,7 +226,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
                     Text(
                       'الصلاة القادمة',
                       style: TextStyle(
-                        color: const Color(0xFFFCD34D),
+                        color: const Color(0xFFFDCB6E),
                         fontSize: isTablet ? 13 : 11.sp,
                       ),
                     ),
@@ -258,7 +258,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
               child: LinearProgressIndicator(
                 value: 0.7,
                 backgroundColor: Colors.white24,
-                valueColor: const AlwaysStoppedAnimation(Color(0xFFFCD34D)),
+                valueColor: const AlwaysStoppedAnimation(Color(0xFFFDCB6E)),
                 minHeight: 6,
               ),
             ),
