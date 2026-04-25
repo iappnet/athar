@@ -105,7 +105,7 @@ class ContextAwareFabController {
         QuickAddOption(
           icon: Icons.check_circle_outline_rounded,
           label: 'مهمة',
-          color: const Color(0xFF3B82F6), // Blue
+          color: const Color(0xFF1A6B3C), // brand primary
           onTap: () {
             Navigator.pop(context);
             onAddTask?.call();
@@ -114,7 +114,7 @@ class ContextAwareFabController {
         QuickAddOption(
           icon: Icons.event_rounded,
           label: 'موعد',
-          color: const Color(0xFF8B5CF6), // Purple
+          color: const Color(0xFF74B9FF), // token info
           onTap: () {
             Navigator.pop(context);
             onAddAppointment?.call();
@@ -123,7 +123,7 @@ class ContextAwareFabController {
         QuickAddOption(
           icon: Icons.medication_rounded,
           label: 'دواء',
-          color: const Color(0xFF10B981), // Green
+          color: const Color(0xFF00B894), // token success
           onTap: () {
             Navigator.pop(context);
             onAddMedicine?.call();
@@ -132,7 +132,7 @@ class ContextAwareFabController {
         QuickAddOption(
           icon: Icons.track_changes_rounded,
           label: 'عادة',
-          color: const Color(0xFFF59E0B), // Amber
+          color: const Color(0xFFFDCB6E), // token warning
           onTap: () {
             Navigator.pop(context);
             onAddHabit?.call();
@@ -141,7 +141,7 @@ class ContextAwareFabController {
         QuickAddOption(
           icon: Icons.workspaces_rounded,
           label: 'مساحة',
-          color: const Color(0xFFEC4899), // Pink
+          color: const Color(0xFF0D7377), // brand secondary
           onTap: () {
             Navigator.pop(context);
             onAddSpace?.call();
@@ -159,7 +159,7 @@ class ContextAwareFabController {
         QuickAddOption(
           icon: Icons.favorite_rounded,
           label: 'ملف صحي',
-          color: const Color(0xFFEF4444), // Red
+          color: const Color(0xFFFF7675), // token error
           onTap: () {
             Navigator.pop(context);
             _addModule('health');
@@ -168,7 +168,7 @@ class ContextAwareFabController {
         QuickAddOption(
           icon: Icons.folder_rounded,
           label: 'مشروع',
-          color: const Color(0xFF3B82F6), // Blue
+          color: const Color(0xFF1A6B3C), // brand primary
           onTap: () {
             Navigator.pop(context);
             _addModule('project');
@@ -177,7 +177,7 @@ class ContextAwareFabController {
         QuickAddOption(
           icon: Icons.checklist_rounded,
           label: 'قائمة',
-          color: const Color(0xFF10B981), // Green
+          color: const Color(0xFF00B894), // token success
           onTap: () {
             Navigator.pop(context);
             _addModule('checklist');
@@ -186,7 +186,7 @@ class ContextAwareFabController {
         QuickAddOption(
           icon: Icons.account_balance_wallet_rounded,
           label: 'أصول',
-          color: const Color(0xFFF59E0B), // Amber
+          color: const Color(0xFFFDCB6E), // token warning
           onTap: () {
             Navigator.pop(context);
             _addModule('assets');
