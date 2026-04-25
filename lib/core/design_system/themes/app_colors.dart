@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // الألوان الأساسية الموجودة سابقاً
-  static const Color primary = Color(0xFF6C63FF); // أو اللون المستخدم عندك
+  static const Color primary = Color(0xFF1A6B3C);
   static const Color background = Color(
     0xFFF8F9FA,
   ); // 🆕 خلفية رمادية فاتحة جداً (Minimalist)
