@@ -186,16 +186,16 @@ class AtharColors extends ThemeExtension<AtharColors> {
   // ═══════════════════════════════════════════════════════════════════
   static const AtharColors light = AtharColors(
     // Primary
-    primary: Color(0xFF6C63FF),
-    primaryLight: Color(0xFF9D97FF),
-    primaryDark: Color(0xFF4A42DB),
+    primary: Color(0xFF1A6B3C),
+    primaryLight: Color(0xFF2D8A54),
+    primaryDark: Color(0xFF0F4828),
     onPrimary: Color(0xFFFFFFFF),
 
     // Secondary
-    secondary: Color(0xFF03DAC6),
-    secondaryLight: Color(0xFF66FFF8),
-    secondaryDark: Color(0xFF00A896),
-    onSecondary: Color(0xFF000000),
+    secondary: Color(0xFF0D7377),
+    secondaryLight: Color(0xFF1A9EA3),
+    secondaryDark: Color(0xFF075258),
+    onSecondary: Color(0xFFFFFFFF),
 
     // Background
     background: Color(0xFFF8F9FA),
@@ -237,7 +237,7 @@ class AtharColors extends ThemeExtension<AtharColors> {
     // Border
     border: Color(0xFFDFE6E9),
     borderLight: Color(0xFFECF0F1),
-    borderFocused: Color(0xFF6C63FF),
+    borderFocused: Color(0xFF1A6B3C),
     divider: Color(0xFFECF0F1),
 
     // Shadow
@@ -256,12 +256,12 @@ class AtharColors extends ThemeExtension<AtharColors> {
     primaryGradient: LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [Color(0xFF6C63FF), Color(0xFF4A42DB)],
+      colors: [Color(0xFF1A6B3C), Color(0xFF0F4828)],
     ),
     secondaryGradient: LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [Color(0xFF03DAC6), Color(0xFF00A896)],
+      colors: [Color(0xFF0D7377), Color(0xFF075258)],
     ),
     surfaceGradient: LinearGradient(
       begin: Alignment.topCenter,
@@ -275,15 +275,15 @@ class AtharColors extends ThemeExtension<AtharColors> {
   // ═══════════════════════════════════════════════════════════════════
   static const AtharColors dark = AtharColors(
     // Primary
-    primary: Color(0xFF8B85FF),
-    primaryLight: Color(0xFFB8B4FF),
-    primaryDark: Color(0xFF6C63FF),
+    primary: Color(0xFF4DA878),
+    primaryLight: Color(0xFF71C49A),
+    primaryDark: Color(0xFF1A6B3C),
     onPrimary: Color(0xFF000000),
 
     // Secondary
-    secondary: Color(0xFF03DAC6),
-    secondaryLight: Color(0xFF66FFF8),
-    secondaryDark: Color(0xFF00A896),
+    secondary: Color(0xFF14A0A5),
+    secondaryLight: Color(0xFF3DD6DC),
+    secondaryDark: Color(0xFF0D7377),
     onSecondary: Color(0xFF000000),
 
     // Background
@@ -326,7 +326,7 @@ class AtharColors extends ThemeExtension<AtharColors> {
     // Border
     border: Color(0xFF404040),
     borderLight: Color(0xFF333333),
-    borderFocused: Color(0xFF8B85FF),
+    borderFocused: Color(0xFF4DA878),
     divider: Color(0xFF333333),
 
     // Shadow
@@ -345,12 +345,12 @@ class AtharColors extends ThemeExtension<AtharColors> {
     primaryGradient: LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [Color(0xFF8B85FF), Color(0xFF6C63FF)],
+      colors: [Color(0xFF4DA878), Color(0xFF1A6B3C)],
     ),
     secondaryGradient: LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [Color(0xFF03DAC6), Color(0xFF00A896)],
+      colors: [Color(0xFF14A0A5), Color(0xFF0D7377)],
     ),
     surfaceGradient: LinearGradient(
       begin: Alignment.topCenter,
