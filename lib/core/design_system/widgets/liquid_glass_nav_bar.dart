@@ -376,9 +376,9 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
   }
 
   Widget _buildFab(BuildContext context, ColorScheme colorScheme, bool isDark) {
-    final fabTop = const Color(0xFF46C7FF);
-    final fabMid = const Color(0xFF3CA7FF);
-    final fabBottom = const Color(0xFF5176FF);
+    final fabTop = const Color(0xFF1A6B3C);
+    final fabMid = const Color(0xFF156035);
+    final fabBottom = const Color(0xFF0D7377);
 
     return GestureDetector(
       onTap: () {
@@ -398,7 +398,7 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF67B9FF).withValues(alpha: 0.45),
+              color: const Color(0xFF1A6B3C).withValues(alpha: 0.45),
               blurRadius: 28,
               spreadRadius: 0,
               offset: const Offset(0, 12),
