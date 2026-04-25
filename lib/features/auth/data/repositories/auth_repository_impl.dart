@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -54,7 +55,7 @@ class AuthRepositoryImpl implements AuthRepository {
       throw e.message;
     } catch (e) {
       // طباعة الخطأ الحقيقي للمطور
-      print("SignUp Error Details: $e");
+      debugPrint("SignUp Error Details: $e");
       throw "حدث خطأ غير متوقع أثناء إنشاء الحساب";
     }
   }

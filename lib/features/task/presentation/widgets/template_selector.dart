@@ -571,7 +571,7 @@ class TemplateSelector extends StatelessWidget {
 //       elevation: 2,
 //       shape: RoundedRectangleBorder(
 //         borderRadius: BorderRadius.circular(12.r),
-//         side: BorderSide(color: AppColors.primary.withOpacity(0.2)),
+//         side: BorderSide(color: AppColors.primary.withValues(alpha: 0.2)),
 //       ),
 //       child: InkWell(
 //         onTap: () => onTemplateSelected(template),
@@ -795,7 +795,7 @@ class TemplateSelector extends StatelessWidget {
 //                             height: 40.w,
 //                             decoration: BoxDecoration(
 //                               color: isSelected
-//                                   ? AppColors.primary.withOpacity(0.2)
+//                                   ? AppColors.primary.withValues(alpha: 0.2)
 //                                   : Colors.grey.shade100,
 //                               borderRadius: BorderRadius.circular(8.r),
 //                               border: Border.all(

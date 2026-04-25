@@ -256,6 +256,24 @@ class HealthCubit extends Cubit<HealthState> {
     }
   }
 
+  Future<void> skipDose(String moduleId, MedicineModel medicine) async {
+    try {
+      final log = MedicineLogModel(
+        uuid: const Uuid().v4(),
+        medicineId: medicine.uuid,
+        moduleId: moduleId,
+        takenAt: DateTime.now(),
+        status: 'skipped',
+      );
+      await _repository.logDose(log);
+      if (isClosed) return;
+      emit(HealthOperationSuccess("تم تخطي الجرعة"));
+    } catch (e) {
+      if (isClosed) return;
+      emit(HealthError("فشل تخطي الجرعة"));
+    }
+  }
+
   Future<MedicineLogModel?> getLastLog(String medicineUuid) {
     return _repository.getLastLogForMedicine(medicineUuid);
   }

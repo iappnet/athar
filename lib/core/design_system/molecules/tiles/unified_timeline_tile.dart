@@ -266,7 +266,7 @@ class UnifiedTimelineTile extends StatelessWidget {
 //             borderRadius: AtharRadii.radiusLg,
 //             boxShadow: [
 //               BoxShadow(
-//                 // ✅ Colors.black.withOpacity(0.03)
+//                 // ✅ Colors.black.withValues(alpha: 0.03)
 //                 color: colors.shadow.withValues(alpha: 0.3),
 //                 blurRadius: 10,
 //                 offset: const Offset(0, 4),
@@ -471,13 +471,13 @@ class UnifiedTimelineTile extends StatelessWidget {
 //             borderRadius: BorderRadius.circular(16.r),
 //             boxShadow: [
 //               BoxShadow(
-//                 color: Colors.black.withOpacity(0.03),
+//                 color: Colors.black.withValues(alpha: 0.03),
 //                 blurRadius: 10,
 //                 offset: const Offset(0, 4),
 //               ),
 //             ],
 //             border: Border(
-//               right: BorderSide(color: color.withOpacity(0.4), width: 4.w),
+//               right: BorderSide(color: color.withValues(alpha: 0.4), width: 4.w),
 //             ),
 //           ),
 //           child: Row(

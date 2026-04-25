@@ -5,7 +5,9 @@ import 'package:athar/features/habits/domain/repositories/habit_repository.dart'
 import 'package:athar/features/settings/domain/repositories/settings_repository.dart';
 import 'package:athar/features/space/domain/repositories/space_repository.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import '../../domain/repositories/auth_repository.dart';
 import 'package:athar/features/settings/data/models/user_settings.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
@@ -79,17 +81,24 @@ class AuthCubit extends Cubit<AuthState> {
             fullName: profile['full_name'],
           ),
         );
+        // Identify user in RevenueCat so entitlements sync per-account.
+        try {
+          await Purchases.logIn(user.id);
+        } catch (_) {}
       } catch (e) {
         // ✅✅ دعم الأوفلاين (Offline Support)
         // إذا فشل الاتصال، لا نمنع المستخدم من الدخول!
         // نستخدم البيانات المخزنة محلياً في جلسة Supabase (MetaData)
-        print("Offline mode or Error loading profile: $e");
+        debugPrint("Offline mode or Error loading profile: $e");
 
         final metaData = user.userMetadata;
         final savedName = metaData?['full_name'] ?? 'مستخدم';
         final savedUsername = metaData?['username'] ?? 'user';
 
         emit(AuthAuthenticated(savedUsername, fullName: savedName));
+        try {
+          await Purchases.logIn(user.id);
+        } catch (_) {}
       }
     }
   }
@@ -117,18 +126,16 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthUnauthenticated());
       }
     } catch (e) {
-      String msg = "حدث خطأ غير متوقع: ${e.toString()}";
-      if (e.toString().contains("User already registered") ||
-          e.toString().contains("23505")) {
+      final raw = e.toString();
+      String msg = "حدث خطأ غير متوقع، يرجى المحاولة لاحقاً";
+      if (raw.contains("User already registered") || raw.contains("23505")) {
         msg = "البريد الإلكتروني مسجل مسبقاً";
-      }
-      if (e.toString().contains("username_key") ||
-          e.toString().contains("username")) {
+      } else if (raw.contains("username_key") || raw.contains("username")) {
         msg = "اسم المستخدم هذا محجوز، اختر اسماً آخر";
+      } else if (raw.contains("weak_password")) {
+        msg = "كلمة المرور ضعيفة، يجب أن تكون 8 أحرف على الأقل";
       }
-      if (e.toString().contains("weak_password")) {
-        msg = "كلمة المرور ضعيفة، يجب أن تكون 6 أحرف على الأقل";
-      }
+      assert(() { debugPrint('[AuthCubit.signUp] $e'); return true; }());
       emit(AuthError(msg));
     }
   }
@@ -142,7 +149,8 @@ class AuthCubit extends Cubit<AuthState> {
       );
       await _loadUserProfile();
     } catch (e) {
-      emit(AuthError("فشل تحديث البيانات: ${e.toString()}"));
+      assert(() { debugPrint('[AuthCubit.updateProfile] $e'); return true; }());
+      emit(AuthError("فشل تحديث البيانات، يرجى المحاولة لاحقاً"));
       await _loadUserProfile();
     }
   }
@@ -163,6 +171,9 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> signOut() async {
     try {
       await _authRepository.signOut();
+      try {
+        await Purchases.logOut();
+      } catch (_) {}
     } catch (e) {
       emit(AuthError("فشل تسجيل الخروج"));
     }
@@ -190,7 +201,8 @@ class AuthCubit extends Cubit<AuthState> {
             e.toString().contains("duplicate")) {
           errorMsg = "اسم المستخدم هذا محجوز، يرجى اختيار اسم آخر";
         } else {
-          errorMsg = "حدث خطأ: $e";
+          assert(() { debugPrint('[AuthCubit.completeProfileData] $e'); return true; }());
+          errorMsg = "فشل حفظ البيانات، يرجى المحاولة لاحقاً";
         }
         emit(AuthError(errorMsg));
         emit(AuthProfileIncomplete(userId: user.id, email: user.email ?? ''));

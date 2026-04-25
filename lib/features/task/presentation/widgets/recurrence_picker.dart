@@ -303,9 +303,19 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
     final colorScheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+    return RadioGroup<RecurrenceEndType>(
+      groupValue: _endType,
+      onChanged: (val) {
+        if (val == null) return;
+        setState(() => _endType = val);
+        if (val == RecurrenceEndType.onDate && _endDate == null) {
+          _pickEndDate();
+        }
+        _notifyChange();
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
         Text(
           l10n.recurrenceEnds,
           style: TextStyle(
@@ -319,12 +329,7 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
         RadioListTile<RecurrenceEndType>(
           title: Text(l10n.recurrenceNever),
           value: RecurrenceEndType.never,
-          groupValue: _endType,
           activeColor: colorScheme.primary,
-          onChanged: (val) {
-            setState(() => _endType = val!);
-            _notifyChange();
-          },
         ),
 
         RadioListTile<RecurrenceEndType>(
@@ -356,12 +361,7 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
             ],
           ),
           value: RecurrenceEndType.afterOccurrences,
-          groupValue: _endType,
           activeColor: colorScheme.primary,
-          onChanged: (val) {
-            setState(() => _endType = val!);
-            _notifyChange();
-          },
         ),
 
         RadioListTile<RecurrenceEndType>(
@@ -383,15 +383,10 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
             ],
           ),
           value: RecurrenceEndType.onDate,
-          groupValue: _endType,
           activeColor: colorScheme.primary,
-          onChanged: (val) {
-            setState(() => _endType = val!);
-            if (_endDate == null) _pickEndDate();
-            _notifyChange();
-          },
         ),
       ],
+      ),
     );
   }
 
@@ -734,7 +729,7 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
 //             return FilterChip(
 //               label: Text(day.$2),
 //               selected: isSelected,
-//               selectedColor: AppColors.primary.withOpacity(0.2),
+//               selectedColor: AppColors.primary.withValues(alpha: 0.2),
 //               checkmarkColor: AppColors.primary,
 //               onSelected: (val) {
 //                 setState(() {

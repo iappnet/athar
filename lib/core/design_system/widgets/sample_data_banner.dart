@@ -10,7 +10,6 @@ import 'package:athar/core/design_system/tokens.dart';
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/features/space/domain/repositories/space_repository.dart';
 import 'package:athar/features/space/presentation/cubit/space_cubit.dart';
-import 'package:athar/l10n/generated/app_localizations.dart';
 
 class SampleDataBanner extends StatefulWidget {
   final VoidCallback? onDismissed;
@@ -110,9 +109,6 @@ class _SampleDataBannerState extends State<SampleDataBanner>
   Widget build(BuildContext context) {
     if (!_isVisible) return const SizedBox.shrink();
 
-    final colorScheme = Theme.of(context).colorScheme;
-    final l10n = AppLocalizations.of(context);
-
     return SlideTransition(
       position: _slideAnimation,
       child: FadeTransition(
@@ -132,7 +128,7 @@ class _SampleDataBannerState extends State<SampleDataBanner>
             borderRadius: BorderRadius.circular(16.r),
             boxShadow: [
               BoxShadow(
-                color: Colors.orange.withOpacity(0.2),
+                color: Colors.orange.withValues(alpha: 0.2),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),

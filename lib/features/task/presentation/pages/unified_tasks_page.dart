@@ -6,6 +6,7 @@ import 'package:athar/core/design_system/widgets/athar_feedback.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:athar/core/design_system/molecules/cards/smart_prayer_wrapper.dart';
 import 'package:athar/core/design_system/organisms/app_bar/athar_app_bar.dart';
+import 'package:athar/features/calendar/presentation/pages/calendar_page.dart';
 import 'package:athar/features/task/domain/models/filter_item.dart';
 import 'package:athar/features/task/presentation/widgets/reflection_dialog.dart';
 import 'package:athar/core/design_system/molecules/tiles/unified_timeline_tile.dart';
@@ -95,6 +96,13 @@ class _UnifiedTasksViewState extends State<UnifiedTasksView> {
       appBar: AtharAppBar(
         title: l10n.unifiedOpsCenter,
         subtitle: l10n.allInOnePlace,
+        onTitleTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const CalendarPage()),
+          );
+        },
+        titleTapIcon: Icons.calendar_month_rounded,
         leading: Builder(
           builder: (context) => AtharButton.icon(
             icon: Icons.menu,
@@ -183,18 +191,7 @@ class _UnifiedTasksViewState extends State<UnifiedTasksView> {
           ],
         ),
       ),
-      floatingActionButton: _isSelectionMode
-          ? null
-          : FloatingActionButton.extended(
-              heroTag: 'unified_tasks_fab',
-              backgroundColor: colorScheme.primary,
-              icon: Icon(Icons.add, color: colorScheme.surface),
-              label: Text(
-                l10n.newTask,
-                style: TextStyle(color: colorScheme.surface),
-              ),
-              onPressed: () => _showAddTaskSheet(context),
-            ),
+      floatingActionButton: null,
     );
   }
 
@@ -429,24 +426,6 @@ class _UnifiedTasksViewState extends State<UnifiedTasksView> {
         ),
       );
     }
-  }
-
-  void _showAddTaskSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (ctx) => MultiBlocProvider(
-        providers: [
-          BlocProvider.value(value: context.read<TaskCubit>()),
-          BlocProvider.value(value: context.read<HealthCubit>()),
-          BlocProvider.value(value: context.read<CategoryCubit>()),
-          BlocProvider.value(value: context.read<SettingsCubit>()),
-          BlocProvider.value(value: context.read<PrayerCubit>()),
-        ],
-        child: const UnifiedAddSheet(initialType: EntityType.task),
-      ),
-    );
   }
 
   // ✅ حوار التأجيل
@@ -913,7 +892,7 @@ class _ZoneInfo {
 //       decoration: BoxDecoration(
 //         color: colors.surface,
 //         borderRadius: AtharRadii.radiusLg,
-//         border: Border.all(color: colors.textTertiary.withOpacity(0.2)),
+//         border: Border.all(color: colors.textTertiary.withValues(alpha: 0.2)),
 //       ),
 //       child: Column(
 //         children: [
@@ -1109,7 +1088,7 @@ class _ZoneInfo {
 //       decoration: BoxDecoration(
 //         color: colors.surface,
 //         borderRadius: AtharRadii.radiusMd,
-//         border: Border.all(color: colors.textTertiary.withOpacity(0.2)),
+//         border: Border.all(color: colors.textTertiary.withValues(alpha: 0.2)),
 //       ),
 //       child: IconButton(
 //         icon: Icon(
@@ -1129,7 +1108,7 @@ class _ZoneInfo {
 //           return Container(
 //             padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
 //             decoration: BoxDecoration(
-//               color: info.color.withOpacity(0.1),
+//               color: info.color.withValues(alpha: 0.1),
 //               borderRadius: AtharRadii.radiusSm,
 //             ),
 //             child: Row(
@@ -1185,7 +1164,7 @@ class _ZoneInfo {
 //           Icon(
 //             Icons.task_alt,
 //             size: 80.sp,
-//             color: colors.textTertiary.withOpacity(0.3),
+//             color: colors.textTertiary.withValues(alpha: 0.3),
 //           ),
 //           AtharGap.lg,
 //           Text(
@@ -1764,7 +1743,7 @@ class _ZoneInfo {
 //           return Container(
 //             padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
 //             decoration: BoxDecoration(
-//               color: info.color.withOpacity(0.1),
+//               color: info.color.withValues(alpha: 0.1),
 //               borderRadius: BorderRadius.circular(8.r),
 //             ),
 //             child: Row(

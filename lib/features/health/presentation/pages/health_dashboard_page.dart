@@ -61,7 +61,27 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
 
     return BlocProvider.value(
       value: _cubit,
-      child: Scaffold(
+      child: BlocListener<HealthCubit, HealthState>(
+        listener: (context, state) {
+          if (state is HealthOperationSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.green,
+                behavior: SnackBarBehavior.floating,
+              ),
+            );
+          } else if (state is HealthError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Theme.of(context).colorScheme.error,
+                behavior: SnackBarBehavior.floating,
+              ),
+            );
+          }
+        },
+        child: Scaffold(
         // ✅ AppColors.background → colors.background
         backgroundColor: colorScheme.surface,
         appBar: AppBar(
@@ -115,6 +135,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
               _buildTodayActionCenter(colorScheme, l10n),
             ],
           ),
+        ),
         ),
       ),
     );
@@ -711,14 +732,14 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
 //           padding: EdgeInsets.all(20.w),
 //           decoration: BoxDecoration(
 //             gradient: LinearGradient(
-//               colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
+//               colors: [AppColors.primary, AppColors.primary.withValues(alpha: 0.8)],
 //               begin: Alignment.topLeft,
 //               end: Alignment.bottomRight,
 //             ),
 //             borderRadius: BorderRadius.circular(20.r),
 //             boxShadow: [
 //               BoxShadow(
-//                 color: AppColors.primary.withOpacity(0.3),
+//                 color: AppColors.primary.withValues(alpha: 0.3),
 //                 blurRadius: 15,
 //                 offset: const Offset(0, 8),
 //               ),
@@ -731,7 +752,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
 //                 children: [
 //                   CircleAvatar(
 //                     radius: 30.r,
-//                     backgroundColor: Colors.white.withOpacity(0.2),
+//                     backgroundColor: Colors.white.withValues(alpha: 0.2),
 //                     child: Icon(Icons.person, size: 35.sp, color: Colors.white),
 //                   ),
 //                   SizedBox(width: 16.w),
@@ -752,7 +773,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
 //                           Text(
 //                             "فصيلة الدم: ${profile!.bloodType}",
 //                             style: TextStyle(
-//                               color: Colors.white.withOpacity(0.9),
+//                               color: Colors.white.withValues(alpha: 0.9),
 //                               fontSize: 12.sp,
 //                               fontFamily: 'Tajawal',
 //                             ),
@@ -778,7 +799,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
 //                     vertical: 8.h,
 //                   ),
 //                   decoration: BoxDecoration(
-//                     color: Colors.red.withOpacity(0.2),
+//                     color: Colors.red.withValues(alpha: 0.2),
 //                     borderRadius: BorderRadius.circular(10.r),
 //                     border: Border.all(color: Colors.red.shade100, width: 0.5),
 //                   ),
@@ -904,7 +925,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
 //           borderRadius: BorderRadius.circular(16.r),
 //           boxShadow: [
 //             BoxShadow(
-//               color: Colors.grey.withOpacity(0.05),
+//               color: Colors.grey.withValues(alpha: 0.05),
 //               blurRadius: 10,
 //               offset: const Offset(0, 4),
 //             ),
@@ -916,7 +937,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
 //             Container(
 //               padding: EdgeInsets.all(10.w),
 //               decoration: BoxDecoration(
-//                 color: color.withOpacity(0.1),
+//                 color: color.withValues(alpha: 0.1),
 //                 shape: BoxShape.circle,
 //               ),
 //               child: Icon(icon, color: color, size: 24.sp),

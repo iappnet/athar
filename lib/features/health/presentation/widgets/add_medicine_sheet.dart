@@ -97,6 +97,17 @@ class _AddMedicineSheetState extends State<AddMedicineSheet> {
   }
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _quantityController.dispose();
+    _doseAmountController.dispose();
+    _doseUnitController.dispose();
+    _durationController.dispose();
+    _thresholdController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // ✅ Get colors & l10n
     final colorScheme = Theme.of(context).colorScheme;
@@ -1345,7 +1356,7 @@ class _AddMedicineSheetState extends State<AddMedicineSheet> {
 //             boxShadow: isSelected
 //                 ? [
 //                     BoxShadow(
-//                       color: Colors.black.withOpacity(0.05),
+//                       color: Colors.black.withValues(alpha: 0.05),
 //                       blurRadius: 4,
 //                     ),
 //                   ]

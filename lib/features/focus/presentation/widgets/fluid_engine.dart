@@ -292,8 +292,8 @@ class FluidPainter extends CustomPainter {
           Offset(pool.centerX, pool.baseY),
           pool.width / 2,
           [
-            engine.primaryColor.withOpacity(0.9),
-            engine.secondaryColor.withOpacity(0.95),
+            engine.primaryColor.withValues(alpha: 0.9),
+            engine.secondaryColor.withValues(alpha: 0.95),
           ],
           [0.0, 1.0],
         )
@@ -318,7 +318,7 @@ class FluidPainter extends CustomPainter {
 
       // إضاءة
       final highlightPaint = Paint()
-        ..color = engine.highlightColor.withOpacity(0.3)
+        ..color = engine.highlightColor.withValues(alpha: 0.3)
         ..style = PaintingStyle.fill;
 
       canvas.drawOval(
@@ -341,8 +341,8 @@ class FluidPainter extends CustomPainter {
           Offset(particle.x, particle.y),
           particle.radius * 3.5,
           [
-            engine.primaryColor.withOpacity(0.35),
-            engine.primaryColor.withOpacity(0.1),
+            engine.primaryColor.withValues(alpha: 0.35),
+            engine.primaryColor.withValues(alpha: 0.1),
             Colors.transparent,
           ],
           [0.0, 0.5, 1.0],
@@ -370,7 +370,7 @@ class FluidPainter extends CustomPainter {
           [
             engine.primaryColor,
             engine.secondaryColor,
-            engine.secondaryColor.withOpacity(0.8),
+            engine.secondaryColor.withValues(alpha: 0.8),
           ],
           [0.0, 0.6, 1.0],
         )
@@ -384,7 +384,7 @@ class FluidPainter extends CustomPainter {
 
       // إضاءة لامعة (زجاجية)
       final highlightPaint = Paint()
-        ..color = engine.highlightColor.withOpacity(0.6)
+        ..color = engine.highlightColor.withValues(alpha: 0.6)
         ..style = PaintingStyle.fill
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 1.5);
 
@@ -399,7 +399,7 @@ class FluidPainter extends CustomPainter {
 
       // إضاءة ثانوية
       final secondaryHighlight = Paint()
-        ..color = Colors.white.withOpacity(0.25)
+        ..color = Colors.white.withValues(alpha: 0.25)
         ..style = PaintingStyle.fill;
 
       canvas.drawCircle(
@@ -418,7 +418,7 @@ class FluidPainter extends CustomPainter {
 
     // خط مستوى الامتلاء
     final linePaint = Paint()
-      ..color = engine.primaryColor.withOpacity(0.25)
+      ..color = engine.primaryColor.withValues(alpha: 0.25)
       ..strokeWidth = 1.5
       ..style = PaintingStyle.stroke;
 
@@ -430,7 +430,7 @@ class FluidPainter extends CustomPainter {
 
     // علامات النسبة
     final markerPaint = Paint()
-      ..color = engine.primaryColor.withOpacity(0.4)
+      ..color = engine.primaryColor.withValues(alpha: 0.4)
       ..strokeWidth = 2
       ..strokeCap = StrokeCap.round;
 
@@ -745,8 +745,8 @@ class FluidPainter extends CustomPainter {
 //           Offset(pool.centerX, pool.baseY),
 //           pool.width / 2,
 //           [
-//             engine.primaryColor.withOpacity(0.9),
-//             engine.secondaryColor.withOpacity(0.95),
+//             engine.primaryColor.withValues(alpha: 0.9),
+//             engine.secondaryColor.withValues(alpha: 0.95),
 //           ],
 //           [0.0, 1.0],
 //         )
@@ -771,7 +771,7 @@ class FluidPainter extends CustomPainter {
 
 //       // إضاءة
 //       final highlightPaint = Paint()
-//         ..color = engine.highlightColor.withOpacity(0.3)
+//         ..color = engine.highlightColor.withValues(alpha: 0.3)
 //         ..style = PaintingStyle.fill;
 
 //       canvas.drawOval(
@@ -794,8 +794,8 @@ class FluidPainter extends CustomPainter {
 //           Offset(particle.x, particle.y),
 //           particle.radius * 3.5,
 //           [
-//             engine.primaryColor.withOpacity(0.35),
-//             engine.primaryColor.withOpacity(0.1),
+//             engine.primaryColor.withValues(alpha: 0.35),
+//             engine.primaryColor.withValues(alpha: 0.1),
 //             Colors.transparent,
 //           ],
 //           [0.0, 0.5, 1.0],
@@ -823,7 +823,7 @@ class FluidPainter extends CustomPainter {
 //           [
 //             engine.primaryColor,
 //             engine.secondaryColor,
-//             engine.secondaryColor.withOpacity(0.8),
+//             engine.secondaryColor.withValues(alpha: 0.8),
 //           ],
 //           [0.0, 0.6, 1.0],
 //         )
@@ -837,7 +837,7 @@ class FluidPainter extends CustomPainter {
 
 //       // إضاءة لامعة (زجاجية)
 //       final highlightPaint = Paint()
-//         ..color = engine.highlightColor.withOpacity(0.6)
+//         ..color = engine.highlightColor.withValues(alpha: 0.6)
 //         ..style = PaintingStyle.fill
 //         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 1.5);
 
@@ -852,7 +852,7 @@ class FluidPainter extends CustomPainter {
 
 //       // إضاءة ثانوية
 //       final secondaryHighlight = Paint()
-//         ..color = Colors.white.withOpacity(0.25)
+//         ..color = Colors.white.withValues(alpha: 0.25)
 //         ..style = PaintingStyle.fill;
 
 //       canvas.drawCircle(
@@ -871,7 +871,7 @@ class FluidPainter extends CustomPainter {
 
 //     // خط مستوى الامتلاء
 //     final linePaint = Paint()
-//       ..color = engine.primaryColor.withOpacity(0.25)
+//       ..color = engine.primaryColor.withValues(alpha: 0.25)
 //       ..strokeWidth = 1.5
 //       ..style = PaintingStyle.stroke;
 
@@ -883,7 +883,7 @@ class FluidPainter extends CustomPainter {
 
 //     // علامات النسبة
 //     final markerPaint = Paint()
-//       ..color = engine.primaryColor.withOpacity(0.4)
+//       ..color = engine.primaryColor.withValues(alpha: 0.4)
 //       ..strokeWidth = 2
 //       ..strokeCap = StrokeCap.round;
 

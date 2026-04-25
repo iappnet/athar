@@ -5,6 +5,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import 'package:athar/features/settings/data/models/user_settings.dart';
+import 'package:athar/features/space/data/models/space_member_model.dart';
 import 'package:athar/features/space/data/models/module_model.dart';
 import 'package:athar/features/space/data/models/project_stats.dart';
 import 'package:athar/features/space/data/models/space_model.dart';
@@ -13,6 +14,7 @@ import 'package:athar/features/task/data/models/task_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
@@ -85,14 +87,35 @@ class SpaceRepositoryImpl implements SpaceRepository {
 
   @override
   Stream<List<SpaceModel>> watchMySpaces() {
-    final odUserId = _currentUserId;
-
-    return _isar.spaceModels
+    final userId = _currentUserId;
+    final spacesStream = _isar.spaceModels
         .filter()
-        .ownerIdEqualTo(odUserId)
         .deletedAtIsNull()
         .sortByCreatedAt()
         .watch(fireImmediately: true);
+
+    if (!_isAuthenticated) {
+      return spacesStream.map(
+        (spaces) => spaces.where((space) => space.ownerId == 'guest').toList(),
+      );
+    }
+
+    final memberStream = _isar.spaceMemberModels
+        .filter()
+        .userIdEqualTo(userId)
+        .watch(fireImmediately: true);
+
+    return Rx.combineLatest2<List<SpaceModel>, List<SpaceMemberModel>,
+        List<SpaceModel>>(spacesStream, memberStream, (spaces, members) {
+      final memberSpaceIds = members.map((member) => member.spaceId).toSet();
+
+      return spaces
+          .where(
+            (space) =>
+                space.ownerId == userId || memberSpaceIds.contains(space.uuid),
+          )
+          .toList();
+    });
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -124,19 +147,66 @@ class SpaceRepositoryImpl implements SpaceRepository {
     // للمساحات المشتركة: إضافة المالك كعضو تلقائياً
     if (type == 'shared' && _isAuthenticated) {
       try {
-        await _addOwnerAsMember(newSpace.uuid, odUserId);
+        await _cacheMemberLocally(
+          spaceId: newSpace.uuid,
+          userId: odUserId,
+          role: 'owner',
+        );
+        await _syncSharedSpaceImmediately(newSpace);
       } catch (e) {
         debugPrint('⚠️ Could not add owner as member: $e');
       }
     }
   }
 
-  Future<void> _addOwnerAsMember(String spaceId, String odUserId) async {
-    await _supabase.from('space_members').insert({
-      'space_id': spaceId,
-      'user_id': odUserId,
-      'role': 'owner',
-      'joined_at': DateTime.now().toIso8601String(),
+  Future<void> _cacheMemberLocally({
+    required String spaceId,
+    required String userId,
+    required String role,
+  }) async {
+    final existing = await _isar.spaceMemberModels
+        .filter()
+        .spaceIdEqualTo(spaceId)
+        .userIdEqualTo(userId)
+        .findFirst();
+
+    final member = existing ?? SpaceMemberModel();
+    member.uuid = existing?.uuid ?? const Uuid().v4();
+    member.spaceId = spaceId;
+    member.userId = userId;
+    member.role = role;
+    member.joinedAt = existing?.joinedAt ?? DateTime.now();
+    member.isSynced = true;
+
+    await _isar.writeTxn(() async {
+      await _isar.spaceMemberModels.put(member);
+    });
+  }
+
+  Future<void> _syncSharedSpaceImmediately(SpaceModel space) async {
+    await _supabase
+        .from('spaces')
+        .upsert([space.toSupabaseJson()], onConflict: 'uuid');
+
+    final existingMember = await _supabase
+        .from('space_members')
+        .select('uuid')
+        .eq('space_id', space.uuid)
+        .eq('user_id', _currentUserId)
+        .maybeSingle();
+
+    if (existingMember == null) {
+      await _supabase.from('space_members').insert({
+        'space_id': space.uuid,
+        'user_id': _currentUserId,
+        'role': 'owner',
+        'joined_at': DateTime.now().toIso8601String(),
+      });
+    }
+
+    await _isar.writeTxn(() async {
+      space.isSynced = true;
+      await _isar.spaceModels.put(space);
     });
   }
 
@@ -187,7 +257,7 @@ class SpaceRepositoryImpl implements SpaceRepository {
         final profile = profilesMap[odUserId] ?? {};
 
         result.add({
-          'uuid': member['uuid'],
+          'uuid': member['uuid']?.toString(),
           'space_id': member['space_id'],
           'user_id': odUserId,
           'role': member['role'],
@@ -230,7 +300,18 @@ class SpaceRepositoryImpl implements SpaceRepository {
       }
     });
 
-    await _addOwnerAsMember(spaceUuid, _currentUserId);
+    final localSpace = await _isar.spaceModels
+        .filter()
+        .uuidEqualTo(spaceUuid)
+        .findFirst();
+    if (localSpace != null) {
+      await _cacheMemberLocally(
+        spaceId: spaceUuid,
+        userId: _currentUserId,
+        role: 'owner',
+      );
+      await _syncSharedSpaceImmediately(localSpace);
+    }
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -393,6 +474,7 @@ class SpaceRepositoryImpl implements SpaceRepository {
   // ═══════════════════════════════════════════════════════════════════════════
 
   /// ✅ هل يوجد بيانات تجريبية؟
+  @override
   Future<bool> hasSampleData() async {
     // التحقق من وجود المساحة التجريبية "مساحتي"
     final count = await _isar.spaceModels
@@ -405,6 +487,7 @@ class SpaceRepositoryImpl implements SpaceRepository {
   }
 
   /// ✅ رفض/حذف البيانات التجريبية نهائياً
+  @override
   Future<void> dismissSampleData() async {
     // 1. حذف البيانات
     await _isar.writeTxn(() async {
@@ -436,6 +519,7 @@ class SpaceRepositoryImpl implements SpaceRepository {
   }
 
   /// ✅ إعادة تعيين حالة البيانات التجريبية (للتطوير/الاختبار)
+  @override
   Future<void> resetSampleDataState() async {
     final settings = await _getOrCreateSettings();
     settings.sampleDataShown = false;

@@ -34,11 +34,13 @@ import 'package:athar/features/prayer/presentation/cubit/prayer_cubit.dart';
 import 'package:athar/features/prayer/presentation/cubit/prayer_state.dart';
 
 // Components
+import 'package:athar/features/task/data/models/recurrence_pattern.dart';
 import 'package:athar/features/task/presentation/widgets/components/category_selector.dart';
 import 'package:athar/features/task/presentation/widgets/components/priority_selector.dart';
 import 'package:athar/features/task/presentation/widgets/components/date_time_picker.dart';
 import 'package:athar/features/task/presentation/widgets/components/duration_picker.dart';
 import 'package:athar/features/task/presentation/widgets/dialogs/conflict_dialog.dart';
+import 'package:athar/features/task/presentation/widgets/recurrence_picker.dart';
 import 'package:athar/features/space/presentation/widgets/member_selector_sheet.dart';
 import 'package:athar/features/settings/domain/repositories/settings_repository.dart';
 
@@ -96,6 +98,7 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
   int _selectedDuration = 30;
   CategoryModel? _selectedCategory;
   String? _selectedAssigneeId;
+  RecurrencePattern? _selectedRecurrence;
   ConflictResult _prayerConflict = ConflictResult.none();
 
   // Medicine Specific
@@ -379,6 +382,12 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
           selectedCategory: _selectedCategory,
           onSelected: (cat) => setState(() => _selectedCategory = cat),
           onAddPressed: _showAddCategoryDialog,
+        ),
+        AtharGap.md,
+        RecurrencePicker(
+          initialPattern: _selectedRecurrence,
+          onChanged: (pattern) =>
+              setState(() => _selectedRecurrence = pattern),
         ),
       ],
     );
@@ -972,6 +981,7 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
           moduleId: widget.targetModuleId,
           assigneeId: _selectedAssigneeId,
           reminderTime: validReminder,
+          recurrence: _selectedRecurrence,
         );
       } else if (_selectedType == EntityType.medicine) {
         // ✅ بناء قائمة الأوقات الثابتة
@@ -2254,7 +2264,7 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
 //               (time) => Chip(
 //                 label: Text(time.format(context)),
 //                 onDeleted: () => setState(() => _fixedTimes.remove(time)),
-//                 backgroundColor: colors.info.withOpacity(0.1),
+//                 backgroundColor: colors.info.withValues(alpha: 0.1),
 //                 labelStyle: TextStyle(color: colors.info),
 //                 deleteIconColor: colors.info,
 //               ),
@@ -2519,7 +2529,7 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
 
 //     return Container(
 //       decoration: BoxDecoration(
-//         color: colors.info.withOpacity(0.1),
+//         color: colors.info.withValues(alpha: 0.1),
 //         borderRadius: AtharRadii.radiusMd,
 //       ),
 //       child: ExpansionTile(

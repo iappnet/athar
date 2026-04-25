@@ -230,11 +230,11 @@ class _FocusPageState extends State<FocusPage>
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
         decoration: BoxDecoration(
           color: isSelected
-              ? theme.primary.withOpacity(0.3)
-              : Colors.white.withOpacity(0.1),
+              ? theme.primary.withValues(alpha: 0.3)
+              : Colors.white.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? theme.primary : Colors.white.withOpacity(0.2),
+            color: isSelected ? theme.primary : Colors.white.withValues(alpha: 0.2),
           ),
         ),
         child: Text(
@@ -271,7 +271,7 @@ class _FocusPageState extends State<FocusPage>
           gradient: RadialGradient(
             center: Alignment.center,
             radius: 1.5,
-            colors: [theme.primary.withOpacity(0.15), Colors.black],
+            colors: [theme.primary.withValues(alpha: 0.15), Colors.black],
           ),
         ),
       ),
@@ -311,14 +311,14 @@ class _FocusPageState extends State<FocusPage>
         width: 48.w,
         height: 48.w,
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.1),
+          color: Colors.white.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.white.withOpacity(0.2)),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
           boxShadow: [
-            BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 10),
+            BoxShadow(color: Colors.black.withValues(alpha: 0.2), blurRadius: 10),
           ],
         ),
-        child: Icon(icon, color: Colors.white.withOpacity(0.8), size: 22.sp),
+        child: Icon(icon, color: Colors.white.withValues(alpha: 0.8), size: 22.sp),
       ),
     );
   }
@@ -334,16 +334,16 @@ class _FocusPageState extends State<FocusPage>
           l10n.focusNowOn,
           style: TextStyle(
             fontSize: 14.sp,
-            color: Colors.white.withOpacity(0.6),
+            color: Colors.white.withValues(alpha: 0.6),
           ),
         ),
         SizedBox(height: 8.h),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
           decoration: BoxDecoration(
-            color: theme.primary.withOpacity(0.2),
+            color: theme.primary.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(25),
-            border: Border.all(color: theme.primary.withOpacity(0.3)),
+            border: Border.all(color: theme.primary.withValues(alpha: 0.3)),
           ),
           child: Text(
             widget.focusTarget!,
@@ -380,15 +380,15 @@ class _FocusPageState extends State<FocusPage>
             Container(
               padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 20.h),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.05),
+                color: Colors.white.withValues(alpha: 0.05),
                 borderRadius: BorderRadius.circular(30),
                 border: Border.all(
-                  color: theme.primary.withOpacity(0.3),
+                  color: theme.primary.withValues(alpha: 0.3),
                   width: 2,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: theme.primary.withOpacity(0.2),
+                    color: theme.primary.withValues(alpha: 0.2),
                     blurRadius: 30,
                     spreadRadius: 5,
                   ),
@@ -404,7 +404,7 @@ class _FocusPageState extends State<FocusPage>
                   letterSpacing: -2,
                   shadows: [
                     Shadow(
-                      color: theme.primary.withOpacity(0.5),
+                      color: theme.primary.withValues(alpha: 0.5),
                       blurRadius: 20,
                     ),
                   ],
@@ -438,7 +438,7 @@ class _FocusPageState extends State<FocusPage>
     if (state is FocusRunning) return theme.primary;
     if (state is FocusPaused) return Colors.amber;
     if (state is FocusCompleted) return Colors.green;
-    return Colors.white.withOpacity(0.6);
+    return Colors.white.withValues(alpha: 0.6);
   }
 
   // ═══════════════════════════════════════════════════════════════════
@@ -518,12 +518,12 @@ class _FocusPageState extends State<FocusPage>
             width: size,
             height: size,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.15),
+              color: color.withValues(alpha: 0.15),
               shape: BoxShape.circle,
-              border: Border.all(color: color.withOpacity(0.4), width: 2),
+              border: Border.all(color: color.withValues(alpha: 0.4), width: 2),
               boxShadow: [
                 BoxShadow(
-                  color: color.withOpacity(0.3),
+                  color: color.withValues(alpha: 0.3),
                   blurRadius: 15,
                   spreadRadius: 2,
                 ),
@@ -537,7 +537,7 @@ class _FocusPageState extends State<FocusPage>
           label,
           style: TextStyle(
             fontSize: 12.sp,
-            color: color.withOpacity(0.8),
+            color: color.withValues(alpha: 0.8),
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -560,7 +560,7 @@ class _FocusPageState extends State<FocusPage>
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: theme.primary.withOpacity(0.5),
+              color: theme.primary.withValues(alpha: 0.5),
               blurRadius: 25,
               spreadRadius: 5,
             ),
@@ -1085,7 +1085,7 @@ class FocusColorTheme {
 //                     icon: Icons.play_arrow_rounded,
 //                     label: "استئناف",
 //                     color: AppColors.primary,
-//                     bgColor: AppColors.primary.withOpacity(0.1),
+//                     bgColor: AppColors.primary.withValues(alpha: 0.1),
 //                     onTap: () => context.read<FocusCubit>().resumeTimer(),
 //                     isLarge: true, // زر أكبر للاستئناف
 //                   ),
@@ -1110,7 +1110,7 @@ class FocusColorTheme {
 //                         shape: BoxShape.circle,
 //                         boxShadow: [
 //                           BoxShadow(
-//                             color: AppColors.primary.withOpacity(0.4),
+//                             color: AppColors.primary.withValues(alpha: 0.4),
 //                             blurRadius: 20,
 //                             offset: const Offset(0, 8),
 //                           ),
@@ -1267,12 +1267,12 @@ class FocusColorTheme {
 //         return Container(
 //           padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 20.h),
 //           decoration: BoxDecoration(
-//             color: Colors.white.withOpacity(0.9), // خلفية بيضاء لضمان القراءة
+//             color: Colors.white.withValues(alpha: 0.9), // خلفية بيضاء لضمان القراءة
 //             borderRadius: BorderRadius.circular(40.r),
 //             border: Border.all(color: Colors.grey.shade300),
 //             boxShadow: [
 //               BoxShadow(
-//                 color: Colors.black.withOpacity(0.1),
+//                 color: Colors.black.withValues(alpha: 0.1),
 //                 blurRadius: 20,
 //                 offset: const Offset(0, 10),
 //               ),
@@ -1368,7 +1368,7 @@ class FocusColorTheme {
 //           // ظل خفيف للأزرار
 //           boxShadow: [
 //             BoxShadow(
-//               color: Colors.black.withOpacity(0.1),
+//               color: Colors.black.withValues(alpha: 0.1),
 //               blurRadius: 10,
 //               offset: const Offset(0, 4),
 //             ),

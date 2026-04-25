@@ -49,7 +49,7 @@ class ReminderPickerWidget extends StatelessWidget {
               Switch(
                 value: isEnabled,
                 onChanged: onToggle,
-                activeColor: colorScheme.primary,
+                activeThumbColor: colorScheme.primary,
               ),
             ],
           ),

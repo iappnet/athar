@@ -1,5 +1,9 @@
+import 'package:athar/core/config/subscription_config.dart';
 import 'package:athar/core/design_system/molecules/skeletons/athar_skeleton.dart';
 import 'package:athar/core/di/injection.dart';
+import 'package:athar/features/subscription/domain/entities/subscription_status.dart';
+import 'package:athar/features/subscription/presentation/cubit/subscription_cubit.dart';
+import 'package:athar/features/subscription/presentation/widgets/pro_gate_widget.dart';
 import 'package:athar/core/iam/permission_service.dart';
 import 'package:athar/features/assets/presentation/cubit/assets_state.dart';
 import 'package:athar/features/assets/presentation/pages/assets_page.dart';
@@ -13,6 +17,7 @@ import 'package:athar/features/space/presentation/pages/space_members_page.dart'
 import 'package:athar/features/space/presentation/widgets/module_settings_dialog.dart';
 import 'package:athar/features/space/presentation/widgets/space_settings_dialog.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
+import 'package:athar/core/utils/navigation_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,7 +49,16 @@ class _SpaceDetailsPageState extends State<SpacePage> {
 
     // ✅ الحل الجذري لمشكلة البيانات القديمة:
     // نستمع لتغيرات SpaceCubit لنحصل على أحدث نسخة من المساحة الحالية
-    return BlocBuilder<SpaceCubit, SpaceState>(
+    return BlocListener<SpaceCubit, SpaceState>(
+      listenWhen: (_, curr) => curr is SpaceError,
+      listener: (context, state) {
+        if (state is SpaceError && state.message == 'spaces_pro_required') {
+          context
+              .read<SubscriptionCubit>()
+              .presentSpacesPaywall(context);
+        }
+      },
+      child: BlocBuilder<SpaceCubit, SpaceState>(
       builder: (context, spaceState) {
         // 1. محاولة العثور على النسخة المحدثة من المساحة الحالية
         SpaceModel currentSpace = widget.space;
@@ -72,6 +86,10 @@ class _SpaceDetailsPageState extends State<SpacePage> {
             elevation: 0,
             backgroundColor: Colors.transparent,
             foregroundColor: colorScheme.onSurface,
+            leading: BackButton(
+              color: colorScheme.onSurface,
+              onPressed: () => NavigationUtils.safeBack(context),
+            ),
             actions: [
               if (currentSpace.type ==
                   'shared') // ✅ نستخدم currentSpace المحدثة
@@ -187,7 +205,8 @@ class _SpaceDetailsPageState extends State<SpacePage> {
           ),
         );
       },
-    );
+    ),   // closes BlocBuilder
+    );   // closes BlocListener
   }
 
   // ✅ إصلاح الخلل: دالة التوجيه الموحدة
@@ -202,7 +221,16 @@ class _SpaceDetailsPageState extends State<SpacePage> {
     } else if (module.type == 'assets') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const AssetsPage()),
+        MaterialPageRoute(
+          builder: (context) => ProGateWidget(
+            hasAccess: (SubscriptionStatus s) => s.hasAssetsPack,
+            entitlementId: SubscriptionConfig.entitlementAssetsPack,
+            featureName: 'وحدة الأصول',
+            featureIcon: Icons.account_balance_wallet_rounded,
+            featureDescription: 'اشترِ وحدة الأصول مرة واحدة وتتبع ممتلكاتك للأبد',
+            child: const AssetsPage(),
+          ),
+        ),
       );
     } else if (module.type == 'list') {
       Navigator.push(
@@ -213,7 +241,14 @@ class _SpaceDetailsPageState extends State<SpacePage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => HealthDashboardPage(module: module),
+          builder: (context) => ProGateWidget(
+            hasAccess: (SubscriptionStatus s) => s.hasHealthPack,
+            entitlementId: SubscriptionConfig.entitlementHealthPack,
+            featureName: 'وحدة الصحة',
+            featureIcon: Icons.favorite_rounded,
+            featureDescription: 'اشترِ وحدة الصحة مرة واحدة وتتبع صحتك للأبد',
+            child: HealthDashboardPage(module: module),
+          ),
         ),
       );
     }

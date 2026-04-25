@@ -644,7 +644,7 @@ class HabitTile extends StatelessWidget {
 //           ),
 //           boxShadow: [
 //             BoxShadow(
-//               color: Colors.black.withOpacity(0.03),
+//               color: Colors.black.withValues(alpha: 0.03),
 //               blurRadius: 10,
 //               offset: const Offset(0, 4),
 //             ),
@@ -699,7 +699,7 @@ class HabitTile extends StatelessWidget {
 //                       vertical: 4.h,
 //                     ),
 //                     decoration: BoxDecoration(
-//                       color: Colors.orange.withOpacity(0.1),
+//                       color: Colors.orange.withValues(alpha: 0.1),
 //                       borderRadius: BorderRadius.circular(8.r),
 //                     ),
 //                     child: Row(
@@ -774,7 +774,7 @@ class HabitTile extends StatelessWidget {
 //                 color: isDone
 //                     ? (isToday
 //                           ? AppColors.primary
-//                           : AppColors.primary.withOpacity(0.5))
+//                           : AppColors.primary.withValues(alpha: 0.5))
 //                     : Colors.grey.shade100,
 //                 border: isToday && !isDone
 //                     ? Border.all(color: AppColors.primary, width: 1)

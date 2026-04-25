@@ -616,7 +616,7 @@ class _HealthTimelinePageState extends State<HealthTimelinePage> {
 //       child: ChoiceChip(
 //         label: Text(label),
 //         selected: isSelected,
-//         selectedColor: AppColors.primary.withOpacity(0.2),
+//         selectedColor: AppColors.primary.withValues(alpha: 0.2),
 //         labelStyle: TextStyle(
 //           color: isSelected ? AppColors.primary : Colors.grey,
 //           fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
@@ -639,7 +639,7 @@ class _HealthTimelinePageState extends State<HealthTimelinePage> {
 //           right: BorderSide(color: Colors.purple, width: 4.w),
 //         ), // لون مميز للمواعيد
 //         boxShadow: [
-//           BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 5),
+//           BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 5),
 //         ],
 //       ),
 //       child: Column(
@@ -703,7 +703,7 @@ class _HealthTimelinePageState extends State<HealthTimelinePage> {
 //           right: BorderSide(color: color, width: 4.w),
 //         ),
 //         boxShadow: [
-//           BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 5),
+//           BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 5),
 //         ],
 //       ),
 //       child: Row(

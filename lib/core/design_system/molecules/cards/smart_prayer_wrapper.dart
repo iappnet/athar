@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../features/settings/presentation/cubit/settings_cubit.dart';
 import '../../../../features/settings/presentation/cubit/settings_state.dart';
 import '../../../../features/settings/data/models/user_settings.dart';
@@ -65,6 +66,50 @@ class SmartPrayerCardWrapper extends StatelessWidget {
           builder: (context, prayerState) {
             if (prayerState is PrayerLoaded) {
               return NextPrayerCard(allPrayers: prayerState.allPrayers);
+            }
+            if (prayerState is PrayerLoading || prayerState is PrayerInitial) {
+              final cs = Theme.of(context).colorScheme;
+              return Container(
+                height: 90.h,
+                margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                decoration: BoxDecoration(
+                  color: cs.surfaceContainerHighest.withValues(alpha: 0.4),
+                  borderRadius: BorderRadius.circular(16.r),
+                ),
+                child: const Center(child: CircularProgressIndicator()),
+              );
+            }
+            if (prayerState is PrayerError) {
+              final cs = Theme.of(context).colorScheme;
+              return Container(
+                margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                padding: EdgeInsets.all(12.w),
+                decoration: BoxDecoration(
+                  color: cs.errorContainer.withValues(alpha: 0.3),
+                  borderRadius: BorderRadius.circular(16.r),
+                  border: Border.all(
+                      color: cs.error.withValues(alpha: 0.3)),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.cloud_off_rounded,
+                        color: cs.error, size: 20.sp),
+                    SizedBox(width: 8.w),
+                    Expanded(
+                      child: Text(
+                        prayerState.message,
+                        style: TextStyle(
+                            color: cs.error, fontSize: 12.sp),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () =>
+                          context.read<PrayerCubit>().loadPrayerTimes(),
+                      child: const Icon(Icons.refresh_rounded),
+                    ),
+                  ],
+                ),
+              );
             }
             return const SizedBox.shrink();
           },

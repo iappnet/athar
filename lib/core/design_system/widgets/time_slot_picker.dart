@@ -103,7 +103,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
   Widget _buildModeTabs(ColorScheme colorScheme) {
     return Container(
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest.withOpacity(0.5),
+        color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(12),
       ),
       padding: EdgeInsets.all(4.w),
@@ -470,7 +470,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
         padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
         decoration: BoxDecoration(
           color: isSelected
-              ? info.color.withOpacity(0.2)
+              ? info.color.withValues(alpha: 0.2)
               : colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
@@ -559,7 +559,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: colorScheme.outline.withOpacity(0.3)),
+          border: Border.all(color: colorScheme.outline.withValues(alpha: 0.3)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -720,7 +720,7 @@ class TimeSlotDisplay extends StatelessWidget {
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: colorScheme.outline.withOpacity(0.3)),
+          border: Border.all(color: colorScheme.outline.withValues(alpha: 0.3)),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -752,12 +752,13 @@ class TimeSlotDisplay extends StatelessWidget {
   }
 
   String _getDisplayText() {
-    if (settings == null) return 'اختر الوقت';
+    final s = settings;
+    if (s == null) return 'اختر الوقت';
 
-    switch (settings!.type) {
+    switch (s.type) {
       case TimeSpecificationType.fixed:
-        if (settings!.fixedTime == null) return 'غير محدد';
-        final time = settings!.fixedTime!;
+        final time = s.fixedTime;
+        if (time == null) return 'غير محدد';
         final hour = time.hour;
         final minute = time.minute.toString().padLeft(2, '0');
         final period = hour >= 12 ? 'م' : 'ص';
@@ -765,16 +766,16 @@ class TimeSlotDisplay extends StatelessWidget {
         return '$hour12:$minute $period';
 
       case TimeSpecificationType.relativeToprayer:
-        final prayerName = _getPrayerName(settings!.referencePrayer);
-        if (settings!.offsetMinutes == 0) return prayerName;
-        final relation = settings!.prayerRelation == PrayerRelativeTime.before
+        final prayerName = _getPrayerName(s.referencePrayer);
+        if (s.offsetMinutes == 0) return prayerName;
+        final relation = s.prayerRelation == PrayerRelativeTime.before
             ? 'قبل'
             : 'بعد';
-        return '$relation $prayerName بـ ${settings!.offsetMinutes} د';
+        return '$relation $prayerName بـ ${s.offsetMinutes} د';
 
       case TimeSpecificationType.period:
-        final periodName = _getPeriodName(settings!.period);
-        switch (settings!.periodPosition) {
+        final periodName = _getPeriodName(s.period);
+        switch (s.periodPosition) {
           case PeriodPosition.start:
             return 'بداية $periodName';
           case PeriodPosition.middle:
@@ -788,9 +789,10 @@ class TimeSlotDisplay extends StatelessWidget {
   }
 
   IconData _getIcon() {
-    if (settings == null) return Icons.access_time;
+    final s = settings;
+    if (s == null) return Icons.access_time;
 
-    switch (settings!.type) {
+    switch (s.type) {
       case TimeSpecificationType.fixed:
         return Icons.access_time;
       case TimeSpecificationType.relativeToprayer:
@@ -1051,7 +1053,7 @@ class TimeSlotDisplay extends StatelessWidget {
 //   Widget _buildModeTabs(ColorScheme colorScheme) {
 //     return Container(
 //       decoration: BoxDecoration(
-//         color: colorScheme.surfaceContainerHighest.withOpacity(0.5),
+//         color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
 //         borderRadius: BorderRadius.circular(12),
 //       ),
 //       padding: EdgeInsets.all(4.w),
@@ -1360,7 +1362,7 @@ class TimeSlotDisplay extends StatelessWidget {
 //         padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
 //         decoration: BoxDecoration(
 //           color: isSelected
-//               ? info.color.withOpacity(0.2)
+//               ? info.color.withValues(alpha: 0.2)
 //               : colorScheme.surfaceContainerHighest,
 //           borderRadius: BorderRadius.circular(12),
 //           border: Border.all(
@@ -1415,7 +1417,7 @@ class TimeSlotDisplay extends StatelessWidget {
 //         decoration: BoxDecoration(
 //           color: colorScheme.surfaceContainerHighest,
 //           borderRadius: BorderRadius.circular(16),
-//           border: Border.all(color: colorScheme.outline.withOpacity(0.3)),
+//           border: Border.all(color: colorScheme.outline.withValues(alpha: 0.3)),
 //         ),
 //         child: Row(
 //           mainAxisAlignment: MainAxisAlignment.center,

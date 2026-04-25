@@ -71,4 +71,15 @@ class SpaceModel {
       'deleted_at': deletedAt?.toIso8601String(),
     };
   }
+
+  Map<String, dynamic> toSupabaseJson() {
+    return {
+      'uuid': uuid,
+      'name': name,
+      'description': null,
+      'type': type,
+      'owner_id': ownerId,
+      'created_at': createdAt?.toIso8601String(),
+    };
+  }
 }

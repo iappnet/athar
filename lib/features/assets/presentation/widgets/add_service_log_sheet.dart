@@ -31,6 +31,14 @@ class _AddServiceLogSheetState extends State<AddServiceLogSheet> {
   DateTime _performedDate = DateTime.now();
 
   @override
+  void dispose() {
+    _odometerController.dispose();
+    _costController.dispose();
+    _notesController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context);

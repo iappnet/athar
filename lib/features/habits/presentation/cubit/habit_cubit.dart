@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:athar/core/config/subscription_config.dart';
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/core/services/habit_notification_scheduler.dart';
+import 'package:athar/features/subscription/presentation/cubit/subscription_cubit.dart';
 import 'package:athar/features/health/presentation/cubit/health_state.dart';
 import 'package:athar/features/settings/domain/repositories/settings_repository.dart';
 import 'package:flutter/material.dart';
@@ -360,6 +362,17 @@ class HabitCubit extends Cubit<HabitState> {
 
   // داخل HabitCubit
   Future<void> addHabit(HabitModel habit) async {
+    // Free-tier limit: count only regular (non-athkar) habits.
+    if (!getIt<SubscriptionCubit>().hasUnlimitedTasksAndHabits) {
+      final regularCount = _cachedHabits
+          .where((h) => h.type == HabitType.regular)
+          .length;
+      if (regularCount >= SubscriptionConfig.freeHabitsLimit) {
+        emit(HabitFreeLimitReached());
+        return;
+      }
+    }
+
     try {
       await _habitRepository.addHabit(habit);
       // ✅ جدولة التذكير فوراً

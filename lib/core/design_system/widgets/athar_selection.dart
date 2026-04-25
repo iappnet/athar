@@ -214,12 +214,14 @@ class AtharRadio<T> extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final effectiveActiveColor = activeColor ?? colorScheme.primary;
 
-    Widget radio = Radio<T>(
-      value: value,
+    Widget radio = RadioGroup<T>(
       groupValue: groupValue,
-      onChanged: enabled ? onChanged : null,
-      activeColor: effectiveActiveColor,
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      onChanged: enabled ? (value) => onChanged?.call(value) : (_) {},
+      child: Radio<T>(
+        value: value,
+        activeColor: effectiveActiveColor,
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
     );
 
     if (label == null) return radio;

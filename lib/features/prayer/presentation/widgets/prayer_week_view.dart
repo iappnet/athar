@@ -223,11 +223,11 @@ class PrayerWeekView extends StatelessWidget {
 //       margin: EdgeInsets.only(bottom: 12.h),
 //       padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
 //       decoration: BoxDecoration(
-//         color: isToday ? AppColors.primary.withOpacity(0.05) : Colors.white,
+//         color: isToday ? AppColors.primary.withValues(alpha: 0.05) : Colors.white,
 //         borderRadius: BorderRadius.circular(12.r),
 //         border: Border.all(
 //           color: isToday
-//               ? AppColors.primary.withOpacity(0.3)
+//               ? AppColors.primary.withValues(alpha: 0.3)
 //               : Colors.grey.shade200,
 //         ),
 //       ),

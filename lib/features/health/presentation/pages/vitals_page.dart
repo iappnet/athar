@@ -441,7 +441,7 @@ class _VitalsPageState extends State<VitalsPage> {
 //       child: ChoiceChip(
 //         label: Text(label),
 //         selected: isSelected,
-//         selectedColor: AppColors.primary.withOpacity(0.1),
+//         selectedColor: AppColors.primary.withValues(alpha: 0.1),
 //         labelStyle: TextStyle(
 //           color: isSelected ? AppColors.primary : Colors.grey,
 //           fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
@@ -506,7 +506,7 @@ class _VitalsPageState extends State<VitalsPage> {
 //         borderRadius: BorderRadius.circular(16.r),
 //         boxShadow: [
 //           BoxShadow(
-//             color: Colors.black.withOpacity(0.03),
+//             color: Colors.black.withValues(alpha: 0.03),
 //             blurRadius: 10,
 //             offset: const Offset(0, 4),
 //           ),
@@ -517,7 +517,7 @@ class _VitalsPageState extends State<VitalsPage> {
 //           Container(
 //             padding: EdgeInsets.all(12.w),
 //             decoration: BoxDecoration(
-//               color: color.withOpacity(0.1),
+//               color: color.withValues(alpha: 0.1),
 //               shape: BoxShape.circle,
 //             ),
 //             child: Icon(icon, color: color, size: 24.sp),

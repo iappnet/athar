@@ -66,6 +66,11 @@ class AssetsCubit extends Cubit<AssetsState> {
     String? notes,
     String? spaceId,
     String? moduleId,
+    DateTime? nextMaintenanceDate,
+    DateTime? insuranceExpiryDate,
+    DateTime? licenseExpiryDate,
+    bool reminderEnabled = true,
+    int reminderDaysBefore = 7,
   }) async {
     // 🔒 يمكن إضافة فحص صلاحية الإنشاء هنا أيضاً (اختياري، لأن الواجهة تخفي الزر)
     // if (!_permissionService.hasPermission('create', spaceId: spaceId, resourceType: 'asset')) return;
@@ -85,11 +90,19 @@ class AssetsCubit extends Cubit<AssetsState> {
         price: price,
         notes: notes,
         spaceId: spaceId,
-        moduleId: moduleId, // ✅ حفظ الربط
+        moduleId: moduleId,
+        nextMaintenanceDate: nextMaintenanceDate,
+        insuranceExpiryDate: insuranceExpiryDate,
+        licenseExpiryDate: licenseExpiryDate,
+        reminderEnabled: reminderEnabled,
+        reminderDaysBefore: reminderDaysBefore,
       );
 
       await _repository.addAsset(newAsset);
+      if (isClosed) return;
+      emit(AssetOperationSuccess("تم إضافة الأصل بنجاح"));
     } catch (e) {
+      if (isClosed) return;
       emit(AssetsError("فشل إضافة الأصل"));
       watchAssets(moduleId: moduleId);
     }
@@ -151,6 +164,8 @@ class AssetsCubit extends Cubit<AssetsState> {
     }
 
     await _repository.deleteAsset(id);
+    if (isClosed) return;
+    emit(AssetOperationSuccess("تم حذف الأصل بنجاح"));
   }
 
   // ===========================================================================

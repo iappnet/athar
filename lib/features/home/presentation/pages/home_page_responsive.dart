@@ -2,7 +2,6 @@
 // ✅ مثال على الصفحة الرئيسية بالتصميم المتجاوب الجديد
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/layouts/adaptive_scaffold.dart';
 import '../../../../core/layouts/responsive_page_wrapper.dart';
@@ -53,7 +52,6 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isTablet = ResponsiveHelper.isTablet(context);
     final l10n = AppLocalizations.of(context);
 
     return AdaptiveScaffold(
@@ -139,7 +137,6 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
   // ═══════════════════════════════════════════════════════════════════
 
   Widget _buildPrayerCard(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     final isTablet = ResponsiveHelper.isTablet(context);
 
     return ContentCard(
@@ -302,7 +299,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.symmetric(horizontal: 4.w),
         itemCount: stats.length,
-        separatorBuilder: (_, __) => SizedBox(width: 12.w),
+        separatorBuilder: (_, _) => SizedBox(width: 12.w),
         itemBuilder: (_, index) => SizedBox(
           width: 130.w,
           child: _buildStatCard(stats[index]),
@@ -326,7 +323,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
               Container(
                 padding: EdgeInsets.all(6.w),
                 decoration: BoxDecoration(
-                  color: stat.color.withOpacity(0.15),
+                  color: stat.color.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(stat.icon, color: stat.color, size: 18.sp),
@@ -391,7 +388,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
       margin: EdgeInsets.zero,
       padding: EdgeInsets.all(14.w),
       backgroundColor: habit.completed 
-          ? colorScheme.primaryContainer.withOpacity(0.5) 
+          ? colorScheme.primaryContainer.withValues(alpha: 0.5) 
           : null,
       child: Row(
         children: [
@@ -399,7 +396,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
             padding: EdgeInsets.all(8.w),
             decoration: BoxDecoration(
               color: habit.completed 
-                  ? colorScheme.primary.withOpacity(0.15) 
+                  ? colorScheme.primary.withValues(alpha: 0.15) 
                   : colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(10),
             ),

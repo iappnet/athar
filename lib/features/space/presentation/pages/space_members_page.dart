@@ -7,6 +7,7 @@ import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/services.dart';
 import 'package:athar/core/iam/permission_service.dart';
 
 class SpaceMembersPage extends StatelessWidget {
@@ -32,44 +33,83 @@ class SpaceMembersPage extends StatelessWidget {
           backgroundColor: colorScheme.surface,
           foregroundColor: colorScheme.onSurface,
         ),
-        body: BlocBuilder<SpaceMembersCubit, SpaceMembersState>(
+        body: BlocConsumer<SpaceMembersCubit, SpaceMembersState>(
+          listener: (context, state) {
+            if (state is SpaceMembersError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
+            } else if (state is SpaceMembersInviteSent) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('تم إرسال الدعوة إلى ${state.userName}'),
+                  backgroundColor: Colors.green,
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
+            }
+          },
           builder: (context, state) {
-            if (state is SpaceMembersLoading) {
+            final cubit = context.read<SpaceMembersCubit>();
+            final members = state is SpaceMembersLoaded
+                ? state.members
+                : cubit.lastMembers;
+            final isAdmin = state is SpaceMembersLoaded
+                ? state.isAdmin
+                : cubit.lastIsAdmin;
+
+            if (state is SpaceMembersLoading && members.isEmpty) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            if (state is SpaceMembersLoaded) {
-              final members = state.members;
-              final bool isFull = members.length >= 15;
-
-              return Column(
-                children: [
-                  _buildHeader(
-                    context,
-                    colorScheme,
-                    l10n,
-                    members.length,
-                    isFull,
-                    state.isAdmin,
-                  ),
-                  Expanded(
-                    child: ListView.separated(
-                      padding: EdgeInsets.symmetric(vertical: 10.h),
-                      itemCount: members.length,
-                      separatorBuilder: (_, _) => const Divider(indent: 70),
-                      itemBuilder: (context, index) => _buildMemberTile(
-                        context,
-                        colorScheme,
-                        l10n,
-                        members[index],
-                        state.isAdmin,
-                      ),
+            if (state is SpaceMembersError && members.isEmpty) {
+              return Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(state.message, textAlign: TextAlign.center),
+                    SizedBox(height: 12.h),
+                    ElevatedButton(
+                      onPressed: () => context
+                          .read<SpaceMembersCubit>()
+                          .loadMembers(spaceId),
+                      child: Text(l10n.retry),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               );
             }
-            return const SizedBox();
+
+            final bool isFull = members.length >= 15;
+            return Column(
+              children: [
+                _buildHeader(
+                  context,
+                  colorScheme,
+                  l10n,
+                  members.length,
+                  isFull,
+                  isAdmin,
+                ),
+                Expanded(
+                  child: ListView.separated(
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                    itemCount: members.length,
+                    separatorBuilder: (_, _) => const Divider(indent: 70),
+                    itemBuilder: (context, index) => _buildMemberTile(
+                      context,
+                      colorScheme,
+                      l10n,
+                      members[index],
+                      isAdmin,
+                    ),
+                  ),
+                ),
+              ],
+            );
           },
         ),
       ),
@@ -283,8 +323,17 @@ class SpaceMembersPage extends StatelessWidget {
                           );
                         }
                         if (state is SpaceMembersSearchResults) {
+                          final query = state.query.trim();
+                          final isEmailQuery = _isEmail(query);
+
                           if (state.results.isEmpty) {
-                            return Center(child: Text(l10n.noResults));
+                            return _buildSearchFallback(
+                              parentContext,
+                              l10n,
+                              cubit,
+                              query,
+                              isEmailQuery,
+                            );
                           }
 
                           return ListView.builder(
@@ -292,27 +341,35 @@ class SpaceMembersPage extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final user = state.results[index];
                               return ListTile(
-                                leading: const CircleAvatar(
-                                  child: Icon(Icons.person_add),
+                                leading: CircleAvatar(
+                                  backgroundImage: user.avatarUrl != null
+                                      ? NetworkImage(user.avatarUrl!)
+                                      : null,
+                                  child: user.avatarUrl == null
+                                      ? const Icon(Icons.person)
+                                      : null,
                                 ),
                                 title: Text(user.fullName),
-                                subtitle: Text(user.username),
-                                trailing: IconButton(
-                                  icon: Icon(
-                                    Icons.send,
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.primary,
-                                  ),
-                                  onPressed: () {
-                                    cubit.inviteUser(user);
+                                subtitle: Text(
+                                  user.email?.isNotEmpty == true
+                                      ? '${user.username} • ${user.email}'
+                                      : user.username,
+                                ),
+                                trailing: FilledButton.icon(
+                                  icon: const Icon(Icons.person_add_alt_1),
+                                  label: Text(l10n.inviteMember),
+                                  onPressed: () async {
+                                    final success = await cubit.addMember(user);
+                                    if (!parentContext.mounted) return;
                                     Navigator.pop(context);
                                     ScaffoldMessenger.of(
                                       parentContext,
                                     ).showSnackBar(
                                       SnackBar(
                                         content: Text(
-                                          l10n.spaceMembersInviteSent,
+                                          success
+                                              ? l10n.spaceMembersInviteSent
+                                              : l10n.errorOccurred(''),
                                         ),
                                       ),
                                     );
@@ -337,6 +394,89 @@ class SpaceMembersPage extends StatelessWidget {
     ).whenComplete(() {
       cubit.cancelSearch();
     });
+  }
+
+  Widget _buildSearchFallback(
+    BuildContext parentContext,
+    AppLocalizations l10n,
+    SpaceMembersCubit cubit,
+    String query,
+    bool isEmailQuery,
+  ) {
+    final colorScheme = Theme.of(parentContext).colorScheme;
+
+    if (query.isEmpty) {
+      return Center(child: Text(l10n.spaceMembersSearchPrompt));
+    }
+
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.all(16.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.search_off, size: 40, color: colorScheme.outline),
+            SizedBox(height: 12.h),
+            Text(
+              l10n.noResultsFor(query),
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),
+            ),
+            SizedBox(height: 8.h),
+            Text(
+              isEmailQuery
+                  ? 'No account found. You can still create an invitation for this email.'
+                  : 'No registered username found. Best practice is to invite using email, or share a join link.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: colorScheme.onSurfaceVariant,
+                fontSize: 13.sp,
+              ),
+            ),
+            SizedBox(height: 16.h),
+            if (isEmailQuery)
+              FilledButton.icon(
+                icon: const Icon(Icons.mark_email_unread_outlined),
+                label: Text(l10n.inviteMember),
+                onPressed: () async {
+                  final success = await cubit.inviteByEmail(query);
+                  if (!parentContext.mounted) return;
+                  Navigator.pop(parentContext);
+                  ScaffoldMessenger.of(parentContext).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        success
+                            ? l10n.spaceMembersInviteSent
+                            : l10n.errorOccurred(''),
+                      ),
+                    ),
+                  );
+                },
+              )
+            else
+              OutlinedButton.icon(
+                icon: const Icon(Icons.link),
+                label: Text(l10n.share),
+                onPressed: () async {
+                  final link = await cubit.createInviteLink();
+                  if (!parentContext.mounted || link == null) return;
+                  await Clipboard.setData(ClipboardData(text: link));
+                  if (!parentContext.mounted) return;
+                  Navigator.pop(parentContext);
+                  ScaffoldMessenger.of(parentContext).showSnackBar(
+                    SnackBar(content: Text('${l10n.copy}: $link')),
+                  );
+                },
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  bool _isEmail(String value) {
+    final trimmed = value.trim();
+    return RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(trimmed);
   }
 
   void _showManagementOptions(

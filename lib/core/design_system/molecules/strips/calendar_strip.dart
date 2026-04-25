@@ -32,8 +32,9 @@ class CalendarStrip extends StatelessWidget {
         separatorBuilder: (ctx, _) => AtharGap.hMd,
         itemBuilder: (context, index) {
           final date = weekDates[index];
-          final isSelected =
-              date.day == selectedDate.day && date.month == selectedDate.month;
+          final isSelected = date.day == selectedDate.day &&
+              date.month == selectedDate.month &&
+              date.year == selectedDate.year;
 
           return GestureDetector(
             onTap: () => onDateSelected(date),
@@ -156,7 +157,7 @@ class CalendarStrip extends StatelessWidget {
 //                 boxShadow: [
 //                   if (!isSelected)
 //                     BoxShadow(
-//                       // ✅ Colors.black.withOpacity(0.03) → colors.shadow
+//                       // ✅ Colors.black.withValues(alpha: 0.03) → colors.shadow
 //                       color: colors.shadow.withValues(alpha: 0.3),
 //                       blurRadius: 4,
 //                       offset: const Offset(0, 2),
@@ -248,7 +249,7 @@ class CalendarStrip extends StatelessWidget {
 //                 boxShadow: [
 //                   if (!isSelected)
 //                     BoxShadow(
-//                       color: Colors.black.withOpacity(0.03),
+//                       color: Colors.black.withValues(alpha: 0.03),
 //                       blurRadius: 4,
 //                       offset: const Offset(0, 2),
 //                     ),

@@ -67,7 +67,12 @@ class _AssetDetailsPageState extends State<AssetDetailsPage>
           if (targetModule.uuid == 'dummy') targetModule = null;
         }
       }
-    } catch (_) {}
+    } catch (e) {
+      assert(() {
+        debugPrint('[AssetDetailsPage] _initPermissions: $e');
+        return true;
+      }());
+    }
 
     _canEditFuture = permissionService.canEdit(
       'asset',

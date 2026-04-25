@@ -4,6 +4,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import 'package:athar/core/utils/responsive_helper.dart';
+import 'package:athar/features/notifications/presentation/widgets/notification_center_button.dart';
 import 'package:athar/features/dhikr/presentation/widgets/dhikr_bottom_sheet.dart';
 import 'package:athar/features/settings/data/models/user_settings.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
@@ -92,8 +93,13 @@ class _HabitsPageState extends State<HabitsPage> {
                       floating: true,
                       delegate: MinimalHeaderDelegate(
                         dateStr: _formatHeaderDate(),
+                        // Future title action hook:
+                        // if this page moves to AtharAppBar or a tappable
+                        // title/header, point it to StatisticsPage or a
+                        // dedicated habit history page.
                         // ✅ l10n: Quran verse
                         quote: l10n.habitsHeaderQuote,
+                        trailing: const NotificationCenterButton(),
                       ),
                     ),
 
@@ -322,6 +328,33 @@ class _HabitsPageState extends State<HabitsPage> {
                   _buildSection(l.habitsSectionFlexible, "⏳", anyTime),
               ],
             ]),
+          );
+        }
+        if (state is HabitError) {
+          return SliverFillRemaining(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.error_outline_rounded,
+                      size: 48, color: Theme.of(context).colorScheme.error),
+                  SizedBox(height: 12.h),
+                  Text(
+                    state.message,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.error),
+                  ),
+                  SizedBox(height: 16.h),
+                  FilledButton.icon(
+                    onPressed: () =>
+                        context.read<HabitCubit>().loadHabits(),
+                    icon: const Icon(Icons.refresh_rounded),
+                    label: Text(AppLocalizations.of(context).retry),
+                  ),
+                ],
+              ),
+            ),
           );
         }
         return const SliverToBoxAdapter(child: SizedBox.shrink());
@@ -2081,8 +2114,8 @@ class _HabitsPageState extends State<HabitsPage> {
   //       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
   //       child: ExpansionTile(
   //         initiallyExpanded: false, // مغلق افتراضياً لتقليل الزحام
-  //         collapsedBackgroundColor: Colors.white.withOpacity(0.5),
-  //         backgroundColor: Colors.white.withOpacity(0.5),
+  //         collapsedBackgroundColor: Colors.white.withValues(alpha: 0.5),
+  //         backgroundColor: Colors.white.withValues(alpha: 0.5),
   //         shape: RoundedRectangleBorder(
   //           borderRadius: BorderRadius.circular(16.r),
   //         ),
@@ -2334,8 +2367,8 @@ class _HabitsPageState extends State<HabitsPage> {
 //       decoration: BoxDecoration(
 //         gradient: LinearGradient(
 //           colors: [
-//             AppColors.primary.withOpacity(0.8),
-//             AppColors.primary.withOpacity(0.6),
+//             AppColors.primary.withValues(alpha: 0.8),
+//             AppColors.primary.withValues(alpha: 0.6),
 //           ],
 //           begin: Alignment.topLeft,
 //           end: Alignment.bottomRight,
@@ -2343,7 +2376,7 @@ class _HabitsPageState extends State<HabitsPage> {
 //         borderRadius: BorderRadius.circular(16.r),
 //         boxShadow: [
 //           BoxShadow(
-//             color: AppColors.primary.withOpacity(0.3),
+//             color: AppColors.primary.withValues(alpha: 0.3),
 //             blurRadius: 10,
 //             offset: const Offset(0, 4),
 //           ),

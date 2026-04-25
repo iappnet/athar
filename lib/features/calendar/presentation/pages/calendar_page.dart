@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:athar/core/utils/navigation_utils.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/design_system/molecules/tiles/task_tile.dart';
 import '../../../task/presentation/cubit/task_cubit.dart';
@@ -34,7 +35,10 @@ class _CalendarPageState extends State<CalendarPage> {
           title: Text(l10n.calendarTitle),
           backgroundColor: colorScheme.surface,
           elevation: 0,
-          leading: BackButton(color: colorScheme.onSurface),
+          leading: BackButton(
+            color: colorScheme.onSurface,
+            onPressed: () => NavigationUtils.safeBack(context),
+          ),
           titleTextStyle: TextStyle(
             color: colorScheme.onSurface,
             fontSize: 20.sp,
@@ -122,6 +126,28 @@ class _CalendarPageState extends State<CalendarPage> {
                               context.read<TaskCubit>().deleteTask(task.id),
                         );
                       },
+                    );
+                  } else if (state is TaskError) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.error_outline_rounded,
+                              color: colorScheme.error, size: 40),
+                          SizedBox(height: 8.h),
+                          Text(state.message,
+                              style:
+                                  TextStyle(color: colorScheme.error)),
+                          TextButton.icon(
+                            onPressed: () => context
+                                .read<TaskCubit>()
+                                .watchTasks(_selectedDate),
+                            icon: const Icon(Icons.refresh_rounded),
+                            label: Text(
+                                AppLocalizations.of(context).retry),
+                          ),
+                        ],
+                      ),
                     );
                   }
                   return const SizedBox.shrink();

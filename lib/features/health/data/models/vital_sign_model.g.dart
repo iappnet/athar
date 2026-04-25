@@ -71,6 +71,11 @@ const VitalSignModelSchema = CollectionSchema(
       id: 10,
       name: r'vitalValue',
       type: IsarType.double,
+    ),
+    r'vitalValueSecondary': PropertySchema(
+      id: 11,
+      name: r'vitalValueSecondary',
+      type: IsarType.double,
     )
   },
   estimateSize: _vitalSignModelEstimateSize,
@@ -167,6 +172,7 @@ void _vitalSignModelSerialize(
   writer.writeString(offsets[8], object.vitalType);
   writer.writeString(offsets[9], object.vitalUnit);
   writer.writeDouble(offsets[10], object.vitalValue);
+  writer.writeDouble(offsets[11], object.vitalValueSecondary);
 }
 
 VitalSignModel _vitalSignModelDeserialize(
@@ -186,6 +192,7 @@ VitalSignModel _vitalSignModelDeserialize(
     vitalType: reader.readStringOrNull(offsets[8]),
     vitalUnit: reader.readStringOrNull(offsets[9]),
     vitalValue: reader.readDoubleOrNull(offsets[10]),
+    vitalValueSecondary: reader.readDoubleOrNull(offsets[11]),
   );
   object.createdAt = reader.readDateTime(offsets[2]);
   object.id = id;
@@ -220,6 +227,8 @@ P _vitalSignModelDeserializeProp<P>(
     case 9:
       return (reader.readStringOrNull(offset)) as P;
     case 10:
+      return (reader.readDoubleOrNull(offset)) as P;
+    case 11:
       return (reader.readDoubleOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1751,6 +1760,90 @@ extension VitalSignModelQueryFilter
       ));
     });
   }
+
+  QueryBuilder<VitalSignModel, VitalSignModel, QAfterFilterCondition>
+      vitalValueSecondaryIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'vitalValueSecondary',
+      ));
+    });
+  }
+
+  QueryBuilder<VitalSignModel, VitalSignModel, QAfterFilterCondition>
+      vitalValueSecondaryIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'vitalValueSecondary',
+      ));
+    });
+  }
+
+  QueryBuilder<VitalSignModel, VitalSignModel, QAfterFilterCondition>
+      vitalValueSecondaryEqualTo(
+    double? value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'vitalValueSecondary',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<VitalSignModel, VitalSignModel, QAfterFilterCondition>
+      vitalValueSecondaryGreaterThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'vitalValueSecondary',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<VitalSignModel, VitalSignModel, QAfterFilterCondition>
+      vitalValueSecondaryLessThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'vitalValueSecondary',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<VitalSignModel, VitalSignModel, QAfterFilterCondition>
+      vitalValueSecondaryBetween(
+    double? lower,
+    double? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'vitalValueSecondary',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
+  }
 }
 
 extension VitalSignModelQueryObject
@@ -1902,6 +1995,20 @@ extension VitalSignModelQuerySortBy
       sortByVitalValueDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'vitalValue', Sort.desc);
+    });
+  }
+
+  QueryBuilder<VitalSignModel, VitalSignModel, QAfterSortBy>
+      sortByVitalValueSecondary() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'vitalValueSecondary', Sort.asc);
+    });
+  }
+
+  QueryBuilder<VitalSignModel, VitalSignModel, QAfterSortBy>
+      sortByVitalValueSecondaryDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'vitalValueSecondary', Sort.desc);
     });
   }
 }
@@ -2063,6 +2170,20 @@ extension VitalSignModelQuerySortThenBy
       return query.addSortBy(r'vitalValue', Sort.desc);
     });
   }
+
+  QueryBuilder<VitalSignModel, VitalSignModel, QAfterSortBy>
+      thenByVitalValueSecondary() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'vitalValueSecondary', Sort.asc);
+    });
+  }
+
+  QueryBuilder<VitalSignModel, VitalSignModel, QAfterSortBy>
+      thenByVitalValueSecondaryDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'vitalValueSecondary', Sort.desc);
+    });
+  }
 }
 
 extension VitalSignModelQueryWhereDistinct
@@ -2143,6 +2264,13 @@ extension VitalSignModelQueryWhereDistinct
       return query.addDistinctBy(r'vitalValue');
     });
   }
+
+  QueryBuilder<VitalSignModel, VitalSignModel, QDistinct>
+      distinctByVitalValueSecondary() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'vitalValueSecondary');
+    });
+  }
 }
 
 extension VitalSignModelQueryProperty
@@ -2218,6 +2346,13 @@ extension VitalSignModelQueryProperty
   QueryBuilder<VitalSignModel, double?, QQueryOperations> vitalValueProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'vitalValue');
+    });
+  }
+
+  QueryBuilder<VitalSignModel, double?, QQueryOperations>
+      vitalValueSecondaryProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'vitalValueSecondary');
     });
   }
 }

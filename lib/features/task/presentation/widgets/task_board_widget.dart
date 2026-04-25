@@ -34,8 +34,13 @@ class _TaskBoardWidgetState extends State<TaskBoardWidget> {
   @override
   void initState() {
     super.initState();
-    // إعداد اللغة العربية للمكتبة
     timeago.setLocaleMessages('ar', timeago.ArMessages());
+  }
+
+  @override
+  void dispose() {
+    _noteController.dispose();
+    super.dispose();
   }
 
   @override
@@ -50,12 +55,9 @@ class _TaskBoardWidgetState extends State<TaskBoardWidget> {
 
         // ✅ التصحيح 1: البحث الآمن
         // بدلاً من orElse التي تعيد موديلاً فارغاً يسبب المشكلة، نستخدم try/catch أو نتركها null
-        TaskNoteModel? myNote;
-        try {
-          myNote = notes.firstWhere((n) => n.userId == _myUserId);
-        } catch (_) {
-          myNote = null; // لا توجد ملاحظة لي بعد
-        }
+        final myNoteMatches = notes.where((n) => n.userId == _myUserId);
+        final TaskNoteModel? myNote =
+            myNoteMatches.isEmpty ? null : myNoteMatches.first;
 
         final otherNotes = notes.where((n) => n.userId != _myUserId).toList();
 
@@ -360,11 +362,11 @@ class _TaskBoardWidgetState extends State<TaskBoardWidget> {
 //         AtharGap.md,
 //         Container(
 //           decoration: BoxDecoration(
-//             color: colors.warning.withOpacity(0.15), // لون أصفر فاتح
+//             color: colors.warning.withValues(alpha: 0.15), // لون أصفر فاتح
 //             borderRadius: AtharRadii.radiusMd,
 //             boxShadow: [
 //               BoxShadow(
-//                 color: colors.shadow.withOpacity(0.05),
+//                 color: colors.shadow.withValues(alpha: 0.05),
 //                 blurRadius: 5,
 //                 offset: const Offset(0, 2),
 //               ),
@@ -431,7 +433,7 @@ class _TaskBoardWidgetState extends State<TaskBoardWidget> {
 //             children: [
 //               CircleAvatar(
 //                 radius: 12.r,
-//                 backgroundColor: colors.info.withOpacity(0.15),
+//                 backgroundColor: colors.info.withValues(alpha: 0.15),
 //                 child: Icon(Icons.person, size: 14.sp, color: colors.info),
 //               ),
 //               AtharGap.hSm,
@@ -598,7 +600,7 @@ class _TaskBoardWidgetState extends State<TaskBoardWidget> {
 //             borderRadius: BorderRadius.circular(12.r),
 //             boxShadow: [
 //               BoxShadow(
-//                 color: Colors.black.withOpacity(0.05),
+//                 color: Colors.black.withValues(alpha: 0.05),
 //                 blurRadius: 5,
 //                 offset: const Offset(0, 2),
 //               ),

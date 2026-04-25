@@ -3,26 +3,9 @@ import 'package:injectable/injectable.dart';
 import 'package:vibration/vibration.dart';
 import '../../data/models/dhikr_model.dart';
 import '../../data/repositories/dhikr_repository.dart';
+import 'dhikr_state.dart';
 
-// --- State ---
-abstract class DhikrState {}
-
-class DhikrInitial extends DhikrState {}
-
-class DhikrLoading extends DhikrState {}
-
-class DhikrLoaded extends DhikrState {
-  final List<DhikrModel> athkar;
-  final int currentIndex;
-
-  DhikrLoaded(this.athkar, {this.currentIndex = 0});
-
-  DhikrModel get currentDhikr => athkar[currentIndex];
-  bool get isLast => currentIndex == athkar.length - 1;
-  double get progress =>
-      (currentIndex + (currentDhikr.currentCount / currentDhikr.count)) /
-      athkar.length;
-}
+export 'dhikr_state.dart';
 
 // --- Cubit ---
 @injectable
@@ -33,14 +16,18 @@ class DhikrCubit extends Cubit<DhikrState> {
 
   Future<void> loadAthkar(DhikrCategory category) async {
     emit(DhikrLoading());
-    await _repository.initDefaultAthkar();
-
-    final athkar = await _repository.getAthkarByCategory(category);
-    for (var d in athkar) {
-      d.currentCount = 0;
+    try {
+      await _repository.initDefaultAthkar();
+      final athkar = await _repository.getAthkarByCategory(category);
+      for (var d in athkar) {
+        d.currentCount = 0;
+      }
+      if (isClosed) return;
+      emit(DhikrLoaded(athkar));
+    } catch (e) {
+      if (isClosed) return;
+      emit(DhikrError("فشل تحميل الأذكار"));
     }
-
-    emit(DhikrLoaded(athkar));
   }
 
   Future<void> incrementCount() async {

@@ -5,42 +5,42 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.00033">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000467">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: latest_testflight_build_number" time="2.945344">
+      <testcase classname="fastlane.lanes" name="1: latest_testflight_build_number" time="3.463125">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: increment_build_number" time="0.658603">
+      <testcase classname="fastlane.lanes" name="2: increment_build_number" time="0.665822">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="3: flutter pub get" time="1.87955">
+      <testcase classname="fastlane.lanes" name="3: flutter pub get" time="2.259635">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="4: cocoapods" time="3.656788">
+      <testcase classname="fastlane.lanes" name="4: rm -rf build/ios build/native_assets" time="0.007145">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="5: flutter build ios --release --no-tree-shake-icons --no-codesign" time="79.769718">
+      <testcase classname="fastlane.lanes" name="5: cocoapods" time="3.55938">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="6: build_app" time="157.545445">
+      <testcase classname="fastlane.lanes" name="6: build_app" time="169.339056">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="7: upload_to_testflight" time="131.187023">
+      <testcase classname="fastlane.lanes" name="7: upload_to_testflight" time="108.883186">
         
       </testcase>
     

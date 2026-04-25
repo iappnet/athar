@@ -198,7 +198,7 @@ class _ItemRow extends StatelessWidget {
 //         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
 //         decoration: BoxDecoration(
 //           color: selectedProject != null
-//               ? AppColors.primary.withOpacity(0.1)
+//               ? AppColors.primary.withValues(alpha: 0.1)
 //               : AppColors.background,
 //           borderRadius: BorderRadius.circular(20.r),
 //           border: Border.all(

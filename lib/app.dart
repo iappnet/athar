@@ -8,6 +8,7 @@ import 'package:athar/features/habits/presentation/cubit/habit_cubit.dart';
 import 'package:athar/features/space/presentation/cubit/list_cubit.dart'; // ✅ استيراد القائمة
 import 'package:athar/features/space/presentation/cubit/module_cubit.dart';
 import 'package:athar/features/space/presentation/pages/join_space_screen.dart';
+import 'package:athar/features/subscription/presentation/cubit/subscription_cubit.dart';
 import 'package:athar/features/sync/presentation/cubit/sync_cubit.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:confetti/confetti.dart';
@@ -22,6 +23,9 @@ import 'dart:math';
 import 'package:athar/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:athar/features/space/presentation/cubit/space_cubit.dart';
 import 'package:athar/features/task/presentation/cubit/task_cubit.dart';
+import 'package:athar/features/notifications/presentation/cubit/notifications_cubit.dart';
+import 'package:athar/features/notifications/domain/repositories/notifications_repository.dart';
+import 'package:athar/core/services/local_notification_service.dart';
 import 'features/home/presentation/pages/main_page.dart';
 import 'features/auth/presentation/pages/login_page.dart';
 // ✅ استيراد خدمة الروابط للوصول للمفتاح
@@ -40,15 +44,46 @@ class _AtharAppState extends State<AtharApp> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(_lifecycleObserver);
     _confettiController = ConfettiController(
       duration: const Duration(seconds: 1),
     );
+    _clearNotificationBadges();
+    // Navigate for cold-start after the first frame so the navigator is ready.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final notificationService = getIt<LocalNotificationService>();
+      final payload = notificationService.consumeColdStartPayload();
+      if (payload != null) {
+        notificationService.navigateFromNotificationPayload(payload);
+      }
+    });
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(_lifecycleObserver);
     _confettiController.dispose();
     super.dispose();
+  }
+
+  late final WidgetsBindingObserver _lifecycleObserver = _AppLifecycleObserver(
+    onResume: _clearNotificationBadges,
+  );
+
+  Future<void> _clearNotificationBadges() async {
+    final repository = getIt<NotificationsRepository>();
+    final notificationService = getIt<LocalNotificationService>();
+
+    try {
+      // Log any notifications still sitting in the system tray so they
+      // appear in the in-app notification center (covers prayer & local ones).
+      await notificationService.logActiveNotifications();
+      await repository.syncNotifications();
+      await repository.markAllAsRead();
+      await notificationService.setAppBadge(0);
+    } catch (_) {
+      await notificationService.setAppBadge(0);
+    }
   }
 
   @override
@@ -60,6 +95,9 @@ class _AtharAppState extends State<AtharApp> {
         BlocProvider(create: (_) => getIt<SettingsCubit>()..loadSettings()),
         BlocProvider(create: (_) => getIt<SyncCubit>()..triggerSync()),
         BlocProvider(create: (_) => getIt<AuthCubit>()),
+        BlocProvider(
+          create: (_) => getIt<NotificationsCubit>()..watchNotifications(),
+        ),
 
         // 2. الميزات الرئيسية (إسلاميات، عادات)
         BlocProvider(create: (_) => getIt<PrayerCubit>()..loadPrayerTimes()),
@@ -80,6 +118,11 @@ class _AtharAppState extends State<AtharApp> {
         BlocProvider(
           create: (context) => getIt<ListCubit>(),
         ), // ✅ القوائم (المقاضي)
+
+        // 6. الاشتراك
+        BlocProvider(
+          create: (_) => getIt<SubscriptionCubit>()..loadStatus(),
+        ),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
@@ -174,5 +217,18 @@ class _AtharAppState extends State<AtharApp> {
     }
     path.close();
     return path;
+  }
+}
+
+class _AppLifecycleObserver extends WidgetsBindingObserver {
+  final Future<void> Function() onResume;
+
+  _AppLifecycleObserver({required this.onResume});
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      onResume();
+    }
   }
 }

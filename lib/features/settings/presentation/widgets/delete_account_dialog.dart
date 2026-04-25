@@ -242,12 +242,12 @@ class DeleteAccountDialog extends StatelessWidget {
 //         decoration: BoxDecoration(
 //           border: Border.all(
 //             color: isDestructive
-//                 ? colors.error.withOpacity(0.3)
+//                 ? colors.error.withValues(alpha: 0.3)
 //                 : colors.border,
 //           ),
 //           borderRadius: AtharRadii.radiusMd,
 //           color: isDestructive
-//               ? colors.error.withOpacity(0.05)
+//               ? colors.error.withValues(alpha: 0.05)
 //               : colors.surface,
 //         ),
 //         child: Row(
@@ -376,11 +376,11 @@ class DeleteAccountDialog extends StatelessWidget {
 //         decoration: BoxDecoration(
 //           border: Border.all(
 //             color: isDestructive
-//                 ? Colors.red.withOpacity(0.3)
+//                 ? Colors.red.withValues(alpha: 0.3)
 //                 : Colors.grey.shade300,
 //           ),
 //           borderRadius: BorderRadius.circular(12.r),
-//           color: isDestructive ? Colors.red.withOpacity(0.05) : Colors.white,
+//           color: isDestructive ? Colors.red.withValues(alpha: 0.05) : Colors.white,
 //         ),
 //         child: Row(
 //           children: [

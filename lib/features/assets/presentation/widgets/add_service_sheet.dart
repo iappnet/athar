@@ -26,6 +26,14 @@ class _AddServiceSheetState extends State<AddServiceSheet> {
   bool _isReminderEnabled = true;
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _daysController.dispose();
+    _kmController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context);

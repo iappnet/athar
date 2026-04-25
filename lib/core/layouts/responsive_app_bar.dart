@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../utils/navigation_utils.dart';
 import '../utils/responsive_helper.dart';
 
 /// AppBar متجاوب مع دعم:
@@ -87,7 +88,8 @@ class ResponsiveAppBar extends StatelessWidget implements PreferredSizeWidget {
           Icons.arrow_back_ios_rounded,
           color: foregroundColor ?? colorScheme.onSurface,
         ),
-        onPressed: onBackPressed ?? () => Navigator.pop(context),
+        onPressed:
+            onBackPressed ?? () => NavigationUtils.safeBack(context),
       );
     }
 
@@ -203,7 +205,7 @@ class ResponsiveSliverAppBar extends StatelessWidget {
           subtitle!,
           style: TextStyle(
             fontSize: isTablet ? 14 : 12.sp,
-            color: (foregroundColor ?? colorScheme.onSurface).withOpacity(0.7),
+            color: (foregroundColor ?? colorScheme.onSurface).withValues(alpha: 0.7),
           ),
         ),
       ],
@@ -217,7 +219,7 @@ class ResponsiveSliverAppBar extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            colorScheme.primaryContainer.withOpacity(0.3),
+            colorScheme.primaryContainer.withValues(alpha: 0.3),
             colorScheme.surface,
           ],
         ),

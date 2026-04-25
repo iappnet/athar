@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:athar/core/di/injection.dart';
 import 'package:athar/features/space/data/repositories/space_repository_impl.dart';
 import 'package:athar/features/space/domain/repositories/space_repository.dart';
 import 'package:athar/features/space/presentation/cubit/space_state.dart';
+import 'package:athar/features/subscription/presentation/cubit/subscription_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -73,12 +75,17 @@ class SpaceCubit extends Cubit<SpaceState> {
 
   Future<void> createSpace(String name, {bool isShared = false}) async {
     try {
-      // ✅ التحقق من تسجيل الدخول للمساحات المشتركة
+      // Shared spaces require the Spaces Pro subscription.
       if (isShared) {
+        if (!getIt<SubscriptionCubit>().hasSpacesPro) {
+          emit(SpaceError('spaces_pro_required'));
+          loadSpaces();
+          return;
+        }
         final currentUser = Supabase.instance.client.auth.currentUser;
         if (currentUser == null) {
           emit(SpaceError("يجب تسجيل الدخول لإنشاء مساحة مشتركة"));
-          loadSpaces(); // إعادة تحميل الحالة السابقة
+          loadSpaces();
           return;
         }
       }

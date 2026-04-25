@@ -65,7 +65,6 @@ class _AtharIconPickerState extends State<AtharIconPicker> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     final icons = IconRegistry.iconPickerItems;
 
     return GridView.builder(

@@ -45,9 +45,8 @@ class PrayerDayView extends StatelessWidget {
     PrayerTime? nextPrayer;
     if (isToday) {
       final now = DateTime.now();
-      try {
-        nextPrayer = prayers.firstWhere((p) => p.time.isAfter(now));
-      } catch (_) {}
+      final upcoming = prayers.where((p) => p.time.isAfter(now));
+      nextPrayer = upcoming.isEmpty ? null : upcoming.first;
     }
 
     return Padding(

@@ -3,6 +3,8 @@
 // ✅ MIGRATED - Phase 5 | Stage 2 | File 2.2
 // ═══════════════════════════════════════════════════════════════════════════════
 
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,16 +12,15 @@ import 'package:intl/intl.dart';
 
 // ✅ NEW: Unified Design System Import
 import 'package:athar/core/design_system/tokens.dart';
-import 'package:athar/core/design_system/organisms/app_bar/athar_app_bar.dart';
 import 'package:athar/core/utils/responsive_helper.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
+import 'package:athar/features/calendar/presentation/pages/calendar_page.dart';
+import 'package:athar/features/notifications/presentation/widgets/notification_center_button.dart';
+import 'package:athar/features/settings/presentation/pages/general_settings_page.dart';
 
 import '../../../../core/di/injection.dart';
 import 'package:athar/core/design_system/molecules/cards/smart_prayer_wrapper.dart';
 import 'package:athar/features/home/presentation/pages/smart_habits_strip.dart';
-import 'package:athar/features/notifications/presentation/cubit/notifications_cubit.dart';
-import 'package:athar/features/notifications/presentation/cubit/notifications_state.dart';
-import 'package:athar/features/notifications/presentation/pages/notification_center_page.dart';
 import '../../../habits/presentation/cubit/habit_cubit.dart';
 import '../../../task/presentation/cubit/task_cubit.dart';
 import '../../../stats/presentation/widgets/statistics_card.dart';
@@ -64,10 +65,6 @@ class DashboardPage extends StatelessWidget {
         ),
         BlocProvider(create: (context) => getIt<HabitCubit>()..loadHabits()),
         BlocProvider(create: (context) => getIt<HealthCubit>()),
-        BlocProvider(
-          create: (context) =>
-              getIt<NotificationsCubit>()..watchNotifications(),
-        ),
       ],
       child: BlocListener<SyncCubit, SyncState>(
         listener: (context, state) {
@@ -110,114 +107,185 @@ class DashboardPage extends StatelessWidget {
             ).format(DateTime.now());
 
             return Scaffold(
-              // ✅ AppColors.background → colors.background
               backgroundColor: colorScheme.surface,
-              appBar: AtharAppBar(
-                title: greeting,
-                subtitle: dateStr,
-                actions: [
-                  BlocBuilder<NotificationsCubit, NotificationsState>(
-                    builder: (context, state) {
-                      int count = 0;
-                      if (state is NotificationsLoaded) {
-                        count = state.unreadCount;
-                      }
-                      return Stack(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.notifications_none_rounded),
-                            onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const NotificationCenterPage(),
-                              ),
+              body: SafeArea(
+                top: false,
+                bottom: false,
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: context.isTablet
+                          ? ResponsiveHelper.maxContentWidth
+                          : double.infinity,
+                    ),
+                    child: CustomScrollView(
+                      slivers: [
+                        SliverAppBar(
+                          pinned: true,
+                          stretch: true,
+                          expandedHeight: 144.h,
+                          collapsedHeight: 68.h,
+                          toolbarHeight: 68.h,
+                          automaticallyImplyLeading: false,
+                          backgroundColor: colorScheme.surface.withValues(alpha: 0.96),
+                          surfaceTintColor: Colors.transparent,
+                          elevation: 0,
+                          scrolledUnderElevation: 0,
+                          leadingWidth: 56.w,
+                          leading: IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const GeneralSettingsPage(),
+                                ),
+                              );
+                            },
+                            icon: Icon(
+                              Icons.settings_outlined,
+                              color: colorScheme.onSurface,
                             ),
                           ),
-                          if (count > 0)
-                            Positioned(
-                              right: 8,
-                              top: 8,
-                              child: Container(
-                                padding: EdgeInsets.all(AtharSpacing.xxs),
-                                decoration: BoxDecoration(
-                                  // ✅ Colors.red → colors.error
-                                  color: colorScheme.error,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Text(
-                                  "$count",
-                                  // ✅ AtharTypography
-                                  style:
-                                      TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w500,
-                                        height: 1.4,
-                                        letterSpacing: 0.5,
-                                      ).copyWith(
-                                        // ✅ Colors.white → colors.onPrimary
-                                        color: colorScheme.onPrimary,
-                                        fontSize: 8.sp,
-                                      ),
-                                ),
+                          actions: [
+                            const NotificationCenterButton(),
+                            IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const CalendarPage(),
+                                  ),
+                                );
+                              },
+                              icon: Icon(
+                                Icons.calendar_month_rounded,
+                                color: colorScheme.onSurface,
                               ),
                             ),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ),
-              body: Align(
-                alignment: Alignment.topCenter,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: context.isTablet ? ResponsiveHelper.maxContentWidth : double.infinity,
-                  ),
-                  child: SafeArea(
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.only(bottom: AtharSpacing.xl),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // شريط حالة المزامنة
-                      _buildSyncStatusHeader(context, colorScheme),
-
-                      // بطاقة الصلاة
-                      const SmartPrayerCardWrapper(
-                        pageType: PageType.dashboard,
-                      ),
-
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: AtharSpacing.lg,
-                        ),
-                        child: Column(
-                          children: [
-                            // ✅ SizedBox(height: 12.h) → AtharGap.md
-                            AtharGap.md,
-
-                            // بطاقة الإحصائيات
-                            const StatisticsCard(),
-
-                            // ✅ SizedBox(height: 24.h) → AtharGap.xxl
-                            AtharGap.xxl,
-
-                            // شريط العادات الذكي
-                            const SmartHabitsStrip(),
-
-                            AtharGap.xxl,
-
-                            // التايملاين اليومي
-                            const DailyTimelineWidget(moduleId: null),
-
-                            SizedBox(height: 80.h),
+                            SizedBox(width: 8.w),
                           ],
+                          flexibleSpace: LayoutBuilder(
+                            builder: (context, constraints) {
+                              final expandedRange = 144.h - 68.h;
+                              final currentHeight = constraints.biggest.height;
+                              final t = ((currentHeight - 68.h) / expandedRange).clamp(0.0, 1.0);
+
+                              return ClipRect(
+                                child: Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    BackdropFilter(
+                                      filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+                                      child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              colorScheme.surface.withValues(alpha: 0.96),
+                                              colorScheme.surface.withValues(alpha: 0.84),
+                                            ],
+                                          ),
+                                          border: Border(
+                                            bottom: BorderSide(
+                                              color: colorScheme.outlineVariant.withValues(alpha: 0.16),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      left: 16.w,
+                                      right: 88.w,
+                                      bottom: 14.h,
+                                      child: Opacity(
+                                        opacity: t,
+                                        child: Transform.translate(
+                                          offset: Offset(0, (1 - t) * -8),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                greeting,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  fontSize: 23.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  color: colorScheme.onSurface,
+                                                ),
+                                              ),
+                                              SizedBox(height: 4.h),
+                                              Text(
+                                                dateStr,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  fontSize: 12.sp,
+                                                  color: colorScheme.onSurfaceVariant,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      left: 72.w,
+                                      right: 88.w,
+                                      bottom: 12.h,
+                                      child: IgnorePointer(
+                                        child: Opacity(
+                                          opacity: 1 - t,
+                                          child: Text(
+                                            greeting,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 17.sp,
+                                              fontWeight: FontWeight.w700,
+                                              color: colorScheme.onSurface,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                    ],
+                        SliverToBoxAdapter(
+                          child: _buildSyncStatusHeader(context, colorScheme),
+                        ),
+                        const SliverToBoxAdapter(
+                          child: SmartPrayerCardWrapper(
+                            pageType: PageType.dashboard,
+                          ),
+                        ),
+                        SliverPadding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: AtharSpacing.lg,
+                          ),
+                          sliver: SliverList(
+                            delegate: SliverChildListDelegate([
+                              AtharGap.md,
+                              const StatisticsCard(),
+                              AtharGap.xxl,
+                              const SmartHabitsStrip(),
+                              AtharGap.xxl,
+                              const DailyTimelineWidget(moduleId: null),
+                              SizedBox(height: 156.h),
+                            ]),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ),
                 ),
               ),
             );

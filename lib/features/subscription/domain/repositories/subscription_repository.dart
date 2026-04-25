@@ -1,9 +1,12 @@
-/// هذا العقد يحدد كيفية التحقق من حالة الاشتراك
-/// سواء كان من Supabase أو من Apple/Google Store مستقبلاً
-abstract class SubscriptionRepository {
-  /// هل المستخدم لديه اشتراك فعال؟
-  Future<bool> isProUser();
+import '../entities/subscription_status.dart';
 
-  /// (اختياري مستقبلاً) جلب تفاصيل الخطة
-  Future<String?> getPlanName();
+abstract class SubscriptionRepository {
+  /// Current subscription status (single fetch).
+  Future<SubscriptionStatus> getStatus();
+
+  /// Live stream — emits whenever RevenueCat CustomerInfo changes.
+  Stream<SubscriptionStatus> watchStatus();
+
+  /// Restore previous purchases (Apple requirement).
+  Future<SubscriptionStatus> restorePurchases();
 }

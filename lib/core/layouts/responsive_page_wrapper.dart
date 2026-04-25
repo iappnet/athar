@@ -119,11 +119,11 @@ class ContentCard extends StatelessWidget {
         color: backgroundColor ?? colorScheme.surface,
         borderRadius: borderRadius ?? BorderRadius.circular(16),
         border: border ?? Border.all(
-          color: colorScheme.outlineVariant.withOpacity(0.3),
+          color: colorScheme.outlineVariant.withValues(alpha: 0.3),
         ),
         boxShadow: [
           BoxShadow(
-            color: colorScheme.shadow.withOpacity(0.05),
+            color: colorScheme.shadow.withValues(alpha: 0.05),
             blurRadius: elevation ?? 8,
             offset: const Offset(0, 2),
           ),
@@ -220,7 +220,7 @@ class ResponsiveList extends StatelessWidget {
       physics: physics,
       padding: padding,
       itemCount: children.length,
-      separatorBuilder: (_, __) => SizedBox(height: spacing),
+      separatorBuilder: (_, _) => SizedBox(height: spacing),
       itemBuilder: (_, index) => children[index],
     );
   }

@@ -535,7 +535,7 @@ class MinimalHabitTile extends StatelessWidget {
 //               borderRadius: BorderRadius.circular(16.r),
 //               boxShadow: [
 //                 BoxShadow(
-//                   color: Colors.black.withOpacity(isCompleted ? 0.01 : 0.03),
+//                   color: Colors.black.withValues(alpha: isCompleted ? 0.01 : 0.03),
 //                   blurRadius: 10,
 //                   offset: const Offset(0, 4),
 //                 ),
@@ -598,7 +598,7 @@ class MinimalHabitTile extends StatelessWidget {
 //                                 habit.currentProgress /
 //                                 (habit.target == 0 ? 1 : habit.target),
 //                             backgroundColor: Colors.grey.shade100,
-//                             color: AppColors.primary.withOpacity(0.5),
+//                             color: AppColors.primary.withValues(alpha: 0.5),
 //                             minHeight: 4.h,
 //                             borderRadius: BorderRadius.circular(2),
 //                           ),
@@ -626,7 +626,7 @@ class MinimalHabitTile extends StatelessWidget {
 //       child: Container(
 //         padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
 //         decoration: BoxDecoration(
-//           color: Colors.orange.withOpacity(0.1),
+//           color: Colors.orange.withValues(alpha: 0.1),
 //           borderRadius: BorderRadius.circular(8.r),
 //         ),
 //         child: Row(

@@ -9,7 +9,7 @@
 /// ```
 /// ===================================================================
 
-library athar_themes;
+library;
 
 export 'athar_theme.dart';
 export 'athar_light_theme.dart';

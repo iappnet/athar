@@ -34,6 +34,18 @@ class _AddAppointmentSheetState extends State<AddAppointmentSheet> {
 
   DateTime? _reminderTime;
   bool _isReminderEnabled = true;
+  int _reminderDaysBefore = 1;
+  int _reminderHoursBefore = 1;
+  int _reminderMinutesBefore = 15;
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _doctorController.dispose();
+    _locationController.dispose();
+    _notesController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -228,6 +240,43 @@ class _AddAppointmentSheetState extends State<AddAppointmentSheet> {
                   setState(() => _reminderTime = newTime),
             ),
 
+            if (_isReminderEnabled) ...[
+              AtharGap.md,
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildReminderDropdown(
+                      label: 'أيام',
+                      value: _reminderDaysBefore,
+                      items: [0, 1, 2, 3, 7],
+                      onChanged: (v) =>
+                          setState(() => _reminderDaysBefore = v!),
+                    ),
+                  ),
+                  SizedBox(width: 8.w),
+                  Expanded(
+                    child: _buildReminderDropdown(
+                      label: 'ساعات',
+                      value: _reminderHoursBefore,
+                      items: [0, 1, 2, 3, 6, 12],
+                      onChanged: (v) =>
+                          setState(() => _reminderHoursBefore = v!),
+                    ),
+                  ),
+                  SizedBox(width: 8.w),
+                  Expanded(
+                    child: _buildReminderDropdown(
+                      label: 'دقائق',
+                      value: _reminderMinutesBefore,
+                      items: [0, 5, 10, 15, 30],
+                      onChanged: (v) =>
+                          setState(() => _reminderMinutesBefore = v!),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+
             AtharGap.lg,
 
             TextField(
@@ -310,6 +359,28 @@ class _AddAppointmentSheetState extends State<AddAppointmentSheet> {
     if (picked != null) setState(() => _selectedTime = picked);
   }
 
+  Widget _buildReminderDropdown({
+    required String label,
+    required int value,
+    required List<int> items,
+    required ValueChanged<int?> onChanged,
+  }) {
+    return DropdownButtonFormField<int>(
+      initialValue: value,
+      decoration: InputDecoration(
+        labelText: label,
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.r)),
+        contentPadding:
+            EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+      ),
+      items: items
+          .map((i) => DropdownMenuItem(value: i, child: Text('$i')))
+          .toList(),
+      onChanged: onChanged,
+    );
+  }
+
   void _saveAppointment() {
     if (_titleController.text.isNotEmpty) {
       final DateTime finalDateTime = DateTime(
@@ -339,6 +410,9 @@ class _AddAppointmentSheetState extends State<AddAppointmentSheet> {
         notes: _notesController.text.isNotEmpty ? _notesController.text : null,
         reminderEnabled: _isReminderEnabled,
         reminderTime: _isReminderEnabled ? _reminderTime : null,
+        reminderDaysBefore: _reminderDaysBefore,
+        reminderHoursBefore: _reminderHoursBefore,
+        reminderMinutesBefore: _reminderMinutesBefore,
       );
 
       widget.cubit.addAppointment(appointment);

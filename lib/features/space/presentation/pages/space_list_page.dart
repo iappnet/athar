@@ -4,6 +4,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import 'package:athar/core/design_system/widgets/sample_data_banner.dart';
+import 'package:athar/features/subscription/presentation/cubit/subscription_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:athar/core/design_system/tokens/athar_radii.dart';
 import 'package:athar/core/design_system/tokens/athar_spacing.dart';
 import 'package:athar/core/utils/responsive_helper.dart';
+import 'package:athar/features/notifications/presentation/widgets/notification_center_button.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 
 import '../cubit/space_cubit.dart';
@@ -18,10 +20,6 @@ import '../cubit/space_state.dart';
 import '../../data/models/space_model.dart';
 import 'space_page.dart';
 import 'inbox_page.dart';
-
-import 'package:athar/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:athar/features/auth/presentation/cubit/auth_state.dart';
-import 'package:athar/features/auth/presentation/pages/auth_page.dart';
 
 class SpaceListPage extends StatefulWidget {
   const SpaceListPage({super.key});
@@ -57,9 +55,13 @@ class _SpaceListPageState extends State<SpaceListPage> {
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
+        forceMaterialTransparency: true,
         centerTitle: true,
         foregroundColor: colorScheme.onSurface,
         actions: [
+          const NotificationCenterButton(),
           // ✅ زر صندوق الدعوات
           IconButton(
             icon: const Icon(Icons.mark_email_unread_outlined),
@@ -74,6 +76,13 @@ class _SpaceListPageState extends State<SpaceListPage> {
           AtharGap.hSm,
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _showCreateSpaceDialog(context, l10n, colorScheme),
+        label: Text(l10n.spaceListNewSpace),
+        icon: const Icon(Icons.add_location_alt_rounded),
+        backgroundColor: colorScheme.primary,
+        foregroundColor: colorScheme.onPrimary,
+      ),
       body: Center(
         child: ConstrainedBox(
           // ✅ Adaptive UI - تحديد العرض الأقصى للتابلت
@@ -82,11 +91,21 @@ class _SpaceListPageState extends State<SpaceListPage> {
                 ? ResponsiveHelper.maxContentWidth
                 : double.infinity,
           ),
-          child: BlocBuilder<SpaceCubit, SpaceState>(
+          child: BlocConsumer<SpaceCubit, SpaceState>(
+            listenWhen: (_, curr) => curr is SpaceError,
+            listener: (context, state) {
+              if (state is SpaceError &&
+                  state.message == 'spaces_pro_required') {
+                context
+                    .read<SubscriptionCubit>()
+                    .presentSpacesPaywall(context);
+              }
+            },
             builder: (context, state) {
               if (state is SpaceLoading) {
                 return const Center(child: CircularProgressIndicator());
-              } else if (state is SpaceError) {
+              } else if (state is SpaceError &&
+                  state.message != 'spaces_pro_required') {
                 return Center(child: Text(state.message));
               } else if (state is SpaceLoaded) {
                 final spaces = state.spaces;
@@ -125,13 +144,6 @@ class _SpaceListPageState extends State<SpaceListPage> {
             },
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _showCreateSpaceDialog(context),
-        label: Text(l10n.spaceListNewSpace),
-        icon: const Icon(Icons.add_location_alt_rounded),
-        backgroundColor: colorScheme.primary,
-        foregroundColor: colorScheme.onPrimary,
       ),
     );
   }
@@ -363,6 +375,79 @@ class _SpaceListPageState extends State<SpaceListPage> {
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
+  // حوار إنشاء مساحة جديدة
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  void _showCreateSpaceDialog(
+    BuildContext context,
+    AppLocalizations l10n,
+    ColorScheme colorScheme,
+  ) {
+    final controller = TextEditingController();
+    bool isShared = false;
+
+    showDialog(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (dialogContext, setState) => AlertDialog(
+          title: Text(
+            l10n.spaceListCreateTitle,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: controller,
+                autofocus: true,
+                decoration: InputDecoration(
+                  labelText: l10n.spaceListNameLabel,
+                  border: const OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 16.h),
+              SwitchListTile(
+                title: Text(l10n.spaceListSharedQuestion),
+                subtitle: Text(
+                  isShared
+                      ? l10n.spaceListSharedSubtitle
+                      : l10n.spaceListPrivateSubtitle,
+                  style: TextStyle(fontSize: 12.sp),
+                ),
+                value: isShared,
+                onChanged: (val) => setState(() => isShared = val),
+                activeThumbColor: colorScheme.primary,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(l10n.spaceListCancel),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (controller.text.isNotEmpty) {
+                  context.read<SpaceCubit>().createSpace(
+                    controller.text,
+                    isShared: isShared,
+                  );
+                  Navigator.pop(ctx);
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: colorScheme.primary,
+                foregroundColor: colorScheme.onPrimary,
+              ),
+              child: Text(l10n.spaceListCreate),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // حوار الحذف
   // ═══════════════════════════════════════════════════════════════════════════
 
@@ -396,224 +481,6 @@ class _SpaceListPageState extends State<SpaceListPage> {
     );
   }
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // حوار إنشاء مساحة
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  void _showCreateSpaceDialog(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final l10n = AppLocalizations.of(context);
-    final controller = TextEditingController();
-    bool isShared = false;
-
-    // ✅ التحقق من حالة المستخدم
-    final authState = context.read<AuthCubit>().state;
-    final bool isAuthenticated = authState is AuthAuthenticated;
-
-    showDialog(
-      context: context,
-      builder: (ctx) => StatefulBuilder(
-        builder: (context, setState) {
-          return AlertDialog(
-            title: Text(l10n.spaceListCreateTitle),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: controller,
-                  decoration: InputDecoration(
-                    labelText: l10n.spaceListNameLabel,
-                    border: const OutlineInputBorder(),
-                  ),
-                ),
-                AtharGap.lg,
-
-                // ═══════════════════════════════════════════════════════════════
-                // ✅ Switch مع التحقق من تسجيل الدخول
-                // ═══════════════════════════════════════════════════════════════
-                if (isAuthenticated)
-                  // ✅ المستخدم مسجل → إظهار switch عادي
-                  SwitchListTile(
-                    title: Text(l10n.spaceListSharedQuestion),
-                    subtitle: Text(
-                      isShared
-                          ? l10n.spaceListSharedSubtitle
-                          : l10n.spaceListPrivateSubtitle,
-                      style: TextStyle(fontSize: 12.sp),
-                    ),
-                    value: isShared,
-                    onChanged: (val) => setState(() => isShared = val),
-                    activeThumbColor: colorScheme.primary,
-                  )
-                else
-                  // ✅ المستخدم guest → إظهار switch معطل مع رسالة
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                      _showLoginRequiredDialog(context, l10n);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(12.w),
-                      decoration: BoxDecoration(
-                        color: colorScheme.surfaceContainerHighest.withOpacity(
-                          0.5,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: colorScheme.outlineVariant),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.group_off, color: colorScheme.outline),
-                          SizedBox(width: 12.w),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  l10n.spaceListSharedQuestion,
-                                  style: TextStyle(
-                                    color: colorScheme.outline,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Text(
-                                  'سجل دخولك لإنشاء مساحات مشتركة',
-                                  style: TextStyle(
-                                    fontSize: 12.sp,
-                                    color: colorScheme.outline.withOpacity(0.7),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios,
-                            size: 16,
-                            color: colorScheme.outline,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(l10n.spaceListCancel),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  if (controller.text.isNotEmpty) {
-                    // ✅ التحقق مرة أخرى قبل الإنشاء
-                    if (isShared && !isAuthenticated) {
-                      Navigator.pop(context);
-                      _showLoginRequiredDialog(context, l10n);
-                      return;
-                    }
-
-                    context.read<SpaceCubit>().createSpace(
-                      controller.text,
-                      isShared: isShared,
-                    );
-                    Navigator.pop(context);
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: colorScheme.primary,
-                  foregroundColor: colorScheme.onPrimary,
-                ),
-                child: Text(l10n.spaceListCreate),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-
-  /// ✅ Dialog طلب تسجيل الدخول
-  void _showLoginRequiredDialog(BuildContext context, AppLocalizations l10n) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        icon: Icon(Icons.lock_outline, size: 48, color: colorScheme.primary),
-        title: const Text('تسجيل الدخول مطلوب'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'لإنشاء مساحات مشتركة ودعوة الآخرين، تحتاج لتسجيل الدخول أولاً.',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: colorScheme.onSurfaceVariant),
-            ),
-            SizedBox(height: 16.h),
-            // ✅ مزايا تسجيل الدخول
-            _buildFeatureItem(
-              colorScheme,
-              Icons.group_add,
-              'إنشاء مساحات مشتركة',
-            ),
-            _buildFeatureItem(
-              colorScheme,
-              Icons.person_add,
-              'دعوة أفراد العائلة والفريق',
-            ),
-            _buildFeatureItem(
-              colorScheme,
-              Icons.cloud_sync,
-              'مزامنة بياناتك عبر الأجهزة',
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('لاحقاً'),
-          ),
-          ElevatedButton.icon(
-            onPressed: () {
-              Navigator.pop(ctx);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const AuthPage()),
-              );
-            },
-            icon: const Icon(Icons.login),
-            label: const Text('تسجيل الدخول'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: colorScheme.primary,
-              foregroundColor: colorScheme.onPrimary,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildFeatureItem(
-    ColorScheme colorScheme,
-    IconData icon,
-    String text,
-  ) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4.h),
-      child: Row(
-        children: [
-          Icon(icon, size: 20, color: colorScheme.primary),
-          SizedBox(width: 8.w),
-          Expanded(
-            child: Text(
-              text,
-              style: TextStyle(fontSize: 13.sp, color: colorScheme.onSurface),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 //----------------------------------------------------------------------
@@ -985,7 +852,7 @@ class _SpaceListPageState extends State<SpaceListPage> {
 //                     child: Container(
 //                       padding: EdgeInsets.all(12.w),
 //                       decoration: BoxDecoration(
-//                         color: colorScheme.surfaceContainerHighest.withOpacity(
+//                         color: colorScheme.surfaceContainerHighest.withValues(alpha: 
 //                           0.5,
 //                         ),
 //                         borderRadius: BorderRadius.circular(12),
@@ -1010,7 +877,7 @@ class _SpaceListPageState extends State<SpaceListPage> {
 //                                   'سجل دخولك لإنشاء مساحات مشتركة',
 //                                   style: TextStyle(
 //                                     fontSize: 12.sp,
-//                                     color: colorScheme.outline.withOpacity(0.7),
+//                                     color: colorScheme.outline.withValues(alpha: 0.7),
 //                                   ),
 //                                 ),
 //                               ],
@@ -1261,7 +1128,7 @@ class _SpaceListPageState extends State<SpaceListPage> {
 //               : Border.all(color: Colors.grey.shade200),
 //           boxShadow: [
 //             BoxShadow(
-//               color: Colors.black.withOpacity(0.03),
+//               color: Colors.black.withValues(alpha: 0.03),
 //               blurRadius: 10,
 //               offset: const Offset(0, 4),
 //             ),
@@ -1273,8 +1140,8 @@ class _SpaceListPageState extends State<SpaceListPage> {
 //               padding: EdgeInsets.all(12.w),
 //               decoration: BoxDecoration(
 //                 color: isPersonal
-//                     ? Colors.blue.withOpacity(0.1)
-//                     : Colors.purple.withOpacity(0.1),
+//                     ? Colors.blue.withValues(alpha: 0.1)
+//                     : Colors.purple.withValues(alpha: 0.1),
 //                 shape: BoxShape.circle,
 //               ),
 //               child: Icon(
@@ -1311,7 +1178,7 @@ class _SpaceListPageState extends State<SpaceListPage> {
 //             IconButton(
 //               icon: Icon(
 //                 Icons.delete_outline_rounded,
-//                 color: Colors.red.withOpacity(0.6),
+//                 color: Colors.red.withValues(alpha: 0.6),
 //                 size: 22.sp,
 //               ),
 //               onPressed: () => _showDeleteDialog(context, space),

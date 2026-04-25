@@ -47,14 +47,7 @@ app.*.map.json
 # Claude Code worktrees
 .claude/worktrees/
 .claude/
-cat >> .gitignore << 'EOF'
 
-# Fastlane & Bundler
-ios/vendor/
-ios/.bundle/
-vendor/bundle
-ios/build/
-ios/Pods/
 # Fastlane & Bundler
 ios/vendor/
 ios/.bundle/

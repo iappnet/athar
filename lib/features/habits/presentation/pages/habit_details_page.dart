@@ -4,6 +4,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import 'package:athar/l10n/generated/app_localizations.dart';
+import 'package:athar/core/utils/navigation_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -39,7 +40,10 @@ class HabitDetailsPage extends StatelessWidget {
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: BackButton(color: colorScheme.onSurface),
+        leading: BackButton(
+          color: colorScheme.onSurface,
+          onPressed: () => NavigationUtils.safeBack(context),
+        ),
         actions: [
           IconButton(
             // ✅ AppColors.primary → colors.primary
@@ -102,7 +106,7 @@ class HabitDetailsPage extends StatelessWidget {
             Container(
               padding: AtharSpacing.allLg,
               decoration: BoxDecoration(
-                // ✅ AppColors.primary.withOpacity(0.1) → colors.primary
+                // ✅ AppColors.primary.withValues(alpha: 0.1) → colors.primary
                 color: colorScheme.primary.withValues(alpha: 0.1),
                 borderRadius: AtharRadii.radiusLg,
               ),
@@ -358,7 +362,7 @@ class HabitDetailsPage extends StatelessWidget {
 //             Container(
 //               padding: AtharSpacing.allLg,
 //               decoration: BoxDecoration(
-//                 // ✅ AppColors.primary.withOpacity(0.1) → colors.primary
+//                 // ✅ AppColors.primary.withValues(alpha: 0.1) → colors.primary
 //                 color: colors.primary.withValues(alpha: 0.1),
 //                 borderRadius: AtharRadii.radiusLg,
 //               ),
@@ -583,7 +587,7 @@ class HabitDetailsPage extends StatelessWidget {
 //             Container(
 //               padding: EdgeInsets.all(16.w),
 //               decoration: BoxDecoration(
-//                 color: AppColors.primary.withOpacity(0.1),
+//                 color: AppColors.primary.withValues(alpha: 0.1),
 //                 borderRadius: BorderRadius.circular(16.r),
 //               ),
 //               child: Row(

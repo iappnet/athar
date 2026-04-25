@@ -127,7 +127,7 @@ class SmartHabitsStrip extends StatelessWidget {
           color: colorScheme.surface,
           // ✅ BorderRadius.circular(16.r) → AtharRadii.radiusLg
           borderRadius: AtharRadii.radiusLg,
-          // ✅ AppColors.primary.withOpacity(0.1)
+          // ✅ AppColors.primary.withValues(alpha: 0.1)
           border: Border.all(color: colorScheme.primary.withValues(alpha: 0.1)),
           boxShadow: [
             BoxShadow(
@@ -188,7 +188,7 @@ class SmartHabitsStrip extends StatelessWidget {
       // ✅ EdgeInsets.all(12.w) → AtharSpacing.allMd
       padding: AtharSpacing.allMd,
       decoration: BoxDecoration(
-        // ✅ Colors.green.withOpacity(0.05) → colors.success
+        // ✅ Colors.green.withValues(alpha: 0.05) → colors.success
         color: _successColor.withValues(alpha: 0.05),
         // ✅ BorderRadius.circular(12.r) → AtharRadii.radiusMd
         borderRadius: AtharRadii.radiusMd,
@@ -360,7 +360,7 @@ class SmartHabitsStrip extends StatelessWidget {
 //           color: colors.surface,
 //           // ✅ BorderRadius.circular(16.r) → AtharRadii.radiusLg
 //           borderRadius: AtharRadii.radiusLg,
-//           // ✅ AppColors.primary.withOpacity(0.1)
+//           // ✅ AppColors.primary.withValues(alpha: 0.1)
 //           border: Border.all(color: colors.primary.withValues(alpha: 0.1)),
 //           boxShadow: [
 //             BoxShadow(
@@ -415,7 +415,7 @@ class SmartHabitsStrip extends StatelessWidget {
 //       // ✅ EdgeInsets.all(12.w) → AtharSpacing.allMd
 //       padding: AtharSpacing.allMd,
 //       decoration: BoxDecoration(
-//         // ✅ Colors.green.withOpacity(0.05) → colors.success
+//         // ✅ Colors.green.withValues(alpha: 0.05) → colors.success
 //         color: colors.success.withValues(alpha: 0.05),
 //         // ✅ BorderRadius.circular(12.r) → AtharRadii.radiusMd
 //         borderRadius: AtharRadii.radiusMd,
@@ -523,10 +523,10 @@ class SmartHabitsStrip extends StatelessWidget {
 //         decoration: BoxDecoration(
 //           color: AppColors.surface,
 //           borderRadius: BorderRadius.circular(16.r),
-//           border: Border.all(color: AppColors.primary.withOpacity(0.1)),
+//           border: Border.all(color: AppColors.primary.withValues(alpha: 0.1)),
 //           boxShadow: [
 //             BoxShadow(
-//               color: AppColors.primary.withOpacity(0.05),
+//               color: AppColors.primary.withValues(alpha: 0.05),
 //               blurRadius: 8,
 //               offset: const Offset(0, 4),
 //             ),
@@ -539,8 +539,8 @@ class SmartHabitsStrip extends StatelessWidget {
 //               padding: EdgeInsets.all(8.w),
 //               decoration: BoxDecoration(
 //                 color: isAthkar
-//                     ? Colors.orange.withOpacity(0.1)
-//                     : AppColors.primary.withOpacity(0.1),
+//                     ? Colors.orange.withValues(alpha: 0.1)
+//                     : AppColors.primary.withValues(alpha: 0.1),
 //                 shape: BoxShape.circle,
 //               ),
 //               child: Icon(
@@ -563,9 +563,9 @@ class SmartHabitsStrip extends StatelessWidget {
 //       width: double.infinity,
 //       padding: EdgeInsets.all(12.w),
 //       decoration: BoxDecoration(
-//         color: Colors.green.withOpacity(0.05),
+//         color: Colors.green.withValues(alpha: 0.05),
 //         borderRadius: BorderRadius.circular(12.r),
-//         border: Border.all(color: Colors.green.withOpacity(0.2)),
+//         border: Border.all(color: Colors.green.withValues(alpha: 0.2)),
 //       ),
 //       child: Row(
 //         mainAxisAlignment: MainAxisAlignment.center,
@@ -715,7 +715,7 @@ class SmartHabitsStrip extends StatelessWidget {
 //           color: colors.surface,
 //           // ✅ BorderRadius.circular(16.r) → AtharRadii.radiusLg
 //           borderRadius: AtharRadii.radiusLg,
-//           // ✅ AppColors.primary.withOpacity(0.1)
+//           // ✅ AppColors.primary.withValues(alpha: 0.1)
 //           border: Border.all(color: colors.primary.withValues(alpha: 0.1)),
 //           boxShadow: [
 //             BoxShadow(
@@ -768,7 +768,7 @@ class SmartHabitsStrip extends StatelessWidget {
 //       // ✅ EdgeInsets.all(12.w) → AtharSpacing.allMd
 //       padding: AtharSpacing.allMd,
 //       decoration: BoxDecoration(
-//         // ✅ Colors.green.withOpacity(0.05) → colors.success
+//         // ✅ Colors.green.withValues(alpha: 0.05) → colors.success
 //         color: colors.success.withValues(alpha: 0.05),
 //         // ✅ BorderRadius.circular(12.r) → AtharRadii.radiusMd
 //         borderRadius: AtharRadii.radiusMd,
@@ -925,10 +925,10 @@ class SmartHabitsStrip extends StatelessWidget {
 //         decoration: BoxDecoration(
 //           color: AppColors.surface,
 //           borderRadius: BorderRadius.circular(16.r),
-//           border: Border.all(color: AppColors.primary.withOpacity(0.1)),
+//           border: Border.all(color: AppColors.primary.withValues(alpha: 0.1)),
 //           boxShadow: [
 //             BoxShadow(
-//               color: AppColors.primary.withOpacity(0.05),
+//               color: AppColors.primary.withValues(alpha: 0.05),
 //               blurRadius: 8,
 //               offset: const Offset(0, 4),
 //             ),
@@ -942,8 +942,8 @@ class SmartHabitsStrip extends StatelessWidget {
 //               padding: EdgeInsets.all(8.w),
 //               decoration: BoxDecoration(
 //                 color: isAthkar
-//                     ? Colors.orange.withOpacity(0.1)
-//                     : AppColors.primary.withOpacity(0.1),
+//                     ? Colors.orange.withValues(alpha: 0.1)
+//                     : AppColors.primary.withValues(alpha: 0.1),
 //                 shape: BoxShape.circle,
 //               ),
 //               child: Icon(
@@ -971,9 +971,9 @@ class SmartHabitsStrip extends StatelessWidget {
 //       width: double.infinity,
 //       padding: EdgeInsets.all(12.w),
 //       decoration: BoxDecoration(
-//         color: Colors.green.withOpacity(0.05),
+//         color: Colors.green.withValues(alpha: 0.05),
 //         borderRadius: BorderRadius.circular(12.r),
-//         border: Border.all(color: Colors.green.withOpacity(0.2)),
+//         border: Border.all(color: Colors.green.withValues(alpha: 0.2)),
 //       ),
 //       child: Row(
 //         mainAxisAlignment: MainAxisAlignment.center,

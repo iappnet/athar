@@ -33,9 +33,17 @@ class _AddListItemSheetState extends State<AddListItemSheet> {
   bool get isEditing => widget.itemToEdit != null;
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _quantityController.dispose();
+    _unitController.dispose();
+    _repeatDaysController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
-    // ✅ إذا كان تعديل، نملأ البيانات القديمة
     if (isEditing) {
       final item = widget.itemToEdit!;
       _nameController.text = item.name;

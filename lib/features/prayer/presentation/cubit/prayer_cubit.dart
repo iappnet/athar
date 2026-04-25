@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:athar/features/settings/domain/repositories/settings_repository.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import '../../domain/repositories/prayer_repository.dart';
@@ -53,7 +54,7 @@ class PrayerCubit extends Cubit<PrayerState> {
         ),
       );
     } catch (e) {
-      print('❌ Error loading prayer times: $e');
+      debugPrint('❌ Error loading prayer times: $e');
       emit(const PrayerError("فشل في تحميل مواقيت الصلاة"));
     }
   }

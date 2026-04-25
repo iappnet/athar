@@ -3,6 +3,8 @@
 
 import 'package:athar/core/design_system/molecules/pickers/reminder_picker_widget.dart';
 import 'package:athar/core/design_system/widgets/time_slot_picker.dart';
+import 'package:athar/features/task/data/models/recurrence_pattern.dart';
+import 'package:athar/features/task/presentation/widgets/recurrence_picker.dart';
 import 'package:athar/core/time_engine/athar_time_periods.dart';
 import 'package:athar/core/time_engine/time_slot_mixin.dart';
 import 'package:athar/features/prayer/domain/entities/prayer_time.dart';
@@ -68,6 +70,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
 
   DateTime? _reminderTime;
   bool _isReminderEnabled = false;
+  RecurrencePattern? _selectedRecurrence;
 
   bool _isHijriMode = false;
   bool _isSaving = false;
@@ -94,6 +97,12 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
         _isHijriMode = settings.isHijriMode;
       });
     }
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    super.dispose();
   }
 
   void _initForm() {
@@ -297,6 +306,16 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
             ),
             AtharGap.md,
 
+            // --- التكرار (للمهام الجديدة فقط) ---
+            if (widget.taskToEdit == null) ...[
+              RecurrencePicker(
+                initialPattern: _selectedRecurrence,
+                onChanged: (pattern) =>
+                    setState(() => _selectedRecurrence = pattern),
+              ),
+              AtharGap.md,
+            ],
+
             // --- الإسناد (للمساحات فقط) ---
             if (widget.targetSpaceId != null ||
                 (widget.taskToEdit?.spaceId != null)) ...[
@@ -357,7 +376,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainerHighest,
           borderRadius: AtharRadii.radiusMd,
-          border: Border.all(color: colorScheme.outline.withOpacity(0.3)),
+          border: Border.all(color: colorScheme.outline.withValues(alpha: 0.3)),
         ),
         child: Row(
           children: [
@@ -380,9 +399,9 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
     return Container(
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
-        color: colorScheme.primaryContainer.withOpacity(0.3),
+        color: colorScheme.primaryContainer.withValues(alpha: 0.3),
         borderRadius: AtharRadii.radiusMd,
-        border: Border.all(color: colorScheme.primary.withOpacity(0.5)),
+        border: Border.all(color: colorScheme.primary.withValues(alpha: 0.5)),
       ),
       child: Row(
         children: [
@@ -432,7 +451,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
           color: colorScheme.surfaceContainerHighest,
           borderRadius: AtharRadii.radiusMd,
           border: Border.all(
-            color: colorScheme.outline.withOpacity(0.3),
+            color: colorScheme.outline.withValues(alpha: 0.3),
             style: BorderStyle.solid,
           ),
         ),
@@ -848,6 +867,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
         spaceId: widget.targetSpaceId,
         assigneeId: _selectedAssigneeId,
         reminderTime: _isReminderEnabled ? _reminderTime : null,
+        recurrence: _selectedRecurrence,
       );
     }
 

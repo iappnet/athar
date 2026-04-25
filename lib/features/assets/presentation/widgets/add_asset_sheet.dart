@@ -29,7 +29,24 @@ class _AddAssetSheetState extends State<AddAssetSheet> {
   final _notesController = TextEditingController();
 
   DateTime _purchaseDate = DateTime.now();
+  DateTime? _nextMaintenanceDate;
+  DateTime? _insuranceExpiryDate;
+  DateTime? _licenseExpiryDate;
+  bool _reminderEnabled = true;
+  int _reminderDaysBefore = 7;
   bool _showAdvanced = false;
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _categoryController.dispose();
+    _priceController.dispose();
+    _warrantyController.dispose();
+    _vendorController.dispose();
+    _serialController.dispose();
+    _notesController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -215,6 +232,71 @@ class _AddAssetSheetState extends State<AddAssetSheet> {
                     Icons.note_outlined,
                   ),
                 ),
+                AtharGap.lg,
+                _buildDatePickerRow(
+                  colorScheme,
+                  label: 'تاريخ الصيانة القادمة',
+                  icon: Icons.build_outlined,
+                  date: _nextMaintenanceDate,
+                  onPicked: (d) =>
+                      setState(() => _nextMaintenanceDate = d),
+                ),
+                AtharGap.md,
+                _buildDatePickerRow(
+                  colorScheme,
+                  label: 'تاريخ انتهاء التأمين',
+                  icon: Icons.health_and_safety_outlined,
+                  date: _insuranceExpiryDate,
+                  onPicked: (d) =>
+                      setState(() => _insuranceExpiryDate = d),
+                ),
+                AtharGap.md,
+                _buildDatePickerRow(
+                  colorScheme,
+                  label: 'تاريخ انتهاء الترخيص',
+                  icon: Icons.badge_outlined,
+                  date: _licenseExpiryDate,
+                  onPicked: (d) =>
+                      setState(() => _licenseExpiryDate = d),
+                ),
+                AtharGap.lg,
+                SwitchListTile(
+                  title: const Text('تفعيل التذكير'),
+                  subtitle:
+                      const Text('تذكيرني قبل انتهاء التواريخ'),
+                  value: _reminderEnabled,
+                  onChanged: (v) =>
+                      setState(() => _reminderEnabled = v),
+                ),
+                if (_reminderEnabled) ...[
+                  AtharGap.sm,
+                  Row(
+                    children: [
+                      const Text('التذكير قبل:'),
+                      SizedBox(width: 12.w),
+                      SizedBox(
+                        width: 70.w,
+                        child: DropdownButtonFormField<int>(
+                          initialValue: _reminderDaysBefore,
+                          items: [1, 3, 7, 14, 30]
+                              .map((d) => DropdownMenuItem(
+                                    value: d,
+                                    child: Text('$d يوم'),
+                                  ))
+                              .toList(),
+                          onChanged: (v) => setState(
+                              () => _reminderDaysBefore = v!),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius: AtharRadii.card),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 8.w),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ],
 
               AtharGap.xxl,
@@ -235,6 +317,51 @@ class _AddAssetSheetState extends State<AddAssetSheet> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDatePickerRow(
+    ColorScheme colorScheme, {
+    required String label,
+    required IconData icon,
+    required DateTime? date,
+    required ValueChanged<DateTime> onPicked,
+  }) {
+    return InkWell(
+      onTap: () async {
+        final picked = await showDatePicker(
+          context: context,
+          initialDate: date ?? DateTime.now(),
+          firstDate: DateTime.now(),
+          lastDate: DateTime.now().add(const Duration(days: 365 * 5)),
+        );
+        if (picked != null) onPicked(picked);
+      },
+      borderRadius: AtharRadii.card,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 14.h),
+        decoration: BoxDecoration(
+          border: Border.all(color: colorScheme.outlineVariant),
+          borderRadius: AtharRadii.card,
+        ),
+        child: Row(
+          children: [
+            Icon(icon, color: colorScheme.outline, size: 20.sp),
+            SizedBox(width: 10.w),
+            Expanded(
+              child: Text(
+                date != null
+                    ? '$label: ${DateFormat('yyyy-MM-dd').format(date)}'
+                    : label,
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  color: date != null ? null : colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -281,6 +408,11 @@ class _AddAssetSheetState extends State<AddAssetSheet> {
         notes: _notesController.text.isNotEmpty ? _notesController.text : null,
         spaceId: widget.spaceId,
         moduleId: widget.moduleId,
+        nextMaintenanceDate: _nextMaintenanceDate,
+        insuranceExpiryDate: _insuranceExpiryDate,
+        licenseExpiryDate: _licenseExpiryDate,
+        reminderEnabled: _reminderEnabled,
+        reminderDaysBefore: _reminderDaysBefore,
       );
 
       Navigator.pop(context);

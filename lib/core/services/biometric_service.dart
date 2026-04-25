@@ -29,7 +29,7 @@ class BiometricService {
       return canAuthenticate;
     } on PlatformException catch (e) {
       if (kDebugMode) {
-        print("🔐 Check Biometric Error: $e");
+        debugPrint("🔐 Check Biometric Error: $e");
       }
       return false;
     }
@@ -41,7 +41,7 @@ class BiometricService {
       return await _auth.getAvailableBiometrics();
     } on PlatformException catch (e) {
       if (kDebugMode) {
-        print("🔐 Get Available Biometrics Error: $e");
+        debugPrint("🔐 Get Available Biometrics Error: $e");
       }
       return [];
     }
@@ -94,7 +94,7 @@ class BiometricService {
       final isAvailable = await isBiometricAvailable;
       if (!isAvailable) {
         if (kDebugMode) {
-          print("🔐 Biometric not available on this device");
+          debugPrint("🔐 Biometric not available on this device");
         }
         return false;
       }
@@ -103,14 +103,14 @@ class BiometricService {
       final biometrics = await getAvailableBiometrics();
       if (biometrics.isEmpty) {
         if (kDebugMode) {
-          print("🔐 No biometrics enrolled on this device");
+          debugPrint("🔐 No biometrics enrolled on this device");
         }
         return false;
       }
 
       if (kDebugMode) {
-        print("🔐 Available biometrics: $biometrics");
-        print("🔐 Authenticating (biometricOnly: $biometricOnly)");
+        debugPrint("🔐 Available biometrics: $biometrics");
+        debugPrint("🔐 Authenticating (biometricOnly: $biometricOnly)");
       }
 
       // ✅ الطريقة الصحيحة في 3.0.0+: معاملات مباشرة بدون AuthenticationOptions
@@ -127,7 +127,7 @@ class BiometricService {
       return false;
     } on PlatformException catch (e) {
       if (kDebugMode) {
-        print("🔐 Platform Error: $e");
+        debugPrint("🔐 Platform Error: $e");
       }
       return false;
     }
@@ -147,20 +147,20 @@ class BiometricService {
   void _handleLocalAuthException(LocalAuthException e) {
     switch (e.code) {
       case LocalAuthExceptionCode.noBiometricHardware:
-        print("🔐 لا يوجد دعم للبصمة على هذا الجهاز");
+        debugPrint("🔐 لا يوجد دعم للبصمة على هذا الجهاز");
         break;
       case LocalAuthExceptionCode.noBiometricsEnrolled:
-        print("🔐 لا توجد بصمات مسجلة - يرجى تسجيل البصمة من الإعدادات");
+        debugPrint("🔐 لا توجد بصمات مسجلة - يرجى تسجيل البصمة من الإعدادات");
         break;
       case LocalAuthExceptionCode.temporaryLockout:
       case LocalAuthExceptionCode.biometricLockout:
-        print("🔐 البصمة مقفلة مؤقتاً بسبب محاولات فاشلة متعددة");
+        debugPrint("🔐 البصمة مقفلة مؤقتاً بسبب محاولات فاشلة متعددة");
         break;
       case LocalAuthExceptionCode.userCanceled:
-        print("🔐 ألغى المستخدم عملية المصادقة");
+        debugPrint("🔐 ألغى المستخدم عملية المصادقة");
         break;
       default:
-        print(
+        debugPrint(
           "🔐 خطأ في المصادقة: ${e.code.name}"
           "${e.description != null ? ' - ${e.description}' : ''}",
         );
@@ -187,7 +187,7 @@ class BiometricService {
 //       return canAuthenticate;
 //     } on PlatformException catch (e) {
 //       if (kDebugMode) {
-//         print("Check Biometric Error: $e");
+//         debugPrint("Check Biometric Error: $e");
 //       }
 //       return false;
 //     }
@@ -214,21 +214,21 @@ class BiometricService {
 //       if (kDebugMode) {
 //         switch (e.code) {
 //           case LocalAuthExceptionCode.noBiometricHardware:
-//             print("لا يوجد دعم للبصمة على هذا الجهاز");
+//             debugPrint("لا يوجد دعم للبصمة على هذا الجهاز");
 //             break;
 //           case LocalAuthExceptionCode.noBiometricsEnrolled:
-//             print("لا توجد بصمات مسجلة");
+//             debugPrint("لا توجد بصمات مسجلة");
 //             break;
 //           case LocalAuthExceptionCode.temporaryLockout:
 //           case LocalAuthExceptionCode.biometricLockout:
-//             print("البصمة مقفلة بسبب محاولات فاشلة كثيرة");
+//             debugPrint("البصمة مقفلة بسبب محاولات فاشلة كثيرة");
 //             break;
 //           case LocalAuthExceptionCode.userCanceled:
-//             print("ألغى المستخدم عملية المصادقة");
+//             debugPrint("ألغى المستخدم عملية المصادقة");
 //             break;
 //           default:
 //             // ✅ استخدم description بدلاً من message
-//             print(
+//             debugPrint(
 //               "خطأ في المصادقة: ${e.code.name}${e.description != null ? ' - ${e.description}' : ''}",
 //             );
 //         }
@@ -237,7 +237,7 @@ class BiometricService {
 //     } on PlatformException catch (e) {
 //       // للأخطاء الأخرى غير المتوقعة
 //       if (kDebugMode) {
-//         print("Platform Error: $e");
+//         debugPrint("Platform Error: $e");
 //       }
 //       return false;
 //     }

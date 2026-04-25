@@ -41,8 +41,9 @@ class SpaceMemberRepository {
   Future<void> syncSpaceMembers(String spaceId) async {
     // ✅ التحقق من تسجيل الدخول أولاً
     if (!_isAuthenticated) {
-      if (kDebugMode)
+      if (kDebugMode) {
         print("⚠️ syncSpaceMembers: User not authenticated, skipping sync");
+      }
       return;
     }
 
@@ -53,7 +54,7 @@ class SpaceMemberRepository {
       // 1. جلب الأعضاء (بدون profiles)
       final membersResponse = await _supabase
           .from('space_members')
-          .select('id, space_id, user_id, role, joined_at')
+          .select('uuid, space_id, user_id, role, joined_at')
           .eq('space_id', spaceId);
 
       if (membersResponse.isEmpty) {
@@ -78,7 +79,7 @@ class SpaceMemberRepository {
       try {
         final profilesResponse = await _supabase
             .from('profiles')
-            .select('user_id, full_name, avatar_url, username, email')
+            .select('user_id, full_name, avatar_url, username')
             .inFilter('user_id', userIds);
 
         for (final profile in profilesResponse) {
@@ -100,7 +101,7 @@ class SpaceMemberRepository {
         final profile = profilesMap[userId] ?? {};
 
         final member = SpaceMemberModel()
-          ..uuid = json['id']?.toString() ?? ''
+          ..uuid = json['uuid']?.toString() ?? ''
           ..spaceId = json['space_id'] ?? spaceId
           ..userId = userId
           ..role = json['role'] ?? 'member'
@@ -130,7 +131,17 @@ class SpaceMemberRepository {
         print("✅ Synced ${remoteMembers.length} members for space: $spaceId");
       }
     } catch (e) {
-      if (kDebugMode) print("❌ Error syncing members: $e");
+      if (e is PostgrestException && e.code == '42P17') {
+        if (kDebugMode) {
+          debugPrint(
+            '❌ Error syncing members: Supabase RLS recursion on '
+            'space_members; using local cache only.',
+          );
+        }
+        return;
+      }
+
+      if (kDebugMode) debugPrint("❌ Error syncing members: $e");
 
       // ✅ Fallback: محاولة جلب الأعضاء بدون profiles على الإطلاق
       await _syncMembersWithoutProfiles(spaceId);
@@ -142,12 +153,12 @@ class SpaceMemberRepository {
     try {
       final response = await _supabase
           .from('space_members')
-          .select('id, space_id, user_id, role, joined_at')
+          .select('uuid, space_id, user_id, role, joined_at')
           .eq('space_id', spaceId);
 
       final List<SpaceMemberModel> members = (response as List).map((json) {
         return SpaceMemberModel()
-          ..uuid = json['id']?.toString() ?? ''
+          ..uuid = json['uuid']?.toString() ?? ''
           ..spaceId = json['space_id'] ?? spaceId
           ..userId = json['user_id'] ?? ''
           ..role = json['role'] ?? 'member'
@@ -169,10 +180,20 @@ class SpaceMemberRepository {
       });
 
       if (kDebugMode) {
-        print("✅ Fallback sync: ${members.length} members (without profiles)");
+        debugPrint(
+          "✅ Fallback sync: ${members.length} members (without profiles)",
+        );
       }
     } catch (e) {
-      if (kDebugMode) print("❌ Fallback sync also failed: $e");
+      if (e is PostgrestException && e.code == '42P17') {
+        if (kDebugMode) {
+          debugPrint(
+            '❌ Fallback sync also blocked by space_members RLS recursion.',
+          );
+        }
+        return;
+      }
+      if (kDebugMode) debugPrint("❌ Fallback sync also failed: $e");
     }
   }
 
@@ -204,6 +225,39 @@ class SpaceMemberRepository {
         localRecord.role = newRole;
         await _isar.spaceMemberModels.put(localRecord);
       });
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // إضافة عضو مباشرة
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  Future<void> addMember(
+    String spaceId,
+    String userId, {
+    String role = 'member',
+  }) async {
+    final existingMember = await _supabase
+        .from('space_members')
+        .select('uuid')
+        .eq('space_id', spaceId)
+        .eq('user_id', userId)
+        .maybeSingle();
+
+    if (existingMember != null) {
+      throw Exception('هذا المستخدم عضو بالفعل في المساحة');
+    }
+
+    await _supabase.from('space_members').insert({
+      'space_id': spaceId,
+      'user_id': userId,
+      'role': role,
+      'joined_at': DateTime.now().toIso8601String(),
+    });
+
+    final member = await getMemberWithProfile(spaceId, userId);
+    if (member == null) {
+      await syncSpaceMembers(spaceId);
     }
   }
 
@@ -262,7 +316,7 @@ class SpaceMemberRepository {
     try {
       final memberResponse = await _supabase
           .from('space_members')
-          .select('id, space_id, user_id, role, joined_at')
+          .select('uuid, space_id, user_id, role, joined_at')
           .eq('space_id', spaceId)
           .eq('user_id', userId)
           .maybeSingle();
@@ -277,7 +331,7 @@ class SpaceMemberRepository {
           .maybeSingle();
 
       final member = SpaceMemberModel()
-        ..uuid = memberResponse['id']?.toString() ?? ''
+        ..uuid = memberResponse['uuid']?.toString() ?? ''
         ..spaceId = spaceId
         ..userId = userId
         ..role = memberResponse['role'] ?? 'member'

@@ -113,6 +113,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
           return FabContextProvider(
             fabContext: _pageContexts[_currentIndex],
             child: Scaffold(
+              extendBody: !isTablet,
               // ═════════════════════════════════════════════════════════════
               // الجسم
               // ═════════════════════════════════════════════════════════════
@@ -127,6 +128,9 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                   ? null
                   // ✅ FIX: استخدام BlocBuilder للوصول الصحيح لـ hideNavOnScroll
                   : BlocBuilder<SettingsCubit, SettingsState>(
+                      buildWhen: (prev, curr) =>
+                          (prev is SettingsLoaded ? prev.settings.hideNavOnScroll : false) !=
+                          (curr is SettingsLoaded ? curr.settings.hideNavOnScroll : false),
                       builder: (context, settingsState) {
                         // ✅ FIX: الوصول الصحيح عبر SettingsLoaded.settings
                         final hideOnScroll = settingsState is SettingsLoaded
@@ -194,7 +198,10 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   // ═══════════════════════════════════════════════════════════════════════════
 
   Widget _buildPhoneLayout() {
-    return IndexedStack(index: _currentIndex, children: _pages);
+    return PrimaryScrollController(
+      controller: _scrollController,
+      child: IndexedStack(index: _currentIndex, children: _pages),
+    );
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -249,7 +256,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
         VerticalDivider(
           width: 1,
           thickness: 1,
-          color: colorScheme.outlineVariant.withOpacity(0.5),
+          color: colorScheme.outlineVariant.withValues(alpha: 0.5),
         ),
 
         // المحتوى
@@ -428,7 +435,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                   Container(
                     padding: EdgeInsets.all(12.w),
                     decoration: BoxDecoration(
-                      color: colorScheme.surfaceContainerHighest.withOpacity(
+                      color: colorScheme.surfaceContainerHighest.withValues(alpha: 
                         0.5,
                       ),
                       borderRadius: AtharRadii.radiusMd,
@@ -453,7 +460,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                                 'سجل دخولك لإنشاء مساحات مشتركة',
                                 style: TextStyle(
                                   fontSize: 12.sp,
-                                  color: colorScheme.outline.withOpacity(0.7),
+                                  color: colorScheme.outline.withValues(alpha: 0.7),
                                 ),
                               ),
                             ],

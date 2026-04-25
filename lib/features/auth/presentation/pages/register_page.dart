@@ -25,6 +25,15 @@ class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _usernameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final canPop = Navigator.canPop(context);
 
@@ -101,8 +110,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       label: "البريد الإلكتروني",
                       controller: _emailController,
                       icon: Icons.email_outlined,
-                      validator: (val) =>
-                          !val!.contains('@') ? "بريد غير صحيح" : null,
+                      validator: (val) {
+                        if (val == null || val.isEmpty) return "مطلوب";
+                        final emailRegex = RegExp(r'^[\w.+-]+@[\w-]+\.\w{2,}$');
+                        if (!emailRegex.hasMatch(val.trim())) return "بريد إلكتروني غير صحيح";
+                        return null;
+                      },
                     ),
                     SizedBox(height: 16.h),
 
@@ -113,7 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       icon: Icons.lock_outline,
                       isPassword: true,
                       validator: (val) =>
-                          val!.length < 6 ? "6 خانات على الأقل" : null,
+                          (val == null || val.length < 8) ? "8 خانات على الأقل" : null,
                     ),
                     SizedBox(height: 32.h),
 

@@ -391,7 +391,7 @@ class _DualCalendarWidgetState extends State<DualCalendarWidget> {
 //         borderRadius: BorderRadius.vertical(bottom: Radius.circular(30.r)),
 //         boxShadow: [
 //           BoxShadow(
-//             color: Colors.black.withOpacity(0.05),
+//             color: Colors.black.withValues(alpha: 0.05),
 //             blurRadius: 10,
 //             offset: const Offset(0, 5),
 //           ),
@@ -444,7 +444,7 @@ class _DualCalendarWidgetState extends State<DualCalendarWidget> {
 //                       // أيقونة التبديل
 //                       Icon(
 //                         Icons.swap_vert_circle_outlined,
-//                         color: AppColors.primary.withOpacity(0.5),
+//                         color: AppColors.primary.withValues(alpha: 0.5),
 //                         size: 20.sp,
 //                       ),
 //                     ],
@@ -523,7 +523,7 @@ class _DualCalendarWidgetState extends State<DualCalendarWidget> {
 //                     color: isSelected
 //                         ? AppColors.primary
 //                         : (isToday
-//                               ? AppColors.primary.withOpacity(0.1)
+//                               ? AppColors.primary.withValues(alpha: 0.1)
 //                               : Colors.transparent),
 //                     borderRadius: BorderRadius.circular(12.r),
 //                     border: isToday && !isSelected

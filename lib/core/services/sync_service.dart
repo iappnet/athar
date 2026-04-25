@@ -1,6 +1,7 @@
 import 'dart:math'; // ✅ ضروري لمنطق Max Value
 import 'package:athar/core/constants/athkar_data.dart';
 import 'package:athar/core/di/injection.dart';
+import 'package:athar/features/subscription/presentation/cubit/subscription_cubit.dart';
 import 'package:athar/core/services/file_service.dart';
 import 'package:athar/features/habits/data/models/habit_model.dart';
 import 'package:athar/features/habits/domain/repositories/habit_repository.dart';
@@ -66,6 +67,9 @@ class SyncService {
   // ===========================================================================
 
   Future<void> executeAutomatedSync(SyncStatus status, String userId) async {
+    // Sync is a Spaces Pro feature — skip silently for free users.
+    if (!getIt<SubscriptionCubit>().hasSyncAccess) return;
+
     switch (status) {
       case SyncStatus.clean:
         await syncAll(); // ✅ استدعاء المزامنة الكاملة بالترتيب الصحيح
@@ -123,7 +127,7 @@ class SyncService {
       await _pullAndMergeSpaces(user.id);
     } catch (e) {
       if (kDebugMode) {
-        print('Sync Spaces Error: $e');
+        debugPrint('Sync Spaces Error: $e');
       }
     }
   }
@@ -136,7 +140,7 @@ class SyncService {
       await _pullAndMergeTasks(user.id);
     } catch (e) {
       if (kDebugMode) {
-        print('Sync Tasks Error: $e');
+        debugPrint('Sync Tasks Error: $e');
       }
     }
   }
@@ -150,7 +154,7 @@ class SyncService {
       await _pullAndMergeHabits(user.id);
     } catch (e) {
       if (kDebugMode) {
-        print('Sync Habits Error: $e');
+        debugPrint('Sync Habits Error: $e');
       }
     }
   }
@@ -167,7 +171,7 @@ class SyncService {
 
     if (unsyncedSpaces.isNotEmpty) {
       final spacesData = unsyncedSpaces.map((s) {
-        final json = s.toJson();
+        final json = s.toSupabaseJson();
         // تأكد من الحقل الصحيح للمالك في قاعدة البيانات
         json['owner_id'] = userId;
         return json;
@@ -424,12 +428,50 @@ class SyncService {
 
   // --- دالة جلب المساحات (جديد) ---
   Future<void> _pullAndMergeSpaces(String userId) async {
-    final remoteData = await _supabase
+    final ownedSpaces = await _supabase
         .from('spaces')
         .select()
-        .eq('owner_id', userId); // أو المساحات المشتركة
+        .eq('owner_id', userId);
 
-    final List<SpaceModel> remoteSpaces = (remoteData as List)
+    List<dynamic> memberships = [];
+    try {
+      memberships = await _supabase
+          .from('space_members')
+          .select('space_id')
+          .eq('user_id', userId);
+    } on PostgrestException catch (e) {
+      if (e.code == '42P17' && kDebugMode) {
+        debugPrint(
+          'Sync Spaces: skipping membership pull because the current '
+          'Supabase RLS policy on space_members is recursively defined.',
+        );
+      } else {
+        rethrow;
+      }
+    }
+
+    final memberSpaceIds = memberships
+        .map((row) => row['space_id'] as String?)
+        .whereType<String>()
+        .toSet();
+
+    List<dynamic> memberSpaces = [];
+    if (memberSpaceIds.isNotEmpty) {
+      memberSpaces = await _supabase
+          .from('spaces')
+          .select()
+          .inFilter('uuid', memberSpaceIds.toList());
+    }
+
+    final mergedByUuid = <String, dynamic>{};
+    for (final row in [...ownedSpaces as List, ...memberSpaces]) {
+      final uuid = row['uuid'] as String?;
+      if (uuid != null) {
+        mergedByUuid[uuid] = row;
+      }
+    }
+
+    final List<SpaceModel> remoteSpaces = mergedByUuid.values
         .map((e) => SpaceModel.fromJson(e))
         .toList();
 

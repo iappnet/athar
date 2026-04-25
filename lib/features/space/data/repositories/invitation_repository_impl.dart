@@ -22,19 +22,94 @@ class InvitationRepositoryImpl implements InvitationRepository {
 
   @override
   Future<List<SearchResultDto>> searchUsers(String query) async {
-    if (query.length < 3) return [];
+    final normalizedQuery = query.trim();
+    if (normalizedQuery.length < 3) return [];
 
     try {
       final List<dynamic> response = await _supabase.rpc(
         'search_profile',
-        params: {'search_term': query},
+        params: {'search_term': normalizedQuery},
       );
 
-      return response.map((e) => SearchResultDto.fromJson(e)).toList();
+      final results = response.map((e) => SearchResultDto.fromJson(e)).toList();
+      if (results.isNotEmpty) {
+        return results;
+      }
     } catch (e) {
       debugPrint('❌ Error searching users: $e');
+    }
+
+    try {
+      final response = await _supabase
+          .from('profiles')
+          .select('user_id, username, full_name, avatar_url')
+          .or(
+            'username.ilike.%$normalizedQuery%,full_name.ilike.%$normalizedQuery%',
+          )
+          .limit(20);
+
+      return (response as List).map((row) {
+        final data = Map<String, dynamic>.from(row as Map);
+        data['id'] = data['user_id'];
+        return SearchResultDto.fromJson(data);
+      }).toList();
+    } catch (e) {
+      debugPrint('❌ Fallback profile search failed: $e');
       return [];
     }
+  }
+
+  Future<void> _ensureNoPendingInvite({
+    required String spaceId,
+    String? userId,
+    String? email,
+  }) async {
+    try {
+      var request = _supabase
+          .from('invitations')
+          .select('uuid')
+          .eq('space_id', spaceId)
+          .eq('status', 'pending');
+
+      if (userId != null && userId.isNotEmpty) {
+        request = request.eq('invitee_id', userId);
+      } else if (email != null && email.isNotEmpty) {
+        request = request.eq('invitee_email', email);
+      }
+
+      final existingInvite = await request.maybeSingle();
+      if (existingInvite != null) {
+        throw Exception('يوجد دعوة معلقة لهذا المستخدم');
+      }
+    } catch (e) {
+      if (e.toString().contains('يوجد دعوة معلقة')) {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> _insertInvite({
+    required String spaceId,
+    String? userId,
+    String? email,
+  }) async {
+    final currentUserId = _supabase.auth.currentUser!.id;
+    final token = const Uuid().v4();
+
+    await _supabase.from('invitations').insert({
+      'uuid': const Uuid().v4(),
+      'token': token,
+      'space_id': spaceId,
+      'inviter_id': currentUserId,
+      'invitee_id': userId,
+      'invitee_email': email,
+      'type': 'direct_user',
+      'status': 'pending',
+      'expires_at': DateTime.now()
+          .add(const Duration(days: 7))
+          .toIso8601String(),
+      'created_at': DateTime.now().toIso8601String(),
+    });
   }
 
   // ═══════════════════════════════════════════════════════════════════
@@ -47,30 +122,9 @@ class InvitationRepositoryImpl implements InvitationRepository {
     required String userId,
     required String userEmail,
   }) async {
-    final token = const Uuid().v4();
-    final currentUserId = _supabase.auth.currentUser!.id;
+    await _ensureNoPendingInvite(spaceId: spaceId, userId: userId);
 
-    // ✅ 1. التحقق من عدم وجود دعوة معلقة سابقة
-    try {
-      final existingInvite = await _supabase
-          .from('invitations')
-          .select('uuid')
-          .eq('space_id', spaceId)
-          .eq('invitee_id', userId)
-          .eq('status', 'pending')
-          .maybeSingle();
-
-      if (existingInvite != null) {
-        throw Exception('يوجد دعوة معلقة لهذا المستخدم');
-      }
-    } catch (e) {
-      if (e.toString().contains('يوجد دعوة معلقة')) {
-        rethrow;
-      }
-      // تجاهل أخطاء أخرى (مثل عدم وجود عمود invitee_id)
-    }
-
-    // ✅ 2. التحقق من أن المستخدم ليس عضواً بالفعل
+    // ✅ التحقق من أن المستخدم ليس عضواً بالفعل
     try {
       final existingMember = await _supabase
           .from('space_members')
@@ -88,44 +142,33 @@ class InvitationRepositoryImpl implements InvitationRepository {
       }
     }
 
-    // ✅ 3. جلب البريد الإلكتروني الحقيقي للمستخدم
-    String? actualEmail = userEmail;
-    try {
-      final profileRes = await _supabase
-          .from('profiles')
-          .select('email')
-          .eq('uuid', userId)
-          .maybeSingle();
+    // profiles لا يحتوي على email في المخطط الحالي، لذا نعتمد على القيمة
+    // القادمة من نتيجة البحث/الواجهة ونخزنها إن كانت متوفرة.
+    final normalizedEmail = userEmail.trim().toLowerCase();
+    final actualEmail = normalizedEmail.isEmpty ? null : normalizedEmail;
 
-      if (profileRes != null && profileRes['email'] != null) {
-        actualEmail = profileRes['email'] as String;
-      }
-    } catch (e) {
-      debugPrint('⚠️ Could not fetch user email: $e');
-    }
-
-    // ✅ 4. إنشاء الدعوة مع invitee_id
-    final invite = {
-      'uuid': const Uuid().v4(),
-      'token': token,
-      'space_id': spaceId,
-      'inviter_id': currentUserId,
-      'invitee_id': userId, // ✅ إضافة ID المستخدم المدعو
-      'invitee_email': actualEmail,
-      'type': 'direct_user',
-      'status': 'pending',
-      'expires_at': DateTime.now()
-          .add(const Duration(days: 7))
-          .toIso8601String(),
-      'created_at': DateTime.now().toIso8601String(),
-    };
-
-    await _supabase.from('invitations').insert(invite);
+    await _insertInvite(spaceId: spaceId, userId: userId, email: actualEmail);
 
     debugPrint('✅ Invitation sent to user: $userId');
 
     // ✅ 5. إرسال إشعار (اختياري - يمكن تفعيله لاحقاً)
     // await _sendInvitationNotification(userId, spaceId);
+  }
+
+  @override
+  Future<void> sendEmailInvite({
+    required String spaceId,
+    required String email,
+  }) async {
+    final normalizedEmail = email.trim().toLowerCase();
+    if (normalizedEmail.isEmpty) {
+      throw Exception('البريد الإلكتروني غير صالح');
+    }
+
+    await _ensureNoPendingInvite(spaceId: spaceId, email: normalizedEmail);
+    await _insertInvite(spaceId: spaceId, email: normalizedEmail);
+
+    debugPrint('✅ Email invitation created for: $normalizedEmail');
   }
 
   // ═══════════════════════════════════════════════════════════════════
@@ -164,7 +207,7 @@ class InvitationRepositoryImpl implements InvitationRepository {
     final currentUser = _supabase.auth.currentUser;
     if (currentUser == null) return [];
 
-    final myEmail = currentUser.email;
+    final myEmail = currentUser.email?.trim().toLowerCase();
     final myId = currentUser.id;
 
     try {
@@ -176,11 +219,10 @@ class InvitationRepositoryImpl implements InvitationRepository {
             spaces:space_id (
               uuid,
               name,
-              description,
-              color
+              description
             ),
             inviter:inviter_id (
-              uuid,
+              user_id,
               full_name,
               avatar_url
             )
@@ -197,7 +239,6 @@ class InvitationRepositoryImpl implements InvitationRepository {
         // إضافة معلومات المساحة
         if (data['spaces'] != null) {
           data['space_name'] = data['spaces']['name'];
-          data['space_color'] = data['spaces']['color'];
         }
 
         // إضافة معلومات الداعي
@@ -315,8 +356,7 @@ class InvitationRepositoryImpl implements InvitationRepository {
             spaces:space_id (
               uuid,
               name,
-              description,
-              color
+              description
             )
           ''')
           .eq('token', token)
@@ -365,7 +405,7 @@ class InvitationRepositoryImpl implements InvitationRepository {
           .select('''
             *,
             invitee:invitee_id (
-              uuid,
+              user_id,
               full_name,
               avatar_url
             )

@@ -60,7 +60,7 @@ class _SpaceSettingsDialogState extends State<SpaceSettingsDialog> {
               style: TextStyle(fontSize: 10.sp),
             ),
             value: _allowDelegation,
-            activeColor: colorScheme.primary,
+            activeThumbColor: colorScheme.primary,
             onChanged: (val) {
               setState(() {
                 _allowDelegation = val;

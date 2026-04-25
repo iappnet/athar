@@ -10,6 +10,9 @@ abstract class NotificationsRepository {
   /// تمييز تنبيه كمقروء
   Future<void> markAsRead(String uuid);
 
+  /// تمييز جميع التنبيهات كمقروءة
+  Future<void> markAllAsRead();
+
   /// مسح كافة التنبيهات
   Future<void> clearAll();
 

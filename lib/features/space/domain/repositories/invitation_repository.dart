@@ -12,6 +12,12 @@ abstract class InvitationRepository {
     required String userEmail,
   });
 
+  /// إرسال دعوة لبريد إلكتروني غير مسجل بعد
+  Future<void> sendEmailInvite({
+    required String spaceId,
+    required String email,
+  });
+
   /// إنشاء رابط دعوة جديد
   Future<String> generateInviteLink(String spaceId);
 

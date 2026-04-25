@@ -11,6 +11,31 @@ class NotificationsRepositoryImpl implements NotificationsRepository {
 
   NotificationsRepositoryImpl(this._isar);
 
+  String _notificationUuid(Map<String, dynamic> row) {
+    final value = row['uuid'] ?? row['id'];
+    return value?.toString() ?? 'missing_${DateTime.now().millisecondsSinceEpoch}';
+  }
+
+  DateTime _createdAt(Map<String, dynamic> row) {
+    final raw = row['created_at'];
+    if (raw is String) {
+      return DateTime.tryParse(raw) ?? DateTime.now();
+    }
+    return DateTime.now();
+  }
+
+  NotificationModel _mapNotification(Map<String, dynamic> row) {
+    return NotificationModel()
+      ..uuid = _notificationUuid(row)
+      ..title = row['title']?.toString() ?? ''
+      ..body = row['body']?.toString() ?? ''
+      ..type = row['type']?.toString() ?? 'general'
+      ..payload = row['payload']?.toString()
+      ..isRead = row['is_read'] == true
+      ..createdAt = _createdAt(row)
+      ..isSynced = true;
+  }
+
   @override
   Stream<List<NotificationModel>> watchNotifications() {
     return _isar.notificationModels.where().sortByCreatedAtDesc().watch(
@@ -30,23 +55,23 @@ class NotificationsRepositoryImpl implements NotificationsRepository {
           .eq('user_id', userId)
           .order('created_at', ascending: false);
 
-      final List<NotificationModel> remoteNotes = (response as List).map((
-        json,
-      ) {
-        return NotificationModel()
-          ..uuid = json['id']
-          ..title = json['title']
-          ..body = json['body']
-          ..type = json['type']
-          ..payload = json['payload']
-          ..isRead = json['is_read']
-          ..createdAt = DateTime.parse(json['created_at'])
-          ..isSynced = true;
-      }).toList();
+      final List<NotificationModel> remoteNotes = (response as List)
+          .whereType<Map<String, dynamic>>()
+          .map(_mapNotification)
+          .toList();
 
       await _isar.writeTxn(() async {
-        // تحديث الكاش المحلي: حذف القديم ووضع الجديد لضمان التطابق مع السحاب
-        await _isar.notificationModels.clear();
+        // Only remove records that came from Supabase (isSynced == true).
+        // Locally-logged notifications (prayer, local reminders) have
+        // isSynced == false and must be preserved across syncs.
+        final syncedIds = await _isar.notificationModels
+            .filter()
+            .isSyncedEqualTo(true)
+            .idProperty()
+            .findAll();
+        if (syncedIds.isNotEmpty) {
+          await _isar.notificationModels.deleteAll(syncedIds);
+        }
         await _isar.notificationModels.putAll(remoteNotes);
       });
     } catch (e) {
@@ -69,7 +94,33 @@ class NotificationsRepositoryImpl implements NotificationsRepository {
     await _supabase
         .from('notifications')
         .update({'is_read': true})
-        .eq('id', uuid);
+        .or('uuid.eq.$uuid,id.eq.$uuid');
+  }
+
+  @override
+  Future<void> markAllAsRead() async {
+    final unreadItems = await _isar.notificationModels
+        .filter()
+        .isReadEqualTo(false)
+        .findAll();
+
+    if (unreadItems.isNotEmpty) {
+      await _isar.writeTxn(() async {
+        for (final item in unreadItems) {
+          item.isRead = true;
+        }
+        await _isar.notificationModels.putAll(unreadItems);
+      });
+    }
+
+    final userId = _supabase.auth.currentUser?.id;
+    if (userId != null) {
+      await _supabase
+          .from('notifications')
+          .update({'is_read': true})
+          .eq('user_id', userId)
+          .eq('is_read', false);
+    }
   }
 
   @override
@@ -109,15 +160,7 @@ class NotificationsRepositoryImpl implements NotificationsRepository {
           .single();
 
       // 2. التخزين في Isar
-      final newNote = NotificationModel()
-        ..uuid = response['id']
-        ..title = title
-        ..body = body
-        ..type = type
-        ..payload = payload
-        ..createdAt = DateTime.now()
-        ..isRead = false
-        ..isSynced = true;
+      final newNote = _mapNotification(response);
 
       await _isar.writeTxn(() async {
         await _isar.notificationModels.put(newNote);

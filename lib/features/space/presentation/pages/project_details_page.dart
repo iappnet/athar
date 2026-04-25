@@ -1890,7 +1890,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
 //         border: Border.all(color: Colors.grey.shade100),
 //         boxShadow: [
 //           BoxShadow(
-//             color: Colors.black.withOpacity(0.03),
+//             color: Colors.black.withValues(alpha: 0.03),
 //             blurRadius: 10,
 //             offset: const Offset(0, 4),
 //           ),
@@ -1960,7 +1960,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
 //                       vertical: 4.h,
 //                     ),
 //                     decoration: BoxDecoration(
-//                       color: countdownColor.withOpacity(0.1),
+//                       color: countdownColor.withValues(alpha: 0.1),
 //                       borderRadius: BorderRadius.circular(20.r),
 //                     ),
 //                     child: Row(
@@ -2617,7 +2617,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
 //         border: Border.all(color: Colors.grey.shade100),
 //         boxShadow: [
 //           BoxShadow(
-//             color: Colors.black.withOpacity(0.03),
+//             color: Colors.black.withValues(alpha: 0.03),
 //             blurRadius: 10,
 //             offset: const Offset(0, 4),
 //           ),
@@ -2695,7 +2695,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
 //                       vertical: 4.h,
 //                     ),
 //                     decoration: BoxDecoration(
-//                       color: countdownColor.withOpacity(0.1),
+//                       color: countdownColor.withValues(alpha: 0.1),
 //                       borderRadius: BorderRadius.circular(20.r),
 //                     ),
 //                     child: Row(

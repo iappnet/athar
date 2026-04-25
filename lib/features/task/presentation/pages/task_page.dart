@@ -7,6 +7,7 @@ import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:athar/core/design_system/molecules/cards/smart_prayer_wrapper.dart';
 import 'package:athar/core/design_system/molecules/skeletons/athar_skeleton.dart';
 import 'package:athar/core/design_system/organisms/app_bar/athar_app_bar.dart';
+import 'package:athar/features/calendar/presentation/pages/calendar_page.dart';
 import 'package:athar/features/task/domain/models/filter_item.dart';
 import 'package:athar/features/task/presentation/widgets/add_task_sheet.dart';
 import 'package:athar/features/task/presentation/widgets/reflection_dialog.dart';
@@ -88,6 +89,13 @@ class _TasksPageViewState extends State<TasksPageView> {
       appBar: AtharAppBar(
         title: l10n.yourAtharToday,
         subtitle: l10n.focusOnWhatMatters,
+        onTitleTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const CalendarPage()),
+          );
+        },
+        titleTapIcon: Icons.calendar_month_rounded,
         leading: Builder(
           builder: (context) => AtharButton.icon(
             icon: Icons.menu,
@@ -222,7 +230,7 @@ class _TasksPageViewState extends State<TasksPageView> {
                   return ListView.builder(
                     padding: AtharSpacing.allLg,
                     itemCount: 5,
-                    itemBuilder: (_, __) => Padding(
+                    itemBuilder: (_, _) => Padding(
                       padding: EdgeInsets.only(bottom: 12.h),
                       child: AtharSkeleton(
                         width: double.infinity,
@@ -316,23 +324,6 @@ class _TasksPageViewState extends State<TasksPageView> {
         ],
       ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        heroTag: 'tasks_page_fab',
-        backgroundColor: colorScheme.primary,
-        icon: Icon(Icons.add, color: colorScheme.surface),
-        label: Text(l10n.newTask, style: TextStyle(color: colorScheme.surface)),
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            backgroundColor: Colors.transparent,
-            builder: (ctx) => BlocProvider.value(
-              value: context.read<TaskCubit>(),
-              child: const AddTaskSheet(),
-            ),
-          );
-        },
       ),
     );
   }
@@ -704,7 +695,7 @@ class _TasksPageViewState extends State<TasksPageView> {
 //                     color: colors.surface,
 //                     borderRadius: AtharRadii.radiusMd,
 //                     border: Border.all(
-//                       color: colors.textTertiary.withOpacity(0.3),
+//                       color: colors.textTertiary.withValues(alpha: 0.3),
 //                     ),
 //                   ),
 //                   child: IconButton(
@@ -1012,7 +1003,7 @@ class _TasksPageViewState extends State<TasksPageView> {
 //           Icon(
 //             Icons.task_alt,
 //             size: 80.sp,
-//             color: colors.textTertiary.withOpacity(0.3),
+//             color: colors.textTertiary.withValues(alpha: 0.3),
 //           ),
 //           AtharGap.lg,
 //           Text(
@@ -1209,7 +1200,7 @@ class _TasksPageViewState extends State<TasksPageView> {
 //                     color: colors.surface,
 //                     borderRadius: AtharRadii.radiusMd,
 //                     border: Border.all(
-//                       color: colors.textTertiary.withOpacity(0.3),
+//                       color: colors.textTertiary.withValues(alpha: 0.3),
 //                     ),
 //                   ),
 //                   child: IconButton(
@@ -1515,7 +1506,7 @@ class _TasksPageViewState extends State<TasksPageView> {
 //           Icon(
 //             Icons.task_alt,
 //             size: 80.sp,
-//             color: colors.textTertiary.withOpacity(0.3),
+//             color: colors.textTertiary.withValues(alpha: 0.3),
 //           ),
 //           AtharGap.lg,
 //           Text(

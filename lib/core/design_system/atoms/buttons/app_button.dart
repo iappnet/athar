@@ -988,7 +988,7 @@ class AtharFAB extends StatelessWidget {
 //       case AtharButtonVariant.primary:
 //         return AppColors.primary;
 //       case AtharButtonVariant.secondary:
-//         return AppColors.primary.withOpacity(0.1);
+//         return AppColors.primary.withValues(alpha: 0.1);
 //       case AtharButtonVariant.outlined:
 //       case AtharButtonVariant.text:
 //         return Colors.transparent;
@@ -1058,7 +1058,7 @@ class AtharFAB extends StatelessWidget {
 
 //     return [
 //       BoxShadow(
-//         color: shadowColor.withOpacity(_isPressed ? 0.2 : 0.3),
+//         color: shadowColor.withValues(alpha: _isPressed ? 0.2 : 0.3),
 //         blurRadius: _isPressed ? 4 : 8,
 //         offset: Offset(0, _isPressed ? 2 : 4),
 //       ),
@@ -1124,13 +1124,13 @@ class AtharFAB extends StatelessWidget {
 //           decoration: BoxDecoration(
 //             color: _isEnabled
 //                 ? _backgroundColor
-//                 : _backgroundColor.withOpacity(0.5),
+//                 : _backgroundColor.withValues(alpha: 0.5),
 //             borderRadius: BorderRadius.circular(_borderRadius),
 //             border: _borderColor != null
 //                 ? Border.all(
 //                     color: _isEnabled
 //                         ? _borderColor!
-//                         : _borderColor!.withOpacity(0.5),
+//                         : _borderColor!.withValues(alpha: 0.5),
 //                     width: 1.5,
 //                   )
 //                 : null,
@@ -1145,7 +1145,7 @@ class AtharFAB extends StatelessWidget {
 //   Widget _buildContent(bool isIconOnly) {
 //     final Color foreground = _isEnabled
 //         ? _foregroundColor
-//         : _foregroundColor.withOpacity(0.5);
+//         : _foregroundColor.withValues(alpha: 0.5);
 
 //     // حالة التحميل
 //     if (widget.isLoading) {
@@ -1236,11 +1236,11 @@ class AtharFAB extends StatelessWidget {
 //         decoration: BoxDecoration(
 //           color: isEnabled
 //               ? (backgroundColor ?? Colors.transparent)
-//               : (backgroundColor ?? Colors.transparent).withOpacity(0.5),
+//               : (backgroundColor ?? Colors.transparent).withValues(alpha: 0.5),
 //           borderRadius: BorderRadius.circular(12.r),
 //           border: hasBorder
 //               ? Border.all(
-//                   color: AppColors.textSecondary.withOpacity(0.2),
+//                   color: AppColors.textSecondary.withValues(alpha: 0.2),
 //                   width: 1,
 //                 )
 //               : null,
@@ -1250,7 +1250,7 @@ class AtharFAB extends StatelessWidget {
 //             icon,
 //             color: isEnabled
 //                 ? (iconColor ?? AppColors.textPrimary)
-//                 : (iconColor ?? AppColors.textPrimary).withOpacity(0.5),
+//                 : (iconColor ?? AppColors.textPrimary).withValues(alpha: 0.5),
 //             size: buttonSize * 0.5,
 //           ),
 //         ),

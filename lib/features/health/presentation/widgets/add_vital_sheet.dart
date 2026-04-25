@@ -25,6 +25,7 @@ class AddVitalSheet extends StatefulWidget {
 
 class _AddVitalSheetState extends State<AddVitalSheet> {
   final _valueController = TextEditingController();
+  final _diastolicController = TextEditingController();
   final _unitController = TextEditingController();
   final _titleController = TextEditingController();
 
@@ -35,6 +36,15 @@ class _AddVitalSheetState extends State<AddVitalSheet> {
   void initState() {
     super.initState();
     _updateUnit();
+  }
+
+  @override
+  void dispose() {
+    _valueController.dispose();
+    _diastolicController.dispose();
+    _unitController.dispose();
+    _titleController.dispose();
+    super.dispose();
   }
 
   void _updateUnit() {
@@ -171,7 +181,9 @@ class _AddVitalSheetState extends State<AddVitalSheet> {
                       keyboardType: TextInputType.number,
                       autofocus: true,
                       decoration: InputDecoration(
-                        labelText: l10n.vitalSheetValue,
+                        labelText: _selectedVitalType == 'pressure'
+                            ? 'الانقباضي (SYS)'
+                            : l10n.vitalSheetValue,
                         hintText: l10n.vitalSheetValueHint,
                         border: OutlineInputBorder(
                           borderRadius: AtharRadii.radiusMd,
@@ -194,6 +206,20 @@ class _AddVitalSheetState extends State<AddVitalSheet> {
                   ),
                 ],
               ),
+              if (_selectedVitalType == 'pressure') ...[
+                AtharGap.md,
+                TextField(
+                  controller: _diastolicController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'الانبساطي (DIA)',
+                    hintText: 'مثال: 80',
+                    border: OutlineInputBorder(
+                      borderRadius: AtharRadii.radiusMd,
+                    ),
+                  ),
+                ),
+              ],
             ] else ...[
               // 3. إذا كان ملاحظة
               TextField(
@@ -306,6 +332,9 @@ class _AddVitalSheetState extends State<AddVitalSheet> {
       category: _selectedCategory,
       vitalType: _selectedCategory == 'vital' ? _selectedVitalType : null,
       vitalValue: double.tryParse(_valueController.text),
+      vitalValueSecondary: _selectedVitalType == 'pressure'
+          ? double.tryParse(_diastolicController.text)
+          : null,
       vitalUnit: _unitController.text,
       title: _selectedCategory == 'document' ? _titleController.text : null,
     );
@@ -556,7 +585,7 @@ class _AddVitalSheetState extends State<AddVitalSheet> {
 //     return ChoiceChip(
 //       label: Text(label),
 //       selected: isSelected,
-//       selectedColor: AppColors.primary.withOpacity(0.2),
+//       selectedColor: AppColors.primary.withValues(alpha: 0.2),
 //       labelStyle: TextStyle(
 //         color: isSelected ? AppColors.primary : Colors.black,
 //         fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,

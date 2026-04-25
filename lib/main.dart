@@ -3,6 +3,8 @@
 import 'dart:io';
 
 import 'package:athar/app.dart';
+import 'package:athar/core/config/subscription_config.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:athar/core/services/appointment_notification_scheduler.dart';
 import 'package:athar/core/services/fcm_service.dart';
 import 'package:athar/core/services/habit_notification_scheduler.dart';
@@ -58,20 +60,40 @@ void main() async {
   // تحميل ملف البيئة (.env) أولاً
   await dotenv.load(fileName: ".env");
 
+  // التحقق من وجود متغيرات البيئة المطلوبة
+  final supabaseUrl = dotenv.maybeGet('SUPABASE_URL');
+  final supabaseAnonKey = dotenv.maybeGet('SUPABASE_ANON_KEY');
+  assert(
+    supabaseUrl != null && supabaseUrl.isNotEmpty,
+    'SUPABASE_URL غير موجود في ملف .env — تأكد من نسخ .env.example وتعبئة القيم',
+  );
+  assert(
+    supabaseAnonKey != null && supabaseAnonKey.isNotEmpty,
+    'SUPABASE_ANON_KEY غير موجود في ملف .env — تأكد من نسخ .env.example وتعبئة القيم',
+  );
+
   // ═══════════════════════════════════════════════════════════
   // ✅ إضافة: تهيئة Firebase قبل أي شيء آخر
-  // ═══════════════════════════════════════════════════════════grep -r "cancelNotification\|cancel(" lib/core/services/
+  // ═══════════════════════════════════════════════════════════
 
   // ✅ تهيئة Firebase مع الخيارات
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform, // ← أضف هذا
+    options: DefaultFirebaseOptions.currentPlatform,
   );
 
   // تهيئة Supabase
   await Supabase.initialize(
-    url: dotenv.get('SUPABASE_URL'),
-    anonKey: dotenv.get('SUPABASE_ANON_KEY'),
+    url: supabaseUrl!,
+    anonKey: supabaseAnonKey!,
   );
+
+  // تهيئة RevenueCat
+  await Purchases.configure(
+    PurchasesConfiguration(SubscriptionConfig.revenueCatApiKey),
+  );
+  if (kDebugMode) {
+    await Purchases.setLogLevel(LogLevel.debug);
+  }
 
   // تهيئة الحقن (GetIt)
   await configureDependencies();

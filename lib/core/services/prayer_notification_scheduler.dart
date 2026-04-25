@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'local_notification_service.dart';
 import 'notification_id_manager.dart';
@@ -27,12 +28,13 @@ class PrayerNotificationScheduler {
   /// ✅ التهيئة الكاملة
   Future<void> initializeScheduling() async {
     try {
-      print('🕌 Initializing prayer notification scheduler...');
+      debugPrint('🕌 Initializing prayer notification scheduler...');
 
       // 1. التحقق من الإعدادات
       final settings = await _settingsRepository.getSettings();
       if (!(settings.isPrayerEnabled)) {
-        print('⏸️ Prayer notifications disabled by user');
+        debugPrint('⏸️ Prayer notifications disabled by user');
+        await disableNotifications();
         return;
       }
 
@@ -42,10 +44,10 @@ class PrayerNotificationScheduler {
       // 3. جدولة إعادة الجدولة التلقائية
       await _scheduleAutoRenewal();
 
-      print('✅ Prayer notification scheduler initialized');
+      debugPrint('✅ Prayer notification scheduler initialized');
     } catch (e, stackTrace) {
-      print('❌ Error initializing prayer scheduler: $e');
-      print('Stack trace: $stackTrace');
+      debugPrint('❌ Error initializing prayer scheduler: $e');
+      debugPrint('Stack trace: $stackTrace');
     }
   }
 
@@ -56,7 +58,7 @@ class PrayerNotificationScheduler {
   /// ✅ جدولة 7 أيام مقدماً
   Future<void> scheduleSevenDays() async {
     try {
-      print('📅 Scheduling prayers for 7 days...');
+      debugPrint('📅 Scheduling prayers for 7 days...');
 
       // 1. إلغاء الإشعارات القديمة
       await _cancelAllPrayerNotifications();
@@ -77,9 +79,9 @@ class PrayerNotificationScheduler {
           )
           .length;
 
-      print('✅ Prayer notifications scheduled: $prayerNotifications');
+      debugPrint('✅ Prayer notifications scheduled: $prayerNotifications');
     } catch (e) {
-      print('❌ Error scheduling 7 days: $e');
+      debugPrint('❌ Error scheduling 7 days: $e');
     }
   }
 
@@ -94,8 +96,8 @@ class PrayerNotificationScheduler {
 
       // 3. جدولة كل صلاة
       for (final prayer in prayerTimes) {
-        // تخطي الأوقات الماضية
-        if (prayer.time.isBefore(DateTime.now())) {
+        // تخطي الأوقات الماضية (مع هامش ثانية واحدة لتجنب الحدود الدقيقة)
+        if (prayer.time.isBefore(DateTime.now().subtract(const Duration(seconds: 1)))) {
           continue;
         }
 
@@ -113,7 +115,7 @@ class PrayerNotificationScheduler {
         }
       }
     } catch (e) {
-      print('❌ Error scheduling prayers for $date: $e');
+      debugPrint('❌ Error scheduling prayers for $date: $e');
     }
   }
 
@@ -132,7 +134,7 @@ class PrayerNotificationScheduler {
         payload: 'prayer:${prayer.type.name}:${date.toIso8601String()}',
       );
     } catch (e) {
-      print('❌ Error scheduling prayer ${prayer.nameArabic}: $e');
+      debugPrint('❌ Error scheduling prayer ${prayer.nameArabic}: $e');
     }
   }
 
@@ -155,7 +157,7 @@ class PrayerNotificationScheduler {
             'prayer_reminder:${prayer.type.name}:${date.toIso8601String()}',
       );
     } catch (e) {
-      print('❌ Error scheduling prayer reminder: $e');
+      debugPrint('❌ Error scheduling prayer reminder: $e');
     }
   }
 
@@ -195,15 +197,15 @@ class PrayerNotificationScheduler {
         payload: 'auto_reschedule_prayers',
       );
 
-      print('📆 Auto-renewal scheduled for: $renewalDate');
+      debugPrint('📆 Auto-renewal scheduled for: $renewalDate');
     } catch (e) {
-      print('❌ Error scheduling auto-renewal: $e');
+      debugPrint('❌ Error scheduling auto-renewal: $e');
     }
   }
 
   /// ✅ معالجة إعادة الجدولة التلقائية
   Future<void> handleAutoRenewal() async {
-    print('🔄 Auto-renewal triggered - rescheduling prayers');
+    debugPrint('🔄 Auto-renewal triggered - rescheduling prayers');
     await scheduleSevenDays();
     await _scheduleAutoRenewal();
   }
@@ -215,20 +217,21 @@ class PrayerNotificationScheduler {
   /// ✅ إلغاء جميع إشعارات الصلاة
   Future<void> _cancelAllPrayerNotifications() async {
     try {
-      print('🗑️ Cancelling all prayer notifications...');
+      debugPrint('🗑️ Cancelling all prayer notifications...');
       await _notificationService.cancelRange(
         NotificationIdRanges.prayerBase,
         NotificationIdRanges.prayerMax,
       );
     } catch (e) {
-      print('❌ Error cancelling prayer notifications: $e');
+      debugPrint('❌ Error cancelling prayer notifications: $e');
     }
   }
 
   /// ✅ إيقاف جميع الإشعارات
   Future<void> disableNotifications() async {
-    print('⏸️ Disabling prayer notifications');
+    debugPrint('⏸️ Disabling prayer notifications');
     await _cancelAllPrayerNotifications();
+    await _notificationService.cancel(_idManager.autoReschedule, silent: true);
   }
 
   // ═══════════════════════════════════════════════════════════
@@ -249,7 +252,7 @@ class PrayerNotificationScheduler {
     final isValid = prayerNotifications >= 15;
 
     if (!isValid) {
-      print(
+      debugPrint(
         '⚠️ Low prayer notifications: $prayerNotifications (expected: 15+)',
       );
     }
@@ -259,7 +262,7 @@ class PrayerNotificationScheduler {
 
   /// ✅ إعادة الجدولة عند تغيير الموقع
   Future<void> onLocationChanged() async {
-    print('📍 Location changed - rescheduling prayers');
+    debugPrint('📍 Location changed - rescheduling prayers');
     await scheduleSevenDays();
   }
 }

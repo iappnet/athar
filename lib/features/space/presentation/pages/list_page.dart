@@ -28,11 +28,14 @@ class _ListPageState extends State<ListPage> {
   @override
   void initState() {
     super.initState();
-    // ✅ 1. تعيين سياق الموديول للصلاحيات
     context.read<ListCubit>().setContext(widget.module);
-
-    // بدء المراقبة
     context.read<ListCubit>().watchListItems(widget.module.uuid);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -697,7 +700,7 @@ class _ListPageState extends State<ListPage> {
 //         color: Colors.white,
 //         boxShadow: [
 //           BoxShadow(
-//             color: Colors.black.withOpacity(0.05),
+//             color: Colors.black.withValues(alpha: 0.05),
 //             blurRadius: 10,
 //             offset: const Offset(0, -5),
 //           ),

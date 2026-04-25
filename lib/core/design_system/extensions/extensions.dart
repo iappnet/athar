@@ -8,6 +8,7 @@
 /// import 'package:athar/core/design_system/extensions/extensions.dart';
 /// ```
 /// ===================================================================
+library;
 
 export 'directionality_extensions.dart';
 export 'context_extensions.dart';

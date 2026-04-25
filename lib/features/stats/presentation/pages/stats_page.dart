@@ -54,6 +54,26 @@ class StatisticsPage extends StatelessWidget {
                   if (state is StatsLoaded) {
                     return WeeklyFocusChart(weeklyData: state.weeklyFocus);
                   }
+                  if (state is StatsError) {
+                    return Column(
+                      children: [
+                        Icon(Icons.error_outline_rounded,
+                            color: Theme.of(context).colorScheme.error),
+                        SizedBox(height: 8.h),
+                        Text(state.message,
+                            style: TextStyle(
+                                color:
+                                    Theme.of(context).colorScheme.error)),
+                        TextButton.icon(
+                          onPressed: () =>
+                              context.read<StatsCubit>().loadStats(),
+                          icon: const Icon(Icons.refresh_rounded),
+                          label: Text(
+                              AppLocalizations.of(context).retry),
+                        ),
+                      ],
+                    );
+                  }
                   return const Center(child: CircularProgressIndicator());
                 },
               ),

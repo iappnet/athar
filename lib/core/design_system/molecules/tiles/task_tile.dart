@@ -1583,14 +1583,14 @@ class TaskTile extends StatelessWidget {
 //             borderRadius: BorderRadius.circular(12.r),
 //             border: Border.all(
 //               color: task.isUrgent && !task.isCompleted
-//                   ? AppColors.urgent.withOpacity(0.3)
+//                   ? AppColors.urgent.withValues(alpha: 0.3)
 //                   : Colors.grey.shade200,
 //               width: 1,
 //             ),
 //             boxShadow: [
 //               if (!task.isCompleted)
 //                 BoxShadow(
-//                   color: Colors.black.withOpacity(0.03),
+//                   color: Colors.black.withValues(alpha: 0.03),
 //                   blurRadius: 8,
 //                   offset: const Offset(0, 2),
 //                 ),
@@ -2388,7 +2388,7 @@ class TaskTile extends StatelessWidget {
 //                         //     vertical: 2.h,
 //                         //   ),
 //                         //   decoration: BoxDecoration(
-//                         //     color: AppColors.urgent.withOpacity(0.1),
+//                         //     color: AppColors.urgent.withValues(alpha: 0.1),
 //                         //     borderRadius: BorderRadius.circular(4),
 //                         //   ),
 //                         //   child: Row(

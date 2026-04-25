@@ -13,6 +13,9 @@ import 'package:athar/features/settings/data/models/category_model.dart';
 import 'package:athar/features/space/data/models/list_item_model.dart';
 import 'package:athar/features/space/data/models/list_log_model.dart';
 import 'package:athar/features/space/data/models/module_model.dart';
+import 'package:athar/features/space/data/models/module_permission_model.dart';
+import 'package:athar/features/space/data/models/invitation_model.dart';
+import 'package:athar/features/space/data/models/space_member_model.dart';
 import 'package:athar/features/space/data/models/space_model.dart';
 import 'package:athar/features/task/data/models/attachment_model.dart';
 import 'package:athar/features/task/data/models/task_model.dart';
@@ -45,6 +48,9 @@ abstract class RegisterModule {
       CategoryModelSchema, // ✅✅ أضف هذا السطر لحل الخطأ الأول
       SpaceModelSchema, // 🆕 تم الإضافة
       ModuleModelSchema, // 🆕 تم الإضافة
+      SpaceMemberModelSchema,
+      InvitationModelSchema,
+      ModulePermissionModelSchema,
       // ✅ 2. أضف الـ Schemas الجديدة هنا
       AttachmentModelSchema,
       TaskNoteModelSchema,

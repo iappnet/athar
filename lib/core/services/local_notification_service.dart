@@ -1,7 +1,6 @@
 // lib/core/services/local_notification_service.dart
 
 import 'dart:io';
-import 'dart:ui';
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/core/services/deep_link_service.dart';
 import 'package:athar/core/services/notification_id_manager.dart';
@@ -11,6 +10,7 @@ import 'package:athar/features/prayer/presentation/pages/prayer_page.dart';
 import 'package:athar/features/task/presentation/pages/task_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:isar/isar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -36,6 +36,7 @@ enum NotificationCategory {
 /// ✅ خدمة الإشعارات المحلية الشاملة (Singleton)
 @lazySingleton
 class LocalNotificationService {
+
   final FlutterLocalNotificationsPlugin _notifications =
       FlutterLocalNotificationsPlugin();
 
@@ -43,6 +44,35 @@ class LocalNotificationService {
 
   // ✅ إضافة: callback للتعامل مع auto-renewal
   Function(String payload)? _onAutoRenewalCallback;
+
+  // Payload from a cold-start (app terminated → user tapped notification).
+  // Populated during init(), consumed once by app.dart after the first frame.
+  String? _coldStartPayload;
+
+  String _notificationUuid(Map<String, dynamic> row) {
+    final value = row['uuid'] ?? row['id'];
+    return value?.toString() ?? 'missing_${DateTime.now().millisecondsSinceEpoch}';
+  }
+
+  NotificationModel _mapStoredNotification({
+    required Map<String, dynamic> row,
+    required String fallbackTitle,
+    required String fallbackBody,
+    required String fallbackType,
+    String? fallbackPayload,
+  }) {
+    return NotificationModel()
+      ..uuid = _notificationUuid(row)
+      ..title = row['title']?.toString() ?? fallbackTitle
+      ..body = row['body']?.toString() ?? fallbackBody
+      ..type = row['type']?.toString() ?? fallbackType
+      ..payload = row['payload']?.toString() ?? fallbackPayload
+      ..createdAt =
+          DateTime.tryParse(row['created_at']?.toString() ?? '') ??
+          DateTime.now()
+      ..isRead = row['is_read'] == true
+      ..isSynced = true;
+  }
 
   // ═══════════════════════════════════════════════════════════
   // 🎬 INITIALIZATION
@@ -54,7 +84,7 @@ class LocalNotificationService {
   Future<void> init({Function(String payload)? onAutoRenewal}) async {
     if (_isInitialized) {
       if (kDebugMode) {
-        print('⚠️ LocalNotificationService already initialized');
+        debugPrint('⚠️ LocalNotificationService already initialized');
       }
       return;
     }
@@ -97,11 +127,45 @@ class LocalNotificationService {
       );
 
       _isInitialized = true;
-      print('✅ LocalNotificationService initialized successfully');
+      debugPrint('✅ LocalNotificationService initialized successfully');
+
+      // 7. Check for cold-start: did the user tap a notification to launch the app?
+      //    getNotificationAppLaunchDetails() only returns data once per cold start.
+      final launchDetails = await _notifications.getNotificationAppLaunchDetails();
+      if (launchDetails != null && launchDetails.didNotificationLaunchApp) {
+        final payload = launchDetails.notificationResponse?.payload;
+        if (payload != null && !_isAutoRenewalPayload(payload)) {
+          // Log immediately so the inbox is populated before the first frame.
+          await _logNotificationLocal(
+            title: _titleFromPayload(payload),
+            body: '',
+            type: payload.split(':').first,
+            payload: payload,
+          );
+          _coldStartPayload = payload;
+          if (kDebugMode) debugPrint('📲 Cold-start payload stored: $payload');
+        } else if (payload != null && _isAutoRenewalPayload(payload)) {
+          _onAutoRenewalCallback?.call(payload);
+        }
+      }
     } catch (e, stackTrace) {
-      print('❌ Error initializing LocalNotificationService: $e');
-      print('Stack trace: $stackTrace');
+      debugPrint('❌ Error initializing LocalNotificationService: $e');
+      debugPrint('Stack trace: $stackTrace');
     }
+  }
+
+  /// Returns (and clears) a notification payload that launched the app from
+  /// terminated state. Call once from app.dart after the first frame.
+  String? consumeColdStartPayload() {
+    final payload = _coldStartPayload;
+    _coldStartPayload = null;
+    return payload;
+  }
+
+  /// Navigate to the correct page for a given notification payload.
+  /// Public so app.dart can invoke it after the navigator is ready.
+  void navigateFromNotificationPayload(String payload) {
+    _handleRegularNotification(payload);
   }
 
   /// ✅ طلب الأذونات (Android 13+ & iOS)
@@ -112,7 +176,7 @@ class LocalNotificationService {
       if (!notificationStatus.isGranted) {
         final result = await Permission.notification.request();
         if (result.isDenied) {
-          print('⚠️ Notification permission denied');
+          debugPrint('⚠️ Notification permission denied');
         }
       }
 
@@ -120,7 +184,7 @@ class LocalNotificationService {
       if (await Permission.scheduleExactAlarm.isDenied) {
         final result = await Permission.scheduleExactAlarm.request();
         if (result.isDenied) {
-          print('⚠️ Exact alarm permission denied');
+          debugPrint('⚠️ Exact alarm permission denied');
         }
       }
     } else if (Platform.isIOS) {
@@ -130,7 +194,7 @@ class LocalNotificationService {
           >()
           ?.requestPermissions(alert: true, badge: true, sound: true);
 
-      print('iOS Notification Permission: $result');
+      debugPrint('iOS Notification Permission: $result');
     }
   }
 
@@ -139,23 +203,25 @@ class LocalNotificationService {
     final payload = response.payload;
     if (payload == null) return;
 
-    print('📱 Notification tapped: $payload');
+    debugPrint('📱 Notification tapped: $payload');
+    clearAppBadge();
 
-    // ✅✅✅ معالجة auto-renewal (الإصلاح الجديد)
     if (_isAutoRenewalPayload(payload)) {
-      print('🔄 Auto-renewal notification detected');
-
-      // استدعاء الـ callback
-      if (_onAutoRenewalCallback != null) {
-        _onAutoRenewalCallback!(payload);
-      } else {
-        print('⚠️ No auto-renewal callback registered');
-      }
-
-      return; // إيقاف - لا نريد معالجة إضافية
+      debugPrint('🔄 Auto-renewal notification detected');
+      _onAutoRenewalCallback?.call(payload);
+      return;
     }
 
-    // ✅ معالجة باقي الإشعارات
+    // Log the tapped notification into the in-app inbox so it appears in
+    // the notification center (prayer and other local notifications are
+    // never pushed to Supabase, so this is the only logging point).
+    _logNotificationLocal(
+      title: _titleFromPayload(payload),
+      body: '',
+      type: payload.split(':').first,
+      payload: payload,
+    );
+
     _handleRegularNotification(payload);
   }
 
@@ -163,11 +229,11 @@ class LocalNotificationService {
   @pragma('vm:entry-point')
   static void _onBackgroundNotificationTapped(NotificationResponse response) {
     final payload = response.payload;
-    print('📱 Background notification tapped: $payload');
+    debugPrint('📱 Background notification tapped: $payload');
 
     // ✅ معالجة auto-renewal في الخلفية
     if (payload != null && _isAutoRenewalPayloadStatic(payload)) {
-      print('🔄 Background auto-renewal detected');
+      debugPrint('🔄 Background auto-renewal detected');
       // في الخلفية، سيتم معالجته عند فتح التطبيق
     }
   }
@@ -186,7 +252,7 @@ class LocalNotificationService {
   void _handleRegularNotification(String payload) {
     final navigator = DeepLinkService.navigatorKey.currentState;
     if (navigator == null) {
-      if (kDebugMode) print('⚠️ Navigator not ready for payload: $payload');
+      if (kDebugMode) debugPrint('⚠️ Navigator not ready for payload: $payload');
       return;
     }
 
@@ -234,34 +300,46 @@ class LocalNotificationService {
 
     if (userId == null) return;
 
-    // 1. الحفظ في Supabase أولاً للحصول على UUID
-    final response = await supabase
-        .from('notifications')
-        .insert({
-          'user_id': userId,
-          'title': title,
-          'body': body,
-          'type': type,
-          'payload': payload,
-          'is_read': false,
-        })
-        .select()
-        .single();
+    try {
+      final response = await supabase
+          .from('notifications')
+          .insert({
+            'user_id': userId,
+            'title': title,
+            'body': body,
+            'type': type,
+            'payload': payload,
+            'is_read': false,
+          })
+          .select()
+          .single();
 
-    // 2. الحفظ في Isar للمزامنة المحلية
-    final newNote = NotificationModel()
-      ..uuid = response['id']
-      ..title = title
-      ..body = body
-      ..type = type
-      ..payload = payload
-      ..createdAt = DateTime.now()
-      ..isRead = false
-      ..isSynced = true;
+      final newNote = _mapStoredNotification(
+        row: response,
+        fallbackTitle: title,
+        fallbackBody: body,
+        fallbackType: type,
+        fallbackPayload: payload,
+      );
 
-    await isar.writeTxn(() async {
-      await isar.notificationModels.put(newNote);
-    });
+      await isar.writeTxn(() async {
+        await isar.notificationModels.put(newNote);
+      });
+    } catch (_) {
+      final offlineNote = NotificationModel()
+        ..uuid = 'off_${DateTime.now().millisecondsSinceEpoch}'
+        ..title = title
+        ..body = body
+        ..type = type
+        ..payload = payload
+        ..createdAt = DateTime.now()
+        ..isRead = false
+        ..isSynced = false;
+
+      await isar.writeTxn(() async {
+        await isar.notificationModels.put(offlineNote);
+      });
+    }
   }
 
   // ═══════════════════════════════════════════════════════════
@@ -278,13 +356,13 @@ class LocalNotificationService {
     String? payload,
   }) async {
     if (!_isInitialized) {
-      print('⚠️ Service not initialized. Call init() first.');
+      debugPrint('⚠️ Service not initialized. Call init() first.');
       return;
     }
 
     // التحقق: الوقت في المستقبل
     if (scheduledDate.isBefore(DateTime.now())) {
-      print('⚠️ Cannot schedule notification in the past: $id');
+      debugPrint('⚠️ Cannot schedule notification in the past: $id');
       return;
     }
 
@@ -299,9 +377,9 @@ class LocalNotificationService {
         payload: payload,
       );
 
-      // print('✅ Scheduled notification #$id at $scheduledDate');
+      // debugPrint('✅ Scheduled notification #$id at $scheduledDate');
     } catch (e) {
-      print('❌ Error scheduling notification #$id: $e');
+      debugPrint('❌ Error scheduling notification #$id: $e');
     }
   }
 
@@ -314,7 +392,7 @@ class LocalNotificationService {
     String? payload,
   }) async {
     if (!_isInitialized) {
-      print('⚠️ Service not initialized. Call init() first.');
+      debugPrint('⚠️ Service not initialized. Call init() first.');
       return;
     }
 
@@ -327,9 +405,9 @@ class LocalNotificationService {
         payload: payload,
       );
 
-      print('✅ Showed immediate notification #$id');
+      debugPrint('✅ Showed immediate notification #$id');
     } catch (e) {
-      print('❌ Error showing notification #$id: $e');
+      debugPrint('❌ Error showing notification #$id: $e');
     }
   }
 
@@ -344,7 +422,7 @@ class LocalNotificationService {
     String? payload,
   }) async {
     if (!_isInitialized) {
-      print('⚠️ Service not initialized. Call init() first.');
+      debugPrint('⚠️ Service not initialized. Call init() first.');
       return;
     }
 
@@ -360,9 +438,9 @@ class LocalNotificationService {
         payload: payload,
       );
 
-      print('✅ Scheduled daily notification #$id at $hour:$minute');
+      debugPrint('✅ Scheduled daily notification #$id at $hour:$minute');
     } catch (e) {
-      print('❌ Error scheduling daily notification #$id: $e');
+      debugPrint('❌ Error scheduling daily notification #$id: $e');
     }
   }
 
@@ -394,36 +472,150 @@ class LocalNotificationService {
   /// ✅ إلغاء إشعار محدد
   // Future<void> cancel(int id) async {
   //   await _notifications.cancel(id);
-  //   print('🗑️ Cancelled notification #$id');
+  //   debugPrint('🗑️ Cancelled notification #$id');
   // }
   Future<void> cancel(int id, {bool silent = false}) async {
     await _notifications.cancel(id: id);
     if (!silent && kDebugMode) {
-      print('🗑️ Cancelled notification #$id');
+      debugPrint('🗑️ Cancelled notification #$id');
     }
   }
 
   /// ✅ إلغاء جميع الإشعارات
   Future<void> cancelAll() async {
     await _notifications.cancelAll();
-    print('🗑️ Cancelled all notifications');
+    debugPrint('🗑️ Cancelled all notifications');
+  }
+
+  Future<void> clearAppBadge() => setAppBadge(0);
+
+  Future<void> setAppBadge(int count) async {
+    try {
+      if (count == 0) {
+        await FlutterAppBadger.removeBadge();
+      } else {
+        await FlutterAppBadger.updateBadgeCount(count);
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        debugPrint('⚠️ Could not set app badge to $count: $e');
+      }
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // 📥 LOCAL NOTIFICATION LOGGING
+  // ═══════════════════════════════════════════════════════════
+
+  /// Reconstructs a human-readable title from a notification payload.
+  String _titleFromPayload(String payload) {
+    final parts = payload.split(':');
+    final type = parts.isNotEmpty ? parts[0] : 'general';
+    final sub = parts.length > 1 ? parts[1] : '';
+    const prayerNames = {
+      'fajr': 'الفجر',
+      'dhuhr': 'الظهر',
+      'asr': 'العصر',
+      'maghrib': 'المغرب',
+      'isha': 'العشاء',
+      'sunrise': 'الشروق',
+    };
+    switch (type) {
+      case 'prayer':
+        return '🕌 حان وقت ${prayerNames[sub] ?? sub}';
+      case 'prayer_reminder':
+        return '⏰ تذكير: صلاة ${prayerNames[sub] ?? sub}';
+      case 'task':
+        return '✅ تذكير مهمة';
+      case 'habit':
+        return '🌟 تذكير عادة';
+      case 'medication':
+      case 'medicine':
+        return '💊 تذكير دواء';
+      case 'appointment':
+        return '📅 موعد قادم';
+      default:
+        return 'تنبيه جديد';
+    }
+  }
+
+  /// Writes a notification record directly to Isar (no Supabase).
+  /// Uses a deterministic UUID from the payload so duplicates are replaced.
+  Future<void> _logNotificationLocal({
+    required String title,
+    required String body,
+    required String type,
+    required String? payload,
+  }) async {
+    try {
+      final isar = getIt<Isar>();
+      final uuid =
+          'local_${(payload ?? 'no_payload').replaceAll(RegExp(r'[:/.]'), '_')}';
+      final note = NotificationModel()
+        ..uuid = uuid
+        ..title = title.isNotEmpty ? title : _titleFromPayload(payload ?? type)
+        ..body = body
+        ..type = type
+        ..payload = payload
+        ..createdAt = DateTime.now()
+        ..isRead = false
+        ..isSynced = false;
+      await isar.writeTxn(() async {
+        await isar.notificationModels.put(note);
+      });
+    } catch (e) {
+      if (kDebugMode) debugPrint('⚠️ logNotificationLocal failed: $e');
+    }
+  }
+
+  /// Logs any notifications currently in the system tray (delivered but not dismissed).
+  /// Safe to call on app resume — uses deterministic UUIDs to prevent duplicates.
+  Future<void> logActiveNotifications() async {
+    try {
+      List<ActiveNotification>? active;
+      if (Platform.isIOS) {
+        active = await _notifications
+            .resolvePlatformSpecificImplementation<
+                IOSFlutterLocalNotificationsPlugin>()
+            ?.getActiveNotifications();
+      } else if (Platform.isAndroid) {
+        active = await _notifications
+            .resolvePlatformSpecificImplementation<
+                AndroidFlutterLocalNotificationsPlugin>()
+            ?.getActiveNotifications();
+      }
+      if (active == null || active.isEmpty) return;
+      for (final notification in active) {
+        final payload = notification.payload;
+        if (payload == null) continue;
+        if (_isAutoRenewalPayload(payload)) continue;
+        await _logNotificationLocal(
+          title: notification.title ?? '',
+          body: notification.body ?? '',
+          type: payload.split(':').first,
+          payload: payload,
+        );
+      }
+    } catch (e) {
+      if (kDebugMode) debugPrint('⚠️ logActiveNotifications failed: $e');
+    }
   }
 
   /// ✅ إلغاء نطاق من الإشعارات
   // Future<void> cancelRange(int startId, int endId) async {
-  //   print('🗑️ Cancelling notifications from $startId to $endId');
+  //   debugPrint('🗑️ Cancelling notifications from $startId to $endId');
 
   //   for (int id = startId; id <= endId; id++) {
   //     await cancel(id);
   //   }
 
-  //   print('✅ Cancelled ${endId - startId + 1} notifications');
+  //   debugPrint('✅ Cancelled ${endId - startId + 1} notifications');
   // }
 
   /// ✅ إلغاء نطاق من الإشعارات (المجدولة فعلياً فقط)
   Future<void> cancelRange(int startId, int endId) async {
     if (kDebugMode) {
-      print('🗑️ Cancelling notifications in range $startId-$endId...');
+      debugPrint('🗑️ Cancelling notifications in range $startId-$endId...');
     }
 
     // 1. جلب الإشعارات المجدولة فعلياً
@@ -436,7 +628,7 @@ class LocalNotificationService {
 
     if (toCancel.isEmpty) {
       if (kDebugMode) {
-        print('ℹ️ No notifications to cancel in this range');
+        debugPrint('ℹ️ No notifications to cancel in this range');
       }
       return;
     }
@@ -447,7 +639,7 @@ class LocalNotificationService {
     }
 
     if (kDebugMode) {
-      print('✅ Cancelled ${toCancel.length} notifications');
+      debugPrint('✅ Cancelled ${toCancel.length} notifications');
     }
   }
 
@@ -506,7 +698,7 @@ class LocalNotificationService {
         presentBadge: true,
         presentSound: true,
         sound: _getIOSSound(category),
-        badgeNumber: 1,
+        // badge count is managed via MethodChannel (setAppBadge) — not per-notification
       ),
     );
   }
@@ -579,7 +771,7 @@ class LocalNotificationService {
           return null;
       }
     } catch (e) {
-      print('⚠️ Sound file not found: $e');
+      debugPrint('⚠️ Sound file not found: $e');
       return null;
     }
   }
@@ -617,9 +809,9 @@ class LocalNotificationService {
   /// ✅ للـ Debugging
   Future<void> debugPrintPending() async {
     final pending = await getPendingNotifications();
-    print('📋 Pending notifications (${pending.length}):');
+    debugPrint('📋 Pending notifications (${pending.length}):');
     for (final n in pending) {
-      print('  - ID: ${n.id}, Title: ${n.title}, Body: ${n.body}');
+      debugPrint('  - ID: ${n.id}, Title: ${n.title}, Body: ${n.body}');
     }
   }
 }

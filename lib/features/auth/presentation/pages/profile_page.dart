@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:athar/core/utils/navigation_utils.dart';
 import '../../../../core/design_system/atoms/inputs/app_text_field.dart';
 import '../cubit/auth_cubit.dart';
 import '../cubit/auth_state.dart';
@@ -36,6 +37,13 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _usernameController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
@@ -44,10 +52,10 @@ class _ProfilePageState extends State<ProfilePage> {
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthUnauthenticated) {
-            Navigator.pop(context);
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(l10n.logoutSuccess)));
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(l10n.logoutSuccess)),
+            );
+            NavigationUtils.resetToUnauthenticated(context);
           } else if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -361,7 +369,7 @@ class _ProfilePageState extends State<ProfilePage> {
 //                       leading: Container(
 //                         padding: EdgeInsets.all(8.w),
 //                         decoration: BoxDecoration(
-//                           color: Colors.red.withOpacity(0.1),
+//                           color: Colors.red.withValues(alpha: 0.1),
 //                           shape: BoxShape.circle,
 //                         ),
 //                         child: Icon(

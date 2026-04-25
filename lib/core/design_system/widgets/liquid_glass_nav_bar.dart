@@ -99,13 +99,13 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
       vsync: this,
     );
 
-    _slideAnimation = Tween<Offset>(
-      begin: Offset.zero,
-      end: const Offset(0, 1.5),
-    ).animate(CurvedAnimation(
-      parent: _hideController,
-      curve: AtharAnimations.smooth,
-    ));
+    _slideAnimation =
+        Tween<Offset>(begin: Offset.zero, end: const Offset(0, 1.5)).animate(
+          CurvedAnimation(
+            parent: _hideController,
+            curve: AtharAnimations.smooth,
+          ),
+        );
 
     if (widget.hideOnScroll && widget.scrollController != null) {
       widget.scrollController!.addListener(_onScroll);
@@ -148,6 +148,12 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final glassBackground = Colors.white.withValues(alpha: 0.64);
+    final glassBorder = Colors.white.withValues(alpha: 0.9);
+    final iconColor = const Color(0xFFB1B1B8);
+    final selectedIconColor = isDark
+        ? Colors.white.withValues(alpha: 0.96)
+        : const Color(0xFF8D8D93);
 
     return SlideTransition(
       position: _slideAnimation,
@@ -161,51 +167,88 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
               // ═══════════════════════════════════════════════════════════════
               Expanded(
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(28.r),
+                  borderRadius: BorderRadius.circular(30.r),
                   child: BackdropFilter(
                     filter: ImageFilter.blur(
-                      sigmaX: widget.blurSigma,
-                      sigmaY: widget.blurSigma,
+                      sigmaX: widget.blurSigma + 14,
+                      sigmaY: widget.blurSigma + 14,
                     ),
                     child: Container(
-                      height: 64.h,
+                      height: 66.h,
                       decoration: BoxDecoration(
-                        // الخلفية الزجاجية
-                        color: isDark
-                            ? Colors.black
-                                .withOpacity(widget.backgroundOpacity * 0.8)
-                            : Colors.white
-                                .withOpacity(widget.backgroundOpacity),
-                        borderRadius: BorderRadius.circular(28.r),
-                        // الحدود الخفيفة
-                        border: Border.all(
-                          color: isDark
-                              ? Colors.white.withOpacity(0.1)
-                              : Colors.black.withOpacity(0.05),
-                          width: 1,
-                        ),
-                        // الظل الخفيف
+                        color: glassBackground,
+                        borderRadius: BorderRadius.circular(30.r),
+                        border: Border.all(color: glassBorder, width: 1.2),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 20,
+                            color: Colors.white.withValues(alpha: 0.55),
+                            blurRadius: 12,
+                            spreadRadius: -2,
+                            offset: const Offset(0, -1),
+                          ),
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.08),
+                            blurRadius: 30,
                             spreadRadius: 0,
-                            offset: const Offset(0, 4),
+                            offset: const Offset(0, 10),
                           ),
                         ],
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: List.generate(
-                          widget.items.length,
-                          (index) => _buildNavItem(
-                            context,
-                            widget.items[index],
-                            index,
-                            colorScheme,
-                            isDark,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 1.h,
+                            left: 18.w,
+                            right: 18.w,
+                            child: IgnorePointer(
+                              child: Container(
+                                height: 1.4.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(999),
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.white.withValues(alpha: 0),
+                                      Colors.white.withValues(alpha: 0.42),
+                                      Colors.white.withValues(alpha: 0),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                          Positioned.fill(
+                            child: IgnorePointer(
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30.r),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Colors.white.withValues(alpha: 0.42),
+                                      Colors.white.withValues(alpha: 0.14),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: List.generate(
+                              widget.items.length,
+                              (index) => _buildNavItem(
+                                context,
+                                widget.items[index],
+                                index,
+                                colorScheme,
+                                isDark,
+                                iconColor,
+                                selectedIconColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -232,6 +275,8 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
     int index,
     ColorScheme colorScheme,
     bool isDark,
+    Color iconColor,
+    Color selectedIconColor,
   ) {
     final isSelected = index == widget.currentIndex;
 
@@ -251,10 +296,13 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
         decoration: BoxDecoration(
           color: isSelected
               ? (isDark
-                  ? Colors.white.withOpacity(0.15)
-                  : colorScheme.primary.withOpacity(0.12))
+                    ? Colors.white.withValues(alpha: 0.14)
+                    : Colors.white.withValues(alpha: 0.38))
               : Colors.transparent,
           borderRadius: BorderRadius.circular(20.r),
+          border: isSelected
+              ? Border.all(color: Colors.white.withValues(alpha: 0.7))
+              : null,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -269,11 +317,7 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
                   Icon(
                     isSelected ? item.selectedIcon : item.icon,
                     key: ValueKey(isSelected),
-                    color: isSelected
-                        ? (isDark ? Colors.white : colorScheme.primary)
-                        : (isDark
-                            ? Colors.white.withOpacity(0.6)
-                            : colorScheme.onSurface.withOpacity(0.5)),
+                    color: isSelected ? selectedIconColor : iconColor,
                     size: 24.sp,
                   ),
                   // Badge
@@ -314,7 +358,7 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
                       child: Text(
                         item.label,
                         style: TextStyle(
-                          color: isDark ? Colors.white : colorScheme.primary,
+                          color: selectedIconColor,
                           fontSize: 11.sp,
                           fontWeight: FontWeight.w600,
                           letterSpacing: -0.2,
@@ -331,12 +375,10 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
     );
   }
 
-  Widget _buildFab(
-    BuildContext context,
-    ColorScheme colorScheme,
-    bool isDark,
-  ) {
-    final fabColor = widget.fabColor ?? colorScheme.primary;
+  Widget _buildFab(BuildContext context, ColorScheme colorScheme, bool isDark) {
+    final fabTop = const Color(0xFF46C7FF);
+    final fabMid = const Color(0xFF3CA7FF);
+    final fabBottom = const Color(0xFF5176FF);
 
     return GestureDetector(
       onTap: () {
@@ -344,72 +386,57 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
         widget.onFabPressed();
       },
       child: Container(
-        width: 56.w,
-        height: 56.h,
+        width: 66.w,
+        height: 66.h,
         decoration: BoxDecoration(
-          // تدرج ثلاثي الأبعاد
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              fabColor.withOpacity(0.9),
-              fabColor,
-              HSLColor.fromColor(fabColor)
-                  .withLightness(
-                    (HSLColor.fromColor(fabColor).lightness - 0.15)
-                        .clamp(0.0, 1.0),
-                  )
-                  .toColor(),
-            ],
-            stops: const [0.0, 0.5, 1.0],
+            colors: [fabTop, fabMid, fabBottom],
+            stops: const [0.0, 0.42, 1.0],
           ),
           shape: BoxShape.circle,
-          // الظل للعمق
           boxShadow: [
-            // ظل خارجي
             BoxShadow(
-              color: fabColor.withOpacity(0.4),
-              blurRadius: 16,
+              color: const Color(0xFF67B9FF).withValues(alpha: 0.45),
+              blurRadius: 28,
               spreadRadius: 0,
-              offset: const Offset(0, 6),
+              offset: const Offset(0, 12),
             ),
-            // لمعان داخلي (محاكاة)
             BoxShadow(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.48),
               blurRadius: 0,
               spreadRadius: 0,
               offset: const Offset(-2, -2),
             ),
           ],
+          border: Border.all(
+            color: Colors.white.withValues(alpha: 0.62),
+            width: 1.4,
+          ),
         ),
         child: Stack(
           alignment: Alignment.center,
           children: [
-            // اللمعان العلوي
             Positioned(
-              top: 8.h,
+              top: 10.h,
               child: Container(
-                width: 24.w,
-                height: 8.h,
+                width: 28.w,
+                height: 10.h,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Colors.white.withOpacity(0.4),
-                      Colors.white.withOpacity(0.0),
+                      Colors.white.withValues(alpha: 0.58),
+                      Colors.white.withValues(alpha: 0.0),
                     ],
                   ),
                   borderRadius: BorderRadius.circular(4.r),
                 ),
               ),
             ),
-            // الأيقونة
-            Icon(
-              widget.fabIcon,
-              color: Colors.white,
-              size: 28.sp,
-            ),
+            Icon(widget.fabIcon, color: const Color(0xFFFFF7D6), size: 34.sp),
           ],
         ),
       ),

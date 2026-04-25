@@ -3,14 +3,15 @@
 // ✅ FIXED - حل مشكلة Row Overflow
 // ═══════════════════════════════════════════════════════════════════════════════
 
+import 'dart:ui';
+
 import 'package:athar/core/design_system/tokens/athar_radii.dart';
 import 'package:athar/core/design_system/tokens/athar_spacing.dart';
+import 'package:athar/core/utils/navigation_utils.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../features/focus/presentation/pages/focus_page.dart';
-import '../../../../features/calendar/presentation/pages/calendar_page.dart';
 import '../../../../features/settings/presentation/pages/general_settings_page.dart';
 
 class AtharAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -18,6 +19,9 @@ class AtharAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? subtitle;
   final Widget? leading;
   final bool showActions;
+  final List<Widget>? actions;
+  final VoidCallback? onTitleTap;
+  final IconData titleTapIcon;
 
   const AtharAppBar({
     super.key,
@@ -25,7 +29,9 @@ class AtharAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.subtitle,
     this.leading,
     this.showActions = true,
-    required actions,
+    this.actions,
+    this.onTitleTap,
+    this.titleTapIcon = Icons.keyboard_arrow_down_rounded,
   });
 
   @override
@@ -35,16 +41,43 @@ class AtharAppBar extends StatelessWidget implements PreferredSizeWidget {
     final canPop = Navigator.canPop(context);
 
     return AppBar(
+      forceMaterialTransparency: true,
       backgroundColor: Colors.transparent,
       elevation: 0,
+      shadowColor: Colors.transparent,
+      surfaceTintColor: Colors.transparent,
+      scrolledUnderElevation: 0,
       centerTitle: true,
+      toolbarHeight: 74.h,
+      flexibleSpace: ClipRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  colorScheme.surface.withValues(alpha: 0.82),
+                  colorScheme.surface.withValues(alpha: 0.42),
+                ],
+              ),
+              border: Border(
+                bottom: BorderSide(
+                  color: colorScheme.outlineVariant.withValues(alpha: 0.2),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
 
       leading:
           leading ??
           (canPop
               ? BackButton(
                   color: colorScheme.onSurface,
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () => NavigationUtils.safeBack(context),
                 )
               : IconButton(
                   onPressed: () {
@@ -64,12 +97,7 @@ class AtharAppBar extends StatelessWidget implements PreferredSizeWidget {
                 )),
 
       title: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const CalendarPage()),
-          );
-        },
+        onTap: onTitleTap,
         borderRadius: AtharRadii.radiusMd,
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -80,18 +108,14 @@ class AtharAppBar extends StatelessWidget implements PreferredSizeWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // ✅ FIX: استخدام ConstrainedBox + Flexible لمنع overflow
               ConstrainedBox(
                 constraints: BoxConstraints(
-                  maxWidth:
-                      MediaQuery.sizeOf(context).width *
-                      0.5, // 50% من عرض الشاشة
+                  maxWidth: MediaQuery.sizeOf(context).width * 0.62,
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // ✅ FIX: لف النص بـ Flexible
                     Flexible(
                       child: Text(
                         title,
@@ -104,12 +128,14 @@ class AtharAppBar extends StatelessWidget implements PreferredSizeWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    AtharGap.hXxs,
-                    Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      size: 14.sp,
-                      color: colorScheme.primary.withValues(alpha: 0.7),
-                    ),
+                    if (onTitleTap != null) ...[
+                      AtharGap.hXxs,
+                      Icon(
+                        titleTapIcon,
+                        size: 14.sp,
+                        color: colorScheme.primary.withValues(alpha: 0.7),
+                      ),
+                    ],
                   ],
                 ),
               ),
@@ -130,46 +156,20 @@ class AtharAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
 
-      actions: showActions
-          ? [
-              IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const CalendarPage(),
-                    ),
-                  );
-                },
-                icon: Icon(
-                  Icons.calendar_month_rounded,
-                  color: colorScheme.onSurface,
-                  size: 22.sp,
-                ),
-                tooltip: l10n.appBarCalendarTooltip,
-              ),
-              IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const FocusPage()),
-                  );
-                },
-                icon: Icon(
-                  Icons.timer_outlined,
-                  color: colorScheme.onSurface,
-                  size: 22.sp,
-                ),
-                tooltip: l10n.appBarFocusTooltip,
-              ),
-              AtharGap.hSm,
-            ]
-          : null,
+      actions: showActions ? _buildActions(context, colorScheme, l10n) : null,
     );
   }
 
+  List<Widget> _buildActions(
+    BuildContext context,
+    ColorScheme colorScheme,
+    AppLocalizations l10n,
+  ) {
+    return actions ?? const [];
+  }
+
   @override
-  Size get preferredSize => Size.fromHeight(70.h);
+  Size get preferredSize => Size.fromHeight(74.h);
 }
 
 //-----------------------------------------------------------------------
@@ -432,7 +432,7 @@ class AtharAppBar extends StatelessWidget implements PreferredSizeWidget {
 //                   Icon(
 //                     Icons.keyboard_arrow_down_rounded,
 //                     size: 14.sp,
-//                     // ✅ AppColors.primary.withOpacity(0.7)
+//                     // ✅ AppColors.primary.withValues(alpha: 0.7)
 //                     color: colors.primary.withValues(alpha: 0.7),
 //                   ),
 //                 ],
@@ -593,7 +593,7 @@ class AtharAppBar extends StatelessWidget implements PreferredSizeWidget {
 //                   Icon(
 //                     Icons.keyboard_arrow_down_rounded,
 //                     size: 14.sp,
-//                     color: AppColors.primary.withOpacity(0.7),
+//                     color: AppColors.primary.withValues(alpha: 0.7),
 //                   ),
 //                 ],
 //               ),

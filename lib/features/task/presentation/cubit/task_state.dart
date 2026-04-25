@@ -87,3 +87,6 @@ class TaskError extends TaskState {
   @override
   List<Object?> get props => [message];
 }
+
+/// Emitted when a free user tries to create a task beyond the free limit.
+class TaskFreeLimitReached extends TaskState {}

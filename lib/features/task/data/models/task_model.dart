@@ -325,9 +325,11 @@ class TaskModel with TimeSlotMixin {
                     ? 'قبل $prayerName'
                     : 'بعد $prayerName');
         }
-        final relation = settings.prayerRelation == PrayerRelativeTime.before
-            ? 'قبل'
-            : 'بعد';
+        final relation = switch (settings.prayerRelation) {
+          PrayerRelativeTime.before => 'قبل',
+          PrayerRelativeTime.iqama => 'وقت إقامة',
+          PrayerRelativeTime.after || null => 'بعد',
+        };
         return '$relation $prayerName بـ ${settings.offsetMinutes} دقيقة';
 
       case TimeSpecificationType.period:

@@ -142,7 +142,7 @@ class BulkActionsBar extends StatelessWidget {
 //         color: colors.primary,
 //         boxShadow: [
 //           BoxShadow(
-//             color: colors.shadow.withOpacity(0.1),
+//             color: colors.shadow.withValues(alpha: 0.1),
 //             blurRadius: 8,
 //             offset: const Offset(0, -2),
 //           ),
@@ -246,7 +246,7 @@ class BulkActionsBar extends StatelessWidget {
 //         color: AppColors.primary,
 //         boxShadow: [
 //           BoxShadow(
-//             color: Colors.black.withOpacity(0.1),
+//             color: Colors.black.withValues(alpha: 0.1),
 //             blurRadius: 8,
 //             offset: const Offset(0, -2),
 //           ),

@@ -37,12 +37,34 @@ target 'Runner' do
 end
 
 post_install do |installer|
+  suppressed_warning_targets = %w[
+    DKImagePickerController
+    DKPhotoGallery
+    file_picker
+    firebase_core
+    geocoding_ios
+  ]
+
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
 
     target.build_configurations.each do |config|
       # ✅ توحيد deployment target
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
+
+      if suppressed_warning_targets.include?(target.name)
+        config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = 'YES'
+        config.build_settings['SWIFT_SUPPRESS_WARNINGS'] = 'YES'
+      end
+    end
+
+    next unless target.name == 'geocoding_ios'
+
+    target.source_build_phase.files.each do |build_file|
+      next unless build_file.file_ref
+      next unless build_file.file_ref.path&.end_with?('PrivacyInfo.xcprivacy')
+
+      target.source_build_phase.remove_build_file(build_file)
     end
   end
 end

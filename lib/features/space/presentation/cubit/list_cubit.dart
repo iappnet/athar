@@ -38,11 +38,12 @@ class ListCubit extends Cubit<ListState> {
         .watchItems(moduleId)
         .listen(
           (items) {
-            // ✅ بمجرد وصول البيانات، نفحص العناصر المتكررة
+            if (isClosed) return;
             _checkRecurringItems(items);
             emit(ListLoaded(items));
           },
           onError: (e) {
+            if (isClosed) return;
             emit(ListError("فشل تحميل القائمة"));
           },
         );

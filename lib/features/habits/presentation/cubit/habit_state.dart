@@ -73,3 +73,6 @@ class HabitError extends HabitState {
   @override
   List<Object> get props => [message];
 }
+
+/// Emitted when a free user tries to create a habit beyond the free limit.
+class HabitFreeLimitReached extends HabitState {}

@@ -15,7 +15,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // أنواع السياقات
@@ -100,8 +99,6 @@ class ContextAwareFabController {
 
   /// قائمة خيارات الداشبورد
   void _showDashboardOptions() {
-    final colorScheme = Theme.of(context).colorScheme;
-    
     _showGlassBottomSheet(
       title: 'ماذا تريد أن تضيف؟',
       options: [
@@ -224,13 +221,13 @@ class ContextAwareFabController {
             padding: EdgeInsets.all(24.w),
             decoration: BoxDecoration(
               color: isDark
-                  ? Colors.black.withOpacity(0.7)
-                  : Colors.white.withOpacity(0.85),
+                  ? Colors.black.withValues(alpha: 0.7)
+                  : Colors.white.withValues(alpha: 0.85),
               borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),
               border: Border.all(
                 color: isDark
-                    ? Colors.white.withOpacity(0.1)
-                    : Colors.black.withOpacity(0.05),
+                    ? Colors.white.withValues(alpha: 0.1)
+                    : Colors.black.withValues(alpha: 0.05),
               ),
             ),
             child: Column(
@@ -241,7 +238,7 @@ class ContextAwareFabController {
                   width: 40.w,
                   height: 4.h,
                   decoration: BoxDecoration(
-                    color: colorScheme.outline.withOpacity(0.3),
+                    color: colorScheme.outline.withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(2.r),
                   ),
                 ),
@@ -295,10 +292,10 @@ class ContextAwareFabController {
             width: 64.w,
             height: 64.h,
             decoration: BoxDecoration(
-              color: option.color.withOpacity(isDark ? 0.2 : 0.12),
+              color: option.color.withValues(alpha: isDark ? 0.2 : 0.12),
               borderRadius: BorderRadius.circular(20.r),
               border: Border.all(
-                color: option.color.withOpacity(0.3),
+                color: option.color.withValues(alpha: 0.3),
                 width: 1.5,
               ),
             ),
@@ -315,7 +312,7 @@ class ContextAwareFabController {
             style: TextStyle(
               fontSize: 13.sp,
               fontWeight: FontWeight.w500,
-              color: colorScheme.onSurface.withOpacity(0.8),
+              color: colorScheme.onSurface.withValues(alpha: 0.8),
             ),
           ),
         ],

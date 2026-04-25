@@ -32,7 +32,6 @@ class AppTheme {
       // ثيم الألوان
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.primary,
-        background: AppColors.background,
         surface: AppColors.surface,
       ),
     );

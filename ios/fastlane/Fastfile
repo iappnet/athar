@@ -22,13 +22,10 @@ platform :ios do
     
     Dir.chdir("..") do
       sh("flutter pub get")
+      sh("rm -rf build/ios build/native_assets")
     end
     
     cocoapods(clean_install: true, podfile: "Podfile")
-    
-    Dir.chdir("..") do
-      sh("flutter build ios --release --no-tree-shake-icons --no-codesign")
-    end
     
     build_app(
       workspace: "Runner.xcworkspace",
@@ -36,7 +33,7 @@ platform :ios do
       export_method: "app-store",
       output_directory: "./build",
       output_name: "Athar.ipa",
-      clean: false,
+      clean: true,
       include_bitcode: false
     )
     
@@ -117,19 +114,16 @@ platform :ios do
     
     Dir.chdir("..") do
       sh("flutter pub get")
+      sh("rm -rf build/ios build/native_assets")
     end
     
     cocoapods(clean_install: true, podfile: "Podfile")
-    
-    Dir.chdir("..") do
-      sh("flutter build ios --release --no-tree-shake-icons --no-codesign")
-    end
     
     build_app(
       workspace: "Runner.xcworkspace",
       scheme: "Runner",
       export_method: "app-store",
-      clean: false,
+      clean: true,
       include_bitcode: false
     )
     

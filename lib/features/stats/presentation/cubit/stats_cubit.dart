@@ -15,9 +15,8 @@ class StatsCubit extends Cubit<StatsState> {
       final weeklyData = await _focusRepository.getLast7DaysFocus();
       emit(StatsLoaded(weeklyData));
     } catch (e) {
-      // في حالة الخطأ نعيد مصفوفة أصفار مؤقتاً أو نرسل حالة خطأ
-      emit(const StatsLoaded([0, 0, 0, 0, 0, 0, 0]));
-      // أو: emit(StatsError("فشل تحميل البيانات"));
+      if (isClosed) return;
+      emit(const StatsError("فشل تحميل الإحصائيات"));
     }
   }
 }

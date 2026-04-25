@@ -51,7 +51,7 @@ class _AddModuleSheetState extends State<AddModuleSheet> {
     _descController = TextEditingController(
       text: widget.moduleToEdit?.description,
     );
-    _selectedColor = widget.moduleToEdit?.color ?? _colors[0].value;
+    _selectedColor = widget.moduleToEdit?.color ?? _colors[0].toARGB32();
     _endDate = widget.moduleToEdit?.endDate;
 
     // ✅ تهيئة التذكير في حالة التعديل

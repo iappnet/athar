@@ -256,6 +256,22 @@ class _MedicinesPageState extends State<MedicinesPage>
               ],
             ),
           ),
+          if (medicine.isActive) ...[
+            IconButton(
+              tooltip: 'تسجيل الجرعة',
+              icon: Icon(Icons.check_circle_outline_rounded,
+                  color: Colors.green),
+              onPressed: () =>
+                  _cubit.takeDose(widget.moduleId, medicine),
+            ),
+            IconButton(
+              tooltip: 'تخطي الجرعة',
+              icon: Icon(Icons.cancel_outlined,
+                  color: colors.outline),
+              onPressed: () =>
+                  _cubit.skipDose(widget.moduleId, medicine),
+            ),
+          ],
           PopupMenuButton<String>(
             onSelected: (value) {
               if (value == 'delete') {
@@ -529,7 +545,7 @@ class _MedicinesPageState extends State<MedicinesPage>
 //         borderRadius: BorderRadius.circular(16.r),
 //         boxShadow: [
 //           BoxShadow(
-//             color: Colors.black.withOpacity(0.03),
+//             color: Colors.black.withValues(alpha: 0.03),
 //             blurRadius: 10,
 //             offset: const Offset(0, 4),
 //           ),
@@ -540,7 +556,7 @@ class _MedicinesPageState extends State<MedicinesPage>
 //           Container(
 //             padding: EdgeInsets.all(12.w),
 //             decoration: BoxDecoration(
-//               color: color.withOpacity(0.1),
+//               color: color.withValues(alpha: 0.1),
 //               shape: BoxShape.circle,
 //             ),
 //             child: Icon(icon, color: color, size: 24.sp),

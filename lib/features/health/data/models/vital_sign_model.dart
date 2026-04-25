@@ -18,6 +18,7 @@ class VitalSignModel {
   // للمؤشرات
   String? vitalType; // weight, temp, pressure
   double? vitalValue;
+  double? vitalValueSecondary; // الانبساطي (diastolic) للضغط
   String? vitalUnit; // kg, C
 
   // للوثائق
@@ -34,6 +35,7 @@ class VitalSignModel {
     required this.category,
     this.vitalType,
     this.vitalValue,
+    this.vitalValueSecondary,
     this.vitalUnit,
     this.title,
     this.attachmentPath,

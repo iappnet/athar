@@ -36,7 +36,30 @@ class _AssetsPageState extends State<AssetsPage> {
         ? widget.module!.name
         : l10n.assetsPageTitle;
 
-    return Scaffold(
+    return BlocListener<AssetsCubit, AssetsState>(
+      listener: (context, state) {
+        if (state is AssetOperationSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: Colors.green,
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+          context
+              .read<AssetsCubit>()
+              .watchAssets(moduleId: widget.module?.uuid);
+        } else if (state is AssetsError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: Theme.of(context).colorScheme.error,
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
+      },
+      child: Scaffold(
       backgroundColor: colorScheme.surface,
       appBar: AppBar(
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
@@ -113,6 +136,7 @@ class _AssetsPageState extends State<AssetsPage> {
           l10n.assetsAddButton,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
+      ),
       ),
     );
   }

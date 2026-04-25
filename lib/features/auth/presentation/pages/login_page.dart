@@ -138,7 +138,12 @@ class _LoginPageState extends State<LoginPage> {
       controller: _emailController,
       prefixIcon: Icons.email_outlined,
       keyboardType: TextInputType.emailAddress,
-      validator: (val) => val!.isEmpty ? l10n.required : null,
+      validator: (val) {
+        if (val == null || val.isEmpty) return l10n.required;
+        final emailRegex = RegExp(r'^[\w.+-]+@[\w-]+\.\w{2,}$');
+        if (!emailRegex.hasMatch(val.trim())) return 'بريد إلكتروني غير صحيح';
+        return null;
+      },
     );
   }
 
@@ -148,7 +153,11 @@ class _LoginPageState extends State<LoginPage> {
       controller: _passwordController,
       prefixIcon: Icons.lock_outline,
       obscureText: true,
-      validator: (val) => val!.length < 6 ? l10n.passwordTooShort : null,
+      validator: (val) {
+        if (val == null || val.isEmpty) return l10n.required;
+        if (val.length < 8) return l10n.passwordTooShort;
+        return null;
+      },
     );
   }
 

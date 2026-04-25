@@ -586,7 +586,7 @@ class DailyTimelineWidget extends StatelessWidget {
 //         ),
 //         boxShadow: [
 //           BoxShadow(
-//             // ✅ Colors.black.withOpacity(0.03) → colors.shadow
+//             // ✅ Colors.black.withValues(alpha: 0.03) → colors.shadow
 //             color: colors.shadow.withValues(alpha: 0.3),
 //             blurRadius: 8,
 //             offset: const Offset(0, 4),
@@ -800,7 +800,7 @@ class DailyTimelineWidget extends StatelessWidget {
 //         ),
 //         boxShadow: [
 //           BoxShadow(
-//             color: Colors.black.withOpacity(0.03),
+//             color: Colors.black.withValues(alpha: 0.03),
 //             blurRadius: 8,
 //             offset: const Offset(0, 4),
 //           ),

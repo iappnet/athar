@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
+import 'package:athar/core/utils/navigation_utils.dart';
 import '../cubit/settings_cubit.dart';
 import '../cubit/settings_state.dart';
 import 'location_settings_page.dart';
@@ -13,6 +14,7 @@ import '../../../auth/presentation/cubit/auth_cubit.dart';
 import '../../../auth/presentation/cubit/auth_state.dart';
 import '../../../auth/presentation/pages/login_page.dart';
 import '../../../auth/presentation/pages/profile_page.dart';
+import '../../../subscription/presentation/pages/subscription_page.dart';
 
 class GeneralSettingsPage extends StatelessWidget {
   const GeneralSettingsPage({super.key});
@@ -34,9 +36,13 @@ class GeneralSettingsPage extends StatelessWidget {
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: BackButton(color: colorScheme.onSurface),
+        leading: BackButton(
+          color: colorScheme.onSurface,
+          onPressed: () => NavigationUtils.safeBack(context),
+        ),
       ),
       body: BlocBuilder<SettingsCubit, SettingsState>(
+        buildWhen: (prev, curr) => prev != curr,
         builder: (context, state) {
           if (state is SettingsLoaded) {
             final settings = state.settings;
@@ -47,6 +53,7 @@ class GeneralSettingsPage extends StatelessWidget {
               children: [
                 // 1. قسم الحساب
                 BlocBuilder<AuthCubit, AuthState>(
+                  buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
                   builder: (context, authState) {
                     if (authState is AuthAuthenticated) {
                       return Column(
@@ -182,11 +189,45 @@ class GeneralSettingsPage extends StatelessWidget {
 
                 SizedBox(height: 24.h),
 
+                // ── قسم الاشتراكات ─────────────────────────────────────────
+                _buildSectionHeader(context, 'الاشتراكات والباقات'),
+                _buildSettingsContainer([
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(
+                        horizontal: 16.w, vertical: 4.h),
+                    leading: Container(
+                      padding: EdgeInsets.all(8.w),
+                      decoration: BoxDecoration(
+                        color: Colors.amber.shade700.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: Icon(
+                        Icons.workspace_premium_rounded,
+                        color: Colors.amber.shade700,
+                        size: 20.sp,
+                      ),
+                    ),
+                    title: const Text('إدارة الاشتراكات',
+                        style: TextStyle(fontWeight: FontWeight.w500)),
+                    subtitle: const Text(
+                        'مساحات برو، مزامنة، وحدة الصحة والأصول'),
+                    trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const SubscriptionPage()),
+                    ),
+                  ),
+                ]),
+
+                SizedBox(height: 24.h),
+
                 // ✅ 1.5. قسم المزامنة (جديد)
                 _buildSectionHeader(context, l10n.syncAndData),
                 _buildSettingsContainer([
                   // ✅✅ الخيار الذكي للمزامنة التلقائية
                   BlocBuilder<AuthCubit, AuthState>(
+                    buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
                     builder: (context, authState) {
                       // نحدد هل هو ضيف أم لا
                       final isGuest =
@@ -271,8 +312,7 @@ class GeneralSettingsPage extends StatelessWidget {
                     subtitle: l10n.enablePrayerTimesDesc,
                     value: settings.isPrayerEnabled,
                     onChanged: (val) {
-                      final newSettings = settings..isPrayerEnabled = val;
-                      cubit.updateSettings(newSettings);
+                      cubit.togglePrayerEnabled(val);
                     },
                   ),
                   if (settings.isPrayerEnabled) ...[
@@ -458,7 +498,37 @@ class GeneralSettingsPage extends StatelessWidget {
 
                 SizedBox(height: 24.h),
 
-                // 5. قسم حول التطبيق (موجود)
+                // 5. قسم التنبيهات
+                _buildSectionHeader(context, 'التنبيهات'),
+                _buildSettingsContainer([
+                  _buildSwitchTile(
+                    context,
+                    icon: Icons.task_alt_rounded,
+                    color: Colors.blue,
+                    title: 'تنبيهات المهام',
+                    subtitle: 'إشعار قبل موعد المهمة',
+                    value: settings.isTaskRemindersEnabled,
+                    onChanged: (val) {
+                      cubit.toggleTaskRemindersEnabled(val);
+                    },
+                  ),
+                  _buildDivider(),
+                  _buildSwitchTile(
+                    context,
+                    icon: Icons.repeat_rounded,
+                    color: Colors.green,
+                    title: 'تنبيهات العادات',
+                    subtitle: 'تذكير يومي بإنجاز العادات',
+                    value: settings.isHabitRemindersEnabled,
+                    onChanged: (val) {
+                      cubit.toggleHabitsRemindersEnabled(val);
+                    },
+                  ),
+                ]),
+
+                SizedBox(height: 24.h),
+
+                // 6. قسم حول التطبيق (موجود)
                 _buildSectionHeader(context, l10n.aboutApp),
 
                 _buildSettingsContainer([
@@ -1413,12 +1483,12 @@ class GeneralSettingsPage extends StatelessWidget {
 //                       );
 //                     } else {
 //                       return Card(
-//                         color: Colors.purple.withOpacity(0.05),
+//                         color: Colors.purple.withValues(alpha: 0.05),
 //                         elevation: 0,
 //                         shape: RoundedRectangleBorder(
 //                           borderRadius: BorderRadius.circular(12.r),
 //                           side: BorderSide(
-//                             color: Colors.purple.withOpacity(0.2),
+//                             color: Colors.purple.withValues(alpha: 0.2),
 //                           ),
 //                         ),
 //                         child: ListTile(
