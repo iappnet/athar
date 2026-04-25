@@ -492,7 +492,7 @@ class _HabitsPageState extends State<HabitsPage> {
       shadowColor = Colors.blueGrey.withValues(alpha: 0.3);
     } else {
       icon = Icons.mosque_rounded;
-      gradientColors = const [Color(0xFF6C63FF), Color(0xFF4834D4)];
+      gradientColors = const [Color(0xFF1A6B3C), Color(0xFF0F4828)];
       // ✅ AppColors.primary → colors.primary
       shadowColor = colorScheme.primary.withValues(alpha: 0.3);
     }
@@ -1241,7 +1241,7 @@ class _HabitsPageState extends State<HabitsPage> {
 //       shadowColor = Colors.blueGrey.withValues(alpha: 0.3);
 //     } else {
 //       icon = Icons.mosque_rounded;
-//       gradientColors = const [Color(0xFF6C63FF), Color(0xFF4834D4)];
+//       gradientColors = const [Color(0xFF1A6B3C), Color(0xFF0F4828)];
 //       // ✅ AppColors.primary → colors.primary
 //       shadowColor = colors.primary.withValues(alpha: 0.3);
 //     }
@@ -1879,7 +1879,7 @@ class _HabitsPageState extends State<HabitsPage> {
 //       shadowColor = Colors.blueGrey.withValues(alpha: 0.3);
 //     } else {
 //       icon = Icons.mosque_rounded;
-//       gradientColors = const [Color(0xFF6C63FF), Color(0xFF4834D4)];
+//       gradientColors = const [Color(0xFF1A6B3C), Color(0xFF0F4828)];
 //       shadowColor = AppColors.primary.withValues(alpha: 0.3);
 //     }
 
