@@ -232,7 +232,7 @@ abstract class AtharShadows {
   /// للـ Input Focus
   static const List<BoxShadow> inputFocus = [
     BoxShadow(
-      color: Color(0x296C63FF), // Primary color with opacity
+      color: Color(0x291A6B3C), // Primary color with opacity
       blurRadius: 4,
       spreadRadius: 0,
       offset: Offset(0, 0),
@@ -305,7 +305,7 @@ abstract class AtharShadows {
   }
 
   /// ظل ملون للـ Primary
-  static List<BoxShadow> get primary => colored(const Color(0xFF6C63FF));
+  static List<BoxShadow> get primary => colored(const Color(0xFF1A6B3C));
 
   /// ظل ملون للـ Success
   static List<BoxShadow> get success => colored(const Color(0xFF00B894));
