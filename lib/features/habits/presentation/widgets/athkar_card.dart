@@ -25,9 +25,9 @@ class AthkarCard extends StatelessWidget {
 
     final cardColor = isMorning
         ? const Color(0xFFFFF8E1)
-        : const Color(0xFFE8EAF6);
+        : const Color(0xFFE8F5EF);
 
-    final iconColor = isMorning ? Colors.orange : const Color(0xFF3F51B5);
+    final iconColor = isMorning ? Colors.orange : colorScheme.primary;
 
     final iconData = isMorning
         ? Icons.wb_sunny_rounded
