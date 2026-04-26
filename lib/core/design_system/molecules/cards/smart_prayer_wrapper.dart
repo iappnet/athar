@@ -94,7 +94,7 @@ class SmartPrayerCardWrapper extends StatelessWidget {
                   children: [
                     Icon(Icons.cloud_off_rounded,
                         color: cs.error, size: 20.sp),
-                    SizedBox(width: 8.w),
+                    AtharGap.hSm,
                     Expanded(
                       child: Text(
                         prayerState.message,

@@ -59,7 +59,7 @@ class StatisticsPage extends StatelessWidget {
                       children: [
                         Icon(Icons.error_outline_rounded,
                             color: Theme.of(context).colorScheme.error),
-                        SizedBox(height: 8.h),
+                        AtharGap.sm,
                         Text(state.message,
                             style: TextStyle(
                                 color:
@@ -124,7 +124,7 @@ class _SectionTitle extends StatelessWidget {
     return Row(
       children: [
         Icon(icon, color: colorScheme.primary, size: 20.sp),
-        SizedBox(width: 8.w),
+        AtharGap.hSm,
         Text(
           title,
           style: TextStyle(
@@ -166,7 +166,7 @@ class _UserHeader extends StatelessWidget {
             backgroundColor: colorScheme.onPrimary,
             child: Icon(Icons.person, size: 35.sp, color: colorScheme.primary),
           ),
-          SizedBox(width: 16.w),
+          AtharGap.hLg,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -178,7 +178,7 @@ class _UserHeader extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 4.h),
+              AtharGap.xxs,
               Text(
                 l10n.statsMotivation,
                 style: TextStyle(

@@ -81,7 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         color: Colors.purple,
                       ),
                     ),
-                    SizedBox(height: 24.h),
+                    AtharGap.xxl,
 
                     // الاسم الكامل
                     AtharTextField(
@@ -90,7 +90,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       icon: Icons.person_outline,
                       validator: (val) => val!.isEmpty ? "مطلوب" : null,
                     ),
-                    SizedBox(height: 16.h),
+                    AtharGap.lg,
 
                     // اسم المستخدم
                     AtharTextField(
@@ -103,7 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 16.h),
+                    AtharGap.lg,
 
                     // البريد
                     AtharTextField(
@@ -117,7 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 16.h),
+                    AtharGap.lg,
 
                     // كلمة المرور
                     AtharTextField(
@@ -128,7 +128,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       validator: (val) =>
                           (val == null || val.length < 8) ? "8 خانات على الأقل" : null,
                     ),
-                    SizedBox(height: 32.h),
+                    AtharGap.xxxl,
 
                     state is AuthLoading
                         ? const Center(child: CircularProgressIndicator())
@@ -160,7 +160,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
 
-                    SizedBox(height: 24.h),
+                    AtharGap.xxl,
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

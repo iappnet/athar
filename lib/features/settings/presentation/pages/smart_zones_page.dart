@@ -64,7 +64,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                   padding: EdgeInsets.all(20.w),
                   children: [
                     _buildAutoModeSwitch(context, settings.isAutoModeEnabled),
-                    SizedBox(height: 24.h),
+                    AtharGap.xxl,
 
                     if (settings.isAutoModeEnabled) ...[
                       // 2. بطاقة العمل
@@ -85,7 +85,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                           context.read<SettingsCubit>().updateWorkDays(days);
                         },
                       ),
-                      SizedBox(height: 16.h),
+                      AtharGap.lg,
 
                       // 3. وقت الأهل (المنزل)
                       _buildZoneCard(
@@ -99,7 +99,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                             .read<SettingsCubit>()
                             .updateFamilyPeriods(periods),
                       ),
-                      SizedBox(height: 16.h),
+                      AtharGap.lg,
 
                       // 4. المنطقة الحرة
                       _buildZoneCard(
@@ -113,7 +113,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                             .read<SettingsCubit>()
                             .updateFreePeriods(periods),
                       ),
-                      SizedBox(height: 16.h),
+                      AtharGap.lg,
 
                       // 5. منطقة الهدوء
                       _buildZoneCard(
@@ -129,7 +129,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                           );
                         },
                       ),
-                      SizedBox(height: 16.h),
+                      AtharGap.lg,
 
                       // 6. بطاقة النوم
                       _buildZoneCard(
@@ -145,7 +145,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                           );
                         },
                       ),
-                      SizedBox(height: 16.h),
+                      AtharGap.lg,
                     ] else ...[
                       Center(
                         child: Padding(
@@ -157,7 +157,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                                 size: 64.sp,
                                 color: colorScheme.outline,
                               ),
-                              SizedBox(height: 16.h),
+                              AtharGap.lg,
                               Text(
                                 l10n.smartModeDisabled,
                                 style: TextStyle(
@@ -209,7 +209,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
       child: Row(
         children: [
           Icon(Icons.auto_awesome, color: colorScheme.surface, size: 28.sp),
-          SizedBox(width: 16.w),
+          AtharGap.hLg,
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,7 +287,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                 ),
                 child: Icon(icon, color: color, size: 20.sp),
               ),
-              SizedBox(width: 12.w),
+              AtharGap.hMd,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -302,7 +302,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                 ],
               ),
               const Spacer(),
-              SizedBox(width: 4.w),
+              AtharGap.hXxs,
               IconButton(
                 onPressed: () async {
                   final newTime = await showTimePicker(
@@ -346,7 +346,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8.h),
+            AtharGap.sm,
             _buildDaySelector(workDays, onUpdateDays, color),
           ],
           Divider(height: 24.h),
@@ -389,7 +389,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                       size: 16.sp,
                       color: colorScheme.onSurfaceVariant,
                     ),
-                    SizedBox(width: 8.w),
+                    AtharGap.hSm,
                     Text(
                       "${_formatTime(period.startHour, period.startMinute)} - ${_formatTime(period.endHour, period.endMinute)}",
                       style: TextStyle(
@@ -420,7 +420,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                               size: 12.sp,
                               color: categoryColor,
                             ),
-                            SizedBox(width: 4.w),
+                            AtharGap.hXxs,
                             Text(
                               categoryLabel,
                               style: TextStyle(
@@ -454,7 +454,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                                   color: Color(cat.colorValue),
                                   size: 12,
                                 ),
-                                SizedBox(width: 8.w),
+                                AtharGap.hSm,
                                 Text(cat.name),
                               ],
                             ),

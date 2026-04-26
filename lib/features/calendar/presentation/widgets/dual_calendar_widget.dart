@@ -158,7 +158,7 @@ class _DualCalendarWidgetState extends State<DualCalendarWidget> {
                           ),
                         ],
                       ),
-                      SizedBox(width: 8.w),
+                      AtharGap.hSm,
                       Icon(
                         Icons.swap_vert_circle_outlined,
                         color: colorScheme.primary.withValues(alpha: 0.5),
@@ -175,7 +175,7 @@ class _DualCalendarWidgetState extends State<DualCalendarWidget> {
               ),
             ],
           ),
-          SizedBox(height: 20.h),
+          AtharGap.xl,
 
           // 2. Weekday headers
           Row(

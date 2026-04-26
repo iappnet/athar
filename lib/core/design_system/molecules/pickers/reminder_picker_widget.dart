@@ -40,7 +40,7 @@ class ReminderPickerWidget extends StatelessWidget {
                 Icons.notifications_active_outlined,
                 color: isEnabled ? colorScheme.primary : colorScheme.outline,
               ),
-              SizedBox(width: 8.w),
+              AtharGap.hSm,
               Text(
                 l10n.reminderToggleLabel,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),

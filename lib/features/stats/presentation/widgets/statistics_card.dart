@@ -49,7 +49,7 @@ class StatisticsCard extends StatelessWidget {
                 size: 24.sp,
               ),
             ),
-            SizedBox(width: 16.w),
+            AtharGap.hLg,
 
             Expanded(
               child: Column(

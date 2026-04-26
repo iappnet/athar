@@ -71,7 +71,7 @@ class SpaceMembersPage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(state.message, textAlign: TextAlign.center),
-                    SizedBox(height: 12.h),
+                    AtharGap.md,
                     ElevatedButton(
                       onPressed: () => context
                           .read<SpaceMembersCubit>()
@@ -416,13 +416,13 @@ class SpaceMembersPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.search_off, size: 40, color: colorScheme.outline),
-            SizedBox(height: 12.h),
+            AtharGap.md,
             Text(
               l10n.noResultsFor(query),
               textAlign: TextAlign.center,
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),
             ),
-            SizedBox(height: 8.h),
+            AtharGap.sm,
             Text(
               isEmailQuery
                   ? 'No account found. You can still create an invitation for this email.'
@@ -433,7 +433,7 @@ class SpaceMembersPage extends StatelessWidget {
                 fontSize: 13.sp,
               ),
             ),
-            SizedBox(height: 16.h),
+            AtharGap.lg,
             if (isEmailQuery)
               FilledButton.icon(
                 icon: const Icon(Icons.mark_email_unread_outlined),

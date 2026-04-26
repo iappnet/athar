@@ -134,9 +134,9 @@ class _NotificationCenterPageState extends State<NotificationCenterPage> {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 2.h),
+            AtharGap.xxxs,
             Text(note.body),
-            SizedBox(height: 4.h),
+            AtharGap.xxs,
             Text(
               DateFormat('EEE d MMM • jm', 'ar').format(note.createdAt),
               style: TextStyle(fontSize: 10.sp, color: colorScheme.outline),
@@ -195,7 +195,7 @@ class _NotificationCenterPageState extends State<NotificationCenterPage> {
             l10n.notificationsEmpty,
             style: TextStyle(color: colorScheme.outline, fontSize: 16.sp),
           ),
-          SizedBox(height: 12.h),
+          AtharGap.md,
           Text(
             'ستظهر هنا التنبيهات الجديدة عند وصولها.',
             style: TextStyle(color: colorScheme.outlineVariant),

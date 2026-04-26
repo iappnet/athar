@@ -143,7 +143,7 @@ class _AddMedicineSheetState extends State<AddMedicineSheet> {
                   ),
                 ),
               ),
-              SizedBox(height: 20.h),
+              AtharGap.xl,
               Text(
                 // ✅ l10n
                 isEditing ? l10n.medicineEditTitle : l10n.medicineAddTitle,
@@ -153,7 +153,7 @@ class _AddMedicineSheetState extends State<AddMedicineSheet> {
                   height: 1.4,
                 ).copyWith(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 20.h),
+              AtharGap.xl,
 
               // 1. الاسم
               TextFormField(
@@ -333,7 +333,7 @@ class _AddMedicineSheetState extends State<AddMedicineSheet> {
               else
                 _buildIntervalSelector(colorScheme, l10n),
 
-              SizedBox(height: 24.h),
+              AtharGap.xxl,
 
               // 5. المخزون والمدة
               Row(
@@ -400,7 +400,7 @@ class _AddMedicineSheetState extends State<AddMedicineSheet> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 4.h),
+                        AtharGap.xxs,
                         if (_durationMode == 'days')
                           TextField(
                             controller: _durationController,
@@ -476,7 +476,7 @@ class _AddMedicineSheetState extends State<AddMedicineSheet> {
                 ],
               ),
 
-              SizedBox(height: 24.h),
+              AtharGap.xxl,
 
               // ✅ 6. قسم الأتمتة الذكية
               Container(
@@ -574,7 +574,7 @@ class _AddMedicineSheetState extends State<AddMedicineSheet> {
                 ),
               ),
 
-              SizedBox(height: 24.h),
+              AtharGap.xxl,
 
               ElevatedButton(
                 onPressed: _saveMedicine,
@@ -619,7 +619,7 @@ class _AddMedicineSheetState extends State<AddMedicineSheet> {
             size: 16,
             color: isSelected ? Colors.white : colorScheme.outline,
           ),
-          SizedBox(width: 4.w),
+          AtharGap.hXxs,
           Text(label),
         ],
       ),

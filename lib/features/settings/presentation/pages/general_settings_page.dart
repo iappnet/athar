@@ -107,7 +107,7 @@ class GeneralSettingsPage extends StatelessWidget {
                               },
                             ),
                           ),
-                          SizedBox(height: 16.h),
+                          AtharGap.lg,
 
                           // ✅✅ زر تفعيل البصمة (يظهر فقط للمسجلين)
                           _buildSettingsContainer([
@@ -187,7 +187,7 @@ class GeneralSettingsPage extends StatelessWidget {
                   },
                 ),
 
-                SizedBox(height: 24.h),
+                AtharGap.xxl,
 
                 // ── قسم الاشتراكات ─────────────────────────────────────────
                 _buildSectionHeader(context, 'الاشتراكات والباقات'),
@@ -220,7 +220,7 @@ class GeneralSettingsPage extends StatelessWidget {
                   ),
                 ]),
 
-                SizedBox(height: 24.h),
+                AtharGap.xxl,
 
                 // ✅ 1.5. قسم المزامنة (جديد)
                 _buildSectionHeader(context, l10n.syncAndData),
@@ -282,7 +282,7 @@ class GeneralSettingsPage extends StatelessWidget {
                   ),
                 ]),
 
-                SizedBox(height: 24.h),
+                AtharGap.xxl,
 
                 // 2. قسم الميزات والذكاء
                 _buildSectionHeader(context, l10n.smartFeatures),
@@ -299,7 +299,7 @@ class GeneralSettingsPage extends StatelessWidget {
                   ),
                 ]),
 
-                SizedBox(height: 24.h),
+                AtharGap.xxl,
 
                 // 3. قسم إعدادات الصلاة
                 _buildSectionHeader(context, l10n.prayerSettings),
@@ -369,11 +369,11 @@ class GeneralSettingsPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 8.h),
+                    AtharGap.sm,
                   ],
                 ]),
 
-                SizedBox(height: 24.h),
+                AtharGap.xxl,
 
                 // 4. قسم التفضيلات
                 _buildSectionHeader(context, l10n.preferences),
@@ -420,7 +420,7 @@ class GeneralSettingsPage extends StatelessWidget {
                                   color: Colors.grey.shade600,
                                 ),
                               ),
-                              SizedBox(height: 8.h),
+                              AtharGap.sm,
                               SegmentedButton<AthkarDisplayMode>(
                                 segments: [
                                   ButtonSegment(
@@ -450,7 +450,7 @@ class GeneralSettingsPage extends StatelessWidget {
                                   color: Colors.grey.shade600,
                                 ),
                               ),
-                              SizedBox(height: 8.h),
+                              AtharGap.sm,
                               SegmentedButton<AthkarSessionViewMode>(
                                 segments: [
                                   ButtonSegment(
@@ -478,7 +478,7 @@ class GeneralSettingsPage extends StatelessWidget {
                   ),
                 ]),
 
-                SizedBox(height: 24.h),
+                AtharGap.xxl,
 
                 // ✅✅✅ 6. قسم التنقل - جديد ✅✅✅
                 _buildSectionHeader(context, l10n.navigationSettings),
@@ -496,7 +496,7 @@ class GeneralSettingsPage extends StatelessWidget {
                   ),
                 ]),
 
-                SizedBox(height: 24.h),
+                AtharGap.xxl,
 
                 // 5. قسم التنبيهات
                 _buildSectionHeader(context, 'التنبيهات'),
@@ -526,7 +526,7 @@ class GeneralSettingsPage extends StatelessWidget {
                   ),
                 ]),
 
-                SizedBox(height: 24.h),
+                AtharGap.xxl,
 
                 // 6. قسم حول التطبيق (موجود)
                 _buildSectionHeader(context, l10n.aboutApp),
@@ -551,7 +551,7 @@ class GeneralSettingsPage extends StatelessWidget {
                   ),
                 ]),
 
-                SizedBox(height: 40.h),
+                AtharGap.huge,
               ],
             );
           }

@@ -115,7 +115,7 @@ class _AddAssetSheetState extends State<AddAssetSheet> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 12.w),
+                  AtharGap.hMd,
                   Expanded(
                     child: TextFormField(
                       controller: _priceController,
@@ -273,7 +273,7 @@ class _AddAssetSheetState extends State<AddAssetSheet> {
                   Row(
                     children: [
                       const Text('التذكير قبل:'),
-                      SizedBox(width: 12.w),
+                      AtharGap.hMd,
                       SizedBox(
                         width: 70.w,
                         child: DropdownButtonFormField<int>(

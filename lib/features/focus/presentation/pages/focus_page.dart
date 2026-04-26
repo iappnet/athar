@@ -168,7 +168,7 @@ class _FocusPageState extends State<FocusPage>
                     // ✅ اختيار المدة (جديد)
                     _buildDurationSelector(context, currentTheme),
 
-                    SizedBox(height: 20.h),
+                    AtharGap.xl,
 
                     // العداد
                     _buildTimerDisplay(context, l10n, currentTheme),
@@ -178,7 +178,7 @@ class _FocusPageState extends State<FocusPage>
                     // أزرار التحكم
                     _buildControls(context, l10n, currentTheme),
 
-                    SizedBox(height: 40.h),
+                    AtharGap.huge,
                   ],
                 ),
               ),
@@ -203,11 +203,11 @@ class _FocusPageState extends State<FocusPage>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _buildDurationChip('15', 'short', context, theme),
-            SizedBox(width: 12.w),
+            AtharGap.hMd,
             _buildDurationChip('25', 'pomodoro', context, theme),
-            SizedBox(width: 12.w),
+            AtharGap.hMd,
             _buildDurationChip('45', 'long', context, theme),
-            SizedBox(width: 12.w),
+            AtharGap.hMd,
             _buildDurationChip('60', 'hour', context, theme),
           ],
         );
@@ -337,7 +337,7 @@ class _FocusPageState extends State<FocusPage>
             color: Colors.white.withValues(alpha: 0.6),
           ),
         ),
-        SizedBox(height: 8.h),
+        AtharGap.sm,
         Container(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
           decoration: BoxDecoration(
@@ -354,7 +354,7 @@ class _FocusPageState extends State<FocusPage>
             ),
           ),
         ),
-        SizedBox(height: 20.h),
+        AtharGap.xl,
       ],
     );
   }
@@ -411,7 +411,7 @@ class _FocusPageState extends State<FocusPage>
                 ),
               ),
             ),
-            SizedBox(height: 16.h),
+            AtharGap.lg,
             Text(
               _getStatusText(state, l10n),
               style: TextStyle(
@@ -462,7 +462,7 @@ class _FocusPageState extends State<FocusPage>
                 color: Colors.amber,
                 onTap: () => context.read<FocusCubit>().pauseTimer(),
               ),
-              SizedBox(width: 24.w),
+              AtharGap.hXxl,
               _buildControlButton(
                 icon: Icons.stop_rounded,
                 label: l10n.focusStop,
@@ -477,7 +477,7 @@ class _FocusPageState extends State<FocusPage>
                 isLarge: true,
                 onTap: () => context.read<FocusCubit>().resumeTimer(),
               ),
-              SizedBox(width: 24.w),
+              AtharGap.hXxl,
               _buildControlButton(
                 icon: Icons.refresh_rounded,
                 label: l10n.focusReset,
@@ -532,7 +532,7 @@ class _FocusPageState extends State<FocusPage>
             child: Icon(icon, color: color, size: isLarge ? 32.sp : 28.sp),
           ),
         ),
-        SizedBox(height: 8.h),
+        AtharGap.sm,
         Text(
           label,
           style: TextStyle(
@@ -639,7 +639,7 @@ class _FocusPageState extends State<FocusPage>
                 color: Colors.white,
               ),
             ),
-            SizedBox(height: 16.h),
+            AtharGap.lg,
             Wrap(
               spacing: 12.w,
               runSpacing: 12.h,
@@ -672,7 +672,7 @@ class _FocusPageState extends State<FocusPage>
                 );
               }),
             ),
-            SizedBox(height: 20.h),
+            AtharGap.xl,
           ],
         ),
       ),

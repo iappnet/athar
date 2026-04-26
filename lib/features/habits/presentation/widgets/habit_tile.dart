@@ -187,7 +187,7 @@ class HabitTile extends StatelessWidget {
                           size: 14.sp,
                           color: Colors.orange,
                         ),
-                        SizedBox(width: 4.w),
+                        AtharGap.hXxs,
                         Text(
                           "${habit.currentStreak}",
                           style: TextStyle(
@@ -245,7 +245,7 @@ class HabitTile extends StatelessWidget {
                 fontWeight: isToday ? FontWeight.bold : FontWeight.normal,
               ),
             ),
-            SizedBox(height: 6.h),
+            AtharGap.xs,
             Container(
               width: 30.w,
               height: 30.w,

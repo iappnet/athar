@@ -55,7 +55,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                     "مرحباً بك! يرجى إكمال بياناتك للمتابعة",
                     style: TextStyle(fontSize: 16.sp, color: Colors.grey[700]),
                   ),
-                  SizedBox(height: 32.h),
+                  AtharGap.xxxl,
 
                   AtharTextField(
                     label: "الاسم الكامل",
@@ -63,7 +63,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                     icon: Icons.person,
                     validator: (v) => v!.isEmpty ? "مطلوب" : null,
                   ),
-                  SizedBox(height: 16.h),
+                  AtharGap.lg,
 
                   AtharTextField(
                     label: "اسم المستخدم",
@@ -71,7 +71,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                     icon: Icons.alternate_email,
                     validator: (v) => v!.isEmpty ? "مطلوب" : null,
                   ),
-                  SizedBox(height: 32.h),
+                  AtharGap.xxxl,
 
                   isLoading
                       ? const CircularProgressIndicator()

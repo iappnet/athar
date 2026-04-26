@@ -103,7 +103,7 @@ class AssetCard extends StatelessWidget {
                       child: Row(
                         children: [
                           Icon(statusIcon, size: 12.sp, color: Colors.white),
-                          SizedBox(width: 4.w),
+                          AtharGap.hXxs,
                           Text(
                             asset.daysRemaining > 0
                                 ? l10n.assetDaysRemaining(asset.daysRemaining)

@@ -338,14 +338,14 @@ class _HabitsPageState extends State<HabitsPage> {
                 children: [
                   Icon(Icons.error_outline_rounded,
                       size: 48, color: Theme.of(context).colorScheme.error),
-                  SizedBox(height: 12.h),
+                  AtharGap.md,
                   Text(
                     state.message,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.error),
                   ),
-                  SizedBox(height: 16.h),
+                  AtharGap.lg,
                   FilledButton.icon(
                     onPressed: () =>
                         context.read<HabitCubit>().loadHabits(),
@@ -610,7 +610,7 @@ class _HabitsPageState extends State<HabitsPage> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        SizedBox(height: 4.h),
+                        AtharGap.xxs,
                         // ✅ FIX: maxLines + ellipsis
                         Text(
                           l.habitsProgressLabel(

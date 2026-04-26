@@ -89,7 +89,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
         // تبويبات نوع الاختيار
         _buildModeTabs(colorScheme),
 
-        SizedBox(height: 16.h),
+        AtharGap.lg,
 
         // المحتوى حسب النوع
         AnimatedSwitcher(
@@ -167,7 +167,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
                     ? colorScheme.primary
                     : colorScheme.onSurfaceVariant,
               ),
-              SizedBox(width: 6.w),
+              AtharGap.hXs,
               Text(
                 label,
                 style: TextStyle(
@@ -214,7 +214,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
         ),
 
         if (_selectedPrayer != null && widget.showRelativeOptions) ...[
-          SizedBox(height: 16.h),
+          AtharGap.lg,
 
           // قبل / بعد / عند الأذان
           Row(
@@ -231,7 +231,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
                   _emitChange();
                 },
               ),
-              SizedBox(width: 8.w),
+              AtharGap.hSm,
               _buildRelationChip(
                 label: 'بعد',
                 isSelected:
@@ -245,7 +245,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
                   _emitChange();
                 },
               ),
-              SizedBox(width: 8.w),
+              AtharGap.hSm,
               _buildRelationChip(
                 label: 'قبل',
                 isSelected:
@@ -265,7 +265,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
 
           // حقل الدقائق
           if (_offsetMinutes > 0) ...[
-            SizedBox(height: 12.h),
+            AtharGap.md,
             _buildOffsetSlider(colorScheme),
           ],
         ],
@@ -304,7 +304,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
                   ? colorScheme.primary
                   : colorScheme.onSurfaceVariant,
             ),
-            SizedBox(height: 4.h),
+            AtharGap.xxs,
             Text(
               info.name,
               style: TextStyle(
@@ -421,7 +421,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
 
         // اختيار الموقع ضمن الفترة
         if (_selectedPeriod != null && widget.showPeriodPosition) ...[
-          SizedBox(height: 16.h),
+          AtharGap.lg,
           Text(
             'الموقع ضمن الفترة:',
             style: TextStyle(
@@ -429,7 +429,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
               color: colorScheme.onSurfaceVariant,
             ),
           ),
-          SizedBox(height: 8.h),
+          AtharGap.sm,
           Row(
             children: [
               _buildPositionChip(
@@ -437,13 +437,13 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
                 position: PeriodPosition.start,
                 colorScheme: colorScheme,
               ),
-              SizedBox(width: 8.w),
+              AtharGap.hSm,
               _buildPositionChip(
                 label: 'المنتصف',
                 position: PeriodPosition.middle,
                 colorScheme: colorScheme,
               ),
-              SizedBox(width: 8.w),
+              AtharGap.hSm,
               _buildPositionChip(
                 label: 'النهاية',
                 position: PeriodPosition.end,
@@ -482,7 +482,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(info.icon, size: 18.sp, color: info.color),
-            SizedBox(width: 6.w),
+            AtharGap.hXs,
             Text(
               info.name,
               style: TextStyle(
@@ -565,7 +565,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.access_time, size: 28.sp, color: colorScheme.primary),
-            SizedBox(width: 12.w),
+            AtharGap.hMd,
             Text(
               _customTime != null
                   ? _formatTimeOfDay(_customTime!)
@@ -727,7 +727,7 @@ class TimeSlotDisplay extends StatelessWidget {
           children: [
             if (showIcon) ...[
               Icon(icon, size: 18.sp, color: colorScheme.primary),
-              SizedBox(width: 8.w),
+              AtharGap.hSm,
             ],
             Text(
               displayText,
@@ -738,7 +738,7 @@ class TimeSlotDisplay extends StatelessWidget {
               ),
             ),
             if (onTap != null) ...[
-              SizedBox(width: 8.w),
+              AtharGap.hSm,
               Icon(
                 Icons.edit_outlined,
                 size: 16.sp,

@@ -164,7 +164,7 @@ class DashboardPage extends StatelessWidget {
                                 color: colorScheme.onSurface,
                               ),
                             ),
-                            SizedBox(width: 8.w),
+                            AtharGap.hSm,
                           ],
                           flexibleSpace: LayoutBuilder(
                             builder: (context, constraints) {
@@ -218,7 +218,7 @@ class DashboardPage extends StatelessWidget {
                                                   color: colorScheme.onSurface,
                                                 ),
                                               ),
-                                              SizedBox(height: 4.h),
+                                              AtharGap.xxs,
                                               Text(
                                                 dateStr,
                                                 maxLines: 1,

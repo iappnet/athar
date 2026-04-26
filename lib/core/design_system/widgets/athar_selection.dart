@@ -420,7 +420,7 @@ class AtharChip extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (avatar != null) ...[avatar!, const SizedBox(width: 8)],
+              if (avatar != null) ...[avatar!, const AtharGap.hSm],
               if (icon != null) ...[
                 Icon(icon, size: 18, color: fgColor),
                 const SizedBox(width: 6),
@@ -435,7 +435,7 @@ class AtharChip extends StatelessWidget {
                 ),
               ),
               if (onDelete != null) ...[
-                const SizedBox(width: 4),
+                const AtharGap.hXxs,
                 InkWell(
                   onTap: enabled ? onDelete : null,
                   borderRadius: AtharRadii.radiusMd,

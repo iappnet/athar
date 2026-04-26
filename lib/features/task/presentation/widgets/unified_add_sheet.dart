@@ -715,7 +715,7 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
       padding: EdgeInsets.only(left: 8.w),
       child: ChoiceChip(
         label: Row(
-          children: [Icon(icon, size: 14), SizedBox(width: 4), Text(label)],
+          children: [Icon(icon, size: 14), AtharGap.hXxs, Text(label)],
         ),
         selected: isSelected,
         selectedColor: colorScheme.primary,
@@ -734,7 +734,7 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
       padding: EdgeInsets.only(left: 8.w),
       child: ChoiceChip(
         label: Row(
-          children: [Icon(icon, size: 14), SizedBox(width: 4), Text(label)],
+          children: [Icon(icon, size: 14), AtharGap.hXxs, Text(label)],
         ),
         selected: isSelected,
         selectedColor: colorScheme.primary,

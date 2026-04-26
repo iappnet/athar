@@ -269,7 +269,7 @@ class _AthkarSessionSheetState extends State<AthkarSessionSheet> {
             ),
           ),
 
-          SizedBox(height: 32.h),
+          AtharGap.xxxl,
 
           // دائرة التقدم والزر
           GestureDetector(

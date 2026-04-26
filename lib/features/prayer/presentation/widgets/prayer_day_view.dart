@@ -68,7 +68,7 @@ class PrayerDayView extends StatelessWidget {
                   color: colorScheme.primary,
                   size: 20.sp,
                 ),
-                SizedBox(width: 8.w),
+                AtharGap.hSm,
                 Column(
                   children: [
                     Text(
@@ -140,7 +140,7 @@ class PrayerDayView extends StatelessWidget {
                                 : colorScheme.onSurface,
                             size: 20.sp,
                           ),
-                          SizedBox(width: 12.w),
+                          AtharGap.hMd,
                           Text(
                             prayer.name,
                             style: TextStyle(

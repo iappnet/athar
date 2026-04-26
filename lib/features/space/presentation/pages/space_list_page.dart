@@ -405,7 +405,7 @@ class _SpaceListPageState extends State<SpaceListPage> {
                   border: const OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 16.h),
+              AtharGap.lg,
               SwitchListTile(
                 title: Text(l10n.spaceListSharedQuestion),
                 subtitle: Text(

@@ -119,7 +119,7 @@ class _SpaceDetailsPageState extends State<SpacePage> {
                       child: Row(
                         children: [
                           const Icon(Icons.people_outline, color: Colors.blue),
-                          SizedBox(width: 8.w),
+                          AtharGap.hSm,
                           Text(l10n.spaceMembers),
                         ],
                       ),
@@ -132,7 +132,7 @@ class _SpaceDetailsPageState extends State<SpacePage> {
                             Icons.settings_suggest_outlined,
                             color: Colors.orange,
                           ),
-                          SizedBox(width: 8.w),
+                          AtharGap.hSm,
                           Text(l10n.spaceSettings),
                         ],
                       ),
@@ -416,7 +416,7 @@ class _SpaceDetailsPageState extends State<SpacePage> {
                               color: Colors.blueGrey,
                               size: 20,
                             ),
-                            SizedBox(width: 8.w),
+                            AtharGap.hSm,
                             Text(l10n.spacePermissionSettings),
                           ],
                         ),
@@ -431,7 +431,7 @@ class _SpaceDetailsPageState extends State<SpacePage> {
                               color: Colors.red,
                               size: 20,
                             ),
-                            SizedBox(width: 8.w),
+                            AtharGap.hSm,
                             Text(
                               l10n.spaceDeleteAction,
                               style: const TextStyle(color: Colors.red),
@@ -490,7 +490,7 @@ class _SpaceDetailsPageState extends State<SpacePage> {
             size: 60.sp,
             color: Colors.grey.shade300,
           ),
-          SizedBox(height: 16.h),
+          AtharGap.lg,
           Text(
             l10n.spaceEmptyTitle,
             style: TextStyle(fontSize: 16.sp, color: Colors.grey),
@@ -541,7 +541,7 @@ class _SpaceDetailsPageState extends State<SpacePage> {
                       border: const OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(height: 16.h),
+                  AtharGap.lg,
 
                   SwitchListTile(
                     title: Text(l10n.spacePrivateModule),
@@ -554,7 +554,7 @@ class _SpaceDetailsPageState extends State<SpacePage> {
                     },
                   ),
 
-                  SizedBox(height: 16.h),
+                  AtharGap.lg,
 
                   Wrap(
                     spacing: 12.w,
@@ -607,12 +607,12 @@ class _SpaceDetailsPageState extends State<SpacePage> {
 
                   // ✅ خيار النسخ من قالب
                   if (selectedType == 'list' && listTemplates.isNotEmpty) ...[
-                    SizedBox(height: 16.h),
+                    AtharGap.lg,
                     const Divider(),
                     Row(
                       children: [
                         const Icon(Icons.copy, size: 20, color: Colors.orange),
-                        SizedBox(width: 8.w),
+                        AtharGap.hSm,
                         Expanded(
                           child: DropdownButtonFormField<String>(
                             initialValue: selectedTemplateId,
@@ -723,7 +723,7 @@ class _SpaceDetailsPageState extends State<SpacePage> {
               size: 24.sp,
             ),
           ),
-          SizedBox(height: 4.h),
+          AtharGap.xxs,
           Text(
             label,
             style: TextStyle(

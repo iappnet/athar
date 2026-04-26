@@ -40,7 +40,7 @@ class DeleteAccountDialog extends StatelessWidget {
               color: colorScheme.onSurface,
             ),
           ),
-          SizedBox(height: 20.h),
+          AtharGap.xl,
 
           // الخيار الأول: حذف كل شيء
           _buildOption(
@@ -129,7 +129,7 @@ class DeleteAccountDialog extends StatelessWidget {
                       fontSize: 13.sp,
                     ),
                   ),
-                  SizedBox(height: 4.h),
+                  AtharGap.xxs,
                   Text(
                     subtitle,
                     style: TextStyle(

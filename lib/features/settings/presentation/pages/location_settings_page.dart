@@ -185,7 +185,7 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
             ),
 
             if (_statusMessage.isNotEmpty) ...[
-              SizedBox(height: 20.h),
+              AtharGap.xl,
               Text(
                 _statusMessage,
                 style: TextStyle(
@@ -197,7 +197,7 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
             ],
 
             if (_isLoading) ...[
-              SizedBox(height: 20.h),
+              AtharGap.xl,
               const CircularProgressIndicator(),
             ],
           ],

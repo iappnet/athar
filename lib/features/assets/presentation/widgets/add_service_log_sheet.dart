@@ -106,7 +106,7 @@ class _AddServiceLogSheetState extends State<AddServiceLogSheet> {
                   child: Row(
                     children: [
                       Icon(Icons.calendar_today, color: colorScheme.primary),
-                      SizedBox(width: 12.w),
+                      AtharGap.hMd,
                       Text(
                         l10n.addServiceLogDate(
                           DateFormat('yyyy-MM-dd').format(_performedDate),
@@ -136,7 +136,7 @@ class _AddServiceLogSheetState extends State<AddServiceLogSheet> {
                       ).copyWith(helperText: l10n.addServiceLogOdometerHint),
                     ),
                   ),
-                  SizedBox(width: 12.w),
+                  AtharGap.hMd,
                   Expanded(
                     child: TextFormField(
                       controller: _costController,

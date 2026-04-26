@@ -158,7 +158,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
                   ],
                 ),
 
-                SizedBox(height: 8.h),
+                AtharGap.sm,
 
                 // شريط التقدم الخطي
                 ClipRRect(
@@ -172,7 +172,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
                     ),
                   ),
                 ),
-                SizedBox(height: 8.h),
+                AtharGap.sm,
                 Text(
                   l10n.progressPercent((progress * 100).toInt()),
                   style: TextStyle(fontSize: 12.sp, color: Colors.grey),
@@ -283,7 +283,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
                 decoration: isCompleted ? TextDecoration.lineThrough : null,
               ),
             ),
-            SizedBox(height: 12.h),
+            AtharGap.md,
 
             // عداد التكرار
             Row(

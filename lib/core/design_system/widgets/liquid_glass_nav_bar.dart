@@ -256,7 +256,7 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
               ),
 
               // المسافة بين الشريط والزر
-              SizedBox(width: 12.w),
+              AtharGap.hMd,
 
               // ═══════════════════════════════════════════════════════════════
               // Floating Action Button

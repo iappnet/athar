@@ -74,7 +74,7 @@ class SubscriptionPage extends StatelessWidget {
                       .read<SubscriptionCubit>()
                       .presentCustomerCenter(context),
                 ),
-                SizedBox(height: 12.h),
+                AtharGap.md,
 
                 // ── Sync Pro (standalone) ─────────────────────────────────
                 _PackCard(
@@ -101,7 +101,7 @@ class SubscriptionPage extends StatelessWidget {
                           .presentCustomerCenter(context)
                       : null,
                 ),
-                SizedBox(height: 12.h),
+                AtharGap.md,
 
                 // ── Health Pack ───────────────────────────────────────────
                 _PackCard(
@@ -122,7 +122,7 @@ class SubscriptionPage extends StatelessWidget {
                       .presentHealthPaywall(context),
                   onManage: null,
                 ),
-                SizedBox(height: 12.h),
+                AtharGap.md,
 
                 // ── Assets Pack ───────────────────────────────────────────
                 _PackCard(
@@ -144,7 +144,7 @@ class SubscriptionPage extends StatelessWidget {
                   onManage: null,
                 ),
 
-                SizedBox(height: 24.h),
+                AtharGap.xxl,
 
                 // ── Restore ───────────────────────────────────────────────
                 OutlinedButton.icon(
@@ -156,7 +156,7 @@ class SubscriptionPage extends StatelessWidget {
                     minimumSize: Size(double.infinity, 48.h),
                   ),
                 ),
-                SizedBox(height: 8.h),
+                AtharGap.sm,
                 Text(
                   'إذا اشتريت سابقاً على هذا الحساب، اضغط لاستعادة مشترياتك.',
                   style: TextStyle(
@@ -233,7 +233,7 @@ class _PackCard extends StatelessWidget {
                   ),
                   child: Icon(icon, color: iconColor, size: 22.sp),
                 ),
-                SizedBox(width: 12.w),
+                AtharGap.hMd,
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -277,7 +277,7 @@ class _PackCard extends StatelessWidget {
 
             // ── Expiry (subscriptions only) ─────────────────────────
             if (isOwned && isSubscription && expirationDate != null) ...[
-              SizedBox(height: 8.h),
+              AtharGap.sm,
               Text(
                 'يتجدد في: ${DateFormat('d MMM y', 'ar').format(expirationDate!)}',
                 style: TextStyle(
@@ -288,7 +288,7 @@ class _PackCard extends StatelessWidget {
             ],
 
             // ── Features ────────────────────────────────────────────
-            SizedBox(height: 12.h),
+            AtharGap.md,
             ...features.map(
               (f) => Padding(
                 padding: EdgeInsets.symmetric(vertical: 2.h),
@@ -299,7 +299,7 @@ class _PackCard extends StatelessWidget {
                       size: 14.sp,
                       color: isOwned ? iconColor : colorScheme.outlineVariant,
                     ),
-                    SizedBox(width: 6.w),
+                    AtharGap.hXs,
                     Text(
                       f,
                       style: TextStyle(
@@ -314,7 +314,7 @@ class _PackCard extends StatelessWidget {
               ),
             ),
 
-            SizedBox(height: 16.h),
+            AtharGap.lg,
 
             // ── CTA ──────────────────────────────────────────────────
             if (isOwned && onManage != null)

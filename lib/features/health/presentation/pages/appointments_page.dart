@@ -247,7 +247,7 @@ class _AppointmentsPageState extends State<AppointmentsPage>
                 child: Row(
                   children: [
                     Icon(icon, size: 14.sp, color: color),
-                    SizedBox(width: 4.w),
+                    AtharGap.hXxs,
                     Text(
                       typeText,
                       style: TextStyle(
@@ -261,7 +261,7 @@ class _AppointmentsPageState extends State<AppointmentsPage>
               ),
               const Spacer(),
               Icon(Icons.access_time, size: 14.sp, color: colorScheme.outline),
-              SizedBox(width: 4.w),
+              AtharGap.hXxs,
               Text(
                 DateFormat('yyyy/MM/dd  hh:mm a').format(apt.appointmentDate),
                 style:
@@ -298,7 +298,7 @@ class _AppointmentsPageState extends State<AppointmentsPage>
                     size: 16.sp,
                     color: colorScheme.outline,
                   ),
-                  SizedBox(width: 4.w),
+                  AtharGap.hXxs,
                   Text(
                     apt.doctorName!,
                     style: TextStyle(
@@ -308,7 +308,7 @@ class _AppointmentsPageState extends State<AppointmentsPage>
                       letterSpacing: 0.5,
                     ).copyWith(color: colorScheme.onSurfaceVariant),
                   ),
-                  SizedBox(width: 16.w),
+                  AtharGap.hLg,
                 ],
                 if (apt.locationName != null) ...[
                   Icon(
@@ -316,7 +316,7 @@ class _AppointmentsPageState extends State<AppointmentsPage>
                     size: 16.sp,
                     color: colorScheme.outline,
                   ),
-                  SizedBox(width: 4.w),
+                  AtharGap.hXxs,
                   Text(
                     apt.locationName!,
                     style: TextStyle(

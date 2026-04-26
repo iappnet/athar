@@ -51,7 +51,7 @@ class AttachmentsWidget extends StatelessWidget {
                   child: Row(
                     children: [
                       Icon(Icons.image),
-                      SizedBox(width: 8),
+                      AtharGap.hSm,
                       Text(l10n.attachmentImage),
                     ],
                   ),
@@ -61,7 +61,7 @@ class AttachmentsWidget extends StatelessWidget {
                   child: Row(
                     children: [
                       Icon(Icons.insert_drive_file),
-                      SizedBox(width: 8),
+                      AtharGap.hSm,
                       Text(l10n.attachmentFile),
                     ],
                   ),
@@ -70,7 +70,7 @@ class AttachmentsWidget extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 12.h),
+        AtharGap.md,
 
         // قائمة الملفات
         StreamBuilder<List<AttachmentModel>>(
@@ -87,7 +87,7 @@ class AttachmentsWidget extends StatelessWidget {
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: files.length,
-                separatorBuilder: (c, i) => SizedBox(width: 12.w),
+                separatorBuilder: (c, i) => AtharGap.hMd,
                 itemBuilder: (context, index) {
                   return _buildFileCard(context, files[index]);
                 },

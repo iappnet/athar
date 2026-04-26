@@ -490,7 +490,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                     child: Row(
                       children: [
                         Icon(Icons.group_off, color: colorScheme.outline),
-                        SizedBox(width: 12.w),
+                        AtharGap.hMd,
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

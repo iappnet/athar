@@ -108,7 +108,7 @@ class _PrayerMonthViewState extends State<PrayerMonthView> {
                     color: colorScheme.primary,
                   ),
                 ),
-                SizedBox(height: 4.h),
+                AtharGap.xxs,
                 // الشهر الميلادي
                 Text(
                   DateFormat('MMMM yyyy', 'ar').format(_currentMonth),
@@ -356,7 +356,7 @@ class _PrayerMonthViewState extends State<PrayerMonthView> {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: prayers.length,
-              separatorBuilder: (_, _) => SizedBox(width: 8.w),
+              separatorBuilder: (_, _) => AtharGap.hSm,
               itemBuilder: (context, index) {
                 final prayer = prayers[index];
                 final isSunrise = prayer.type == PrayerType.sunrise;
@@ -389,7 +389,7 @@ class _PrayerMonthViewState extends State<PrayerMonthView> {
                               : colorScheme.primary,
                         ),
                       ),
-                      SizedBox(height: 4.h),
+                      AtharGap.xxs,
                       // الوقت
                       Text(
                         DateFormat('h:mm', 'ar').format(prayer.time),

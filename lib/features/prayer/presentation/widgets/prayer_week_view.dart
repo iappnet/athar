@@ -140,7 +140,7 @@ class PrayerWeekView extends StatelessWidget {
             color: colorScheme.onSurfaceVariant,
           ),
         ),
-        SizedBox(height: 2.h),
+        AtharGap.xxxs,
         Text(
           DateFormat('h:mm', 'en').format(time),
           style: TextStyle(

@@ -104,7 +104,7 @@ class _HabitFormSheetState extends State<HabitFormSheet> {
                 ),
               ),
             ),
-            SizedBox(height: 20.h),
+            AtharGap.xl,
             Text(
               // ✅ l10n: "تعديل العادة" / "إضافة عادة جديدة 💪"
               isEditing ? l10n.habitFormEditTitle : l10n.habitFormAddTitle,
@@ -114,7 +114,7 @@ class _HabitFormSheetState extends State<HabitFormSheet> {
                 height: 1.4,
               ).copyWith(fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20.h),
+            AtharGap.xl,
 
             // 1. اسم العادة
             TextField(
@@ -195,7 +195,7 @@ class _HabitFormSheetState extends State<HabitFormSheet> {
                 ),
               ),
             ),
-            SizedBox(height: 20.h),
+            AtharGap.xl,
 
             // 4. مكون التذكير
             ReminderPickerWidget(
@@ -206,7 +206,7 @@ class _HabitFormSheetState extends State<HabitFormSheet> {
                   setState(() => _reminderTime = newTime),
             ),
 
-            SizedBox(height: 24.h),
+            AtharGap.xxl,
 
             // 5. زر الحفظ
             SizedBox(

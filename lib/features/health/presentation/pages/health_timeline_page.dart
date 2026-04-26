@@ -260,7 +260,7 @@ class _HealthTimelinePageState extends State<HealthTimelinePage> {
                     color: Colors.purple,
                     size: 18,
                   ),
-                  SizedBox(width: 8.w),
+                  AtharGap.hSm,
                   Text(
                     // ✅ l10n
                     l10n.healthTimelineMedicalVisit,
@@ -340,7 +340,7 @@ class _HealthTimelinePageState extends State<HealthTimelinePage> {
                 Row(
                   children: [
                     Icon(icon, color: color, size: 18),
-                    SizedBox(width: 8.w),
+                    AtharGap.hSm,
                     Text(
                       // ✅ l10n
                       isDoc

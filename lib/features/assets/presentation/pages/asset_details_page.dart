@@ -351,7 +351,7 @@ class _AssetDetailsPageState extends State<AssetDetailsPage>
               : ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: asset.attachments.length,
-                  separatorBuilder: (c, i) => SizedBox(width: 12.w),
+                  separatorBuilder: (c, i) => AtharGap.hMd,
                   itemBuilder: (context, index) {
                     final file = asset.attachments.elementAt(index);
                     return GestureDetector(
@@ -475,7 +475,7 @@ class _AssetDetailsPageState extends State<AssetDetailsPage>
     return Row(
       children: [
         Icon(icon, size: 18.sp, color: colorScheme.outline),
-        SizedBox(width: 8.w),
+        AtharGap.hSm,
         Text(
           label,
           style: TextStyle(

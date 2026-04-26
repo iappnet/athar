@@ -328,7 +328,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                 ],
               ),
             ),
-            SizedBox(height: 12.h),
+            AtharGap.md,
           ],
           if (_module.startDate != null || _module.endDate != null)
             Row(
@@ -373,7 +373,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                           size: 14.sp,
                           color: countdownColor,
                         ),
-                        SizedBox(width: 4.w),
+                        AtharGap.hXxs,
                         Text(
                           countdownText,
                           style: TextStyle(
@@ -387,7 +387,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                   ),
               ],
             ),
-          SizedBox(height: 16.h),
+          AtharGap.lg,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -404,7 +404,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
               ),
             ],
           ),
-          SizedBox(height: 6.h),
+          AtharGap.xs,
           ClipRRect(
             borderRadius: AtharRadii.radiusXxs,
             child: LinearProgressIndicator(
@@ -432,7 +432,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
           size: 14.sp,
           color: isEnd ? colorScheme.error : colorScheme.outline,
         ),
-        SizedBox(width: 4.w),
+        AtharGap.hXxs,
         Text(
           label,
           style: TextStyle(
@@ -483,7 +483,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 24.h),
+                AtharGap.xxl,
                 Text(
                   l10n.projectDetailsSettings,
                   style: const TextStyle(
@@ -491,7 +491,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 16.h),
+                AtharGap.lg,
                 TextField(
                   controller: nameController,
                   decoration: InputDecoration(
@@ -499,7 +499,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                     border: const OutlineInputBorder(),
                   ),
                 ),
-                SizedBox(height: 12.h),
+                AtharGap.md,
                 TextField(
                   controller: descController,
                   maxLines: 3,
@@ -509,7 +509,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                     alignLabelWithHint: true,
                   ),
                 ),
-                SizedBox(height: 16.h),
+                AtharGap.lg,
                 Row(
                   children: [
                     Expanded(
@@ -529,7 +529,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                         },
                       ),
                     ),
-                    SizedBox(width: 12.w),
+                    AtharGap.hMd,
                     Expanded(
                       child: _buildDateSelector(
                         label: l10n.projectDetailsEndDate,
@@ -556,7 +556,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 24.h),
+                AtharGap.xxl,
                 ElevatedButton(
                   onPressed: () async {
                     if (nameController.text.isNotEmpty) {
@@ -603,7 +603,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16.h),
+                AtharGap.lg,
                 const Divider(),
                 ListTile(
                   leading: Icon(
@@ -686,7 +686,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
               label,
               style: TextStyle(fontSize: 10.sp, color: colorScheme.outline),
             ),
-            SizedBox(height: 4.h),
+            AtharGap.xxs,
             Row(
               children: [
                 Icon(

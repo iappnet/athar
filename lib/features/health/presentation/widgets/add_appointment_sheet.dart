@@ -78,12 +78,12 @@ class _AddAppointmentSheetState extends State<AddAppointmentSheet> {
                 ),
               ),
             ),
-            SizedBox(height: 20.h),
+            AtharGap.xl,
             Text(
               l10n.appointmentSheetTitle,
               style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20.h),
+            AtharGap.xl,
 
             // 1. عنوان الموعد
             TextField(
@@ -111,15 +111,15 @@ class _AddAppointmentSheetState extends State<AddAppointmentSheet> {
                     l10n.appointmentTypeCheckup,
                     Icons.medical_services,
                   ),
-                  SizedBox(width: 8.w),
+                  AtharGap.hSm,
                   _buildTypeChip('lab', l10n.appointmentTypeLab, Icons.science),
-                  SizedBox(width: 8.w),
+                  AtharGap.hSm,
                   _buildTypeChip(
                     'vaccine',
                     l10n.appointmentTypeVaccine,
                     Icons.vaccines,
                   ),
-                  SizedBox(width: 8.w),
+                  AtharGap.hSm,
                   _buildTypeChip(
                     'procedure',
                     l10n.appointmentTypeProcedure,
@@ -253,7 +253,7 @@ class _AddAppointmentSheetState extends State<AddAppointmentSheet> {
                           setState(() => _reminderDaysBefore = v!),
                     ),
                   ),
-                  SizedBox(width: 8.w),
+                  AtharGap.hSm,
                   Expanded(
                     child: _buildReminderDropdown(
                       label: 'ساعات',
@@ -263,7 +263,7 @@ class _AddAppointmentSheetState extends State<AddAppointmentSheet> {
                           setState(() => _reminderHoursBefore = v!),
                     ),
                   ),
-                  SizedBox(width: 8.w),
+                  AtharGap.hSm,
                   Expanded(
                     child: _buildReminderDropdown(
                       label: 'دقائق',
@@ -291,7 +291,7 @@ class _AddAppointmentSheetState extends State<AddAppointmentSheet> {
               ),
             ),
 
-            SizedBox(height: 24.h),
+            AtharGap.xxl,
 
             ElevatedButton(
               onPressed: _saveAppointment,
@@ -328,7 +328,7 @@ class _AddAppointmentSheetState extends State<AddAppointmentSheet> {
             size: 16,
             color: isSelected ? colors.onPrimary : colors.onSurfaceVariant,
           ),
-          SizedBox(width: 4.w),
+          AtharGap.hXxs,
           Text(label),
         ],
       ),

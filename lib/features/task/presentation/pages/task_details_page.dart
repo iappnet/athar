@@ -267,7 +267,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
         // ✅ إضافة ودجت المرفقات
         AttachmentsWidget(taskId: widget.task.uuid, spaceType: _getSpaceType()),
 
-        SizedBox(height: 40.h), // مسافة في الأسفل
+        AtharGap.huge, // مسافة في الأسفل
       ],
     );
   }
@@ -286,7 +286,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             onTap: () => setState(() => _isUrgent = !_isUrgent),
           ),
         ),
-        SizedBox(width: 12.w),
+        AtharGap.hMd,
         Expanded(
           child: _buildToggleChip(
             label: l10n.important,
@@ -330,7 +330,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             Icon(icon,
                 size: 18.sp,
                 color: isActive ? activeColor : colorScheme.outline),
-            SizedBox(width: 6.w),
+            AtharGap.hXs,
             Text(
               label,
               style: TextStyle(
@@ -376,7 +376,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
         children: [
           Icon(Icons.repeat_rounded,
               size: 18.sp, color: colorScheme.primary),
-          SizedBox(width: 8.w),
+          AtharGap.hSm,
           Text(
             typeLabel,
             style: TextStyle(
@@ -407,7 +407,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             children: [
               Icon(Icons.check_circle_outline_rounded,
                   size: 18.sp, color: _successColor),
-              SizedBox(width: 8.w),
+              AtharGap.hSm,
               Text(
                 'ملاحظة الإكمال',
                 style: TextStyle(

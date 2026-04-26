@@ -116,7 +116,7 @@ class ServiceLogsPage extends StatelessWidget {
             children: [
               if (log.odometerReading != null) ...[
                 Icon(Icons.speed, size: 16.sp, color: colorScheme.outline),
-                SizedBox(width: 4.w),
+                AtharGap.hXxs,
                 Text(
                   l10n.serviceLogsOdometer(log.odometerReading!),
                   style: TextStyle(
@@ -124,11 +124,11 @@ class ServiceLogsPage extends StatelessWidget {
                     color: colorScheme.onSurfaceVariant,
                   ),
                 ),
-                SizedBox(width: 16.w),
+                AtharGap.hLg,
               ],
               if (log.notes != null && log.notes!.isNotEmpty) ...[
                 Icon(Icons.notes, size: 16.sp, color: colorScheme.outline),
-                SizedBox(width: 4.w),
+                AtharGap.hXxs,
                 Expanded(
                   child: Text(
                     log.notes!,

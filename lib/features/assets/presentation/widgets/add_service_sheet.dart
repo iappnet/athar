@@ -113,7 +113,7 @@ class _AddServiceSheetState extends State<AddServiceSheet> {
                       ).copyWith(suffixText: l10n.addServiceDaysSuffix),
                     ),
                   ),
-                  SizedBox(width: 12.w),
+                  AtharGap.hMd,
                   Expanded(
                     child: TextFormField(
                       controller: _kmController,

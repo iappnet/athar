@@ -32,7 +32,7 @@ class SyncPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _buildIcon(state, colorScheme),
-                    SizedBox(height: 24.h),
+                    AtharGap.xxl,
                     Text(
                       _getTitle(state, l10n),
                       style: TextStyle(
@@ -42,7 +42,7 @@ class SyncPage extends StatelessWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 8.h),
+                    AtharGap.sm,
                     if (state is SyncError)
                       Text(
                         state.message,
@@ -52,7 +52,7 @@ class SyncPage extends StatelessWidget {
                         ),
                         textAlign: TextAlign.center,
                       ),
-                    SizedBox(height: 40.h),
+                    AtharGap.huge,
                     if (state is! SyncLoading)
                       FilledButton.icon(
                         onPressed: () => context

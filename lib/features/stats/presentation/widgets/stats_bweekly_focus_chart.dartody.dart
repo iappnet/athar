@@ -44,7 +44,7 @@ class WeeklyFocusChart extends StatelessWidget {
             l10n.statsWeeklyFocusTitle,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
           ),
-          SizedBox(height: 4.h),
+          AtharGap.xxs,
           Text(
             l10n.statsWeeklyFocusTotal(totalMinutes),
             style: TextStyle(color: colorScheme.outline, fontSize: 12.sp),

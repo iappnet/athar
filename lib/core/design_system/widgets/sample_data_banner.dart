@@ -157,7 +157,7 @@ class _SampleDataBannerState extends State<SampleDataBanner>
                       size: 24.sp,
                     ),
                   ),
-                  SizedBox(width: 12.w),
+                  AtharGap.hMd,
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,7 +183,7 @@ class _SampleDataBannerState extends State<SampleDataBanner>
                 ],
               ),
 
-              SizedBox(height: 12.h),
+              AtharGap.md,
 
               // الوصف
               Text(
@@ -195,7 +195,7 @@ class _SampleDataBannerState extends State<SampleDataBanner>
                 ),
               ),
 
-              SizedBox(height: 16.h),
+              AtharGap.lg,
 
               // الأزرار
               Row(
@@ -232,7 +232,7 @@ class _SampleDataBannerState extends State<SampleDataBanner>
                     ),
                   ),
 
-                  SizedBox(width: 12.w),
+                  AtharGap.hMd,
 
                   // زر الاحتفاظ
                   Expanded(
@@ -258,7 +258,7 @@ class _SampleDataBannerState extends State<SampleDataBanner>
                 ],
               ),
 
-              SizedBox(height: 8.h),
+              AtharGap.sm,
 
               // ملاحظة
               Text(

@@ -467,7 +467,7 @@ class _AtharButtonState extends State<AtharButton>
       children: [
         if (widget.leadingIcon != null) ...[
           Icon(widget.leadingIcon, color: foreground, size: _iconSize),
-          SizedBox(width: 8.w),
+          AtharGap.hSm,
         ],
         Flexible(
           child: Text(
@@ -482,7 +482,7 @@ class _AtharButtonState extends State<AtharButton>
           ),
         ),
         if (widget.trailingIcon != null) ...[
-          SizedBox(width: 8.w),
+          AtharGap.hSm,
           Icon(widget.trailingIcon, color: foreground, size: _iconSize),
         ],
       ],

@@ -242,7 +242,7 @@ class ContextAwareFabController {
                     borderRadius: AtharRadii.radiusXxxs,
                   ),
                 ),
-                SizedBox(height: 20.h),
+                AtharGap.xl,
                 
                 // Title
                 Text(
@@ -253,7 +253,7 @@ class ContextAwareFabController {
                     color: colorScheme.onSurface,
                   ),
                 ),
-                SizedBox(height: 24.h),
+                AtharGap.xxl,
                 
                 // Options Grid
                 Wrap(
@@ -265,7 +265,7 @@ class ContextAwareFabController {
                   }).toList(),
                 ),
                 
-                SizedBox(height: 16.h),
+                AtharGap.lg,
               ],
             ),
           ),
@@ -305,7 +305,7 @@ class ContextAwareFabController {
               size: 28.sp,
             ),
           ),
-          SizedBox(height: 8.h),
+          AtharGap.sm,
           // النص
           Text(
             option.label,

@@ -23,7 +23,7 @@ class PendingInvitationsWidget extends StatelessWidget {
                   child: Row(
                     children: [
                       Icon(Icons.mail, color: Theme.of(context).primaryColor),
-                      const SizedBox(width: 8),
+                      const AtharGap.hSm,
                       Text(
                         'دعوات معلقة (${state.invitations.length})',
                         style: const TextStyle(

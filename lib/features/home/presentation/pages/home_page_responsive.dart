@@ -96,12 +96,12 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
             // 1. بطاقة الصلاة
             _buildPrayerCard(context),
             
-            SizedBox(height: 16.h),
+            AtharGap.lg,
             
             // 2. الإحصائيات (Grid في التابلت)
             _buildStatisticsSection(context),
             
-            SizedBox(height: 24.h),
+            AtharGap.xxl,
             
             // 3. العادات اليومية
             ResponsiveSection(
@@ -113,7 +113,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
               child: _buildHabitsGrid(context),
             ),
             
-            SizedBox(height: 24.h),
+            AtharGap.xxl,
             
             // 4. المهام القادمة
             ResponsiveSection(
@@ -168,7 +168,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
                       color: Colors.white70,
                       size: 16.sp,
                     ),
-                    SizedBox(width: 8.w),
+                    AtharGap.hSm,
                     Text(
                       'الاثنين، 18 شوال 1447 - 6 أبريل 2026',
                       style: TextStyle(
@@ -197,7 +197,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
               ],
             ),
             
-            SizedBox(height: 16.h),
+            AtharGap.lg,
             
             // الصلاة القادمة
             Row(
@@ -250,7 +250,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
               ],
             ),
             
-            SizedBox(height: 12.h),
+            AtharGap.md,
             
             // شريط التقدم
             ClipRRect(
@@ -299,7 +299,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.symmetric(horizontal: 4.w),
         itemCount: stats.length,
-        separatorBuilder: (_, _) => SizedBox(width: 12.w),
+        separatorBuilder: (_, _) => AtharGap.hMd,
         itemBuilder: (_, index) => SizedBox(
           width: 130.w,
           child: _buildStatCard(stats[index]),
@@ -339,7 +339,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
               ),
             ],
           ),
-          SizedBox(height: 8.h),
+          AtharGap.sm,
           Text(
             stat.title,
             style: TextStyle(
@@ -477,7 +477,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
                       : null,
                 ),
                 
-                SizedBox(width: 12.w),
+                AtharGap.hMd,
                 
                 // المحتوى
                 Expanded(
@@ -497,7 +497,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
                               : colorScheme.onSurface,
                         ),
                       ),
-                      SizedBox(height: 4.h),
+                      AtharGap.xxs,
                       Text(
                         task.time,
                         style: TextStyle(

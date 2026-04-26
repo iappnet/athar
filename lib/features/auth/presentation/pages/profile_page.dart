@@ -85,7 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: Colors.purple,
                     ),
                   ),
-                  SizedBox(height: 32.h),
+                  AtharGap.xxxl,
 
                   AtharTextField(
                     label: l10n.fullName,
@@ -94,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     validator: (val) =>
                         val!.isEmpty ? l10n.errorRequired : null,
                   ),
-                  SizedBox(height: 16.h),
+                  AtharGap.lg,
 
                   AtharTextField(
                     label: l10n.usernameLabel,
@@ -102,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     icon: Icons.alternate_email,
                   ),
 
-                  SizedBox(height: 32.h),
+                  AtharGap.xxxl,
 
                   ElevatedButton(
                     onPressed: () {
@@ -129,9 +129,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
 
-                  SizedBox(height: 24.h),
+                  AtharGap.xxl,
                   Divider(color: Colors.grey.shade300),
-                  SizedBox(height: 16.h), // تقليل المسافة قليلاً
+                  AtharGap.lg, // تقليل المسافة قليلاً
                   // زر تسجيل الخروج
                   TextButton.icon(
                     onPressed: () {
@@ -147,7 +147,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
 
-                  SizedBox(height: 8.h),
+                  AtharGap.sm,
 
                   // ✅ 2. زر حذف الحساب (تم دمجه هنا)
                   Container(

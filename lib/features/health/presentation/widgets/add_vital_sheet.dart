@@ -100,7 +100,7 @@ class _AddVitalSheetState extends State<AddVitalSheet> {
                 ),
               ),
             ),
-            SizedBox(height: 20.h),
+            AtharGap.xl,
             Text(
               l10n.vitalSheetTitle,
               style: TextStyle(
@@ -109,7 +109,7 @@ class _AddVitalSheetState extends State<AddVitalSheet> {
                 height: 1.4,
               ).copyWith(fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20.h),
+            AtharGap.xl,
 
             // 1. نوع السجل
             Row(
@@ -133,7 +133,7 @@ class _AddVitalSheetState extends State<AddVitalSheet> {
                 ),
               ],
             ),
-            SizedBox(height: 20.h),
+            AtharGap.xl,
 
             // 2. إذا كان مؤشر حيوي
             if (_selectedCategory == 'vital') ...[
@@ -233,7 +233,7 @@ class _AddVitalSheetState extends State<AddVitalSheet> {
               ),
             ],
 
-            SizedBox(height: 24.h),
+            AtharGap.xxl,
 
             ElevatedButton(
               onPressed: _saveRecord,

@@ -134,7 +134,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         children: [
                           Icon(Icons.error_outline_rounded,
                               color: colorScheme.error, size: 40),
-                          SizedBox(height: 8.h),
+                          AtharGap.sm,
                           Text(state.message,
                               style:
                                   TextStyle(color: colorScheme.error)),

@@ -115,7 +115,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
               // 1. البطاقة الذكية
               _buildSmartHeader(colorScheme, l10n),
 
-              SizedBox(height: 24.h),
+              AtharGap.xxl,
 
               // 2. شبكة الوصول السريع
               Text(
@@ -129,7 +129,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
               AtharGap.md,
               _buildQuickAccessGrid(colorScheme, l10n),
 
-              SizedBox(height: 24.h),
+              AtharGap.xxl,
 
               // 3. جدولي اليوم
               _buildTodayActionCenter(colorScheme, l10n),

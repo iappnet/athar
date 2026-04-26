@@ -112,7 +112,7 @@ class _LockedScreen extends StatelessWidget {
                   color: colorScheme.primary,
                 ),
               ),
-              SizedBox(height: 24.h),
+              AtharGap.xxl,
               Text(
                 featureName,
                 style: TextStyle(
@@ -121,7 +121,7 @@ class _LockedScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 8.h),
+              AtharGap.sm,
               Text(
                 featureDescription ??
                     'هذه الميزة تحتاج إلى اشتراك أو شراء منفصل',
@@ -131,7 +131,7 @@ class _LockedScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 32.h),
+              AtharGap.xxxl,
               FilledButton.icon(
                 onPressed: () => context
                     .read<SubscriptionCubit>()
@@ -146,7 +146,7 @@ class _LockedScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 12.h),
+              AtharGap.md,
               TextButton(
                 onPressed: () =>
                     context.read<SubscriptionCubit>().restorePurchases(),
@@ -214,13 +214,13 @@ class _UpgradeNudge extends StatelessWidget {
             size: 40.sp,
             color: colorScheme.primary,
           ),
-          SizedBox(height: 12.h),
+          AtharGap.md,
           Text(
             message,
             style: TextStyle(fontSize: 15.sp),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 24.h),
+          AtharGap.xxl,
           FilledButton.icon(
             onPressed: () {
               Navigator.pop(context);
@@ -234,7 +234,7 @@ class _UpgradeNudge extends StatelessWidget {
               minimumSize: Size(double.infinity, 48.h),
             ),
           ),
-          SizedBox(height: 8.h),
+          AtharGap.sm,
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: const Text('ربما لاحقاً'),
@@ -269,7 +269,7 @@ class FreeLimitBanner extends StatelessWidget {
             color: colorScheme.tertiary,
             size: 20.sp,
           ),
-          SizedBox(width: 12.w),
+          AtharGap.hMd,
           Expanded(
             child: Text(
               message,
@@ -279,7 +279,7 @@ class FreeLimitBanner extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(width: 8.w),
+          AtharGap.hSm,
           TextButton(
             onPressed: () => context
                 .read<SubscriptionCubit>()
