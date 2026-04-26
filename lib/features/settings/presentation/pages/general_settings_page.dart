@@ -1,21 +1,20 @@
+import 'package:athar/core/design_system/tokens.dart';
+import 'package:athar/core/presentation/cubit/locale_cubit.dart';
+import 'package:athar/core/utils/navigation_utils.dart';
+import 'package:athar/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:athar/features/auth/presentation/cubit/auth_state.dart';
+import 'package:athar/features/auth/presentation/pages/login_page.dart';
+import 'package:athar/features/auth/presentation/pages/profile_page.dart';
+import 'package:athar/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:athar/features/settings/presentation/cubit/settings_state.dart';
+import 'package:athar/features/settings/presentation/pages/location_settings_page.dart';
+import 'package:athar/features/settings/presentation/pages/smart_zones_page.dart';
+import 'package:athar/features/subscription/presentation/pages/subscription_page.dart';
+import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:athar/l10n/generated/app_localizations.dart';
-import 'package:athar/core/utils/navigation_utils.dart';
-import '../cubit/settings_cubit.dart';
-import '../cubit/settings_state.dart';
-import 'location_settings_page.dart';
-import 'smart_zones_page.dart';
-import '../../data/models/user_settings.dart';
-
-// تأكد من استيراد المسارات الصحيحة
-import '../../../auth/presentation/cubit/auth_cubit.dart';
-import '../../../auth/presentation/cubit/auth_state.dart';
-import '../../../auth/presentation/pages/login_page.dart';
-import '../../../auth/presentation/pages/profile_page.dart';
-import '../../../subscription/presentation/pages/subscription_page.dart';
-import 'package:athar/core/design_system/tokens.dart';
+import 'package:share_plus/share_plus.dart';
 
 class GeneralSettingsPage extends StatelessWidget {
   const GeneralSettingsPage({super.key});
@@ -28,1944 +27,768 @@ class GeneralSettingsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: colorScheme.surfaceContainerLowest,
       appBar: AppBar(
+        backgroundColor: colorScheme.surfaceContainerLowest,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        centerTitle: false,
         title: Text(
           l10n.settings,
           style: TextStyle(
+            fontFamily: 'Cairo',
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
             color: colorScheme.onSurface,
-            fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: BackButton(
-          color: colorScheme.onSurface,
+        leading: IconButton(
           onPressed: () => NavigationUtils.safeBack(context),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: colorScheme.onSurface,
+            size: 20,
+          ),
         ),
       ),
-      body: BlocBuilder<SettingsCubit, SettingsState>(
-        buildWhen: (prev, curr) => prev != curr,
-        builder: (context, state) {
-          if (state is SettingsLoaded) {
-            final settings = state.settings;
-            final cubit = context.read<SettingsCubit>();
+      body: BlocBuilder<AuthCubit, AuthState>(
+        buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
+        builder: (context, authState) {
+          return BlocBuilder<SettingsCubit, SettingsState>(
+            builder: (context, settingsState) {
+              final settings =
+                  settingsState is SettingsLoaded ? settingsState.settings : null;
 
-            return ListView(
-              padding: EdgeInsets.all(20.w),
-              children: [
-                // 1. قسم الحساب
-                BlocBuilder<AuthCubit, AuthState>(
-                  buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
-                  builder: (context, authState) {
-                    if (authState is AuthAuthenticated) {
-                      return Column(
-                        children: [
-                          Card(
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: AtharRadii.radiusMd,
-                            ),
-                            child: ListTile(
-                              contentPadding: EdgeInsets.all(12.w),
-                              leading: CircleAvatar(
-                                radius: 25.r,
-                                backgroundColor: Colors.purple.shade100,
-                                child: Text(
-                                  authState.username.isNotEmpty
-                                      ? authState.username[0].toUpperCase()
-                                      : "?",
-                                  style: TextStyle(
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.purple,
-                                  ),
-                                ),
-                              ),
-                              title: Text(
-                                authState.fullName ?? authState.username,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16.sp,
-                                ),
-                              ),
-                              subtitle: Text(
-                                "@${authState.username}",
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 12.sp,
-                                ),
-                              ),
-                              trailing: const Icon(
-                                Icons.edit,
-                                color: Colors.purple,
-                              ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => const ProfilePage(),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          AtharGap.lg,
+              return ListView(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                children: [
+                  // ── Profile card ────────────────────────────────────────
+                  _ProfileCard(authState: authState),
+                  AtharGap.xl,
 
-                          // ✅✅ زر تفعيل البصمة (يظهر فقط للمسجلين)
-                          _buildSettingsContainer([
-                            _buildSwitchTile(
-                              context,
-                              icon: Icons.fingerprint_rounded,
-                              color: Colors.pink,
-                              title: l10n.biometricLogin,
-                              subtitle: l10n.biometricLoginDesc,
-                              value: settings.isBiometricEnabled,
-                              onChanged: (val) async {
-                                // نستدعي دالة التبديل في الكيوبت
-                                final success = await cubit.toggleBiometric(
-                                  val,
-                                );
+                  // ── Appearance ──────────────────────────────────────────
+                  _SectionHeader(l10n.appearance),
+                  _SettingsCard(children: [
+                    _LanguageTile(),
+                    _Divider(),
+                    _SwitchTile(
+                      icon: Icons.dark_mode_outlined,
+                      iconColor: const Color(0xFF5C35C9),
+                      title: l10n.darkMode,
+                      value: settings?.isDarkMode ?? false,
+                      onChanged: (_) {},
+                    ),
+                  ]),
+                  AtharGap.lg,
 
-                                if (!success &&
-                                    val == true &&
-                                    context.mounted) {
-                                  // إذا فشل التفعيل (لم يتعرف على البصمة)
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        l10n.biometricVerificationFailed,
-                                      ),
-                                      backgroundColor: Colors.red,
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
-                          ]),
-                        ],
-                      );
-                    } else {
-                      return Card(
-                        color: Colors.purple.withValues(alpha: 0.05),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: AtharRadii.radiusMd,
-                          side: BorderSide(
-                            color: Colors.purple.withValues(alpha: 0.2),
+                  // ── Prayer & Worship ────────────────────────────────────
+                  _SectionHeader(l10n.prayerSettings),
+                  _SettingsCard(children: [
+                    _SwitchTile(
+                      icon: Icons.mosque_outlined,
+                      iconColor: const Color(0xFF1A6B3C),
+                      title: l10n.prayerTimes,
+                      value: settings?.isPrayerEnabled ?? true,
+                      onChanged: (v) =>
+                          context.read<SettingsCubit>().togglePrayerEnabled(v),
+                    ),
+                    if (settings?.isPrayerEnabled ?? true) ...[
+                      _Divider(),
+                      _SwitchTile(
+                        icon: Icons.notifications_outlined,
+                        iconColor: const Color(0xFF1A6B3C),
+                        title: l10n.prayerReminder,
+                        value: settings?.enablePrayerReminders ?? true,
+                        onChanged: (v) => context
+                            .read<SettingsCubit>()
+                            .togglePrayerReminders(v),
+                      ),
+                      _Divider(),
+                      _NavTile(
+                        icon: Icons.location_on_outlined,
+                        iconColor: const Color(0xFF0288D1),
+                        title: l10n.prayerTimesLocation,
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const LocationSettingsPage(),
                           ),
                         ),
-                        child: ListTile(
-                          leading: Icon(
-                            Icons.login_rounded,
-                            color: Colors.purple,
-                            size: 28.sp,
-                          ),
-                          title: Text(
-                            l10n.loginOrCreateAccount,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14.sp,
-                              color: Colors.purple,
-                            ),
-                          ),
-                          subtitle: Text(l10n.forSyncAndFamilySharing),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios,
-                            size: 16,
-                            color: Colors.purple,
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const LoginPage(),
-                                fullscreenDialog: true,
-                              ),
-                            );
-                          },
+                      ),
+                    ],
+                    _Divider(),
+                    _SwitchTile(
+                      icon: Icons.menu_book_outlined,
+                      iconColor: const Color(0xFF00897B),
+                      title: l10n.morningEveningAthkar,
+                      value: settings?.isAthkarEnabled ?? true,
+                      onChanged: (v) =>
+                          context.read<SettingsCubit>().toggleAthkarEnabled(v),
+                    ),
+                  ]),
+                  AtharGap.lg,
+
+                  // ── Productivity ────────────────────────────────────────
+                  _SectionHeader(l10n.reminders),
+                  _SettingsCard(children: [
+                    _SwitchTile(
+                      icon: Icons.task_alt_outlined,
+                      iconColor: const Color(0xFF1565C0),
+                      title: '${l10n.task} & ${l10n.habits}',
+                      subtitle: l10n.reminders,
+                      value: settings?.isTaskRemindersEnabled ?? true,
+                      onChanged: (v) => context
+                          .read<SettingsCubit>()
+                          .toggleTaskRemindersEnabled(v),
+                    ),
+                    _Divider(),
+                    _SwitchTile(
+                      icon: Icons.calendar_today_outlined,
+                      iconColor: const Color(0xFF6D4C41),
+                      title: l10n.hijriCalendar,
+                      subtitle: l10n.hijriCalendarDesc,
+                      value: settings?.isHijriMode ?? false,
+                      onChanged: (v) =>
+                          context.read<SettingsCubit>().toggleHijriMode(v),
+                    ),
+                    _Divider(),
+                    _NavTile(
+                      icon: Icons.schedule_outlined,
+                      iconColor: const Color(0xFF7B1FA2),
+                      title: l10n.smartZones,
+                      subtitle: l10n.smartZonesDesc,
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const SmartZonesPage(),
                         ),
-                      );
-                    }
-                  },
-                ),
-
-                AtharGap.xxl,
-
-                // ── قسم الاشتراكات ─────────────────────────────────────────
-                _buildSectionHeader(context, 'الاشتراكات والباقات'),
-                _buildSettingsContainer([
-                  ListTile(
-                    contentPadding: EdgeInsets.symmetric(
-                        horizontal: 16.w, vertical: 4.h),
-                    leading: Container(
-                      padding: EdgeInsets.all(8.w),
-                      decoration: BoxDecoration(
-                        color: Colors.amber.shade700.withValues(alpha: 0.1),
-                        borderRadius: AtharRadii.radiusSm,
-                      ),
-                      child: Icon(
-                        Icons.workspace_premium_rounded,
-                        color: Colors.amber.shade700,
-                        size: 20.sp,
                       ),
                     ),
-                    title: const Text('إدارة الاشتراكات',
-                        style: TextStyle(fontWeight: FontWeight.w500)),
-                    subtitle: const Text(
-                        'مساحات برو، مزامنة، وحدة الصحة والأصول'),
-                    trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const SubscriptionPage()),
+                  ]),
+                  AtharGap.lg,
+
+                  // ── Security ────────────────────────────────────────────
+                  _SectionHeader(l10n.privacy),
+                  _SettingsCard(children: [
+                    _SwitchTile(
+                      icon: Icons.fingerprint,
+                      iconColor: const Color(0xFFC62828),
+                      title: l10n.biometricLogin,
+                      subtitle: l10n.biometricLoginDesc,
+                      value: settings?.isBiometricEnabled ?? false,
+                      onChanged: (v) =>
+                          context.read<SettingsCubit>().toggleBiometric(v),
                     ),
-                  ),
-                ]),
+                  ]),
+                  AtharGap.lg,
 
-                AtharGap.xxl,
-
-                // ✅ 1.5. قسم المزامنة (جديد)
-                _buildSectionHeader(context, l10n.syncAndData),
-                _buildSettingsContainer([
-                  // ✅✅ الخيار الذكي للمزامنة التلقائية
-                  BlocBuilder<AuthCubit, AuthState>(
-                    buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
-                    builder: (context, authState) {
-                      // نحدد هل هو ضيف أم لا
-                      final isGuest =
-                          authState is AuthGuest ||
-                          authState is AuthUnauthenticated;
-                      return _buildSwitchTile(
-                        context,
+                  // ── Sync & Account ──────────────────────────────────────
+                  if (authState is AuthAuthenticated) ...[
+                    _SectionHeader(l10n.syncAndData),
+                    _SettingsCard(children: [
+                      _SwitchTile(
                         icon: Icons.cloud_sync_outlined,
-                        color: Colors.teal,
+                        iconColor: const Color(0xFF0288D1),
                         title: l10n.autoSync,
                         subtitle: l10n.autoSyncDesc,
-                        // إذا كان ضيفاً -> اجبر القيمة على false (مغلق)
-                        // إذا كان مسجلاً -> خذ القيمة الحقيقية من الإعدادات
-                        value: isGuest ? false : settings.isAutoSyncEnabled,
-                        onChanged: (val) {
-                          // 🛑 التحقق الذكي قبل التغيير
-                          if (authState is AuthGuest ||
-                              authState is AuthUnauthenticated) {
-                            // إذا كان ضيفاً، نرفض التغيير ونعرض حوار التسجيل
-                            showDialog(
-                              context: context,
-                              builder: (ctx) => AlertDialog(
-                                title: Text(l10n.loginRequired),
-                                content: Text(l10n.syncRequiresAccount),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () => Navigator.pop(ctx),
-                                    child: Text(l10n.cancel),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.pop(ctx);
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (_) => const LoginPage(),
-                                        ),
-                                      );
-                                    },
-                                    child: Text(l10n.login),
-                                  ),
-                                ],
-                              ),
-                            );
-                          } else {
-                            // إذا كان مسجلاً، نسمح بالتغيير
-                            cubit.toggleAutoSync(val);
-                          }
-                        },
-                      );
-                    },
-                  ),
-                ]),
+                        value: settings?.isAutoSyncEnabled ?? false,
+                        onChanged: (v) =>
+                            context.read<SettingsCubit>().toggleAutoSync(v),
+                      ),
+                    ]),
+                    AtharGap.lg,
 
-                AtharGap.xxl,
-
-                // 2. قسم الميزات والذكاء
-                _buildSectionHeader(context, l10n.smartFeatures),
-                _buildSettingsContainer([
-                  _buildTile(
-                    icon: Icons.auto_awesome_rounded,
-                    color: Colors.purple,
-                    title: l10n.smartZones,
-                    subtitle: l10n.smartZonesDesc,
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const SmartZonesPage()),
-                    ),
-                  ),
-                ]),
-
-                AtharGap.xxl,
-
-                // 3. قسم إعدادات الصلاة
-                _buildSectionHeader(context, l10n.prayerSettings),
-                _buildSettingsContainer([
-                  _buildSwitchTile(
-                    context,
-                    icon: Icons.access_time_filled_rounded,
-                    color: colorScheme.primary,
-                    title: l10n.enablePrayerTimes,
-                    subtitle: l10n.enablePrayerTimesDesc,
-                    value: settings.isPrayerEnabled,
-                    onChanged: (val) {
-                      cubit.togglePrayerEnabled(val);
-                    },
-                  ),
-                  if (settings.isPrayerEnabled) ...[
-                    _buildDivider(),
-                    _buildTile(
-                      icon: Icons.location_on_outlined,
-                      color: Colors.red,
-                      title: l10n.prayerTimesLocation,
-                      subtitle: settings.cityName ?? l10n.notSet,
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const LocationSettingsPage(),
+                    _SectionHeader(l10n.accountSettings),
+                    _SettingsCard(children: [
+                      _NavTile(
+                        icon: Icons.person_outline_rounded,
+                        iconColor: const Color(0xFF1A6B3C),
+                        title: l10n.editProfile,
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => const ProfilePage()),
                         ),
                       ),
-                    ),
-                    _buildDivider(),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 0),
-                      child: Text(
-                        l10n.prayerCardLocations,
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          color: Colors.grey.shade600,
-                          fontWeight: FontWeight.bold,
+                      _Divider(),
+                      _NavTile(
+                        icon: Icons.workspace_premium_outlined,
+                        iconColor: const Color(0xFFF57C00),
+                        title: 'Athar Pro',
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const SubscriptionPage(),
+                          ),
                         ),
                       ),
-                    ),
-                    // ✅ إصلاح: استخدام RadioGroup بدل groupValue/onChanged المهملة
-                    RadioGroup<PrayerCardDisplayMode>(
-                      groupValue: settings.prayerCardDisplayMode,
-                      onChanged: (val) {
-                        final newSettings = settings
-                          ..prayerCardDisplayMode = val!;
-                        cubit.updateSettings(newSettings);
-                      },
-                      child: Column(
-                        children: [
-                          _buildRadioOption(
-                            context,
-                            title: l10n.dashboardOnly,
-                            value: PrayerCardDisplayMode.dashboardOnly,
-                          ),
-                          _buildRadioOption(
-                            context,
-                            title: l10n.dashboardAndTasks,
-                            value: PrayerCardDisplayMode.dashboardAndTasks,
-                          ),
-                          _buildRadioOption(
-                            context,
-                            title: l10n.allPages,
-                            value: PrayerCardDisplayMode.allPages,
-                          ),
-                        ],
+                      _Divider(),
+                      _NavTile(
+                        icon: Icons.logout_rounded,
+                        iconColor: Colors.red.shade600,
+                        title: l10n.logout,
+                        titleColor: Colors.red.shade600,
+                        onTap: () => _confirmLogout(context, l10n),
                       ),
-                    ),
-                    AtharGap.sm,
+                    ]),
+                    AtharGap.lg,
                   ],
-                ]),
 
-                AtharGap.xxl,
-
-                // 4. قسم التفضيلات
-                _buildSectionHeader(context, l10n.preferences),
-                _buildSettingsContainer([
-                  _buildSwitchTile(
-                    context,
-                    icon: Icons.calendar_month_outlined,
-                    color: Colors.blue,
-                    title: l10n.hijriCalendar,
-                    subtitle: l10n.hijriCalendarDesc,
-                    value: settings.isHijriMode,
-                    onChanged: (val) {
-                      cubit.toggleHijriMode(val);
-                    },
-                  ),
-                  _buildDivider(),
-                  Column(
-                    children: [
-                      _buildSwitchTile(
-                        context,
-                        icon: Icons.wb_sunny_outlined,
-                        color: Colors.orange,
-                        title: l10n.morningEveningAthkar,
-                        subtitle: l10n.morningEveningAthkarDesc,
-                        value: settings.isAthkarEnabled,
-                        onChanged: (val) {
-                          cubit.toggleAthkarFeature(val);
-                        },
+                  // ── About ───────────────────────────────────────────────
+                  _SectionHeader(l10n.aboutApp),
+                  _SettingsCard(children: [
+                    _NavTile(
+                      icon: Icons.share_outlined,
+                      iconColor: const Color(0xFF1A6B3C),
+                      title: l10n.shareApp,
+                      onTap: () => SharePlus.instance.share(
+                        ShareParams(text: 'أثر — حياة متوازنة، أثر مستدام'),
                       ),
-                      if (settings.isAthkarEnabled)
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 16.h),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Divider(
-                                height: 20.h,
-                                color: Colors.grey.shade100,
-                              ),
-                              Text(
-                                l10n.displayMode,
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                  color: Colors.grey.shade600,
-                                ),
-                              ),
-                              AtharGap.sm,
-                              SegmentedButton<AthkarDisplayMode>(
-                                segments: [
-                                  ButtonSegment(
-                                    value: AthkarDisplayMode.independent,
-                                    label: Text(l10n.cards),
-                                    icon: Icon(Icons.view_agenda_outlined),
-                                  ),
-                                  ButtonSegment(
-                                    value: AthkarDisplayMode.embedded,
-                                    label: Text(l10n.compact),
-                                    icon: Icon(Icons.list_alt_rounded),
-                                  ),
-                                ],
-                                selected: {settings.athkarDisplayMode},
-                                onSelectionChanged:
-                                    (Set<AthkarDisplayMode> newSelection) {
-                                      cubit.updateAthkarDisplayMode(
-                                        newSelection.first,
-                                      );
-                                    },
-                                style: _segmentedButtonStyle(context),
-                              ),
-                              Text(
-                                l10n.sessionDisplayMode,
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                  color: Colors.grey.shade600,
-                                ),
-                              ),
-                              AtharGap.sm,
-                              SegmentedButton<AthkarSessionViewMode>(
-                                segments: [
-                                  ButtonSegment(
-                                    value: AthkarSessionViewMode.list,
-                                    label: Text(l10n.listMode),
-                                    icon: Icon(Icons.format_list_bulleted),
-                                  ),
-                                  ButtonSegment(
-                                    value: AthkarSessionViewMode.focus,
-                                    label: Text(l10n.focusMode),
-                                    icon: Icon(Icons.fullscreen),
-                                  ),
-                                ],
-                                selected: {settings.athkarSessionViewMode},
-                                onSelectionChanged: (newSelection) =>
-                                    cubit.updateAthkarSessionViewMode(
-                                      newSelection.first,
-                                    ),
-                                style: _segmentedButtonStyle(context),
-                              ),
-                            ],
-                          ),
-                        ),
-                    ],
-                  ),
-                ]),
-
-                AtharGap.xxl,
-
-                // ✅✅✅ 6. قسم التنقل - جديد ✅✅✅
-                _buildSectionHeader(context, l10n.navigationSettings),
-                _buildSettingsContainer([
-                  _buildSwitchTile(
-                    context,
-                    icon: Icons.swipe_vertical_rounded,
-                    color: Colors.indigo,
-                    title: l10n.hideNavOnScroll,
-                    subtitle: l10n.hideNavOnScrollDesc,
-                    value: settings.hideNavOnScroll,
-                    onChanged: (val) {
-                      cubit.toggleHideNavOnScroll(val);
-                    },
-                  ),
-                ]),
-
-                AtharGap.xxl,
-
-                // 5. قسم التنبيهات
-                _buildSectionHeader(context, 'التنبيهات'),
-                _buildSettingsContainer([
-                  _buildSwitchTile(
-                    context,
-                    icon: Icons.task_alt_rounded,
-                    color: Colors.blue,
-                    title: 'تنبيهات المهام',
-                    subtitle: 'إشعار قبل موعد المهمة',
-                    value: settings.isTaskRemindersEnabled,
-                    onChanged: (val) {
-                      cubit.toggleTaskRemindersEnabled(val);
-                    },
-                  ),
-                  _buildDivider(),
-                  _buildSwitchTile(
-                    context,
-                    icon: Icons.repeat_rounded,
-                    color: Colors.green,
-                    title: 'تنبيهات العادات',
-                    subtitle: 'تذكير يومي بإنجاز العادات',
-                    value: settings.isHabitRemindersEnabled,
-                    onChanged: (val) {
-                      cubit.toggleHabitsRemindersEnabled(val);
-                    },
-                  ),
-                ]),
-
-                AtharGap.xxl,
-
-                // 6. قسم حول التطبيق (موجود)
-                _buildSectionHeader(context, l10n.aboutApp),
-
-                _buildSettingsContainer([
-                  _buildTile(
-                    icon: Icons.info_outline_rounded,
-                    color: Colors.grey,
-                    title: l10n.aboutAthar,
-                    trailing: Text(
-                      "v1.0.0",
-                      style: TextStyle(color: Colors.grey, fontSize: 12.sp),
                     ),
-                    onTap: () {},
-                  ),
-                  _buildDivider(),
-                  _buildTile(
-                    icon: Icons.share_outlined,
-                    color: Colors.green,
-                    title: l10n.shareApp,
-                    onTap: () {},
-                  ),
-                ]),
+                    _Divider(),
+                    _InfoTile(
+                      icon: Icons.info_outline_rounded,
+                      iconColor: const Color(0xFF546E7A),
+                      title: l10n.version,
+                      trailing: '1.0.0',
+                    ),
+                  ]),
 
-                AtharGap.huge,
-              ],
-            );
-          }
-          return const Center(child: CircularProgressIndicator());
+                  SizedBox(height: 32.h),
+                ],
+              );
+            },
+          );
         },
       ),
     );
   }
 
-  // --- Widgets مساعدة ---
-
-  ButtonStyle _segmentedButtonStyle(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return ButtonStyle(
-      visualDensity: VisualDensity.compact,
-      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
-        if (states.contains(WidgetState.selected)) {
-          return colorScheme.primary.withValues(alpha: 0.2);
-        }
-        return Colors.transparent;
-      }),
-    );
-  }
-
-  Widget _buildSectionHeader(BuildContext context, String title) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Padding(
-      padding: EdgeInsetsDirectional.only(bottom: 8.h, end: 4.w),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 14.sp,
-          fontWeight: FontWeight.bold,
-          color: colorScheme.onSurfaceVariant,
+  void _confirmLogout(BuildContext context, AppLocalizations l10n) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: AtharRadii.radiusLg),
+        title: Text(
+          l10n.logout,
+          style: const TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.w700),
         ),
-      ),
-    );
-  }
-
-  Widget _buildSettingsContainer(List<Widget> children) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: AtharRadii.radiusLg,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
+        content: Text(
+          l10n.logout,
+          style: const TextStyle(fontFamily: 'Cairo'),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(l10n.cancel,
+                style: const TextStyle(fontFamily: 'Cairo')),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: Colors.red.shade600),
+            onPressed: () {
+              Navigator.pop(ctx);
+              context.read<AuthCubit>().signOut();
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (_) => const LoginPage()),
+                (_) => false,
+              );
+            },
+            child: Text(
+              l10n.logout,
+              style: const TextStyle(fontFamily: 'Cairo', color: Colors.white),
+            ),
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: children,
-      ),
-    );
-  }
-
-  // ✅ إصلاح: بدون groupValue/onChanged — يتم التحكم عبر RadioGroup الأب
-  Widget _buildRadioOption(
-    BuildContext context, {
-    required String title,
-    required PrayerCardDisplayMode value,
-  }) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return RadioListTile<PrayerCardDisplayMode>(
-      title: Text(title, style: TextStyle(fontSize: 14.sp)),
-      value: value,
-      activeColor: colorScheme.primary,
-      contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
-      dense: true,
-      visualDensity: VisualDensity.compact,
-    );
-  }
-
-  Widget _buildTile({
-    required IconData icon,
-    required Color color,
-    required String title,
-    String? subtitle,
-    Widget? trailing,
-    VoidCallback? onTap,
-  }) {
-    return ListTile(
-      onTap: onTap,
-      contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
-      leading: Container(
-        padding: EdgeInsets.all(8.w),
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.1),
-          shape: BoxShape.circle,
-        ),
-        child: Icon(icon, color: color, size: 20.sp),
-      ),
-      title: Text(
-        title,
-        style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-      ),
-      subtitle: subtitle != null
-          ? Text(
-              subtitle,
-              style: TextStyle(fontSize: 12.sp, color: Colors.grey),
-            )
-          : null,
-      trailing:
-          trailing ??
-          Icon(
-            Icons.arrow_forward_ios_rounded,
-            size: 14.sp,
-            color: Colors.grey,
-          ),
-    );
-  }
-
-  Widget _buildSwitchTile(
-    BuildContext context, {
-    required IconData icon,
-    required Color color,
-    required String title,
-    required String subtitle,
-    required bool value,
-    required Function(bool) onChanged,
-  }) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
-      leading: Container(
-        padding: EdgeInsets.all(8.w),
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.1),
-          shape: BoxShape.circle,
-        ),
-        child: Icon(icon, color: color, size: 20.sp),
-      ),
-      title: Text(
-        title,
-        style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-      ),
-      subtitle: Text(
-        subtitle,
-        style: TextStyle(fontSize: 12.sp, color: colorScheme.onSurfaceVariant),
-      ),
-      trailing: Switch(
-        value: value,
-        activeTrackColor: colorScheme.primary.withValues(alpha: 0.5),
-        activeThumbColor: colorScheme.primary,
-        onChanged: onChanged,
-      ),
-    );
-  }
-
-  Widget _buildDivider() {
-    return Divider(
-      height: 1,
-      indent: 60.w,
-      endIndent: 20.w,
-      color: Colors.grey.shade100,
     );
   }
 }
-//-----------------------------------------------------------------------------
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:athar/core/design_system/design_system.dart';
-// import 'package:athar/l10n/generated/app_localizations.dart';
-// import '../cubit/settings_cubit.dart';
-// import '../cubit/settings_state.dart';
-// import 'location_settings_page.dart';
-// import 'smart_zones_page.dart';
-// import '../../data/models/user_settings.dart';
 
-// // تأكد من استيراد المسارات الصحيحة
-// import '../../../auth/presentation/cubit/auth_cubit.dart';
-// import '../../../auth/presentation/cubit/auth_state.dart';
-// import '../../../auth/presentation/pages/login_page.dart';
-// import '../../../auth/presentation/pages/profile_page.dart';
+// ─── Profile Card ──────────────────────────────────────────────────────────────
 
-// class GeneralSettingsPage extends StatelessWidget {
-//   const GeneralSettingsPage({super.key});
+class _ProfileCard extends StatelessWidget {
+  final AuthState authState;
+  const _ProfileCard({required this.authState});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     final colors = context.colors;
-//     final l10n = AppLocalizations.of(context);
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context);
+    final isAuth = authState is AuthAuthenticated;
+    final String name;
+    if (isAuth) {
+      final a = authState as AuthAuthenticated;
+      name = a.fullName ?? a.username;
+    } else {
+      name = l10n.login;
+    }
+    final initial = name.isNotEmpty ? name[0].toUpperCase() : 'أ';
 
-//     return Scaffold(
-//       backgroundColor: colors.scaffoldBackground,
-//       appBar: AppBar(
-//         title: Text(
-//           l10n.settings,
-//           style: TextStyle(
-//             color: colors.textPrimary,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//         backgroundColor: Colors.transparent,
-//         elevation: 0,
-//         leading: BackButton(color: colors.textPrimary),
-//       ),
-//       body: BlocBuilder<SettingsCubit, SettingsState>(
-//         builder: (context, state) {
-//           if (state is SettingsLoaded) {
-//             final settings = state.settings;
-//             final cubit = context.read<SettingsCubit>();
+    return Container(
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: AtharRadii.radiusLg,
+        border: Border.all(
+          color: colorScheme.outlineVariant.withValues(alpha: 0.5),
+        ),
+      ),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 28,
+            backgroundColor: const Color(0xFF1A6B3C).withValues(alpha: 0.12),
+            child: Text(
+              initial,
+              style: const TextStyle(
+                fontFamily: 'Cairo',
+                fontSize: 22,
+                fontWeight: FontWeight.w700,
+                color: Color(0xFF1A6B3C),
+              ),
+            ),
+          ),
+          AtharGap.hMd,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: TextStyle(
+                    fontFamily: 'Cairo',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: colorScheme.onSurface,
+                  ),
+                ),
+                Text(
+                  isAuth ? l10n.accountSettings : l10n.autoSyncDesc,
+                  style: TextStyle(
+                    fontFamily: 'Cairo',
+                    fontSize: 13,
+                    color: colorScheme.outline,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (!isAuth)
+            FilledButton(
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const LoginPage()),
+              ),
+              style: FilledButton.styleFrom(
+                backgroundColor: const Color(0xFF1A6B3C),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                shape: RoundedRectangleBorder(
+                    borderRadius: AtharRadii.radiusMd),
+              ),
+              child: Text(
+                l10n.login,
+                style: const TextStyle(
+                  fontFamily: 'Cairo',
+                  fontSize: 13,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
 
-//             return ListView(
-//               padding: EdgeInsets.all(20.w),
-//               children: [
-//                 // 1. قسم الحساب
-//                 BlocBuilder<AuthCubit, AuthState>(
-//                   builder: (context, authState) {
-//                     if (authState is AuthAuthenticated) {
-//                       return Column(
-//                         children: [
-//                           Card(
-//                             elevation: 2,
-//                             shape: RoundedRectangleBorder(
-//                               borderRadius: BorderRadius.circular(12.r),
-//                             ),
-//                             child: ListTile(
-//                               contentPadding: EdgeInsets.all(12.w),
-//                               leading: CircleAvatar(
-//                                 radius: 25.r,
-//                                 backgroundColor: Colors.purple.shade100,
-//                                 child: Text(
-//                                   authState.username.isNotEmpty
-//                                       ? authState.username[0].toUpperCase()
-//                                       : "?",
-//                                   style: TextStyle(
-//                                     fontSize: 20.sp,
-//                                     fontWeight: FontWeight.bold,
-//                                     color: Colors.purple,
-//                                   ),
-//                                 ),
-//                               ),
-//                               title: Text(
-//                                 authState.fullName ?? authState.username,
-//                                 style: TextStyle(
-//                                   fontWeight: FontWeight.bold,
-//                                   fontSize: 16.sp,
-//                                 ),
-//                               ),
-//                               subtitle: Text(
-//                                 "@${authState.username}",
-//                                 style: TextStyle(
-//                                   color: Colors.grey,
-//                                   fontSize: 12.sp,
-//                                 ),
-//                               ),
-//                               trailing: const Icon(
-//                                 Icons.edit,
-//                                 color: Colors.purple,
-//                               ),
-//                               onTap: () {
-//                                 Navigator.push(
-//                                   context,
-//                                   MaterialPageRoute(
-//                                     builder: (_) => const ProfilePage(),
-//                                   ),
-//                                 );
-//                               },
-//                             ),
-//                           ),
-//                           SizedBox(height: 16.h),
+// ─── Language Tile ─────────────────────────────────────────────────────────────
 
-//                           // ✅✅ زر تفعيل البصمة (يظهر فقط للمسجلين)
-//                           _buildSettingsContainer([
-//                             _buildSwitchTile(
-//                               context,
-//                               icon: Icons.fingerprint_rounded,
-//                               color: Colors.pink,
-//                               title: l10n.biometricLogin,
-//                               subtitle: l10n.biometricLoginDesc,
-//                               value: settings.isBiometricEnabled,
-//                               onChanged: (val) async {
-//                                 // نستدعي دالة التبديل في الكيوبت
-//                                 final success = await cubit.toggleBiometric(
-//                                   val,
-//                                 );
+class _LanguageTile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final currentLocale = context.watch<LocaleCubit>().state.locale;
 
-//                                 if (!success &&
-//                                     val == true &&
-//                                     context.mounted) {
-//                                   // إذا فشل التفعيل (لم يتعرف على البصمة)
-//                                   ScaffoldMessenger.of(context).showSnackBar(
-//                                     SnackBar(
-//                                       content: Text(
-//                                         l10n.biometricVerificationFailed,
-//                                       ),
-//                                       backgroundColor: Colors.red,
-//                                     ),
-//                                   );
-//                                 }
-//                               },
-//                             ),
-//                           ]),
-//                         ],
-//                       );
-//                     } else {
-//                       return Card(
-//                         color: Colors.purple.withValues(alpha: 0.05),
-//                         elevation: 0,
-//                         shape: RoundedRectangleBorder(
-//                           borderRadius: BorderRadius.circular(12.r),
-//                           side: BorderSide(
-//                             color: Colors.purple.withValues(alpha: 0.2),
-//                           ),
-//                         ),
-//                         child: ListTile(
-//                           leading: Icon(
-//                             Icons.login_rounded,
-//                             color: Colors.purple,
-//                             size: 28.sp,
-//                           ),
-//                           title: Text(
-//                             l10n.loginOrCreateAccount,
-//                             style: TextStyle(
-//                               fontWeight: FontWeight.bold,
-//                               fontSize: 14.sp,
-//                               color: Colors.purple,
-//                             ),
-//                           ),
-//                           subtitle: Text(l10n.forSyncAndFamilySharing),
-//                           trailing: Icon(
-//                             Icons.arrow_forward_ios,
-//                             size: 16,
-//                             color: Colors.purple,
-//                           ),
-//                           onTap: () {
-//                             Navigator.push(
-//                               context,
-//                               MaterialPageRoute(
-//                                 builder: (_) => const LoginPage(),
-//                                 fullscreenDialog: true,
-//                               ),
-//                             );
-//                           },
-//                         ),
-//                       );
-//                     }
-//                   },
-//                 ),
+    final String label;
+    if (currentLocale == null) {
+      label = l10n.systemMode;
+    } else if (currentLocale.languageCode == 'ar') {
+      label = l10n.arabic;
+    } else {
+      label = l10n.english;
+    }
 
-//                 SizedBox(height: 24.h),
+    return _NavTile(
+      icon: Icons.language_outlined,
+      iconColor: const Color(0xFF0288D1),
+      title: l10n.language,
+      trailing2: Text(
+        label,
+        style: const TextStyle(
+          fontFamily: 'Cairo',
+          fontSize: 13,
+          color: Color(0xFF636E72),
+        ),
+      ),
+      onTap: () => _showPicker(context, l10n, currentLocale),
+    );
+  }
 
-//                 // ✅ 1.5. قسم المزامنة (جديد)
-//                 _buildSectionHeader(context, l10n.syncAndData),
-//                 _buildSettingsContainer([
-//                   // ✅✅ الخيار الذكي للمزامنة التلقائية
-//                   BlocBuilder<AuthCubit, AuthState>(
-//                     builder: (context, authState) {
-//                       // نحدد هل هو ضيف أم لا
-//                       final isGuest =
-//                           authState is AuthGuest ||
-//                           authState is AuthUnauthenticated;
-//                       return _buildSwitchTile(
-//                         context,
-//                         icon: Icons.cloud_sync_outlined,
-//                         color: Colors.teal,
-//                         title: l10n.autoSync,
-//                         subtitle: l10n.autoSyncDesc,
-//                         // إذا كان ضيفاً -> اجبر القيمة على false (مغلق)
-//                         // إذا كان مسجلاً -> خذ القيمة الحقيقية من الإعدادات
-//                         value: isGuest ? false : settings.isAutoSyncEnabled,
-//                         onChanged: (val) {
-//                           // 🛑 التحقق الذكي قبل التغيير
-//                           if (authState is AuthGuest ||
-//                               authState is AuthUnauthenticated) {
-//                             // إذا كان ضيفاً، نرفض التغيير ونعرض حوار التسجيل
-//                             showDialog(
-//                               context: context,
-//                               builder: (ctx) => AlertDialog(
-//                                 title: Text(l10n.loginRequired),
-//                                 content: Text(l10n.syncRequiresAccount),
-//                                 actions: [
-//                                   TextButton(
-//                                     onPressed: () => Navigator.pop(ctx),
-//                                     child: Text(l10n.cancel),
-//                                   ),
-//                                   ElevatedButton(
-//                                     onPressed: () {
-//                                       Navigator.pop(ctx);
-//                                       Navigator.push(
-//                                         context,
-//                                         MaterialPageRoute(
-//                                           builder: (_) => const LoginPage(),
-//                                         ),
-//                                       );
-//                                     },
-//                                     child: Text(l10n.login),
-//                                   ),
-//                                 ],
-//                               ),
-//                             );
-//                           } else {
-//                             // إذا كان مسجلاً، نسمح بالتغيير
-//                             cubit.toggleAutoSync(val);
-//                           }
-//                         },
-//                       );
-//                     },
-//                   ),
-//                 ]),
+  void _showPicker(
+    BuildContext context,
+    AppLocalizations l10n,
+    Locale? current,
+  ) {
+    final cubit = context.read<LocaleCubit>();
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (sheetCtx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 8),
+            Container(
+              width: 36,
+              height: 4,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  l10n.language,
+                  style: const TextStyle(
+                    fontFamily: 'Cairo',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 4),
+            _LangOption(
+              label: l10n.systemMode,
+              subtitle: 'System Default',
+              isSelected: current == null,
+              onTap: () {
+                cubit.setLocale(null);
+                Navigator.pop(sheetCtx);
+              },
+            ),
+            _LangOption(
+              label: 'العربية',
+              subtitle: 'Arabic',
+              isSelected: current?.languageCode == 'ar',
+              onTap: () {
+                cubit.setLocale(const Locale('ar', 'SA'));
+                Navigator.pop(sheetCtx);
+              },
+            ),
+            _LangOption(
+              label: 'English',
+              subtitle: 'الإنجليزية',
+              isSelected: current?.languageCode == 'en',
+              onTap: () {
+                cubit.setLocale(const Locale('en', 'US'));
+                Navigator.pop(sheetCtx);
+              },
+            ),
+            const SizedBox(height: 16),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
-//                 SizedBox(height: 24.h),
+class _LangOption extends StatelessWidget {
+  final String label;
+  final String subtitle;
+  final bool isSelected;
+  final VoidCallback onTap;
 
-//                 // 2. قسم الميزات والذكاء
-//                 _buildSectionHeader(context, l10n.smartFeatures),
-//                 _buildSettingsContainer([
-//                   _buildTile(
-//                     icon: Icons.auto_awesome_rounded,
-//                     color: Colors.purple,
-//                     title: l10n.smartZones,
-//                     subtitle: l10n.smartZonesDesc,
-//                     onTap: () => Navigator.push(
-//                       context,
-//                       MaterialPageRoute(builder: (_) => const SmartZonesPage()),
-//                     ),
-//                   ),
-//                 ]),
+  const _LangOption({
+    required this.label,
+    required this.subtitle,
+    required this.isSelected,
+    required this.onTap,
+  });
 
-//                 SizedBox(height: 24.h),
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: onTap,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+      leading: Container(
+        width: 42,
+        height: 42,
+        decoration: BoxDecoration(
+          color: isSelected
+              ? const Color(0xFF1A6B3C).withValues(alpha: 0.1)
+              : Colors.grey.shade100,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          isSelected
+              ? Icons.check_circle_rounded
+              : Icons.radio_button_unchecked,
+          color:
+              isSelected ? const Color(0xFF1A6B3C) : Colors.grey.shade400,
+          size: 22,
+        ),
+      ),
+      title: Text(
+        label,
+        style: TextStyle(
+          fontFamily: 'Cairo',
+          fontSize: 15,
+          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+          color: isSelected ? const Color(0xFF1A6B3C) : null,
+        ),
+      ),
+      subtitle: Text(
+        subtitle,
+        style: TextStyle(
+          fontFamily: 'Cairo',
+          fontSize: 12,
+          color: Colors.grey.shade500,
+        ),
+      ),
+    );
+  }
+}
 
-//                 // 3. قسم إعدادات الصلاة
-//                 _buildSectionHeader(context, l10n.prayerSettings),
-//                 _buildSettingsContainer([
-//                   _buildSwitchTile(
-//                     context,
-//                     icon: Icons.access_time_filled_rounded,
-//                     color: colors.primary,
-//                     title: l10n.enablePrayerTimes,
-//                     subtitle: l10n.enablePrayerTimesDesc,
-//                     value: settings.isPrayerEnabled,
-//                     onChanged: (val) {
-//                       final newSettings = settings..isPrayerEnabled = val;
-//                       cubit.updateSettings(newSettings);
-//                     },
-//                   ),
-//                   if (settings.isPrayerEnabled) ...[
-//                     _buildDivider(),
-//                     _buildTile(
-//                       icon: Icons.location_on_outlined,
-//                       color: Colors.red,
-//                       title: l10n.prayerTimesLocation,
-//                       subtitle: settings.cityName ?? l10n.notSet,
-//                       onTap: () => Navigator.push(
-//                         context,
-//                         MaterialPageRoute(
-//                           builder: (_) => const LocationSettingsPage(),
-//                         ),
-//                       ),
-//                     ),
-//                     _buildDivider(),
-//                     Padding(
-//                       padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 0),
-//                       child: Text(
-//                         l10n.prayerCardLocations,
-//                         style: TextStyle(
-//                           fontSize: 12.sp,
-//                           color: Colors.grey.shade600,
-//                           fontWeight: FontWeight.bold,
-//                         ),
-//                       ),
-//                     ),
-//                     // ✅ إصلاح: استخدام RadioGroup بدل groupValue/onChanged المهملة
-//                     RadioGroup<PrayerCardDisplayMode>(
-//                       groupValue: settings.prayerCardDisplayMode,
-//                       onChanged: (val) {
-//                         final newSettings = settings
-//                           ..prayerCardDisplayMode = val!;
-//                         cubit.updateSettings(newSettings);
-//                       },
-//                       child: Column(
-//                         children: [
-//                           _buildRadioOption(
-//                             context,
-//                             title: l10n.dashboardOnly,
-//                             value: PrayerCardDisplayMode.dashboardOnly,
-//                           ),
-//                           _buildRadioOption(
-//                             context,
-//                             title: l10n.dashboardAndTasks,
-//                             value: PrayerCardDisplayMode.dashboardAndTasks,
-//                           ),
-//                           _buildRadioOption(
-//                             context,
-//                             title: l10n.allPages,
-//                             value: PrayerCardDisplayMode.allPages,
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                     SizedBox(height: 8.h),
-//                   ],
-//                 ]),
+// ─── Section Header ────────────────────────────────────────────────────────────
 
-//                 SizedBox(height: 24.h),
+class _SectionHeader extends StatelessWidget {
+  final String title;
+  const _SectionHeader(this.title);
 
-//                 // 4. قسم التفضيلات
-//                 _buildSectionHeader(context, l10n.preferences),
-//                 _buildSettingsContainer([
-//                   _buildSwitchTile(
-//                     context,
-//                     icon: Icons.calendar_month_outlined,
-//                     color: Colors.blue,
-//                     title: l10n.hijriCalendar,
-//                     subtitle: l10n.hijriCalendarDesc,
-//                     value: settings.isHijriMode,
-//                     onChanged: (val) {
-//                       cubit.toggleHijriMode(val);
-//                     },
-//                   ),
-//                   _buildDivider(),
-//                   Column(
-//                     children: [
-//                       _buildSwitchTile(
-//                         context,
-//                         icon: Icons.wb_sunny_outlined,
-//                         color: Colors.orange,
-//                         title: l10n.morningEveningAthkar,
-//                         subtitle: l10n.morningEveningAthkarDesc,
-//                         value: settings.isAthkarEnabled,
-//                         onChanged: (val) {
-//                           cubit.toggleAthkarFeature(val);
-//                         },
-//                       ),
-//                       if (settings.isAthkarEnabled)
-//                         Padding(
-//                           padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 16.h),
-//                           child: Column(
-//                             crossAxisAlignment: CrossAxisAlignment.start,
-//                             children: [
-//                               Divider(
-//                                 height: 20.h,
-//                                 color: Colors.grey.shade100,
-//                               ),
-//                               Text(
-//                                 l10n.displayMode,
-//                                 style: TextStyle(
-//                                   fontSize: 12.sp,
-//                                   color: Colors.grey.shade600,
-//                                 ),
-//                               ),
-//                               SizedBox(height: 8.h),
-//                               SegmentedButton<AthkarDisplayMode>(
-//                                 segments: [
-//                                   ButtonSegment(
-//                                     value: AthkarDisplayMode.independent,
-//                                     label: Text(l10n.cards),
-//                                     icon: Icon(Icons.view_agenda_outlined),
-//                                   ),
-//                                   ButtonSegment(
-//                                     value: AthkarDisplayMode.embedded,
-//                                     label: Text(l10n.compact),
-//                                     icon: Icon(Icons.list_alt_rounded),
-//                                   ),
-//                                 ],
-//                                 selected: {settings.athkarDisplayMode},
-//                                 onSelectionChanged:
-//                                     (Set<AthkarDisplayMode> newSelection) {
-//                                       cubit.updateAthkarDisplayMode(
-//                                         newSelection.first,
-//                                       );
-//                                     },
-//                                 style: _segmentedButtonStyle(context),
-//                               ),
-//                               Text(
-//                                 l10n.sessionDisplayMode,
-//                                 style: TextStyle(
-//                                   fontSize: 12.sp,
-//                                   color: Colors.grey.shade600,
-//                                 ),
-//                               ),
-//                               SizedBox(height: 8.h),
-//                               SegmentedButton<AthkarSessionViewMode>(
-//                                 segments: [
-//                                   ButtonSegment(
-//                                     value: AthkarSessionViewMode.list,
-//                                     label: Text(l10n.listMode),
-//                                     icon: Icon(Icons.format_list_bulleted),
-//                                   ),
-//                                   ButtonSegment(
-//                                     value: AthkarSessionViewMode.focus,
-//                                     label: Text(l10n.focusMode),
-//                                     icon: Icon(Icons.fullscreen),
-//                                   ),
-//                                 ],
-//                                 selected: {settings.athkarSessionViewMode},
-//                                 onSelectionChanged: (newSelection) =>
-//                                     cubit.updateAthkarSessionViewMode(
-//                                       newSelection.first,
-//                                     ),
-//                                 style: _segmentedButtonStyle(context),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                     ],
-//                   ),
-//                 ]),
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsetsDirectional.only(bottom: 8.h, start: 4.w),
+      child: Text(
+        title,
+        style: TextStyle(
+          fontFamily: 'Cairo',
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
+          color: Theme.of(context).colorScheme.outline,
+          letterSpacing: 0.3,
+        ),
+      ),
+    );
+  }
+}
 
-//                 SizedBox(height: 24.h),
+// ─── Settings Card ─────────────────────────────────────────────────────────────
 
-//                 // 5. قسم حول التطبيق
-//                 _buildSectionHeader(context, l10n.aboutApp),
-//                 _buildSettingsContainer([
-//                   _buildTile(
-//                     icon: Icons.info_outline_rounded,
-//                     color: Colors.grey,
-//                     title: l10n.aboutAthar,
-//                     trailing: Text(
-//                       "v1.0.0",
-//                       style: TextStyle(color: Colors.grey, fontSize: 12.sp),
-//                     ),
-//                     onTap: () {},
-//                   ),
-//                   _buildDivider(),
-//                   _buildTile(
-//                     icon: Icons.share_outlined,
-//                     color: Colors.green,
-//                     title: l10n.shareApp,
-//                     onTap: () {},
-//                   ),
-//                 ]),
+class _SettingsCard extends StatelessWidget {
+  final List<Widget> children;
+  const _SettingsCard({required this.children});
 
-//                 SizedBox(height: 40.h),
-//               ],
-//             );
-//           }
-//           return const Center(child: CircularProgressIndicator());
-//         },
-//       ),
-//     );
-//   }
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Container(
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: AtharRadii.radiusLg,
+        border: Border.all(
+          color: colorScheme.outlineVariant.withValues(alpha: 0.5),
+        ),
+      ),
+      child: Column(children: children),
+    );
+  }
+}
 
-//   // --- Widgets مساعدة ---
+// ─── Divider ───────────────────────────────────────────────────────────────────
 
-//   ButtonStyle _segmentedButtonStyle(BuildContext context) {
-//     final colors = context.colors;
+class _Divider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Divider(
+      height: 1,
+      thickness: 0.5,
+      indent: 56,
+      color: Theme.of(context)
+          .colorScheme
+          .outlineVariant
+          .withValues(alpha: 0.5),
+    );
+  }
+}
 
-//     return ButtonStyle(
-//       visualDensity: VisualDensity.compact,
-//       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-//       backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
-//         if (states.contains(WidgetState.selected)) {
-//           return colors.primary.withValues(alpha: 0.2);
-//         }
-//         return Colors.transparent;
-//       }),
-//     );
-//   }
+// ─── Switch Tile ───────────────────────────────────────────────────────────────
 
-//   Widget _buildSectionHeader(BuildContext context, String title) {
-//     final colors = context.colors;
+class _SwitchTile extends StatelessWidget {
+  final IconData icon;
+  final Color iconColor;
+  final String title;
+  final String? subtitle;
+  final bool value;
+  final ValueChanged<bool> onChanged;
 
-//     return Padding(
-//       padding: EdgeInsets.only(bottom: 8.h, right: 4.w),
-//       child: Text(
-//         title,
-//         style: TextStyle(
-//           fontSize: 14.sp,
-//           fontWeight: FontWeight.bold,
-//           color: colors.textSecondary,
-//         ),
-//       ),
-//     );
-//   }
+  const _SwitchTile({
+    required this.icon,
+    required this.iconColor,
+    required this.title,
+    this.subtitle,
+    required this.value,
+    required this.onChanged,
+  });
 
-//   Widget _buildSettingsContainer(List<Widget> children) {
-//     return Container(
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.circular(16.r),
-//         boxShadow: [
-//           BoxShadow(
-//             color: Colors.black.withValues(alpha: 0.02),
-//             blurRadius: 10,
-//             offset: const Offset(0, 2),
-//           ),
-//         ],
-//       ),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.stretch,
-//         children: children,
-//       ),
-//     );
-//   }
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding:
+          EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.h),
+      leading: _IconBox(icon: icon, color: iconColor),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontFamily: 'Cairo',
+          fontSize: 15,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      subtitle: subtitle != null
+          ? Text(
+              subtitle!,
+              style: TextStyle(
+                fontFamily: 'Cairo',
+                fontSize: 12,
+                color: Theme.of(context).colorScheme.outline,
+              ),
+            )
+          : null,
+      trailing: Switch.adaptive(
+        value: value,
+        onChanged: onChanged,
+        activeThumbColor: Colors.white,
+        activeTrackColor: const Color(0xFF1A6B3C),
+      ),
+    );
+  }
+}
 
-//   // ✅ إصلاح: بدون groupValue/onChanged — يتم التحكم عبر RadioGroup الأب
-//   Widget _buildRadioOption(
-//     BuildContext context, {
-//     required String title,
-//     required PrayerCardDisplayMode value,
-//   }) {
-//     final colors = context.colors;
+// ─── Nav Tile ──────────────────────────────────────────────────────────────────
 
-//     return RadioListTile<PrayerCardDisplayMode>(
-//       title: Text(title, style: TextStyle(fontSize: 14.sp)),
-//       value: value,
-//       activeColor: colors.primary,
-//       contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
-//       dense: true,
-//       visualDensity: VisualDensity.compact,
-//     );
-//   }
+class _NavTile extends StatelessWidget {
+  final IconData icon;
+  final Color iconColor;
+  final String title;
+  final String? subtitle;
+  final Color? titleColor;
+  final Widget? trailing2;
+  final VoidCallback onTap;
 
-//   Widget _buildTile({
-//     required IconData icon,
-//     required Color color,
-//     required String title,
-//     String? subtitle,
-//     Widget? trailing,
-//     VoidCallback? onTap,
-//   }) {
-//     return ListTile(
-//       onTap: onTap,
-//       contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
-//       leading: Container(
-//         padding: EdgeInsets.all(8.w),
-//         decoration: BoxDecoration(
-//           color: color.withValues(alpha: 0.1),
-//           shape: BoxShape.circle,
-//         ),
-//         child: Icon(icon, color: color, size: 20.sp),
-//       ),
-//       title: Text(
-//         title,
-//         style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-//       ),
-//       subtitle: subtitle != null
-//           ? Text(
-//               subtitle,
-//               style: TextStyle(fontSize: 12.sp, color: Colors.grey),
-//             )
-//           : null,
-//       trailing:
-//           trailing ??
-//           Icon(
-//             Icons.arrow_forward_ios_rounded,
-//             size: 14.sp,
-//             color: Colors.grey,
-//           ),
-//     );
-//   }
+  const _NavTile({
+    required this.icon,
+    required this.iconColor,
+    required this.title,
+    this.subtitle,
+    this.titleColor,
+    this.trailing2,
+    required this.onTap,
+  });
 
-//   Widget _buildSwitchTile(
-//     BuildContext context, {
-//     required IconData icon,
-//     required Color color,
-//     required String title,
-//     required String subtitle,
-//     required bool value,
-//     required Function(bool) onChanged,
-//   }) {
-//     final colors = context.colors;
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: onTap,
+      contentPadding:
+          EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.h),
+      leading: _IconBox(icon: icon, color: iconColor),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontFamily: 'Cairo',
+          fontSize: 15,
+          fontWeight: FontWeight.w500,
+          color: titleColor,
+        ),
+      ),
+      subtitle: subtitle != null
+          ? Text(
+              subtitle!,
+              style: TextStyle(
+                fontFamily: 'Cairo',
+                fontSize: 12,
+                color: Theme.of(context).colorScheme.outline,
+              ),
+            )
+          : null,
+      trailing: trailing2 ??
+          Icon(
+            Icons.chevron_right_rounded,
+            color: Theme.of(context).colorScheme.outline,
+            size: 20,
+          ),
+    );
+  }
+}
 
-//     return ListTile(
-//       contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
-//       leading: Container(
-//         padding: EdgeInsets.all(8.w),
-//         decoration: BoxDecoration(
-//           color: color.withValues(alpha: 0.1),
-//           shape: BoxShape.circle,
-//         ),
-//         child: Icon(icon, color: color, size: 20.sp),
-//       ),
-//       title: Text(
-//         title,
-//         style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-//       ),
-//       subtitle: Text(
-//         subtitle,
-//         style: TextStyle(fontSize: 12.sp, color: colors.textSecondary),
-//       ),
-//       trailing: Switch(
-//         value: value,
-//         activeTrackColor: colors.primary.withValues(alpha: 0.5),
-//         activeThumbColor: colors.primary,
-//         onChanged: onChanged,
-//       ),
-//     );
-//   }
+// ─── Info Tile ─────────────────────────────────────────────────────────────────
 
-//   Widget _buildDivider() {
-//     return Divider(
-//       height: 1,
-//       indent: 60.w,
-//       endIndent: 20.w,
-//       color: Colors.grey.shade100,
-//     );
-//   }
-// }
-//--------------------------------------------------------------
+class _InfoTile extends StatelessWidget {
+  final IconData icon;
+  final Color iconColor;
+  final String title;
+  final String trailing;
 
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import '../../../../core/design_system/themes/app_colors.dart';
-// import '../cubit/settings_cubit.dart';
-// import '../cubit/settings_state.dart';
-// import 'location_settings_page.dart';
-// import 'smart_zones_page.dart';
-// import '../../data/models/user_settings.dart';
+  const _InfoTile({
+    required this.icon,
+    required this.iconColor,
+    required this.title,
+    required this.trailing,
+  });
 
-// // تأكد من استيراد المسارات الصحيحة
-// import '../../../auth/presentation/cubit/auth_cubit.dart';
-// import '../../../auth/presentation/cubit/auth_state.dart';
-// import '../../../auth/presentation/pages/login_page.dart';
-// import '../../../auth/presentation/pages/profile_page.dart';
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding:
+          EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.h),
+      leading: _IconBox(icon: icon, color: iconColor),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontFamily: 'Cairo',
+          fontSize: 15,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      trailing: Text(
+        trailing,
+        style: TextStyle(
+          fontFamily: 'Cairo',
+          fontSize: 13,
+          color: Theme.of(context).colorScheme.outline,
+        ),
+      ),
+    );
+  }
+}
 
-// class GeneralSettingsPage extends StatelessWidget {
-//   const GeneralSettingsPage({super.key});
+// ─── Icon Box ──────────────────────────────────────────────────────────────────
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: AppColors.background,
-//       appBar: AppBar(
-//         title: const Text(
-//           "الإعدادات",
-//           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-//         ),
-//         backgroundColor: Colors.transparent,
-//         elevation: 0,
-//         leading: const BackButton(color: Colors.black),
-//       ),
-//       body: BlocBuilder<SettingsCubit, SettingsState>(
-//         builder: (context, state) {
-//           if (state is SettingsLoaded) {
-//             final settings = state.settings;
-//             final cubit = context.read<SettingsCubit>();
+class _IconBox extends StatelessWidget {
+  final IconData icon;
+  final Color color;
+  const _IconBox({required this.icon, required this.color});
 
-//             return ListView(
-//               padding: EdgeInsets.all(20.w),
-//               children: [
-//                 // 1. قسم الحساب
-//                 BlocBuilder<AuthCubit, AuthState>(
-//                   builder: (context, authState) {
-//                     if (authState is AuthAuthenticated) {
-//                       return Column(
-//                         children: [
-//                           Card(
-//                             elevation: 2,
-//                             shape: RoundedRectangleBorder(
-//                               borderRadius: BorderRadius.circular(12.r),
-//                             ),
-//                             child: ListTile(
-//                               contentPadding: EdgeInsets.all(12.w),
-//                               leading: CircleAvatar(
-//                                 radius: 25.r,
-//                                 backgroundColor: Colors.purple.shade100,
-//                                 child: Text(
-//                                   authState.username.isNotEmpty
-//                                       ? authState.username[0].toUpperCase()
-//                                       : "?",
-//                                   style: TextStyle(
-//                                     fontSize: 20.sp,
-//                                     fontWeight: FontWeight.bold,
-//                                     color: Colors.purple,
-//                                   ),
-//                                 ),
-//                               ),
-//                               title: Text(
-//                                 authState.fullName ?? authState.username,
-//                                 style: TextStyle(
-//                                   fontWeight: FontWeight.bold,
-//                                   fontSize: 16.sp,
-//                                 ),
-//                               ),
-//                               subtitle: Text(
-//                                 "@${authState.username}",
-//                                 style: TextStyle(
-//                                   color: Colors.grey,
-//                                   fontSize: 12.sp,
-//                                 ),
-//                               ),
-//                               trailing: const Icon(
-//                                 Icons.edit,
-//                                 color: Colors.purple,
-//                               ),
-//                               onTap: () {
-//                                 Navigator.push(
-//                                   context,
-//                                   MaterialPageRoute(
-//                                     builder: (_) => const ProfilePage(),
-//                                   ),
-//                                 );
-//                               },
-//                             ),
-//                           ),
-//                           SizedBox(height: 16.h),
-
-//                           // ✅✅ زر تفعيل البصمة (يظهر فقط للمسجلين)
-//                           _buildSettingsContainer([
-//                             _buildSwitchTile(
-//                               icon: Icons.fingerprint_rounded,
-//                               color: Colors.pink,
-//                               title: "الدخول بالبصمة",
-//                               subtitle: "حماية التطبيق ببصمة الوجه أو الأصبع",
-//                               value: settings.isBiometricEnabled,
-//                               onChanged: (val) async {
-//                                 // نستدعي دالة التبديل في الكيوبت
-//                                 final success = await cubit.toggleBiometric(
-//                                   val,
-//                                 );
-
-//                                 if (!success &&
-//                                     val == true &&
-//                                     context.mounted) {
-//                                   // إذا فشل التفعيل (لم يتعرف على البصمة)
-//                                   ScaffoldMessenger.of(context).showSnackBar(
-//                                     const SnackBar(
-//                                       content: Text("فشل التحقق من البصمة"),
-//                                       backgroundColor: Colors.red,
-//                                     ),
-//                                   );
-//                                 }
-//                               },
-//                             ),
-//                           ]),
-//                         ],
-//                       );
-//                     } else {
-//                       return Card(
-//                         color: Colors.purple.withValues(alpha: 0.05),
-//                         elevation: 0,
-//                         shape: RoundedRectangleBorder(
-//                           borderRadius: BorderRadius.circular(12.r),
-//                           side: BorderSide(
-//                             color: Colors.purple.withValues(alpha: 0.2),
-//                           ),
-//                         ),
-//                         child: ListTile(
-//                           leading: Icon(
-//                             Icons.login_rounded,
-//                             color: Colors.purple,
-//                             size: 28.sp,
-//                           ),
-//                           title: Text(
-//                             "تسجيل الدخول / إنشاء حساب",
-//                             style: TextStyle(
-//                               fontWeight: FontWeight.bold,
-//                               fontSize: 14.sp,
-//                               color: Colors.purple,
-//                             ),
-//                           ),
-//                           subtitle: const Text("للمزامنة والمشاركة العائلية"),
-//                           trailing: const Icon(
-//                             Icons.arrow_forward_ios,
-//                             size: 16,
-//                             color: Colors.purple,
-//                           ),
-//                           onTap: () {
-//                             Navigator.push(
-//                               context,
-//                               MaterialPageRoute(
-//                                 builder: (_) => const LoginPage(),
-//                                 fullscreenDialog: true,
-//                               ),
-//                             );
-//                           },
-//                         ),
-//                       );
-//                     }
-//                   },
-//                 ),
-
-//                 SizedBox(height: 24.h),
-
-//                 // ✅ 1.5. قسم المزامنة (جديد)
-//                 _buildSectionHeader("المزامنة والبيانات"),
-//                 _buildSettingsContainer([
-//                   // ✅✅ الخيار الذكي للمزامنة التلقائية
-//                   BlocBuilder<AuthCubit, AuthState>(
-//                     builder: (context, authState) {
-//                       // نحدد هل هو ضيف أم لا
-//                       final isGuest =
-//                           authState is AuthGuest ||
-//                           authState is AuthUnauthenticated;
-//                       return _buildSwitchTile(
-//                         icon: Icons.cloud_sync_outlined,
-//                         color: Colors.teal,
-//                         title: "المزامنة التلقائية",
-//                         subtitle: "حفظ بياناتك في السحابة تلقائياً",
-//                         // إذا كان ضيفاً -> اجبر القيمة على false (مغلق)
-//                         // إذا كان مسجلاً -> خذ القيمة الحقيقية من الإعدادات
-//                         value: isGuest ? false : settings.isAutoSyncEnabled,
-//                         onChanged: (val) {
-//                           // 🛑 التحقق الذكي قبل التغيير
-//                           if (authState is AuthGuest ||
-//                               authState is AuthUnauthenticated) {
-//                             // إذا كان ضيفاً، نرفض التغيير ونعرض حوار التسجيل
-//                             showDialog(
-//                               context: context,
-//                               builder: (ctx) => AlertDialog(
-//                                 title: const Text("مطلوب تسجيل الدخول"),
-//                                 content: const Text(
-//                                   "المزامنة السحابية تتطلب حساباً.\nهل تود تسجيل الدخول الآن؟",
-//                                 ),
-//                                 actions: [
-//                                   TextButton(
-//                                     onPressed: () => Navigator.pop(ctx),
-//                                     child: const Text("إلغاء"),
-//                                   ),
-//                                   ElevatedButton(
-//                                     onPressed: () {
-//                                       Navigator.pop(ctx);
-//                                       Navigator.push(
-//                                         context,
-//                                         MaterialPageRoute(
-//                                           builder: (_) => const LoginPage(),
-//                                         ),
-//                                       );
-//                                     },
-//                                     child: const Text("تسجيل الدخول"),
-//                                   ),
-//                                 ],
-//                               ),
-//                             );
-//                           } else {
-//                             // إذا كان مسجلاً، نسمح بالتغيير
-//                             cubit.toggleAutoSync(val);
-//                           }
-//                         },
-//                       );
-//                     },
-//                   ),
-//                 ]),
-
-//                 SizedBox(height: 24.h),
-
-//                 // 2. قسم الميزات والذكاء
-//                 _buildSectionHeader("الذكاء والميزات"),
-//                 _buildSettingsContainer([
-//                   _buildTile(
-//                     icon: Icons.auto_awesome_rounded,
-//                     color: Colors.purple,
-//                     title: "المناطق الذكية",
-//                     subtitle: "تخصيص أوقات العمل والمنزل",
-//                     onTap: () => Navigator.push(
-//                       context,
-//                       MaterialPageRoute(builder: (_) => const SmartZonesPage()),
-//                     ),
-//                   ),
-//                 ]),
-
-//                 SizedBox(height: 24.h),
-
-//                 // 3. قسم إعدادات الصلاة
-//                 _buildSectionHeader("إعدادات الصلاة"),
-//                 _buildSettingsContainer([
-//                   _buildSwitchTile(
-//                     icon: Icons.access_time_filled_rounded,
-//                     color: AppColors.primary,
-//                     title: "تفعيل مواقيت الصلاة",
-//                     subtitle: "البطاقات، التنبيهات، والتعارضات",
-//                     value: settings.isPrayerEnabled,
-//                     onChanged: (val) {
-//                       final newSettings = settings..isPrayerEnabled = val;
-//                       cubit.updateSettings(newSettings);
-//                     },
-//                   ),
-//                   if (settings.isPrayerEnabled) ...[
-//                     _buildDivider(),
-//                     _buildTile(
-//                       icon: Icons.location_on_outlined,
-//                       color: Colors.red,
-//                       title: "موقع المواقيت",
-//                       subtitle: settings.cityName ?? "غير محدد",
-//                       onTap: () => Navigator.push(
-//                         context,
-//                         MaterialPageRoute(
-//                           builder: (_) => const LocationSettingsPage(),
-//                         ),
-//                       ),
-//                     ),
-//                     _buildDivider(),
-//                     Padding(
-//                       padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 0),
-//                       child: Text(
-//                         "أماكن ظهور بطاقة الصلاة:",
-//                         style: TextStyle(
-//                           fontSize: 12.sp,
-//                           color: Colors.grey.shade600,
-//                           fontWeight: FontWeight.bold,
-//                         ),
-//                       ),
-//                     ),
-//                     _buildRadioOption(
-//                       title: "الداشبورد فقط",
-//                       value: PrayerCardDisplayMode.dashboardOnly,
-//                       groupValue: settings.prayerCardDisplayMode,
-//                       onChanged: (val) {
-//                         final newSettings = settings
-//                           ..prayerCardDisplayMode = val!;
-//                         cubit.updateSettings(newSettings);
-//                       },
-//                     ),
-//                     _buildRadioOption(
-//                       title: "الداشبورد وصفحة المهام",
-//                       value: PrayerCardDisplayMode.dashboardAndTasks,
-//                       groupValue: settings.prayerCardDisplayMode,
-//                       onChanged: (val) {
-//                         final newSettings = settings
-//                           ..prayerCardDisplayMode = val!;
-//                         cubit.updateSettings(newSettings);
-//                       },
-//                     ),
-//                     _buildRadioOption(
-//                       title: "جميع الصفحات",
-//                       value: PrayerCardDisplayMode.allPages,
-//                       groupValue: settings.prayerCardDisplayMode,
-//                       onChanged: (val) {
-//                         final newSettings = settings
-//                           ..prayerCardDisplayMode = val!;
-//                         cubit.updateSettings(newSettings);
-//                       },
-//                     ),
-//                     SizedBox(height: 8.h),
-//                   ],
-//                 ]),
-
-//                 SizedBox(height: 24.h),
-
-//                 // 4. قسم التفضيلات
-//                 _buildSectionHeader("التفضيلات"),
-//                 _buildSettingsContainer([
-//                   _buildSwitchTile(
-//                     icon: Icons.calendar_month_outlined,
-//                     color: Colors.blue,
-//                     title: "التقويم الهجري",
-//                     subtitle: "استخدام التاريخ الهجري كافتراضي",
-//                     value: settings.isHijriMode,
-//                     onChanged: (val) {
-//                       cubit.toggleHijriMode(val);
-//                     },
-//                   ),
-//                   _buildDivider(),
-//                   Column(
-//                     children: [
-//                       _buildSwitchTile(
-//                         icon: Icons.wb_sunny_outlined,
-//                         color: Colors.orange,
-//                         title: "أذكار الصباح والمساء",
-//                         subtitle: "تفعيل نظام الأذكار اليومي",
-//                         value: settings.isAthkarEnabled,
-//                         onChanged: (val) {
-//                           cubit.toggleAthkarFeature(val);
-//                         },
-//                       ),
-//                       if (settings.isAthkarEnabled)
-//                         Padding(
-//                           padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 16.h),
-//                           child: Column(
-//                             crossAxisAlignment: CrossAxisAlignment.start,
-//                             children: [
-//                               Divider(
-//                                 height: 20.h,
-//                                 color: Colors.grey.shade100,
-//                               ),
-//                               Text(
-//                                 "طريقة العرض:",
-//                                 style: TextStyle(
-//                                   fontSize: 12.sp,
-//                                   color: Colors.grey.shade600,
-//                                 ),
-//                               ),
-//                               SizedBox(height: 8.h),
-//                               SegmentedButton<AthkarDisplayMode>(
-//                                 segments: const [
-//                                   ButtonSegment(
-//                                     value: AthkarDisplayMode.independent,
-//                                     label: Text("بطاقات"),
-//                                     icon: Icon(Icons.view_agenda_outlined),
-//                                   ),
-//                                   ButtonSegment(
-//                                     value: AthkarDisplayMode.embedded,
-//                                     label: Text("مدمجة"),
-//                                     icon: Icon(Icons.list_alt_rounded),
-//                                   ),
-//                                 ],
-//                                 selected: {settings.athkarDisplayMode},
-//                                 onSelectionChanged:
-//                                     (Set<AthkarDisplayMode> newSelection) {
-//                                       cubit.updateAthkarDisplayMode(
-//                                         newSelection.first,
-//                                       );
-//                                     },
-//                                 style: _segmentedButtonStyle(),
-//                               ),
-//                               Text(
-//                                 "طريقة عرض الجلسة:",
-//                                 style: TextStyle(
-//                                   fontSize: 12.sp,
-//                                   color: Colors.grey.shade600,
-//                                 ),
-//                               ),
-//                               SizedBox(height: 8.h),
-//                               SegmentedButton<AthkarSessionViewMode>(
-//                                 segments: const [
-//                                   ButtonSegment(
-//                                     value: AthkarSessionViewMode.list,
-//                                     label: Text("قائمة"),
-//                                     icon: Icon(Icons.format_list_bulleted),
-//                                   ),
-//                                   ButtonSegment(
-//                                     value: AthkarSessionViewMode.focus,
-//                                     label: Text("تركيز"),
-//                                     icon: Icon(Icons.fullscreen),
-//                                   ),
-//                                 ],
-//                                 selected: {settings.athkarSessionViewMode},
-//                                 onSelectionChanged: (newSelection) =>
-//                                     cubit.updateAthkarSessionViewMode(
-//                                       newSelection.first,
-//                                     ),
-//                                 style: _segmentedButtonStyle(),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                     ],
-//                   ),
-//                 ]),
-
-//                 SizedBox(height: 24.h),
-
-//                 // 5. قسم حول التطبيق
-//                 _buildSectionHeader("عن التطبيق"),
-//                 _buildSettingsContainer([
-//                   _buildTile(
-//                     icon: Icons.info_outline_rounded,
-//                     color: Colors.grey,
-//                     title: "عن أثر",
-//                     trailing: Text(
-//                       "v1.0.0",
-//                       style: TextStyle(color: Colors.grey, fontSize: 12.sp),
-//                     ),
-//                     onTap: () {},
-//                   ),
-//                   _buildDivider(),
-//                   _buildTile(
-//                     icon: Icons.share_outlined,
-//                     color: Colors.green,
-//                     title: "شارك التطبيق",
-//                     onTap: () {},
-//                   ),
-//                 ]),
-
-//                 SizedBox(height: 40.h),
-//               ],
-//             );
-//           }
-//           return const Center(child: CircularProgressIndicator());
-//         },
-//       ),
-//     );
-//   }
-
-//   // --- Widgets مساعدة ---
-
-//   ButtonStyle _segmentedButtonStyle() {
-//     return ButtonStyle(
-//       visualDensity: VisualDensity.compact,
-//       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-//       backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
-//         if (states.contains(WidgetState.selected)) {
-//           return AppColors.primary.withValues(alpha: 0.2);
-//         }
-//         return Colors.transparent;
-//       }),
-//     );
-//   }
-
-//   Widget _buildSectionHeader(String title) {
-//     return Padding(
-//       padding: EdgeInsets.only(bottom: 8.h, right: 4.w),
-//       child: Text(
-//         title,
-//         style: TextStyle(
-//           fontSize: 14.sp,
-//           fontWeight: FontWeight.bold,
-//           color: Colors.grey.shade600,
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildSettingsContainer(List<Widget> children) {
-//     return Container(
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.circular(16.r),
-//         boxShadow: [
-//           BoxShadow(
-//             color: Colors.black.withValues(alpha: 0.02),
-//             blurRadius: 10,
-//             offset: const Offset(0, 2),
-//           ),
-//         ],
-//       ),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.stretch,
-//         children: children,
-//       ),
-//     );
-//   }
-
-//   Widget _buildRadioOption({
-//     required String title,
-//     required PrayerCardDisplayMode value,
-//     required PrayerCardDisplayMode groupValue,
-//     required ValueChanged<PrayerCardDisplayMode?> onChanged,
-//   }) {
-//     return RadioListTile<PrayerCardDisplayMode>(
-//       title: Text(title, style: TextStyle(fontSize: 14.sp)),
-//       value: value,
-//       groupValue: groupValue,
-//       onChanged: onChanged,
-//       activeColor: AppColors.primary,
-//       contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
-//       dense: true,
-//       visualDensity: VisualDensity.compact,
-//     );
-//   }
-
-//   Widget _buildTile({
-//     required IconData icon,
-//     required Color color,
-//     required String title,
-//     String? subtitle,
-//     Widget? trailing,
-//     VoidCallback? onTap,
-//   }) {
-//     return ListTile(
-//       onTap: onTap,
-//       contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
-//       leading: Container(
-//         padding: EdgeInsets.all(8.w),
-//         decoration: BoxDecoration(
-//           color: color.withValues(alpha: 0.1),
-//           shape: BoxShape.circle,
-//         ),
-//         child: Icon(icon, color: color, size: 20.sp),
-//       ),
-//       title: Text(
-//         title,
-//         style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-//       ),
-//       subtitle: subtitle != null
-//           ? Text(
-//               subtitle,
-//               style: TextStyle(fontSize: 12.sp, color: Colors.grey),
-//             )
-//           : null,
-//       trailing:
-//           trailing ??
-//           Icon(
-//             Icons.arrow_forward_ios_rounded,
-//             size: 14.sp,
-//             color: Colors.grey,
-//           ),
-//     );
-//   }
-
-//   Widget _buildSwitchTile({
-//     required IconData icon,
-//     required Color color,
-//     required String title,
-//     required String subtitle,
-//     required bool value,
-//     required Function(bool) onChanged,
-//   }) {
-//     return ListTile(
-//       contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
-//       leading: Container(
-//         padding: EdgeInsets.all(8.w),
-//         decoration: BoxDecoration(
-//           color: color.withValues(alpha: 0.1),
-//           shape: BoxShape.circle,
-//         ),
-//         child: Icon(icon, color: color, size: 20.sp),
-//       ),
-//       title: Text(
-//         title,
-//         style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-//       ),
-//       subtitle: Text(
-//         subtitle,
-//         style: TextStyle(fontSize: 12.sp, color: Colors.grey),
-//       ),
-//       trailing: Switch(
-//         value: value,
-//         activeTrackColor: AppColors.primary.withValues(alpha: 0.5),
-//         activeColor: AppColors.primary,
-//         onChanged: onChanged,
-//       ),
-//     );
-//   }
-
-//   Widget _buildDivider() {
-//     return Divider(
-//       height: 1,
-//       indent: 60.w,
-//       endIndent: 20.w,
-//       color: Colors.grey.shade100,
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 36,
+      height: 36,
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: AtharRadii.radiusSm,
+      ),
+      child: Icon(icon, color: color, size: 20),
+    );
+  }
+}

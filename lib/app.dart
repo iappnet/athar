@@ -1,4 +1,6 @@
 import 'package:athar/core/presentation/cubit/celebration_cubit.dart';
+import 'package:athar/core/presentation/cubit/locale_cubit.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:athar/features/assets/presentation/cubit/assets_cubit.dart';
 import 'package:athar/features/auth/presentation/pages/complete_profile_page.dart';
 import 'package:athar/features/settings/presentation/cubit/category_cubit.dart';
@@ -123,19 +125,25 @@ class _AtharAppState extends State<AtharApp> {
         BlocProvider(
           create: (_) => getIt<SubscriptionCubit>()..loadStatus(),
         ),
+
+        // 7. اللغة
+        BlocProvider(
+          create: (_) =>
+              LocaleCubit(const FlutterSecureStorage())..loadLocale(),
+        ),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
+          final locale = context.watch<LocaleCubit>().state.locale;
           return MaterialApp(
-            // ✅✅✅ الإضافة الهامة هنا: ربط مفتاح التنقل
             navigatorKey: DeepLinkService.navigatorKey,
             debugShowCheckedModeBanner: false,
             title: 'Athar | أثر',
             theme: AppTheme.lightTheme,
-            locale: const Locale('ar', 'SA'),
+            locale: locale,
             supportedLocales: const [Locale('ar', 'SA'), Locale('en', 'US')],
             localizationsDelegates: [
               AppLocalizations.delegate, // ← هذا كان مفقوداً!
