@@ -17,3 +17,4 @@ export 'tokens/athar_radii.dart';
 export 'tokens/athar_shadows.dart';
 export 'tokens/athar_animations.dart';
 export 'tokens/athar_typography.dart';
+export 'themes/app_colors.dart';

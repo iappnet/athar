@@ -9,7 +9,7 @@ import 'package:athar/features/prayer/presentation/cubit/prayer_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Semantic colors (not in ColorScheme)
-const _successColor = Color(0xFF00B894);
+const _successColor = AppColors.success;
 
 class LocationSettingsPage extends StatefulWidget {
   const LocationSettingsPage({super.key});

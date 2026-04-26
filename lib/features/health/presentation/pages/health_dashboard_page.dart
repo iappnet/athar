@@ -26,7 +26,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 /// Semantic colors (not in ColorScheme)
-const _successColor = Color(0xFF00B894);
+const _successColor = AppColors.success;
 
 class HealthDashboardPage extends StatefulWidget {
   final ModuleModel module;

@@ -18,7 +18,7 @@ import 'package:athar/core/presentation/cubit/celebration_cubit.dart';
 import 'package:athar/features/task/presentation/pages/task_details_page.dart';
 
 /// Semantic colors (not in ColorScheme)
-const _successColor = Color(0xFF00B894);
+const _successColor = AppColors.success;
 
 class ProjectDetailsPage extends StatefulWidget {
   final ModuleModel module;

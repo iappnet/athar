@@ -12,8 +12,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 /// Semantic colors (not in ColorScheme)
-const _warningColor = Color(0xFFFDCB6E);
-const _infoColor = Color(0xFF74B9FF);
+const _warningColor = AppColors.warning;
+
 
 class TaskBoardWidget extends StatefulWidget {
   final String taskId;
@@ -197,8 +197,8 @@ class _TaskBoardWidgetState extends State<TaskBoardWidget> {
             children: [
               CircleAvatar(
                 radius: 12.r,
-                backgroundColor: _infoColor.withValues(alpha: 0.15),
-                child: Icon(Icons.person, size: 14.sp, color: _infoColor),
+                backgroundColor: AppColors.info.withValues(alpha: 0.15),
+                child: Icon(Icons.person, size: 14.sp, color: AppColors.info),
               ),
               AtharGap.hSm,
               Text(

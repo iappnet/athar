@@ -3,7 +3,7 @@ import 'package:athar/core/design_system/tokens.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 
 /// Semantic colors (not in ColorScheme)
-const _warningColor = Color(0xFFFDCB6E);
+const _warningColor = AppColors.warning;
 
 class PrioritySelector extends StatelessWidget {
   final bool isUrgent;

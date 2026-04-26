@@ -19,6 +19,7 @@ class AppColors {
   static const Color success = Color(0xFF00B894);
   static const Color warning = Color(0xFFFDCB6E);
   static const Color urgent = Color(0xFFFF7675);
+  static const Color info = Color(0xFF74B9FF);
 
   static const Color surface = Color(0xFFFFFFFF); // أبيض نقي للكروت
 }

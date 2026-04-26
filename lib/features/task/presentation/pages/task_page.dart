@@ -25,8 +25,8 @@ import '../../../../core/design_system/molecules/bars/filter_bar.dart';
 import '../../data/models/task_model.dart';
 
 /// Semantic colors (not in ColorScheme)
-const _warningColor = Color(0xFFFDCB6E);
-const _successColor = Color(0xFF00B894);
+const _warningColor = AppColors.warning;
+const _successColor = AppColors.success;
 
 class TasksPage extends StatelessWidget {
   const TasksPage({super.key});

@@ -8,7 +8,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 /// Semantic colors (not in ColorScheme)
-const _warningColor = Color(0xFFFDCB6E);
+const _warningColor = AppColors.warning;
 
 class TemplateSelector extends StatelessWidget {
   final List<TaskTemplate> templates;

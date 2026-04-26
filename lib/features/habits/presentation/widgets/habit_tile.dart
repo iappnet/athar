@@ -14,7 +14,7 @@ import 'package:athar/core/design_system/tokens.dart';
 import '../../data/models/habit_model.dart';
 
 /// Semantic colors (not in ColorScheme)
-const _successColor = Color(0xFF00B894);
+const _successColor = AppColors.success;
 
 class HabitTile extends StatelessWidget {
   final HabitModel habit;

@@ -16,7 +16,7 @@ import '../../data/models/habit_model.dart';
 import '../cubit/habit_cubit.dart';
 
 /// Semantic colors (not in ColorScheme)
-const _successColor = Color(0xFF00B894);
+const _successColor = AppColors.success;
 
 class AthkarSessionSheet extends StatefulWidget {
   final HabitModel habit;

@@ -17,8 +17,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 /// Semantic colors (not in ColorScheme)
-const _warningColor = Color(0xFFFDCB6E);
-const _successColor = Color(0xFF00B894);
+const _warningColor = AppColors.warning;
+const _successColor = AppColors.success;
 
 class TaskDetailsPage extends StatefulWidget {
   final TaskModel task;

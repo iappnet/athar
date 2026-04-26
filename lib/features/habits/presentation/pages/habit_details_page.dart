@@ -16,7 +16,7 @@ import '../../data/models/habit_model.dart';
 import '../widgets/habit_form_dialog.dart';
 
 /// Semantic colors (not in ColorScheme)
-const _successColor = Color(0xFF00B894);
+const _successColor = AppColors.success;
 
 class HabitDetailsPage extends StatelessWidget {
   final HabitModel habit;

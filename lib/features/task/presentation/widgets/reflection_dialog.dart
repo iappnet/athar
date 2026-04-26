@@ -4,7 +4,7 @@ import 'package:athar/core/design_system/tokens.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 
 /// Semantic colors (not in ColorScheme)
-const _successColor = Color(0xFF00B894);
+const _successColor = AppColors.success;
 
 class ReflectionDialog extends StatefulWidget {
   final String taskTitle;

@@ -47,8 +47,8 @@ import 'package:athar/features/settings/domain/repositories/settings_repository.
 enum EntityType { task, medicine, appointment }
 
 /// Semantic colors (not in ColorScheme)
-const _warningColor = Color(0xFFFDCB6E);
-const _infoColor = Color(0xFF74B9FF);
+const _warningColor = AppColors.warning;
+
 
 class UnifiedAddSheet extends StatefulWidget {
   final EntityType initialType;
@@ -502,9 +502,9 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
               (time) => Chip(
                 label: Text(time.format(context)),
                 onDeleted: () => setState(() => _fixedTimes.remove(time)),
-                backgroundColor: _infoColor.withValues(alpha: 0.1),
-                labelStyle: TextStyle(color: _infoColor),
-                deleteIconColor: _infoColor,
+                backgroundColor: AppColors.info.withValues(alpha: 0.1),
+                labelStyle: TextStyle(color: AppColors.info),
+                deleteIconColor: AppColors.info,
               ),
             ),
             ActionChip(
@@ -775,7 +775,7 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
 
     return Container(
       decoration: BoxDecoration(
-        color: _infoColor.withValues(alpha: 0.1),
+        color: AppColors.info.withValues(alpha: 0.1),
         borderRadius: AtharRadii.radiusMd,
       ),
       child: ExpansionTile(

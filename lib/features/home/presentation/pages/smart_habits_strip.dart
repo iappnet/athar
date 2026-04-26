@@ -21,8 +21,8 @@ import '../../../dhikr/presentation/widgets/dhikr_bottom_sheet.dart';
 import '../../../habits/presentation/widgets/athkar_session_sheet.dart';
 
 /// Semantic colors (not in ColorScheme)
-const _warningColor = Color(0xFFFDCB6E);
-const _successColor = Color(0xFF00B894);
+const _warningColor = AppColors.warning;
+const _successColor = AppColors.success;
 
 class SmartHabitsStrip extends StatelessWidget {
   const SmartHabitsStrip({super.key});

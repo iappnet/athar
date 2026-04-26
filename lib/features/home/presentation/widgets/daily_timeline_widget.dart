@@ -21,8 +21,8 @@ import 'package:athar/features/health/presentation/cubit/health_cubit.dart';
 import 'package:athar/features/task/presentation/cubit/task_cubit.dart';
 
 /// Semantic colors (not in ColorScheme)
-const _successColor = Color(0xFF00B894);
-const _infoColor = Color(0xFF74B9FF);
+const _successColor = AppColors.success;
+
 
 class DailyTimelineWidget extends StatelessWidget {
   final String? moduleId;
@@ -97,7 +97,7 @@ class DailyTimelineWidget extends StatelessWidget {
 
     switch (item.type) {
       case DailyItemType.task:
-        color = _infoColor;
+        color = AppColors.info;
         break;
       case DailyItemType.medicine:
         color = colorScheme.error;

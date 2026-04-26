@@ -31,7 +31,7 @@ import '../widgets/habit_section_list.dart';
 import '../widgets/athkar_session_sheet.dart';
 
 /// Semantic colors (not in ColorScheme)
-const _successColor = Color(0xFF00B894);
+const _successColor = AppColors.success;
 
 class HabitsPage extends StatefulWidget {
   const HabitsPage({super.key});
