@@ -168,73 +168,38 @@ class _HabitsPageState extends State<HabitsPage> {
 
   // ✅ ويدجت زر التبديل
   Widget _buildViewToggle(ColorScheme colorScheme, AppLocalizations l) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(4.w),
-      decoration: BoxDecoration(
-        // ✅ Colors.white → colors.surface
-        color: colorScheme.surface,
-        // ✅ BorderRadius.circular(12.r) → AtharRadii.radiusMd
-        borderRadius: AtharRadii.radiusMd,
-        border: Border.all(color: colorScheme.outlineVariant),
-      ),
-      child: Row(
-        children: [
-          _buildToggleItem(
-            colorScheme,
-            // ✅ l10n: "مختصر"
-            l.habitsViewCompact,
-            !_isDetailedView,
-            () => setState(() => _isDetailedView = false),
-          ),
-          _buildToggleItem(
-            colorScheme,
-            // ✅ l10n: "مفصل (أثر)"
-            l.habitsViewDetailed,
-            _isDetailedView,
-            () => setState(() => _isDetailedView = true),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildToggleItem(
-    ColorScheme colorScheme,
-    String text,
-    bool isActive,
-    VoidCallback onTap,
-  ) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: onTap,
-        child: AnimatedContainer(
-          // ✅ Duration(milliseconds: 200) → AtharAnimations.fast
-          duration: AtharAnimations.fast,
-          alignment: Alignment.center,
-          padding: EdgeInsets.symmetric(vertical: 8.h),
-          decoration: BoxDecoration(
-            // ✅ AppColors.primary → colors.primary
-            color: isActive
-                ? colorScheme.primary.withValues(alpha: 0.1)
-                : Colors.transparent,
-            // ✅ BorderRadius.circular(8.r) → AtharRadii.radiusSm
-            borderRadius: AtharRadii.radiusSm,
-          ),
-          child: Text(
-            text,
-            style:
-                TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  height: 1.4,
-                  letterSpacing: 0.5,
-                ).copyWith(
-                  fontWeight: FontWeight.bold,
-                  // ✅ AppColors.primary / Colors.grey → colors
-                  color: isActive ? colorScheme.primary : colorScheme.outline,
-                ),
-          ),
+    return SegmentedButton<bool>(
+      segments: [
+        ButtonSegment(
+          value: false,
+          label: Text(l.habitsViewCompact,
+              style: const TextStyle(fontFamily: 'Cairo', fontSize: 13)),
+          icon: const Icon(Icons.view_list_rounded, size: 16),
+        ),
+        ButtonSegment(
+          value: true,
+          label: Text(l.habitsViewDetailed,
+              style: const TextStyle(fontFamily: 'Cairo', fontSize: 13)),
+          icon: const Icon(Icons.auto_awesome_outlined, size: 16),
+        ),
+      ],
+      selected: {_isDetailedView},
+      onSelectionChanged: (s) => setState(() => _isDetailedView = s.first),
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return colorScheme.primary.withValues(alpha: 0.12);
+          }
+          return colorScheme.surface;
+        }),
+        foregroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return colorScheme.primary;
+          }
+          return colorScheme.outline;
+        }),
+        side: WidgetStatePropertyAll(
+          BorderSide(color: colorScheme.outlineVariant),
         ),
       ),
     );
@@ -654,35 +619,47 @@ class _HabitsPageState extends State<HabitsPage> {
 
   Widget _buildEmptyState(ColorScheme colorScheme, AppLocalizations l) {
     return SliverFillRemaining(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.spa_outlined, size: 60.sp, color: colorScheme.outline),
-          AtharGap.lg,
-          Text(
-            // ✅ l10n: "ابدأ رحلة العادات"
-            l.habitsEmptyTitle,
-            style:
-                TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  height: 1.4,
-                ).copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-          AtharGap.sm,
-          Text(
-            // ✅ l10n: "أضف عادة جديدة من الزر أدناه"
-            l.habitsEmptySubtitle,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              height: 1.6,
-            ).copyWith(color: colorScheme.outline),
-          ),
-        ],
+      hasScrollBody: false,
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 88,
+              height: 88,
+              decoration: BoxDecoration(
+                color: colorScheme.primary.withValues(alpha: 0.08),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.spa_outlined,
+                size: 44,
+                color: colorScheme.primary.withValues(alpha: 0.6),
+              ),
+            ),
+            AtharGap.lg,
+            Text(
+              l.habitsEmptyTitle,
+              style: TextStyle(
+                fontFamily: 'Cairo',
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: colorScheme.onSurface,
+              ),
+            ),
+            AtharGap.xs,
+            Text(
+              l.habitsEmptySubtitle,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: 'Cairo',
+                fontSize: 14,
+                color: colorScheme.outline,
+                height: 1.6,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -491,21 +491,39 @@ class _TasksPageViewState extends State<TasksPageView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.task_alt,
-            size: 80.sp,
-            color: colorScheme.outline.withValues(alpha: 0.3),
+          Container(
+            width: 88,
+            height: 88,
+            decoration: BoxDecoration(
+              color: colorScheme.primary.withValues(alpha: 0.08),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.task_alt_outlined,
+              size: 44,
+              color: colorScheme.primary.withValues(alpha: 0.6),
+            ),
           ),
           AtharGap.lg,
           Text(
             l10n.dayClear,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge?.copyWith(color: colorScheme.outline),
+            style: TextStyle(
+              fontFamily: 'Cairo',
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: colorScheme.onSurface,
+            ),
           ),
+          AtharGap.xs,
           Text(
             l10n.addTasksToStart,
-            style: Theme.of(context).textTheme.bodyMedium,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Cairo',
+              fontSize: 14,
+              color: colorScheme.outline,
+              height: 1.6,
+            ),
           ),
         ],
       ),
