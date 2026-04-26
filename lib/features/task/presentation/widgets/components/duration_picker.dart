@@ -34,7 +34,7 @@ class DurationPicker extends StatelessWidget {
           child: Row(
             children: [15, 30, 45, 60, 90, 120].map((minutes) {
               return Padding(
-                padding: EdgeInsets.only(left: 8.w),
+                padding: EdgeInsetsDirectional.only(start: 8.w),
                 child: ChoiceChip(
                   label: Text(
                     minutes >= 60

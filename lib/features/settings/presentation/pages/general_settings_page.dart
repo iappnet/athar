@@ -582,7 +582,7 @@ class GeneralSettingsPage extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
-      padding: EdgeInsets.only(bottom: 8.h, right: 4.w),
+      padding: EdgeInsetsDirectional.only(bottom: 8.h, end: 4.w),
       child: Text(
         title,
         style: TextStyle(

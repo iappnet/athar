@@ -55,7 +55,7 @@ class CategorySelector extends StatelessWidget {
                       final iconData = IconRegistry.getIcon(cat.iconKey);
 
                       return Padding(
-                        padding: EdgeInsets.only(left: 8.w),
+                        padding: EdgeInsetsDirectional.only(start: 8.w),
                         child: InputChip(
                           showCheckmark: false,
                           label: Row(

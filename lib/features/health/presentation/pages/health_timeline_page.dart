@@ -211,7 +211,7 @@ class _HealthTimelinePageState extends State<HealthTimelinePage> {
   Widget _buildFilterChip(ColorScheme colorScheme, String key, String label) {
     final isSelected = _filterType == key;
     return Padding(
-      padding: EdgeInsets.only(left: 8.w),
+      padding: EdgeInsetsDirectional.only(start: 8.w),
       child: ChoiceChip(
         label: Text(label),
         selected: isSelected,

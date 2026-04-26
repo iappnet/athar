@@ -689,7 +689,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
           children: [
             if (isSelected)
               Padding(
-                padding: EdgeInsets.only(left: 4.w),
+                padding: EdgeInsetsDirectional.only(start: 4.w),
                 child: Icon(
                   Icons.check_circle,
                   size: 14.sp,

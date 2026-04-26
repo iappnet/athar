@@ -712,7 +712,7 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
     final colorScheme = Theme.of(context).colorScheme;
     bool isSelected = _medType == key;
     return Padding(
-      padding: EdgeInsets.only(left: 8.w),
+      padding: EdgeInsetsDirectional.only(start: 8.w),
       child: ChoiceChip(
         label: Row(
           children: [Icon(icon, size: 14), AtharGap.hXxs, Text(label)],
@@ -731,7 +731,7 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
     final colorScheme = Theme.of(context).colorScheme;
     bool isSelected = _apptType == key;
     return Padding(
-      padding: EdgeInsets.only(left: 8.w),
+      padding: EdgeInsetsDirectional.only(start: 8.w),
       child: ChoiceChip(
         label: Row(
           children: [Icon(icon, size: 14), AtharGap.hXxs, Text(label)],

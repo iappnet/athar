@@ -99,7 +99,7 @@ class TemplateSelector extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
 
     return Card(
-      margin: EdgeInsets.only(right: 12.w),
+      margin: EdgeInsetsDirectional.only(end: 12.w),
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: AtharRadii.radiusMd,
@@ -190,7 +190,7 @@ class TemplateSelector extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
 
     return Card(
-      margin: EdgeInsets.only(right: 12.w),
+      margin: EdgeInsetsDirectional.only(end: 12.w),
       elevation: 1,
       shape: RoundedRectangleBorder(
         borderRadius: AtharRadii.radiusMd,

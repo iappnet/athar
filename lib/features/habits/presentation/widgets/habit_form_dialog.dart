@@ -239,7 +239,7 @@ class _HabitFormSheetState extends State<HabitFormSheet> {
 
   // --- دوال بناء الواجهة الفرعية ---
   Widget _buildDropdownLabel(ColorScheme colorScheme, String text) => Padding(
-    padding: EdgeInsets.only(bottom: 8.h, right: 4.w),
+    padding: EdgeInsetsDirectional.only(bottom: 8.h, end: 4.w),
     child: Text(
       text,
       style: TextStyle(

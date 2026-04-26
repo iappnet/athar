@@ -156,7 +156,7 @@ class _VitalsPageState extends State<VitalsPage> {
     final isSelected = _selectedFilter == key;
 
     return Padding(
-      padding: EdgeInsets.only(left: 8.w),
+      padding: EdgeInsetsDirectional.only(start: 8.w),
       child: ChoiceChip(
         label: Text(label),
         selected: isSelected,
