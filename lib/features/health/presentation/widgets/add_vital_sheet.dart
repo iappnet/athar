@@ -96,7 +96,7 @@ class _AddVitalSheetState extends State<AddVitalSheet> {
                 height: 4.h,
                 decoration: BoxDecoration(
                   color: colorScheme.outlineVariant,
-                  borderRadius: BorderRadius.circular(2),
+                  borderRadius: AtharRadii.radiusXxxs,
                 ),
               ),
             ),

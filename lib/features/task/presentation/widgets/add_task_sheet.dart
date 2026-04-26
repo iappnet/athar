@@ -598,7 +598,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
                 height: 4.h,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.outlineVariant,
-                  borderRadius: BorderRadius.circular(2),
+                  borderRadius: AtharRadii.radiusXxxs,
                 ),
               ),
             ),

@@ -98,7 +98,7 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
               decoration: InputDecoration(
                 hintText: l10n.categoryName,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
+                  borderRadius: AtharRadii.radiusMd,
                 ),
               ),
               textInputAction: TextInputAction.done,
@@ -119,12 +119,12 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
             AtharGap.sm,
             InkWell(
               onTap: _selectIcon,
-              borderRadius: BorderRadius.circular(12.r),
+              borderRadius: AtharRadii.radiusMd,
               child: Container(
                 padding: EdgeInsets.all(16.w),
                 decoration: BoxDecoration(
                   color: colorScheme.surfaceContainerHighest,
-                  borderRadius: BorderRadius.circular(12.r),
+                  borderRadius: AtharRadii.radiusMd,
                   border: Border.all(
                     color: colorScheme.outline.withValues(alpha: 0.3),
                   ),
@@ -135,7 +135,7 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                       padding: EdgeInsets.all(8.w),
                       decoration: BoxDecoration(
                         color: Color(_selectedColor).withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(8.r),
+                        borderRadius: AtharRadii.radiusSm,
                       ),
                       child: Icon(
                         IconRegistry.getIcon(_selectedIconKey),

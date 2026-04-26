@@ -74,7 +74,7 @@ class SmartPrayerCardWrapper extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                 decoration: BoxDecoration(
                   color: cs.surfaceContainerHighest.withValues(alpha: 0.4),
-                  borderRadius: BorderRadius.circular(16.r),
+                  borderRadius: AtharRadii.radiusLg,
                 ),
                 child: const Center(child: CircularProgressIndicator()),
               );
@@ -86,7 +86,7 @@ class SmartPrayerCardWrapper extends StatelessWidget {
                 padding: EdgeInsets.all(12.w),
                 decoration: BoxDecoration(
                   color: cs.errorContainer.withValues(alpha: 0.3),
-                  borderRadius: BorderRadius.circular(16.r),
+                  borderRadius: AtharRadii.radiusLg,
                   border: Border.all(
                       color: cs.error.withValues(alpha: 0.3)),
                 ),

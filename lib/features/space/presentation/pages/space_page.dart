@@ -323,7 +323,7 @@ class _SpaceDetailsPageState extends State<SpacePage> {
                   padding: EdgeInsets.all(12.w),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(16.r),
+                    borderRadius: AtharRadii.radiusLg,
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withValues(alpha: 0.03),

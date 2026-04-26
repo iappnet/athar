@@ -41,7 +41,7 @@ class PrayerDetailsPage extends StatelessWidget {
                 unselectedLabelColor: colorScheme.outline,
                 indicator: BoxDecoration(
                   color: colorScheme.primary,
-                  borderRadius: BorderRadius.circular(10.r),
+                  borderRadius: AtharRadii.radiusMd,
                 ),
                 indicatorSize: TabBarIndicatorSize.tab,
                 labelStyle: TextStyle(

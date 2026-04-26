@@ -151,7 +151,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
               const Color(0xFF0F172A),
             ],
           ),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: AtharRadii.radiusLg,
         ),
         padding: EdgeInsets.all(isTablet ? 24 : 16.w),
         child: Column(
@@ -254,7 +254,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
             
             // شريط التقدم
             ClipRRect(
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: AtharRadii.radiusXxs,
               child: LinearProgressIndicator(
                 value: 0.7,
                 backgroundColor: Colors.white24,
@@ -324,7 +324,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
                 padding: EdgeInsets.all(6.w),
                 decoration: BoxDecoration(
                   color: stat.color.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: AtharRadii.radiusSm,
                 ),
                 child: Icon(stat.icon, color: stat.color, size: 18.sp),
               ),
@@ -398,7 +398,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
               color: habit.completed 
                   ? colorScheme.primary.withValues(alpha: 0.15) 
                   : colorScheme.surfaceContainerHighest,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: AtharRadii.radiusMd,
             ),
             child: Icon(
               habit.icon,
@@ -515,7 +515,7 @@ class _HomePageResponsiveState extends State<HomePageResponsive> {
                   height: 40.h,
                   decoration: BoxDecoration(
                     color: task.priorityColor,
-                    borderRadius: BorderRadius.circular(2),
+                    borderRadius: AtharRadii.radiusXxxs,
                   ),
                 ),
               ],

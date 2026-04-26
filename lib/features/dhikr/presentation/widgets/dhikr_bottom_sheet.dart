@@ -121,7 +121,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
                   margin: EdgeInsets.only(bottom: 16.h),
                   decoration: BoxDecoration(
                     color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(2),
+                    borderRadius: AtharRadii.radiusXxxs,
                   ),
                 ),
                 // ✅ الصف العلوي الجديد (إغلاق - عنوان - تحديث)
@@ -162,7 +162,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
 
                 // شريط التقدم الخطي
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: AtharRadii.radiusXxs,
                   child: LinearProgressIndicator(
                     value: progress,
                     minHeight: 8.h,
@@ -252,7 +252,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
           color: isCompleted
               ? Colors.green.withValues(alpha: 0.1)
               : Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(12.r),
+          borderRadius: AtharRadii.radiusMd,
           border: Border.all(
             color: isCompleted
                 ? Colors.transparent
@@ -298,7 +298,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
                     color: isCompleted
                         ? Colors.green
                         : Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(20.r),
+                    borderRadius: AtharRadii.radiusXl,
                   ),
                   child: Text(
                     isCompleted

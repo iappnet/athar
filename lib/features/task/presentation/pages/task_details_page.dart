@@ -446,7 +446,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
           padding: EdgeInsets.symmetric(vertical: 10.h),
           decoration: BoxDecoration(
             color: isSelected ? colorScheme.surface : Colors.transparent,
-            borderRadius: BorderRadius.circular(10.r),
+            borderRadius: AtharRadii.radiusMd,
             boxShadow: isSelected
                 ? [const BoxShadow(color: Colors.black12, blurRadius: 4)]
                 : [],

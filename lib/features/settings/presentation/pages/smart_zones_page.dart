@@ -197,7 +197,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: colorScheme.primary,
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: AtharRadii.radiusLg,
         boxShadow: [
           BoxShadow(
             color: colorScheme.primary.withValues(alpha: 0.3),
@@ -264,7 +264,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: AtharRadii.radiusLg,
         border: Border.all(color: colorScheme.outlineVariant),
         boxShadow: [
           BoxShadow(
@@ -380,7 +380,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                 decoration: BoxDecoration(
                   color: Colors.grey.shade50,
-                  borderRadius: BorderRadius.circular(8.r),
+                  borderRadius: AtharRadii.radiusSm,
                 ),
                 child: Row(
                   children: [
@@ -407,7 +407,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                         ),
                         decoration: BoxDecoration(
                           color: categoryColor.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(12.r),
+                          borderRadius: AtharRadii.radiusMd,
                           border: Border.all(
                             color: categoryColor.withValues(alpha: 0.3),
                           ),

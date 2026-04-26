@@ -49,7 +49,7 @@ class DurationPicker extends StatelessWidget {
                   backgroundColor: colorScheme.surfaceContainerLowest,
                   side: BorderSide.none,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: AtharRadii.radiusXl,
                   ),
                 ),
               );

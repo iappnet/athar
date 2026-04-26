@@ -104,7 +104,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
     return Container(
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AtharRadii.radiusMd,
       ),
       padding: EdgeInsets.all(4.w),
       child: Row(
@@ -155,7 +155,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
             color: isSelected
                 ? colorScheme.primaryContainer
                 : Colors.transparent,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: AtharRadii.radiusMd,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -289,7 +289,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
           color: isSelected
               ? colorScheme.primaryContainer
               : colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: AtharRadii.radiusMd,
           border: Border.all(
             color: isSelected ? colorScheme.primary : Colors.transparent,
             width: 1.5,
@@ -335,7 +335,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
           color: isSelected
               ? colorScheme.secondaryContainer
               : colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: AtharRadii.radiusSm,
         ),
         child: Text(
           label,
@@ -472,7 +472,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
           color: isSelected
               ? info.color.withValues(alpha: 0.2)
               : colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: AtharRadii.radiusMd,
           border: Border.all(
             color: isSelected ? info.color : Colors.transparent,
             width: 1.5,
@@ -515,7 +515,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
           color: isSelected
               ? colorScheme.tertiaryContainer
               : colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: AtharRadii.radiusSm,
         ),
         child: Text(
           label,
@@ -558,7 +558,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
         padding: EdgeInsets.all(20.w),
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: AtharRadii.radiusLg,
           border: Border.all(color: colorScheme.outline.withValues(alpha: 0.3)),
         ),
         child: Row(
@@ -719,7 +719,7 @@ class TimeSlotDisplay extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: AtharRadii.radiusSm,
           border: Border.all(color: colorScheme.outline.withValues(alpha: 0.3)),
         ),
         child: Row(

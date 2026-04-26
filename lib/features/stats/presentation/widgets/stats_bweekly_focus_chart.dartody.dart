@@ -114,7 +114,7 @@ class WeeklyFocusChart extends StatelessWidget {
                             ? colorScheme.primary
                             : colorScheme.primary.withValues(alpha: 0.3),
                         width: 16.w,
-                        borderRadius: BorderRadius.circular(4),
+                        borderRadius: AtharRadii.radiusXxs,
                         backDrawRodData: BackgroundBarChartRodData(
                           show: true,
                           toY: maxY * 1.2,

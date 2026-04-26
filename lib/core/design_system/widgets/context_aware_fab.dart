@@ -239,7 +239,7 @@ class ContextAwareFabController {
                   height: 4.h,
                   decoration: BoxDecoration(
                     color: colorScheme.outline.withValues(alpha: 0.3),
-                    borderRadius: BorderRadius.circular(2.r),
+                    borderRadius: AtharRadii.radiusXxxs,
                   ),
                 ),
                 SizedBox(height: 20.h),
@@ -293,7 +293,7 @@ class ContextAwareFabController {
             height: 64.h,
             decoration: BoxDecoration(
               color: option.color.withValues(alpha: isDark ? 0.2 : 0.12),
-              borderRadius: BorderRadius.circular(20.r),
+              borderRadius: AtharRadii.radiusXl,
               border: Border.all(
                 color: option.color.withValues(alpha: 0.3),
                 width: 1.5,

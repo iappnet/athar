@@ -167,7 +167,7 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
               // ═══════════════════════════════════════════════════════════════
               Expanded(
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(30.r),
+                  borderRadius: AtharRadii.radiusXxxl,
                   child: BackdropFilter(
                     filter: ImageFilter.blur(
                       sigmaX: widget.blurSigma + 14,
@@ -177,7 +177,7 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
                       height: 66.h,
                       decoration: BoxDecoration(
                         color: glassBackground,
-                        borderRadius: BorderRadius.circular(30.r),
+                        borderRadius: AtharRadii.radiusXxxl,
                         border: Border.all(color: glassBorder, width: 1.2),
                         boxShadow: [
                           BoxShadow(
@@ -204,7 +204,7 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
                               child: Container(
                                 height: 1.4.h,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(999),
+                                  borderRadius: AtharRadii.radiusFull,
                                   gradient: LinearGradient(
                                     colors: [
                                       Colors.white.withValues(alpha: 0),
@@ -220,7 +220,7 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
                             child: IgnorePointer(
                               child: DecoratedBox(
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30.r),
+                                  borderRadius: AtharRadii.radiusXxxl,
                                   gradient: LinearGradient(
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
@@ -299,7 +299,7 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
                     ? Colors.white.withValues(alpha: 0.14)
                     : Colors.white.withValues(alpha: 0.38))
               : Colors.transparent,
-          borderRadius: BorderRadius.circular(20.r),
+          borderRadius: AtharRadii.radiusXl,
           border: isSelected
               ? Border.all(color: Colors.white.withValues(alpha: 0.7))
               : null,
@@ -332,7 +332,7 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
                         ),
                         decoration: BoxDecoration(
                           color: colorScheme.error,
-                          borderRadius: BorderRadius.circular(10.r),
+                          borderRadius: AtharRadii.radiusMd,
                         ),
                         child: Text(
                           item.badge!,
@@ -432,7 +432,7 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
                       Colors.white.withValues(alpha: 0.0),
                     ],
                   ),
-                  borderRadius: BorderRadius.circular(4.r),
+                  borderRadius: AtharRadii.radiusXxs,
                 ),
               ),
             ),

@@ -222,7 +222,7 @@ class _PrayerMonthViewState extends State<PrayerMonthView> {
               : isToday
               ? colorScheme.primary.withValues(alpha: 0.1)
               : Colors.transparent,
-          borderRadius: BorderRadius.circular(8.r),
+          borderRadius: AtharRadii.radiusSm,
           border: Border.all(
             color: isToday && !isSelected
                 ? colorScheme.primary
@@ -368,7 +368,7 @@ class _PrayerMonthViewState extends State<PrayerMonthView> {
                     color: isSunrise
                         ? colorScheme.surfaceContainerHighest
                         : colorScheme.primary.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(12.r),
+                    borderRadius: AtharRadii.radiusMd,
                     border: Border.all(
                       color: isSunrise
                           ? colorScheme.outlineVariant

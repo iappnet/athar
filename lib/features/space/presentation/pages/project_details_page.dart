@@ -222,7 +222,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
             decoration: BoxDecoration(
               color: colorScheme.surface,
-              borderRadius: BorderRadius.circular(20.r),
+              borderRadius: AtharRadii.radiusXl,
               border: Border.all(color: colorScheme.outlineVariant),
             ),
             child: DropdownButtonHideUnderline(
@@ -364,7 +364,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                     ),
                     decoration: BoxDecoration(
                       color: countdownColor.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(20.r),
+                      borderRadius: AtharRadii.radiusXl,
                     ),
                     child: Row(
                       children: [
@@ -406,7 +406,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
           ),
           SizedBox(height: 6.h),
           ClipRRect(
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: AtharRadii.radiusXxs,
             child: LinearProgressIndicator(
               value: progress,
               backgroundColor: colorScheme.outlineVariant,
@@ -479,7 +479,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                     height: 4.h,
                     decoration: BoxDecoration(
                       color: colorScheme.outlineVariant,
-                      borderRadius: BorderRadius.circular(2),
+                      borderRadius: AtharRadii.radiusXxxs,
                     ),
                   ),
                 ),

@@ -327,7 +327,7 @@ class AtharBottomSheet extends StatelessWidget {
               height: 4,
               decoration: BoxDecoration(
                 color: colorScheme.surfaceContainerHigh,
-                borderRadius: BorderRadius.circular(2),
+                borderRadius: AtharRadii.radiusXxxs,
               ),
             ),
           ),

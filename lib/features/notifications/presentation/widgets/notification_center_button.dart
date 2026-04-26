@@ -39,7 +39,7 @@ class NotificationCenterButton extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: colorScheme.error,
-                    borderRadius: BorderRadius.circular(999),
+                    borderRadius: AtharRadii.radiusFull,
                   ),
                   constraints: const BoxConstraints(minWidth: 18, minHeight: 18),
                   child: Text(

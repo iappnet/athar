@@ -139,7 +139,7 @@ class _AddMedicineSheetState extends State<AddMedicineSheet> {
                   decoration: BoxDecoration(
                     // ✅ Colors.grey.shade300 → colors.borderLight
                     color: colorScheme.outlineVariant,
-                    borderRadius: BorderRadius.circular(2),
+                    borderRadius: AtharRadii.radiusXxxs,
                   ),
                 ),
               ),

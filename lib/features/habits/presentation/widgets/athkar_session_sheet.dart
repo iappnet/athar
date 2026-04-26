@@ -128,7 +128,7 @@ class _AthkarSessionSheetState extends State<AthkarSessionSheet> {
 
                 // شريط التقدم الخطي
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: AtharRadii.radiusXxs,
                   child: LinearProgressIndicator(
                     value: totalProgress,
                     minHeight: 6.h,

@@ -148,7 +148,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               padding: EdgeInsets.symmetric(vertical: 16.h),
                               minimumSize: Size(double.infinity, 50.h),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.r),
+                                borderRadius: AtharRadii.radiusMd,
                               ),
                             ),
                             child: Text(

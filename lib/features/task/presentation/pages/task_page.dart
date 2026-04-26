@@ -422,7 +422,7 @@ class _TasksPageViewState extends State<TasksPageView> {
                     ),
                     decoration: BoxDecoration(
                       color: colorScheme.surface,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: AtharRadii.radiusMd,
                     ),
                     child: Text(
                       "${tasks.length}",

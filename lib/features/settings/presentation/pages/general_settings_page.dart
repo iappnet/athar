@@ -61,7 +61,7 @@ class GeneralSettingsPage extends StatelessWidget {
                           Card(
                             elevation: 2,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.r),
+                              borderRadius: AtharRadii.radiusMd,
                             ),
                             child: ListTile(
                               contentPadding: EdgeInsets.all(12.w),
@@ -147,7 +147,7 @@ class GeneralSettingsPage extends StatelessWidget {
                         color: Colors.purple.withValues(alpha: 0.05),
                         elevation: 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.r),
+                          borderRadius: AtharRadii.radiusMd,
                           side: BorderSide(
                             color: Colors.purple.withValues(alpha: 0.2),
                           ),
@@ -199,7 +199,7 @@ class GeneralSettingsPage extends StatelessWidget {
                       padding: EdgeInsets.all(8.w),
                       decoration: BoxDecoration(
                         color: Colors.amber.shade700.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(8.r),
+                        borderRadius: AtharRadii.radiusSm,
                       ),
                       child: Icon(
                         Icons.workspace_premium_rounded,
@@ -598,7 +598,7 @@ class GeneralSettingsPage extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: AtharRadii.radiusLg,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.02),

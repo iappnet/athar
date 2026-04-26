@@ -283,7 +283,7 @@ class _SpaceListPageState extends State<SpaceListPage> {
                           ),
                           decoration: BoxDecoration(
                             color: Colors.orange.shade100,
-                            borderRadius: BorderRadius.circular(4.r),
+                            borderRadius: AtharRadii.radiusXxs,
                           ),
                           child: Text(
                             'تجريبي',

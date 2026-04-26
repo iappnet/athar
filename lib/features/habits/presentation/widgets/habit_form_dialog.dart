@@ -100,7 +100,7 @@ class _HabitFormSheetState extends State<HabitFormSheet> {
                 height: 4.h,
                 decoration: BoxDecoration(
                   color: colorScheme.outlineVariant,
-                  borderRadius: BorderRadius.circular(2),
+                  borderRadius: AtharRadii.radiusXxxs,
                 ),
               ),
             ),

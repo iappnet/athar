@@ -206,7 +206,7 @@ class _UpgradeNudge extends StatelessWidget {
             margin: EdgeInsets.only(bottom: 20.h),
             decoration: BoxDecoration(
               color: colorScheme.outlineVariant,
-              borderRadius: BorderRadius.circular(2.r),
+              borderRadius: AtharRadii.radiusXxxs,
             ),
           ),
           Icon(
@@ -260,7 +260,7 @@ class FreeLimitBanner extends StatelessWidget {
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
         color: colorScheme.tertiaryContainer,
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: AtharRadii.radiusMd,
       ),
       child: Row(
         children: [

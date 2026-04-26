@@ -232,7 +232,7 @@ class _FocusPageState extends State<FocusPage>
           color: isSelected
               ? theme.primary.withValues(alpha: 0.3)
               : Colors.white.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: AtharRadii.radiusXl,
           border: Border.all(
             color: isSelected ? theme.primary : Colors.white.withValues(alpha: 0.2),
           ),
@@ -312,7 +312,7 @@ class _FocusPageState extends State<FocusPage>
         height: 48.w,
         decoration: BoxDecoration(
           color: Colors.white.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: AtharRadii.radiusLg,
           border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
           boxShadow: [
             BoxShadow(color: Colors.black.withValues(alpha: 0.2), blurRadius: 10),
@@ -342,7 +342,7 @@ class _FocusPageState extends State<FocusPage>
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
           decoration: BoxDecoration(
             color: theme.primary.withValues(alpha: 0.2),
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: AtharRadii.radiusXxl,
             border: Border.all(color: theme.primary.withValues(alpha: 0.3)),
           ),
           child: Text(
@@ -381,7 +381,7 @@ class _FocusPageState extends State<FocusPage>
               padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 20.h),
               decoration: BoxDecoration(
                 color: Colors.white.withValues(alpha: 0.05),
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: AtharRadii.radiusXxxl,
                 border: Border.all(
                   color: theme.primary.withValues(alpha: 0.3),
                   width: 2,

@@ -72,7 +72,7 @@ class ProjectSelector extends StatelessWidget {
           color: selectedProject != null
               ? colorScheme.primary.withValues(alpha: 0.1)
               : colorScheme.surfaceContainerLowest,
-          borderRadius: BorderRadius.circular(20.r),
+          borderRadius: AtharRadii.radiusXl,
           border: Border.all(
             color: selectedProject != null
                 ? colorScheme.primary

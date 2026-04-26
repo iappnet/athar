@@ -290,7 +290,7 @@ class _AssetDetailsPageState extends State<AssetDetailsPage>
           ),
           AtharGap.md,
           ClipRRect(
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: AtharRadii.radiusXs,
             child: LinearProgressIndicator(
               value: progress,
               backgroundColor: colorScheme.surfaceContainerHighest,

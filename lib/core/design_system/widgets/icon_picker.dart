@@ -150,7 +150,7 @@ class _IconPickerContentState extends State<_IconPickerContent> {
             height: 4.h,
             decoration: BoxDecoration(
               color: colorScheme.outline,
-              borderRadius: BorderRadius.circular(2.r),
+              borderRadius: AtharRadii.radiusXxxs,
             ),
           ),
           AtharGap.md,
@@ -175,7 +175,7 @@ class _IconPickerContentState extends State<_IconPickerContent> {
               hintText: l10n.searchIcons,
               prefixIcon: const Icon(Icons.search),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12.r),
+                borderRadius: AtharRadii.radiusMd,
               ),
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 16.w,
@@ -249,14 +249,14 @@ class _IconItem extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: AtharRadii.radiusMd,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
             color: isSelected
                 ? color.withValues(alpha: 0.2)
                 : colorScheme.surfaceContainerHighest,
-            borderRadius: BorderRadius.circular(12.r),
+            borderRadius: AtharRadii.radiusMd,
             border: Border.all(
               color: isSelected ? color : Colors.transparent,
               width: 2,

@@ -74,7 +74,7 @@ class _AddAppointmentSheetState extends State<AddAppointmentSheet> {
                 height: 4.h,
                 decoration: BoxDecoration(
                   color: colors.outlineVariant,
-                  borderRadius: BorderRadius.circular(2),
+                  borderRadius: AtharRadii.radiusXxxs,
                 ),
               ),
             ),
@@ -92,7 +92,7 @@ class _AddAppointmentSheetState extends State<AddAppointmentSheet> {
                 labelText: l10n.appointmentTitleLabel,
                 hintText: l10n.appointmentTitleHint,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
+                  borderRadius: AtharRadii.radiusMd,
                 ),
                 prefixIcon: const Icon(Icons.title),
               ),
@@ -209,7 +209,7 @@ class _AddAppointmentSheetState extends State<AddAppointmentSheet> {
                     decoration: InputDecoration(
                       labelText: l10n.appointmentDoctorLabel,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.r),
+                        borderRadius: AtharRadii.radiusMd,
                       ),
                       prefixIcon: const Icon(Icons.person_outline),
                     ),
@@ -222,7 +222,7 @@ class _AddAppointmentSheetState extends State<AddAppointmentSheet> {
                     decoration: InputDecoration(
                       labelText: l10n.appointmentLocationLabel,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.r),
+                        borderRadius: AtharRadii.radiusMd,
                       ),
                       prefixIcon: const Icon(Icons.location_on_outlined),
                     ),
@@ -285,7 +285,7 @@ class _AddAppointmentSheetState extends State<AddAppointmentSheet> {
               decoration: InputDecoration(
                 labelText: l10n.appointmentNotesLabel,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
+                  borderRadius: AtharRadii.radiusMd,
                 ),
                 prefixIcon: const Icon(Icons.notes),
               ),
@@ -370,7 +370,7 @@ class _AddAppointmentSheetState extends State<AddAppointmentSheet> {
       decoration: InputDecoration(
         labelText: label,
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8.r)),
+            borderRadius: AtharRadii.radiusSm),
         contentPadding:
             EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
       ),

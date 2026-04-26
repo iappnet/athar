@@ -208,7 +208,7 @@ class _PackCard extends StatelessWidget {
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: AtharRadii.radiusLg,
         side: BorderSide(
           color: isOwned
               ? iconColor.withValues(alpha: 0.6)
@@ -229,7 +229,7 @@ class _PackCard extends StatelessWidget {
                   height: 44.r,
                   decoration: BoxDecoration(
                     color: iconColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(10.r),
+                    borderRadius: AtharRadii.radiusMd,
                   ),
                   child: Icon(icon, color: iconColor, size: 22.sp),
                 ),
@@ -261,7 +261,7 @@ class _PackCard extends StatelessWidget {
                         EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                     decoration: BoxDecoration(
                       color: Colors.green.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(8.r),
+                      borderRadius: AtharRadii.radiusSm,
                     ),
                     child: Text(
                       'مفعّل',

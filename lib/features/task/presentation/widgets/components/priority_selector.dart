@@ -62,7 +62,7 @@ class PrioritySelector extends StatelessWidget {
       onSelected: onSelected,
       backgroundColor: colorScheme.surfaceContainerLowest,
       side: BorderSide.none,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      shape: RoundedRectangleBorder(borderRadius: AtharRadii.radiusXl),
     );
   }
 }

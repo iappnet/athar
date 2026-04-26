@@ -46,7 +46,7 @@ class AtharCheckbox extends StatelessWidget {
           color: enabled ? colorScheme.outline : colorScheme.outlineVariant,
           width: 2,
         ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+        shape: RoundedRectangleBorder(borderRadius: AtharRadii.radiusXxs),
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
     );
@@ -438,7 +438,7 @@ class AtharChip extends StatelessWidget {
                 const SizedBox(width: 4),
                 InkWell(
                   onTap: enabled ? onDelete : null,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: AtharRadii.radiusMd,
                   child: Icon(
                     deleteIcon ?? Icons.close,
                     size: 16,

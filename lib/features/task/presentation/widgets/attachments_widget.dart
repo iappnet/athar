@@ -149,7 +149,7 @@ class AttachmentsWidget extends StatelessWidget {
         width: 100.w,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12.r),
+          borderRadius: AtharRadii.radiusMd,
           border: Border.all(color: Colors.grey.shade200),
         ),
         child: Stack(
@@ -204,7 +204,7 @@ class AttachmentsWidget extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.black.withValues(alpha: 0.6),
-                    borderRadius: BorderRadius.circular(12.r),
+                    borderRadius: AtharRadii.radiusMd,
                   ),
                   child: Center(
                     child: Icon(
@@ -228,7 +228,7 @@ class AttachmentsWidget extends StatelessWidget {
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: Colors.grey.shade50,
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: AtharRadii.radiusMd,
         border: Border.all(
           color: Colors.grey.shade200,
           style: BorderStyle.solid,

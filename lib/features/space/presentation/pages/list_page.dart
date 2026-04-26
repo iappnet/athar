@@ -200,7 +200,7 @@ class _ListPageState extends State<ListPage> {
             value: isChecked,
             activeColor: colorScheme.outline,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: AtharRadii.radiusXxs,
             ),
             onChanged: (val) {
               context.read<ListCubit>().toggleItem(item);
@@ -294,7 +294,7 @@ class _ListPageState extends State<ListPage> {
                   hintText: l10n.listPageQuickAddHint,
                   hintStyle: TextStyle(color: colorScheme.outline),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.r),
+                    borderRadius: AtharRadii.radiusXxxl,
                     borderSide: BorderSide.none,
                   ),
                   filled: true,

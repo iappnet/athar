@@ -56,7 +56,7 @@ class _AtharDatePickerState extends State<AtharDatePicker> {
             margin: EdgeInsets.only(bottom: 20.h),
             decoration: BoxDecoration(
               color: colorScheme.outlineVariant,
-              borderRadius: BorderRadius.circular(2.r),
+              borderRadius: AtharRadii.radiusXxxs,
             ),
           ),
 
@@ -169,7 +169,7 @@ class _AtharDatePickerState extends State<AtharDatePicker> {
           padding: EdgeInsets.symmetric(vertical: 8.h),
           decoration: BoxDecoration(
             color: isActive ? colorScheme.surface : Colors.transparent,
-            borderRadius: BorderRadius.circular(8.r),
+            borderRadius: AtharRadii.radiusSm,
             boxShadow: isActive
                 ? [
                     BoxShadow(

@@ -120,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       backgroundColor: Colors.purple,
                       minimumSize: Size(double.infinity, 50.h),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
+                        borderRadius: AtharRadii.radiusMd,
                       ),
                     ),
                     child: Text(
@@ -153,7 +153,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.red.shade50,
-                      borderRadius: BorderRadius.circular(12.r),
+                      borderRadius: AtharRadii.radiusMd,
                       border: Border.all(color: Colors.red.shade100),
                     ),
                     child: ListTile(

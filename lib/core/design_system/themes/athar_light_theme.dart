@@ -340,7 +340,7 @@ class AtharLightTheme {
         }),
         checkColor: WidgetStateProperty.all(colors.onPrimary),
         side: BorderSide(color: colors.border, width: 2),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+        shape: RoundedRectangleBorder(borderRadius: AtharRadii.radiusXxs),
       ),
 
       // ─────────────────────────────────────────────────────────────

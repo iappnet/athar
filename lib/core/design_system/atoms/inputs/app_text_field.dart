@@ -27,9 +27,9 @@ class AtharTextField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: Icon(icon, color: Colors.purple, size: 20.sp),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
+        border: OutlineInputBorder(borderRadius: AtharRadii.radiusMd),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
+          borderRadius: AtharRadii.radiusMd,
           borderSide: const BorderSide(color: Colors.purple, width: 2),
         ),
         contentPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),

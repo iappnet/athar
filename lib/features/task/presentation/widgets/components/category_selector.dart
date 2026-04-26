@@ -87,7 +87,7 @@ class CategorySelector extends StatelessWidget {
                           ),
                           side: BorderSide.none,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.r),
+                            borderRadius: AtharRadii.radiusXl,
                           ),
                           onDeleted: cat.isDefault
                               ? null

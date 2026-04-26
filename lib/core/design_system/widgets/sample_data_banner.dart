@@ -125,7 +125,7 @@ class _SampleDataBannerState extends State<SampleDataBanner>
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-            borderRadius: BorderRadius.circular(16.r),
+            borderRadius: AtharRadii.radiusLg,
             boxShadow: [
               BoxShadow(
                 color: Colors.orange.withValues(alpha: 0.2),
@@ -209,7 +209,7 @@ class _SampleDataBannerState extends State<SampleDataBanner>
                         side: BorderSide(color: Colors.red.shade300),
                         padding: EdgeInsets.symmetric(vertical: 12.h),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.r),
+                          borderRadius: AtharRadii.radiusMd,
                         ),
                       ),
                       icon: _isLoading
@@ -242,7 +242,7 @@ class _SampleDataBannerState extends State<SampleDataBanner>
                         backgroundColor: Colors.orange.shade700,
                         padding: EdgeInsets.symmetric(vertical: 12.h),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.r),
+                          borderRadius: AtharRadii.radiusMd,
                         ),
                       ),
                       icon: Icon(Icons.check_rounded, size: 18.sp),
