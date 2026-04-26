@@ -42,6 +42,7 @@ import 'package:athar/features/space/presentation/cubit/space_cubit.dart';
 import 'package:athar/features/habits/presentation/cubit/habit_cubit.dart';
 import 'package:athar/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:athar/features/settings/presentation/cubit/settings_state.dart';
+import 'package:athar/features/settings/presentation/pages/settings_page.dart';
 import 'package:athar/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:athar/features/auth/presentation/cubit/auth_state.dart';
 
@@ -56,8 +57,19 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   int _currentIndex = 0;
   bool _isRailExpanded = true;
 
-  // ScrollController للتحكم في إخفاء الشريط
   final ScrollController _scrollController = ScrollController();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Auto-expand rail in landscape on iPad, collapse in portrait
+    if (ResponsiveHelper.isTablet(context)) {
+      final isLandscape = ResponsiveHelper.isLandscape(context);
+      if (_isRailExpanded != isLandscape) {
+        _isRailExpanded = isLandscape;
+      }
+    }
+  }
 
   // الصفحات
   late final List<Widget> _pages;
@@ -209,75 +221,107 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   // ═══════════════════════════════════════════════════════════════════════════
 
   Widget _buildTabletLayout(ColorScheme colorScheme, AppLocalizations l10n) {
-    // ✅ FIX: حذفنا isLandscape لأنه غير مستخدم
-    return Row(
-      children: [
-        // NavigationRail
-        AnimatedContainer(
-          duration: AtharAnimations.normal,
-          width: _isRailExpanded ? 200.w : 72.w,
-          child: NavigationRail(
-            selectedIndex: _currentIndex,
-            onDestinationSelected: _onTabTapped,
-            extended: _isRailExpanded,
-            minExtendedWidth: 200.w,
-            labelType: _isRailExpanded
-                ? NavigationRailLabelType.none
-                : NavigationRailLabelType.all,
-            backgroundColor: colorScheme.surface,
-            leading: _buildRailLeading(colorScheme),
-            trailing: _buildRailTrailing(colorScheme),
-            destinations: [
-              NavigationRailDestination(
-                icon: const Icon(AtharNavIcons.homeOutline),
-                selectedIcon: const Icon(AtharNavIcons.homeFilled),
-                label: Text(l10n.home),
-              ),
-              NavigationRailDestination(
-                icon: const Icon(AtharNavIcons.tasksOutline),
-                selectedIcon: const Icon(AtharNavIcons.tasksFilled),
-                label: Text(l10n.tasks),
-              ),
-              NavigationRailDestination(
-                icon: const Icon(AtharNavIcons.habitsOutline),
-                selectedIcon: const Icon(AtharNavIcons.habitsFilled),
-                label: Text(l10n.habits),
-              ),
-              NavigationRailDestination(
-                icon: const Icon(AtharNavIcons.spacesOutline),
-                selectedIcon: const Icon(AtharNavIcons.spacesFilled),
-                label: Text(l10n.spaces),
-              ),
-            ],
+    final isRTL = Directionality.of(context) == TextDirection.rtl;
+
+    final rail = AnimatedContainer(
+      duration: AtharAnimations.normal,
+      width: _isRailExpanded ? 200.w : 72.w,
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        border: Border(
+          left: isRTL
+              ? BorderSide.none
+              : BorderSide(
+                  color: colorScheme.outlineVariant.withValues(alpha: 0.4),
+                  width: 1,
+                ),
+          right: isRTL
+              ? BorderSide(
+                  color: colorScheme.outlineVariant.withValues(alpha: 0.4),
+                  width: 1,
+                )
+              : BorderSide.none,
+        ),
+      ),
+      child: SafeArea(
+        child: NavigationRail(
+          selectedIndex: _currentIndex,
+          onDestinationSelected: _onTabTapped,
+          extended: _isRailExpanded,
+          minExtendedWidth: 200.w,
+          minWidth: 72.w,
+          labelType: _isRailExpanded
+              ? NavigationRailLabelType.none
+              : NavigationRailLabelType.all,
+          backgroundColor: Colors.transparent,
+          indicatorColor: colorScheme.primaryContainer,
+          selectedIconTheme: IconThemeData(color: colorScheme.primary, size: 24),
+          unselectedIconTheme: IconThemeData(color: colorScheme.onSurfaceVariant, size: 24),
+          selectedLabelTextStyle: TextStyle(
+            color: colorScheme.primary,
+            fontWeight: FontWeight.w600,
+            fontSize: 13.sp,
           ),
+          unselectedLabelTextStyle: TextStyle(
+            color: colorScheme.onSurfaceVariant,
+            fontSize: 13.sp,
+          ),
+          leading: _buildRailLeading(colorScheme, isRTL),
+          trailing: _buildRailTrailing(colorScheme),
+          destinations: [
+            NavigationRailDestination(
+              icon: const Icon(AtharNavIcons.homeOutline),
+              selectedIcon: const Icon(AtharNavIcons.homeFilled),
+              label: Text(l10n.home),
+            ),
+            NavigationRailDestination(
+              icon: const Icon(AtharNavIcons.tasksOutline),
+              selectedIcon: const Icon(AtharNavIcons.tasksFilled),
+              label: Text(l10n.tasks),
+            ),
+            NavigationRailDestination(
+              icon: const Icon(AtharNavIcons.habitsOutline),
+              selectedIcon: const Icon(AtharNavIcons.habitsFilled),
+              label: Text(l10n.habits),
+            ),
+            NavigationRailDestination(
+              icon: const Icon(AtharNavIcons.spacesOutline),
+              selectedIcon: const Icon(AtharNavIcons.spacesFilled),
+              label: Text(l10n.spaces),
+            ),
+          ],
         ),
+      ),
+    );
 
-        // الخط الفاصل
-        VerticalDivider(
-          width: 1,
-          thickness: 1,
-          color: colorScheme.outlineVariant.withValues(alpha: 0.5),
-        ),
+    final content = Expanded(
+      child: SafeArea(
+        left: !isRTL,
+        right: isRTL,
+        child: _pages[_currentIndex],
+      ),
+    );
 
-        // المحتوى
-        Expanded(child: _pages[_currentIndex]),
-      ],
+    // Rail on the trailing edge (right in RTL, left in LTR)
+    return Row(
+      children: isRTL ? [content, rail] : [rail, content],
     );
   }
 
-  Widget _buildRailLeading(ColorScheme colorScheme) {
+  Widget _buildRailLeading(ColorScheme colorScheme, bool isRTL) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.h),
+      padding: EdgeInsets.symmetric(vertical: 12.h),
       child: IconButton(
-        onPressed: () {
-          setState(() {
-            _isRailExpanded = !_isRailExpanded;
-          });
-        },
+        onPressed: () => setState(() => _isRailExpanded = !_isRailExpanded),
         icon: AnimatedRotation(
-          turns: _isRailExpanded ? 0.5 : 0,
+          // In RTL: chevron_right collapses to the right, in LTR: chevron_left collapses left
+          turns: isRTL
+              ? (_isRailExpanded ? 0.0 : 0.5)
+              : (_isRailExpanded ? 0.5 : 0.0),
           duration: AtharAnimations.fast,
-          child: const Icon(Icons.chevron_left_rounded),
+          child: Icon(
+            isRTL ? Icons.chevron_right_rounded : Icons.chevron_left_rounded,
+          ),
         ),
         tooltip: _isRailExpanded ? 'تصغير القائمة' : 'توسيع القائمة',
       ),
@@ -289,12 +333,14 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Padding(
-          padding: EdgeInsets.only(bottom: 16.h),
+          padding: EdgeInsets.only(bottom: 24.h),
           child: IconButton(
-            onPressed: () {
-              // فتح الإعدادات
-            },
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const SettingsPage()),
+            ),
             icon: const Icon(Icons.settings_outlined),
+            color: colorScheme.onSurfaceVariant,
             tooltip: 'الإعدادات',
           ),
         ),
