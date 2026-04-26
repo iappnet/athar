@@ -111,6 +111,19 @@ class AtharTimeCalculator {
     return AtharTimePeriod.undefined;
   }
 
+  /// Approximate period from clock hour only — used when prayer times are unavailable.
+  /// Maps to greeting-friendly buckets: dawn/morning/noon/afternoon/maghrib/night.
+  static AtharTimePeriod approximatePeriod([DateTime? now]) {
+    final hour = (now ?? DateTime.now()).hour;
+    if (hour >= 4 && hour < 7)  return AtharTimePeriod.dawn;
+    if (hour >= 7 && hour < 12) return AtharTimePeriod.morning;
+    if (hour >= 12 && hour < 15) return AtharTimePeriod.noon;
+    if (hour >= 15 && hour < 18) return AtharTimePeriod.afternoon;
+    if (hour >= 18 && hour < 21) return AtharTimePeriod.maghrib;
+    if (hour >= 21 || hour < 4)  return AtharTimePeriod.night;
+    return AtharTimePeriod.undefined;
+  }
+
   /// دالة مساعدة لمعرفة هل الوقت الحالي هو وقت "الضحى" شرعاً
   static bool isDuhaTime(DateTime now, DateTime sunrise, DateTime dhuhr) {
     final start = sunrise.add(const Duration(minutes: 15));

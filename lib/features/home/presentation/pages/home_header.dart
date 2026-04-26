@@ -6,8 +6,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-// ✅ NEW: Unified Design System Import
 import 'package:athar/core/design_system/tokens.dart';
+import 'package:athar/core/time_engine/athar_time_calculator.dart';
+import 'package:athar/core/time_engine/athar_time_periods.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 
 class HomeHeader extends StatelessWidget {
@@ -19,15 +20,24 @@ class HomeHeader extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context);
 
-    // تحديد التحية حسب الوقت
-    final hour = DateTime.now().hour;
-    String greeting = l10n.welcomeBack;
-    if (hour < 12) {
-      greeting = l10n.goodMorningChamp;
-    } else if (hour < 17) {
-      greeting = l10n.haveANiceDay;
-    } else {
-      greeting = l10n.goodEveningSimple;
+    // تحديد التحية حسب الفترة الزمنية
+    final period = AtharTimeCalculator.approximatePeriod();
+    final String greeting;
+    switch (period) {
+      case AtharTimePeriod.dawn:
+      case AtharTimePeriod.bakur:
+      case AtharTimePeriod.morning:
+      case AtharTimePeriod.duha:
+        greeting = l10n.goodMorningChamp;
+      case AtharTimePeriod.noon:
+      case AtharTimePeriod.afternoon:
+        greeting = l10n.haveANiceDay;
+      case AtharTimePeriod.maghrib:
+      case AtharTimePeriod.isha:
+      case AtharTimePeriod.night:
+      case AtharTimePeriod.lastThird:
+      case AtharTimePeriod.undefined:
+        greeting = l10n.goodEveningSimple;
     }
 
     // تنسيق التاريخ

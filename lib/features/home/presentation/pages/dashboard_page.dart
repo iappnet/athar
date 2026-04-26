@@ -19,6 +19,8 @@ import 'package:athar/features/notifications/presentation/widgets/notification_c
 import 'package:athar/features/settings/presentation/pages/general_settings_page.dart';
 
 import '../../../../core/di/injection.dart';
+import '../../../../core/time_engine/athar_time_calculator.dart';
+import '../../../../core/time_engine/athar_time_periods.dart';
 import 'package:athar/core/design_system/molecules/cards/smart_prayer_wrapper.dart';
 import 'package:athar/features/home/presentation/pages/smart_habits_strip.dart';
 import '../../../habits/presentation/cubit/habit_cubit.dart';
@@ -36,19 +38,27 @@ class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
 
   String _getSmartGreeting(AppLocalizations l10n, String? userName) {
-    final hour = DateTime.now().hour;
+    final period = AtharTimeCalculator.approximatePeriod();
     final name = (userName != null && userName.isNotEmpty)
         ? l10n.greetingName(userName)
         : "";
 
-    if (hour >= 5 && hour < 12) {
-      return l10n.goodMorning(name);
-    } else if (hour >= 12 && hour < 17) {
-      return l10n.goodAfternoon(name);
-    } else if (hour >= 17 && hour < 21) {
-      return l10n.goodEvening(name);
-    } else {
-      return l10n.goodNight(name);
+    switch (period) {
+      case AtharTimePeriod.dawn:
+      case AtharTimePeriod.bakur:
+      case AtharTimePeriod.morning:
+      case AtharTimePeriod.duha:
+        return l10n.goodMorning(name);
+      case AtharTimePeriod.noon:
+      case AtharTimePeriod.afternoon:
+        return l10n.goodAfternoon(name);
+      case AtharTimePeriod.maghrib:
+      case AtharTimePeriod.isha:
+        return l10n.goodEvening(name);
+      case AtharTimePeriod.night:
+      case AtharTimePeriod.lastThird:
+      case AtharTimePeriod.undefined:
+        return l10n.goodNight(name);
     }
   }
 
