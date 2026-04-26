@@ -103,6 +103,7 @@ class DashboardPage extends StatelessWidget {
           }
         },
         child: BlocBuilder<AuthCubit, AuthState>(
+          buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
           builder: (context, authState) {
             String? currentUserName;
 
@@ -308,6 +309,7 @@ class DashboardPage extends StatelessWidget {
   Widget _buildSyncStatusHeader(BuildContext context, ColorScheme colorScheme) {
     final l10n = AppLocalizations.of(context);
     return BlocBuilder<AuthCubit, AuthState>(
+      buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
       builder: (context, authState) {
         if (authState is AuthGuest || authState is AuthUnauthenticated) {
           return const SizedBox.shrink();
@@ -322,6 +324,7 @@ class DashboardPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               BlocBuilder<SyncCubit, SyncState>(
+                buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
                 builder: (context, state) {
                   final isLoading = state is SyncLoading;
 

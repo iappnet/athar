@@ -9,6 +9,7 @@ import '../cubit/auth_state.dart';
 
 // ✅ 1. استيراد SettingsCubit و DeleteAccountDialog
 import '../../../settings/presentation/widgets/delete_account_dialog.dart';
+import 'package:athar/core/design_system/tokens.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

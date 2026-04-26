@@ -12,6 +12,7 @@ import '../../../../l10n/generated/app_localizations.dart';
 import '../cubit/focus_cubit.dart' hide Ticker;
 import '../cubit/focus_state.dart';
 import '../widgets/fluid_engine.dart';
+import 'package:athar/core/design_system/tokens.dart';
 
 /// أنواع خلفية التركيز
 enum FocusBackgroundType {

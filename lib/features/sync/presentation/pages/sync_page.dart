@@ -5,6 +5,7 @@ import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:athar/core/design_system/tokens.dart';
 
 class SyncPage extends StatelessWidget {
   const SyncPage({super.key});
@@ -24,6 +25,7 @@ class SyncPage extends StatelessWidget {
           elevation: 0,
         ),
         body: BlocBuilder<SyncCubit, SyncState>(
+          buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
           builder: (context, state) {
             return Center(
               child: Padding(

@@ -7,6 +7,7 @@ import '../../../../features/settings/data/models/user_settings.dart';
 import '../../../../features/prayer/presentation/cubit/prayer_cubit.dart';
 import '../../../../features/prayer/presentation/cubit/prayer_state.dart';
 import 'next_prayer_card.dart';
+import 'package:athar/core/design_system/tokens.dart';
 
 // ✅ تعريف أنواع الصفحات التي تستخدم البطاقة
 enum PageType { dashboard, tasks, habits, projects }

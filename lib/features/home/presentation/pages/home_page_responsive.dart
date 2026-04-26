@@ -8,6 +8,7 @@ import '../../../../core/layouts/responsive_page_wrapper.dart';
 import '../../../../core/layouts/responsive_app_bar.dart';
 import '../../../../core/utils/responsive_helper.dart';
 import '../../../../l10n/generated/app_localizations.dart';
+import 'package:athar/core/design_system/tokens.dart';
 // استيراد الـ cubits والـ widgets الخاصة بك
 
 /// الصفحة الرئيسية المحسنة للتابلت والموبايل

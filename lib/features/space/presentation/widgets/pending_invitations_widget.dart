@@ -3,6 +3,7 @@
 import 'package:athar/features/space/presentation/cubit/space_members_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:athar/core/design_system/tokens.dart';
 
 class PendingInvitationsWidget extends StatelessWidget {
   const PendingInvitationsWidget({super.key});
@@ -23,7 +24,7 @@ class PendingInvitationsWidget extends StatelessWidget {
                   child: Row(
                     children: [
                       Icon(Icons.mail, color: Theme.of(context).primaryColor),
-                      const AtharGap.hSm,
+                      AtharGap.hSm,
                       Text(
                         'دعوات معلقة (${state.invitations.length})',
                         style: const TextStyle(

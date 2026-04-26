@@ -8,6 +8,7 @@ import '../../data/models/category_model.dart';
 import '../cubit/settings_cubit.dart';
 import '../cubit/settings_state.dart';
 import '../cubit/category_cubit.dart';
+import 'package:athar/core/design_system/tokens.dart';
 
 class SmartZonesPage extends StatefulWidget {
   const SmartZonesPage({super.key});

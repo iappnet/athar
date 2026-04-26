@@ -3,6 +3,7 @@ import 'package:athar/features/notifications/presentation/cubit/notifications_st
 import 'package:athar/features/notifications/presentation/pages/notification_center_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:athar/core/design_system/tokens.dart';
 
 class NotificationCenterButton extends StatelessWidget {
   const NotificationCenterButton({super.key});

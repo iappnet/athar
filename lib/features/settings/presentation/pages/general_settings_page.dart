@@ -15,6 +15,7 @@ import '../../../auth/presentation/cubit/auth_state.dart';
 import '../../../auth/presentation/pages/login_page.dart';
 import '../../../auth/presentation/pages/profile_page.dart';
 import '../../../subscription/presentation/pages/subscription_page.dart';
+import 'package:athar/core/design_system/tokens.dart';
 
 class GeneralSettingsPage extends StatelessWidget {
   const GeneralSettingsPage({super.key});

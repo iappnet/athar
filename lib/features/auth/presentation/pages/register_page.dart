@@ -9,6 +9,7 @@ import '../cubit/auth_state.dart';
 // ✅ 1. إضافة استيرادات الحقن والمزامنة
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/features/sync/presentation/cubit/sync_cubit.dart';
+import 'package:athar/core/design_system/tokens.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

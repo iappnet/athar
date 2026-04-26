@@ -1,4 +1,3 @@
-import 'package:athar/core/design_system/tokens/athar_radii.dart';
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/core/services/deep_link_service.dart';
 import 'package:athar/core/services/local_notification_service.dart';
@@ -11,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:athar/core/design_system/tokens.dart';
 
 class NotificationCenterPage extends StatefulWidget {
   const NotificationCenterPage({super.key});
