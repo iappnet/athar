@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/core/services/automation_service.dart';
+import 'package:athar/features/stats/domain/repositories/i_stats_repository.dart';
 import 'package:athar/core/services/file_service.dart';
 import 'package:athar/core/services/sync_service.dart';
 import 'package:athar/core/services/task_notification_scheduler.dart';
+import 'package:athar/core/services/widget_data_service.dart';
 import 'package:athar/core/time_engine/time_slot_mixin.dart';
 import 'package:athar/features/settings/data/repositories/category_repository.dart';
 import 'package:athar/features/settings/domain/repositories/settings_repository.dart';
@@ -37,7 +39,8 @@ class TaskCubit extends Cubit<TaskState> {
   final TaskRepository _repository;
   final SettingsRepository _settingsRepository;
   final CategoryRepository _categoryRepository;
-  final SyncService _syncService = getIt<SyncService>();
+  final SyncService _syncService;
+  final WidgetDataService _widgetDataService;
   final TaskNotificationScheduler _taskNotificationScheduler;
   final SpaceRepository _spaceRepository;
   final PermissionService _permissionService;
@@ -67,6 +70,8 @@ class TaskCubit extends Cubit<TaskState> {
     this._spaceRepository,
     this._permissionService,
     this._taskNotificationScheduler,
+    this._syncService,
+    this._widgetDataService,
   ) : super(TaskInitial());
 
   // --- 1. المراقبة والجلب ---
@@ -210,7 +215,6 @@ class TaskCubit extends Cubit<TaskState> {
     return [
       FixedFilterType.all,
       FixedFilterType.urgent,
-      FixedFilterType.important,
       ...uniqueCategories,
     ];
   }
@@ -278,6 +282,8 @@ class TaskCubit extends Cubit<TaskState> {
         availableFilters: allFilters,
       ),
     );
+
+    unawaited(_widgetDataService.pushTaskData(_cachedTasks));
   }
 
   void changeFilter(FilterItem filter) {
@@ -303,6 +309,9 @@ class TaskCubit extends Cubit<TaskState> {
     DateTime? reminderTime,
     RecurrencePattern? recurrence,
   }) async {
+    // Await first subscription load so Pro users on slow networks are not
+    // incorrectly capped at the free limit during the startup race window.
+    await getIt<SubscriptionCubit>().ready;
     // Free-tier limit check
     if (!getIt<SubscriptionCubit>().hasUnlimitedTasksAndHabits) {
       final activeTasks = await _repository.getActiveTasks();
@@ -337,6 +346,7 @@ class TaskCubit extends Cubit<TaskState> {
           recurrence: recurrence,
           userId: userId,
         );
+        getIt<IStatsRepository>().invalidateCache();
         return;
       }
 
@@ -365,6 +375,7 @@ class TaskCubit extends Cubit<TaskState> {
       }
 
       await _repository.addTask(newTask);
+      getIt<IStatsRepository>().invalidateCache();
 
       if (validReminderTime != null) {
         await _taskNotificationScheduler.scheduleTask(newTask);
@@ -455,6 +466,16 @@ class TaskCubit extends Cubit<TaskState> {
     DateTime? reminderTime,
     RecurrencePattern? recurrence,
   }) async {
+    // Same subscription gate as addTask() — must stay in sync.
+    await getIt<SubscriptionCubit>().ready;
+    if (!getIt<SubscriptionCubit>().hasUnlimitedTasksAndHabits) {
+      final activeTasks = await _repository.getActiveTasks();
+      if (activeTasks.length >= SubscriptionConfig.freeTasksLimit) {
+        emit(TaskFreeLimitReached());
+        return;
+      }
+    }
+
     try {
       final userId = Supabase.instance.client.auth.currentUser?.id ?? '';
 
@@ -543,6 +564,7 @@ class TaskCubit extends Cubit<TaskState> {
   Future<void> toggleTaskCompletion(TaskModel task) async {
     try {
       await _repository.toggleTaskCompletion(task.id, !task.isCompleted);
+      getIt<IStatsRepository>().invalidateCache();
     } catch (e) {
       debugPrint("Error toggling task: $e");
     }
@@ -597,6 +619,7 @@ class TaskCubit extends Cubit<TaskState> {
         }
       }
       await _repository.deleteTask(taskId);
+      getIt<IStatsRepository>().invalidateCache();
     } catch (e) {
       if (isClosed) return;
       emit(TaskError("فشل حذف المهمة"));

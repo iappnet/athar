@@ -319,6 +319,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get email => 'Email';
 
   @override
+  String get emailOrUsername => 'Email or username';
+
+  @override
   String get password => 'Password';
 
   @override
@@ -1594,32 +1597,80 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcomeToApp => 'Welcome to Athar';
 
   @override
-  String get onboardingTitle1 => 'Organize Your Life';
+  String get onboardingCategory1 => 'Tasks & Habits';
+
+  @override
+  String get onboardingTitle1 => 'Own Your Day';
 
   @override
   String get onboardingDesc1 =>
-      'Manage your tasks and habits easily and effectively';
+      'Organize your tasks and habits in one place.\nStart your day with clarity and end it with pride.';
 
   @override
-  String get onboardingTitle2 => 'Keep Your Prayers';
+  String get onboardingChip11 => 'Smart Tasks';
+
+  @override
+  String get onboardingChip12 => 'Daily Habits';
+
+  @override
+  String get onboardingChip13 => 'Track Progress';
+
+  @override
+  String get onboardingCategory2 => 'Prayer & Dhikr';
+
+  @override
+  String get onboardingTitle2 => 'Never Miss a Prayer';
 
   @override
   String get onboardingDesc2 =>
-      'Accurate prayer time reminders and Qibla direction';
+      'Accurate prayer times based on your location,\nwith Qibla direction and daily dhikr.';
 
   @override
-  String get onboardingTitle3 => 'Focus and Achieve';
+  String get onboardingChip21 => 'Prayer Times';
+
+  @override
+  String get onboardingChip22 => 'Qibla';
+
+  @override
+  String get onboardingChip23 => 'Dhikr';
+
+  @override
+  String get onboardingCategory3 => 'Focus & Productivity';
+
+  @override
+  String get onboardingTitle3 => 'Focus on What Matters';
 
   @override
   String get onboardingDesc3 =>
-      'Use Pomodoro technique for maximum productivity';
+      'Focus mode blocks distractions\nand tracks your time for real results.';
 
   @override
-  String get onboardingTitle4 => 'Track Your Health';
+  String get onboardingChip31 => 'Pomodoro';
+
+  @override
+  String get onboardingChip32 => 'Block Distractions';
+
+  @override
+  String get onboardingChip33 => 'Statistics';
+
+  @override
+  String get onboardingCategory4 => 'Get Started';
+
+  @override
+  String get onboardingTitle4 => 'Live with More Impact';
 
   @override
   String get onboardingDesc4 =>
-      'Log your medicines, appointments, and health metrics';
+      'Join those building healthy habits\nand a productive, balanced life every day.';
+
+  @override
+  String get onboardingChip41 => 'Free to Start';
+
+  @override
+  String get onboardingChip42 => 'No Ads';
+
+  @override
+  String get onboardingChip43 => 'Full Privacy';
 
   @override
   String selectedCountLabel(int count) {
@@ -4065,6 +4116,124 @@ class AppLocalizationsEn extends AppLocalizations {
   String statsMinutesAbbr(int count) {
     return '$count min';
   }
+
+  @override
+  String get statsRange7Days => '7 days';
+
+  @override
+  String get statsRange30Days => '30 days';
+
+  @override
+  String get statsTodaySection => 'Today';
+
+  @override
+  String statsTodayTasks(int done, int total) {
+    return '$done/$total tasks';
+  }
+
+  @override
+  String statsTodayHabits(int done, int total) {
+    return '$done/$total habits';
+  }
+
+  @override
+  String statsTodayFocus(int minutes) {
+    return '${minutes}m focus';
+  }
+
+  @override
+  String get statsTasksSection => 'Tasks';
+
+  @override
+  String statsCompletionRate(int pct) {
+    return '$pct% done';
+  }
+
+  @override
+  String statsOverdueTasks(int count) {
+    return '$count overdue';
+  }
+
+  @override
+  String statsAvgDelay(int days) {
+    return 'Avg delay ${days}d';
+  }
+
+  @override
+  String get statsTasksByPriority => 'By priority';
+
+  @override
+  String get statsPriorityHigh => 'High';
+
+  @override
+  String get statsPriorityMedium => 'Medium';
+
+  @override
+  String get statsPriorityLow => 'Low';
+
+  @override
+  String get statsDailyCompletion => 'Daily completion';
+
+  @override
+  String get statsHabitsSection => 'Habits';
+
+  @override
+  String statsConsistency(int pct) {
+    return '$pct% consistency';
+  }
+
+  @override
+  String get statsTopStreaks => 'Top Streaks';
+
+  @override
+  String statsStreakDays(int days) {
+    return '${days}d';
+  }
+
+  @override
+  String get statsHeatmapTitle => 'Habit heatmap';
+
+  @override
+  String get statsFocusSection => 'Focus';
+
+  @override
+  String get statsFocusTotal => 'Total focus';
+
+  @override
+  String statsFocusHours(int h, int m) {
+    return '${h}h ${m}m';
+  }
+
+  @override
+  String get statsPeriodsSection => 'Productivity by period';
+
+  @override
+  String get statsDomainsSection => 'Domains';
+
+  @override
+  String get statsDomainNeglected => 'Needs attention';
+
+  @override
+  String get statsDomainOverloaded => 'Overloaded';
+
+  @override
+  String get statsInsightsSection => 'Insights';
+
+  @override
+  String get statsNoData => 'Not enough data';
+
+  @override
+  String get statsNoDataSub => 'Add tasks and habits to see a full analysis';
+
+  @override
+  String get statsUpgradeTitle => 'Detailed Statistics';
+
+  @override
+  String get statsUpgradeBody =>
+      'Subscribe to unlock full reports and advanced analytics';
+
+  @override
+  String get statsUpgradeCta => 'Subscribe Now';
 
   @override
   String get statsCardTitle => 'Athar Statistics';

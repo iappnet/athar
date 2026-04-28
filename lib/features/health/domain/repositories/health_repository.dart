@@ -33,4 +33,5 @@ abstract class HealthRepository {
   // ✅ للمواعيد القادمة
   Future<List<AppointmentModel>> getUpcomingAppointments();
   Future<List<AppointmentModel>> getAppointmentsWithReminders();
+  Future<List<AppointmentModel>> getAppointmentsForDay(DateTime date);
 }

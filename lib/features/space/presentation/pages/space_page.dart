@@ -92,8 +92,7 @@ class _SpaceDetailsPageState extends State<SpacePage> {
               onPressed: () => NavigationUtils.safeBack(context),
             ),
             actions: [
-              if (currentSpace.type ==
-                  'shared') // ✅ نستخدم currentSpace المحدثة
+              if (currentSpace.type == 'shared')
                 PopupMenuButton<String>(
                   icon: const Icon(Icons.more_vert),
                   onSelected: (value) {
@@ -106,7 +105,6 @@ class _SpaceDetailsPageState extends State<SpacePage> {
                         ),
                       );
                     } else if (value == 'settings') {
-                      // ✅ نمرر currentSpace المحدثة للنافذة!
                       showDialog(
                         context: context,
                         builder: (_) =>
@@ -188,22 +186,7 @@ class _SpaceDetailsPageState extends State<SpacePage> {
               return const SizedBox.shrink();
             },
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              final currentState = context.read<ModuleCubit>().state;
-              final existingModules = currentState is ModuleLoaded
-                  ? currentState.modules
-                  : <ModuleModel>[];
-              _showCreateModuleDialog(
-                context,
-                existingModules,
-                l10n,
-                colorScheme,
-              );
-            },
-            backgroundColor: colorScheme.primary,
-            child: const Icon(Icons.add),
-          ),
+          floatingActionButton: null,
         );
       },
     ),   // closes BlocBuilder
@@ -505,6 +488,7 @@ class _SpaceDetailsPageState extends State<SpacePage> {
     );
   }
 
+  // ignore: unused_element — keep for future use when context-aware FAB wires in
   void _showCreateModuleDialog(
     BuildContext context,
     List<ModuleModel> existingModules,

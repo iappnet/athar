@@ -14,19 +14,24 @@ platform :ios do
   desc "بناء ورفع إلى TestFlight"
   lane :beta do
     puts "🚀 بدء عملية Beta..."
-    
+
     increment_build_number(
       xcodeproj: "Runner.xcodeproj",
       build_number: latest_testflight_build_number + 1
     )
-    
-    Dir.chdir("..") do
+
+    project_root = File.expand_path("../..", __dir__)
+    Dir.chdir(project_root) do
       sh("flutter pub get")
-      sh("rm -rf build/ios build/native_assets")
+      # Keep build/native_assets — xcode_backend.dart needs objective_c.framework during archive
+      sh("rm -rf build/ios")
     end
-    
+
     cocoapods(clean_install: true, podfile: "Podfile")
-    
+
+    # Ensure Flutter bin is in PATH so xcodebuild Run Script phases can find it
+    ENV["PATH"] = "/Users/itech/Development/flutter/bin:#{ENV['PATH']}"
+
     build_app(
       workspace: "Runner.xcworkspace",
       scheme: "Runner",
@@ -34,7 +39,17 @@ platform :ios do
       output_directory: "./build",
       output_name: "Athar.ipa",
       clean: true,
-      include_bitcode: false
+      xcargs: "FLUTTER_BUILD_FLAGS='--no-tree-shake-icons'",
+      export_options: {
+        method: "app-store",
+        teamID: "755F6NKP7S",
+        provisioningProfiles: {
+          "com.iappsnet.athar" => "com.iappsnet.athar AppStore",
+          "com.iappsnet.athar.AtharPrayerWidget" => "com.iappsnet.athar.AtharPrayerWidget AppStore",
+          "com.iappsnet.athar.AtharTaskWidget" => "com.iappsnet.athar.AtharTaskWidget AppStore",
+          "com.iappsnet.athar.AtharHabitWidget" => "com.iappsnet.athar.AtharHabitWidget AppStore"
+        }
+      }
     )
     
     upload_to_testflight(
@@ -111,20 +126,21 @@ platform :ios do
       xcodeproj: "Runner.xcodeproj",
       build_number: latest_testflight_build_number + 1
     )
-    
-    Dir.chdir("..") do
+
+    project_root = File.expand_path("../..", __dir__)
+    Dir.chdir(project_root) do
       sh("flutter pub get")
-      sh("rm -rf build/ios build/native_assets")
+      sh("rm -rf build/ios")
+      sh("/Users/itech/Development/flutter/bin/flutter build ios --release --no-codesign --no-pub --no-tree-shake-icons")
     end
-    
-    cocoapods(clean_install: true, podfile: "Podfile")
-    
+
+    ENV["PATH"] = "/Users/itech/Development/flutter/bin:#{ENV['PATH']}"
+
     build_app(
       workspace: "Runner.xcworkspace",
       scheme: "Runner",
       export_method: "app-store",
-      clean: true,
-      include_bitcode: false
+      clean: false
     )
     
     deliver(

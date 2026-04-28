@@ -45,6 +45,7 @@ import 'package:athar/features/settings/presentation/cubit/settings_state.dart';
 import 'package:athar/features/settings/presentation/pages/settings_page.dart';
 import 'package:athar/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:athar/features/auth/presentation/cubit/auth_state.dart';
+import 'package:athar/features/health/presentation/cubit/health_cubit.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -119,6 +120,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
         ),
         BlocProvider(create: (context) => getIt<HabitCubit>()),
         BlocProvider(create: (context) => getIt<ModuleCubit>()),
+        BlocProvider(create: (context) => getIt<HealthCubit>()),
       ],
       child: Builder(
         builder: (newContext) {
@@ -375,7 +377,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
       onAddHabit: () => _openAddHabitSheet(parentContext),
       // ✅ FIX: استخدام Dialog بدلاً من AddSpaceSheet غير الموجود
       onAddSpace: () => _showCreateSpaceDialog(parentContext),
-      onAddModule: () => _openAddModuleSheet(parentContext),
+      onAddModule: (_) => _openAddModuleSheet(parentContext),
     );
 
     controller.execute();
@@ -391,9 +393,11 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) {
-        return BlocProvider.value(
-          value: parentContext.read<TaskCubit>(),
-          // ✅ FIX: استخدام EntityType بدلاً من AddSheetType
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: parentContext.read<TaskCubit>()),
+            BlocProvider.value(value: parentContext.read<HealthCubit>()),
+          ],
           child: const UnifiedAddSheet(initialType: EntityType.task),
         );
       },
@@ -406,9 +410,11 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) {
-        return BlocProvider.value(
-          value: parentContext.read<TaskCubit>(),
-          // ✅ FIX: استخدام EntityType بدلاً من AddSheetType
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: parentContext.read<TaskCubit>()),
+            BlocProvider.value(value: parentContext.read<HealthCubit>()),
+          ],
           child: const UnifiedAddSheet(initialType: EntityType.appointment),
         );
       },
@@ -421,9 +427,11 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) {
-        return BlocProvider.value(
-          value: parentContext.read<TaskCubit>(),
-          // ✅ FIX: استخدام EntityType بدلاً من AddSheetType
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: parentContext.read<TaskCubit>()),
+            BlocProvider.value(value: parentContext.read<HealthCubit>()),
+          ],
           child: const UnifiedAddSheet(initialType: EntityType.medicine),
         );
       },

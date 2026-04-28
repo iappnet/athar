@@ -66,6 +66,27 @@ class SyncRepositoryImpl implements SyncRepository {
   // ✅ دالة نقل البيانات (Migration) - الحل الجذري لمشكلة Guest UUID
   // -----------------------------------------------------------------------------
   Future<void> _migrateGuestData(String realUserId) async {
+    // If the guest data is demo/sample data (user explored the app and then
+    // signed up without creating anything real), delete it instead of
+    // migrating. claimLocalSpaces already handles this on first login, but
+    // this guard covers the sync path as well.
+    final settings = await _isar.userSettings.where().findFirst();
+    final isDemoData = settings != null &&
+        settings.sampleDataShown &&
+        !settings.sampleDataDismissed;
+
+    if (isDemoData) {
+      await _isar.writeTxn(() async {
+        await _isar.spaceModels.filter().ownerIdEqualTo('guest').deleteAll();
+        await _isar.taskModels.filter().userIdEqualTo('guest').deleteAll();
+        settings.sampleDataDismissed = true;
+        settings.sampleDataShown = false;
+        await _isar.userSettings.put(settings);
+      });
+      debugPrint("🗑️ Demo data cleared during sync migration");
+      return;
+    }
+
     await _isar.writeTxn(() async {
       // 1. نقل المساحات
       final guestSpaces = await _isar.spaceModels
@@ -75,7 +96,7 @@ class SyncRepositoryImpl implements SyncRepository {
 
       for (var space in guestSpaces) {
         space.ownerId = realUserId;
-        space.isSynced = false; // إجبار المزامنة لرفع المالك الجديد
+        space.isSynced = false;
         await _isar.spaceModels.put(space);
       }
 
@@ -87,11 +108,9 @@ class SyncRepositoryImpl implements SyncRepository {
 
       for (var task in guestTasks) {
         task.userId = realUserId;
-        task.isSynced = false; // إجبار المزامنة
+        task.isSynced = false;
         await _isar.taskModels.put(task);
       }
-
-      // ملاحظة: الموديولات لا تملك ownerId مباشر (تتبع المساحة)، لذا لا تحتاج تعديل
     });
   }
 

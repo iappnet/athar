@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:athar/core/config/subscription_config.dart';
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/core/services/habit_notification_scheduler.dart';
+import 'package:athar/features/stats/domain/repositories/i_stats_repository.dart';
+import 'package:athar/core/services/widget_data_service.dart';
 import 'package:athar/features/subscription/presentation/cubit/subscription_cubit.dart';
 import 'package:athar/features/health/presentation/cubit/health_state.dart';
 import 'package:athar/features/settings/domain/repositories/settings_repository.dart';
@@ -25,6 +27,7 @@ class HabitCubit extends Cubit<HabitState> {
   final HabitRepository _habitRepository;
   final PrayerRepository _prayerRepository;
   final SettingsRepository _settingsRepository;
+  final WidgetDataService _widgetDataService;
 
   StreamSubscription? _habitsSubscription;
   StreamSubscription? _settingsSubscription;
@@ -36,6 +39,7 @@ class HabitCubit extends Cubit<HabitState> {
     this._habitRepository,
     this._prayerRepository,
     this._settingsRepository,
+    this._widgetDataService,
   ) : super(HabitInitial());
 
   Future<void> loadHabits() async {
@@ -244,6 +248,8 @@ class HabitCubit extends Cubit<HabitState> {
         anyTimeHabits: anyTimeList,
       ),
     );
+
+    unawaited(_widgetDataService.pushHabitData(_cachedHabits));
   }
 
   Future<void> _checkAndResetHabits(
@@ -355,6 +361,7 @@ class HabitCubit extends Cubit<HabitState> {
     if (completedItems == totalItems) {
       habit.isCompleted = true;
       habit.lastCompletionDate = DateTime.now();
+      getIt<IStatsRepository>().invalidateCache();
     }
     habit.lastUpdated = DateTime.now();
     await _habitRepository.updateHabit(habit);
@@ -362,6 +369,9 @@ class HabitCubit extends Cubit<HabitState> {
 
   // داخل HabitCubit
   Future<void> addHabit(HabitModel habit) async {
+    // Await first subscription load so Pro users on slow networks are not
+    // incorrectly capped at the free limit during the startup race window.
+    await getIt<SubscriptionCubit>().ready;
     // Free-tier limit: count only regular (non-athkar) habits.
     if (!getIt<SubscriptionCubit>().hasUnlimitedTasksAndHabits) {
       final regularCount = _cachedHabits
@@ -375,6 +385,7 @@ class HabitCubit extends Cubit<HabitState> {
 
     try {
       await _habitRepository.addHabit(habit);
+      getIt<IStatsRepository>().invalidateCache();
       // ✅ جدولة التذكير فوراً
       if (habit.reminderEnabled && habit.reminderTime != null) {
         await getIt<HabitNotificationScheduler>().scheduleHabit(habit);
@@ -401,6 +412,7 @@ class HabitCubit extends Cubit<HabitState> {
 
   Future<void> deleteHabit(int id) async {
     await _habitRepository.deleteHabit(id);
+    getIt<IStatsRepository>().invalidateCache();
   }
 
   Map<DateTime, int> getHeatmapData(List<HabitModel> habits) {
@@ -465,6 +477,7 @@ class HabitCubit extends Cubit<HabitState> {
 
       habit.lastUpdated = DateTime.now();
       await _habitRepository.updateHabit(habit);
+      getIt<IStatsRepository>().invalidateCache();
 
       _cachedHabits[habitIndex] = habit;
       final settings = await _settingsRepository.getSettings();

@@ -1,3 +1,5 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 /// Central place for all subscription-related constants.
 /// Edit these values to change free-tier limits or product / entitlement
 /// identifiers without touching business logic.
@@ -6,9 +8,13 @@ class SubscriptionConfig {
   static const int freeTasksLimit = 20;
   static const int freeHabitsLimit = 5;
 
-  // ── RevenueCat API key ───────────────────────────────────────────────────
-  // iOS public SDK key from RevenueCat Dashboard → Project Settings → API Keys
-  static const String revenueCatApiKey = 'appl_TAwfeAYISMuxUNHfpJMoarBCeQp';
+  // ── RevenueCat SDK keys (loaded from .env, never hardcoded) ─────────────
+  // iOS key: RevenueCat Dashboard → Project Settings → API Keys (starts with appl_)
+  // Android key: same dashboard (starts with goog_)
+  static String get revenueCatIosKey =>
+      dotenv.get('REVENUE_CAT_IOS_KEY', fallback: '');
+  static String get revenueCatAndroidKey =>
+      dotenv.get('REVENUE_CAT_ANDROID_KEY', fallback: '');
 
   // ── Entitlement identifiers (must match RevenueCat dashboard exactly) ────
   /// Subscription — unlocks Spaces + Sync + unlimited tasks & habits.

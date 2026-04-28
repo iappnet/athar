@@ -20,128 +20,212 @@ class InboxPage extends StatelessWidget {
 
     return BlocProvider(
       create: (context) => getIt<InboxCubit>()..loadInvites(),
-      child: Scaffold(
-        backgroundColor: colorScheme.surface,
-        appBar: AppBar(
-          title: Text(
-            l10n.inboxTitle,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+      child: BlocListener<InboxCubit, InboxState>(
+        listener: (context, state) {
+          if (state is InboxAcceptSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('🎉 انضممت إلى "${state.spaceName}" بنجاح'),
+                backgroundColor: Colors.green,
+                duration: const Duration(seconds: 3),
+              ),
+            );
+          } else if (state is InboxRejectSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text('تم رفض الدعوة'),
+                backgroundColor: Colors.grey[700],
+              ),
+            );
+          } else if (state is InboxError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: colorScheme.error,
+              ),
+            );
+          }
+        },
+        child: Scaffold(
+          backgroundColor: colorScheme.surface,
+          appBar: AppBar(
+            title: Text(
+              l10n.inboxTitle,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            centerTitle: true,
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            foregroundColor: colorScheme.onSurface,
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.refresh_rounded),
+                onPressed: () => context.read<InboxCubit>().loadInvites(),
+              ),
+            ],
           ),
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          foregroundColor: colorScheme.onSurface,
-        ),
-        body: BlocBuilder<InboxCubit, InboxState>(
-          builder: (context, state) {
-            if (state is InboxLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is InboxEmpty) {
-              return _buildEmptyState(colorScheme, l10n);
-            } else if (state is InboxError) {
-              return Center(child: Text(state.message));
-            } else if (state is InboxLoaded) {
-              return ListView.builder(
-                padding: AtharSpacing.allXl,
-                itemCount: state.invitations.length,
-                itemBuilder: (context, index) {
-                  final invite = state.invitations[index];
+          body: BlocBuilder<InboxCubit, InboxState>(
+            builder: (context, state) {
+              if (state is InboxLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is InboxEmpty) {
+                return _buildEmptyState(colorScheme, l10n);
+              } else if (state is InboxError) {
+                return _buildErrorState(colorScheme, state.message, context);
+              } else if (state is InboxLoaded) {
+                return ListView.builder(
+                  padding: AtharSpacing.allXl,
+                  itemCount: state.invitations.length,
+                  itemBuilder: (context, index) {
+                    final invite = state.invitations[index];
+                    final spaceName = invite.spaceName?.isNotEmpty == true
+                        ? invite.spaceName!
+                        : 'مساحة غير معروفة';
+                    final inviterName = invite.inviterName?.isNotEmpty == true
+                        ? invite.inviterName!
+                        : 'مستخدم';
+                    final timeAgo = timeago.format(
+                      invite.createdAt ?? DateTime.now(),
+                      locale: 'ar',
+                    );
 
-                  final timeAgo = timeago.format(
-                    invite.createdAt ?? DateTime.now(),
-                    locale: 'ar',
-                  );
-
-                  return Card(
-                    margin: EdgeInsets.only(bottom: 12.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: AtharRadii.card,
-                    ),
-                    elevation: 2,
-                    child: Padding(
-                      padding: AtharSpacing.allXl,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.mail_outline,
-                                color: colorScheme.primary,
-                              ),
-                              AtharGap.hSm,
-                              Text(
-                                l10n.inboxNewInvite,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16.sp,
-                                ),
-                              ),
-                              const Spacer(),
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 8.w,
-                                  vertical: 2.h,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: colorScheme.surfaceContainerHighest,
-                                  borderRadius: AtharRadii.card,
-                                ),
-                                child: Text(
-                                  timeAgo,
-                                  style: TextStyle(
-                                    fontSize: 10.sp,
-                                    color: colorScheme.outline,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          AtharGap.sm,
-                          Text(
-                            l10n.inboxInviteMessage,
-                            style: TextStyle(
-                              color: colorScheme.onSurfaceVariant,
-                              fontSize: 14.sp,
-                              height: 1.5,
-                            ),
-                          ),
-                          AtharGap.lg,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              ElevatedButton.icon(
-                                onPressed: () {
-                                  context.read<InboxCubit>().acceptInvite(
-                                    invite.token,
-                                  );
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(l10n.inboxJoiningSpace),
-                                    ),
-                                  );
-                                },
-                                icon: const Icon(Icons.check, size: 18),
-                                label: Text(l10n.inboxAcceptInvite),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green,
-                                  foregroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: AtharRadii.radiusSm,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                    return Card(
+                      margin: EdgeInsets.only(bottom: 12.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: AtharRadii.card,
                       ),
-                    ),
-                  );
-                },
-              );
-            }
-            return const SizedBox.shrink();
-          },
+                      elevation: 2,
+                      child: Padding(
+                        padding: AtharSpacing.allXl,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Header row: icon + space name + time
+                            Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 22,
+                                  backgroundColor: (invite.spaceColor != null
+                                          ? Color(invite.spaceColor!)
+                                          : colorScheme.primary)
+                                      .withValues(alpha: 0.15),
+                                  child: Icon(
+                                    Icons.group_rounded,
+                                    color: invite.spaceColor != null
+                                        ? Color(invite.spaceColor!)
+                                        : colorScheme.primary,
+                                    size: 22,
+                                  ),
+                                ),
+                                SizedBox(width: 12.w),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        spaceName,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.sp,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        'دعوة من $inviterName',
+                                        style: TextStyle(
+                                          color: colorScheme.onSurfaceVariant,
+                                          fontSize: 13.sp,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 8.w,
+                                    vertical: 2.h,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: colorScheme.surfaceContainerHighest,
+                                    borderRadius: AtharRadii.card,
+                                  ),
+                                  child: Text(
+                                    timeAgo,
+                                    style: TextStyle(
+                                      fontSize: 10.sp,
+                                      color: colorScheme.outline,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 12.h),
+                            // Invite description
+                            Text(
+                              'دعاك $inviterName للانضمام إلى مساحة "$spaceName". انقر قبول للبدء بالتعاون.',
+                              style: TextStyle(
+                                color: colorScheme.onSurfaceVariant,
+                                fontSize: 13.sp,
+                                height: 1.5,
+                              ),
+                            ),
+                            SizedBox(height: 16.h),
+                            // Action buttons
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                // Reject button
+                                OutlinedButton.icon(
+                                  onPressed: () => context
+                                      .read<InboxCubit>()
+                                      .rejectInvite(invite.token),
+                                  icon: Icon(
+                                    Icons.close_rounded,
+                                    size: 16,
+                                    color: colorScheme.error,
+                                  ),
+                                  label: Text(
+                                    'رفض',
+                                    style: TextStyle(color: colorScheme.error),
+                                  ),
+                                  style: OutlinedButton.styleFrom(
+                                    side: BorderSide(color: colorScheme.error),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: AtharRadii.radiusSm,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 8.w),
+                                // Accept button
+                                ElevatedButton.icon(
+                                  onPressed: () => context
+                                      .read<InboxCubit>()
+                                      .acceptInvite(invite.token, spaceName),
+                                  icon: const Icon(Icons.check_rounded, size: 16),
+                                  label: Text(l10n.inboxAcceptInvite),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.green,
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: AtharRadii.radiusSm,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
         ),
       ),
     );
@@ -157,7 +241,7 @@ class InboxPage extends StatelessWidget {
             size: 80.sp,
             color: colorScheme.outlineVariant,
           ),
-          AtharGap.lg,
+          SizedBox(height: 16.h),
           Text(
             l10n.inboxEmptyTitle,
             style: TextStyle(
@@ -177,192 +261,30 @@ class InboxPage extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildErrorState(
+    ColorScheme colorScheme,
+    String message,
+    BuildContext context,
+  ) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.error_outline_rounded,
+            size: 60.sp,
+            color: colorScheme.error,
+          ),
+          SizedBox(height: 12.h),
+          Text(message, style: TextStyle(color: colorScheme.error)),
+          SizedBox(height: 12.h),
+          TextButton(
+            onPressed: () => context.read<InboxCubit>().loadInvites(),
+            child: const Text('إعادة المحاولة'),
+          ),
+        ],
+      ),
+    );
+  }
 }
-//----------------------------------------------------------------------
-// import 'package:athar/core/design_system/themes/app_colors.dart';
-// import 'package:athar/core/di/injection.dart';
-// import 'package:athar/features/space/presentation/cubit/inbox_cubit.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// // ✅ 1. استعادة مكتبة الوقت
-// import 'package:timeago/timeago.dart' as timeago;
-
-// class InboxPage extends StatelessWidget {
-//   const InboxPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     // ✅ 2. تهيئة اللغة العربية لمكتبة timeago
-//     timeago.setLocaleMessages('ar', timeago.ArMessages());
-
-//     return BlocProvider(
-//       create: (context) => getIt<InboxCubit>()..loadInvites(),
-//       child: Scaffold(
-//         backgroundColor: AppColors.background,
-//         appBar: AppBar(
-//           title: const Text(
-//             "صندوق الدعوات",
-//             style: TextStyle(
-//               fontFamily: 'Tajawal',
-//               fontWeight: FontWeight.bold,
-//             ),
-//           ),
-//           centerTitle: true,
-//           elevation: 0,
-//           backgroundColor: Colors.transparent,
-//           foregroundColor: AppColors.textPrimary,
-//         ),
-//         body: BlocBuilder<InboxCubit, InboxState>(
-//           builder: (context, state) {
-//             if (state is InboxLoading) {
-//               return const Center(child: CircularProgressIndicator());
-//             } else if (state is InboxEmpty) {
-//               return _buildEmptyState();
-//             } else if (state is InboxError) {
-//               return Center(child: Text(state.message));
-//             } else if (state is InboxLoaded) {
-//               return ListView.builder(
-//                 padding: EdgeInsets.all(16.w),
-//                 itemCount: state.invitations.length,
-//                 itemBuilder: (context, index) {
-//                   final invite = state.invitations[index];
-
-//                   // ✅ حساب الوقت المنقضي (تأكد أن created_at موجود في الموديل)
-//                   // إذا لم يكن موجوداً، يمكنك استخدام invite.expiresAt وطرح 7 أيام
-//                   final timeAgo = timeago.format(
-//                     invite.createdAt ?? DateTime.now(),
-//                     locale: 'ar',
-//                   );
-
-//                   return Card(
-//                     margin: EdgeInsets.only(bottom: 12.h),
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(12.r),
-//                     ),
-//                     elevation: 2,
-//                     child: Padding(
-//                       padding: EdgeInsets.all(16.w),
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         children: [
-//                           // الصف العلوي: الأيقونة + العنوان + الوقت
-//                           Row(
-//                             children: [
-//                               const Icon(
-//                                 Icons.mail_outline,
-//                                 color: AppColors.primary,
-//                               ),
-//                               SizedBox(width: 8.w),
-//                               Text(
-//                                 "دعوة جديدة",
-//                                 style: TextStyle(
-//                                   fontWeight: FontWeight.bold,
-//                                   fontSize: 16.sp,
-//                                   fontFamily: 'Tajawal',
-//                                 ),
-//                               ),
-//                               const Spacer(), // يدفع الوقت لليسار
-//                               // ✅ عرض الوقت هنا
-//                               Container(
-//                                 padding: EdgeInsets.symmetric(
-//                                   horizontal: 8.w,
-//                                   vertical: 2.h,
-//                                 ),
-//                                 decoration: BoxDecoration(
-//                                   color: Colors.grey.shade100,
-//                                   borderRadius: BorderRadius.circular(12.r),
-//                                 ),
-//                                 child: Text(
-//                                   timeAgo,
-//                                   style: TextStyle(
-//                                     fontSize: 10.sp,
-//                                     color: Colors.grey.shade600,
-//                                     fontFamily: 'Tajawal',
-//                                   ),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                           SizedBox(height: 8.h),
-//                           Text(
-//                             "لقد تمت دعوتك للانضمام إلى مساحة عمل جديدة.\nانقر قبول للبدء بالتعاون.",
-//                             style: TextStyle(
-//                               color: Colors.grey[700],
-//                               fontSize: 14.sp,
-//                               height: 1.5, // تحسين تباعد الأسطر
-//                             ),
-//                           ),
-//                           SizedBox(height: 16.h),
-//                           Row(
-//                             mainAxisAlignment: MainAxisAlignment.end,
-//                             children: [
-//                               ElevatedButton.icon(
-//                                 onPressed: () {
-//                                   context.read<InboxCubit>().acceptInvite(
-//                                     invite.token,
-//                                   );
-//                                   ScaffoldMessenger.of(context).showSnackBar(
-//                                     const SnackBar(
-//                                       content: Text(
-//                                         "جاري الانضمام للمساحة... 🚀",
-//                                       ),
-//                                     ),
-//                                   );
-//                                 },
-//                                 icon: const Icon(Icons.check, size: 18),
-//                                 label: const Text("قبول الدعوة"),
-//                                 style: ElevatedButton.styleFrom(
-//                                   backgroundColor: Colors.green,
-//                                   foregroundColor: Colors.white,
-//                                   shape: RoundedRectangleBorder(
-//                                     borderRadius: BorderRadius.circular(8.r),
-//                                   ),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                   );
-//                 },
-//               );
-//             }
-//             return const SizedBox.shrink();
-//           },
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildEmptyState() {
-//     return Center(
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           Icon(
-//             Icons.mark_email_read_outlined,
-//             size: 80.sp,
-//             color: Colors.grey.shade300,
-//           ),
-//           SizedBox(height: 16.h),
-//           Text(
-//             "لا توجد دعوات جديدة",
-//             style: TextStyle(
-//               fontSize: 18.sp,
-//               fontWeight: FontWeight.bold,
-//               color: Colors.grey,
-//               fontFamily: 'Tajawal',
-//             ),
-//           ),
-//           Text(
-//             "أنت جاهز تماماً! استمتع بوقتك",
-//             style: TextStyle(fontSize: 14.sp, color: Colors.grey.shade400),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-//----------------------------------------------------------------------

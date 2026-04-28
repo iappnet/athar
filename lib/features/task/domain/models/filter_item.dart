@@ -12,8 +12,10 @@ abstract class FilterItem {
 /// 1. الفلاتر الثابتة (Enum)
 enum FixedFilterType implements FilterItem {
   all("الكل"),
-  urgent("🔥 عاجل"),
-  important("⭐ مهم");
+  task("المهام"),
+  urgent("عاجل"),
+  medicine("الدواء"),
+  appointment("المواعيد");
 
   final String _label;
   const FixedFilterType(this._label);

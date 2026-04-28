@@ -1,3 +1,4 @@
+import 'package:athar/core/config/subscription_config.dart';
 import 'package:athar/features/subscription/domain/entities/subscription_status.dart';
 import 'package:athar/features/subscription/presentation/cubit/subscription_cubit.dart';
 import 'package:flutter/material.dart';
@@ -148,12 +149,25 @@ class _LockedScreen extends StatelessWidget {
                 ),
               ),
               AtharGap.md,
-              TextButton(
-                onPressed: () =>
-                    context.read<SubscriptionCubit>().restorePurchases(),
-                child: Text(
-                  'استعادة المشتريات السابقة',
-                  style: TextStyle(color: colorScheme.primary),
+              BlocListener<SubscriptionCubit, SubscriptionState>(
+                listenWhen: (_, curr) => curr is SubscriptionError,
+                listener: (context, state) {
+                  if (state is SubscriptionError) {
+                    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+                      SnackBar(
+                        content: Text(state.message),
+                        behavior: SnackBarBehavior.floating,
+                      ),
+                    );
+                  }
+                },
+                child: TextButton(
+                  onPressed: () =>
+                      context.read<SubscriptionCubit>().restorePurchases(),
+                  child: Text(
+                    'استعادة المشتريات السابقة',
+                    style: TextStyle(color: colorScheme.primary),
+                  ),
                 ),
               ),
             ],
@@ -172,7 +186,7 @@ class _LockedScreen extends StatelessWidget {
 void showUpgradeNudge(
   BuildContext context, {
   required String message,
-  String entitlementId = 'spaces_pro',
+  String entitlementId = SubscriptionConfig.entitlementSpacesPro,
 }) {
   showModalBottomSheet<void>(
     context: context,

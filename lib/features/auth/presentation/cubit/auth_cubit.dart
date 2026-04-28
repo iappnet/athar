@@ -17,6 +17,10 @@ class AuthCubit extends Cubit<AuthState> {
   final AuthRepository _authRepository;
   StreamSubscription? _authStateSubscription;
 
+  // Suppresses the auth listener during OTP-based password reset so that
+  // the temporary sign-in from verifyOTP does not navigate the user home.
+  bool _passwordResetMode = false;
+
   AuthCubit(this._authRepository) : super(AuthInitial()) {
     _startAuthListener();
   }
@@ -32,6 +36,8 @@ class AuthCubit extends Cubit<AuthState> {
     }
 
     _authStateSubscription = _authRepository.authStateChanges.listen((data) {
+      if (_passwordResetMode) return;
+
       final event = data.event;
       final session = data.session;
 
@@ -155,15 +161,95 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> signIn(String email, String password) async {
+  Future<void> signIn(String emailOrUsername, String password) async {
     emit(AuthLoading());
     try {
+      String email = emailOrUsername.trim();
+      if (!email.contains('@')) {
+        final resolved = await _authRepository.getEmailByUsername(email);
+        if (resolved != null && resolved.isNotEmpty) {
+          email = resolved;
+        }
+      }
       await _authRepository.signIn(email: email, password: password);
     } catch (e) {
       String msg = "فشل تسجيل الدخول، تأكد من البيانات";
       if (e.toString().contains("Invalid login credentials")) {
-        msg = "البريد الإلكتروني أو كلمة المرور غير صحيحة";
+        msg = "اسم المستخدم أو البريد الإلكتروني أو كلمة المرور غير صحيحة";
       }
+      emit(AuthError(msg));
+    }
+  }
+
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _authRepository.sendPasswordResetEmail(email);
+    } catch (e) {
+      assert(() { debugPrint('[AuthCubit.sendPasswordResetEmail] $e'); return true; }());
+      rethrow;
+    }
+  }
+
+  String? get currentUserEmail => _authRepository.getCurrentUser()?.email;
+
+  Future<void> sendOtpForPasswordReset(String email) async {
+    await _authRepository.sendOtpForPasswordReset(email);
+  }
+
+  // Verifies OTP for an already-logged-in user (no mode flag needed since
+  // the auth listener already guards against re-navigating AuthAuthenticated).
+  Future<void> verifyOtpOnly({
+    required String email,
+    required String otp,
+  }) async {
+    await _authRepository.verifyOtpForPasswordReset(email: email, otp: otp);
+  }
+
+  Future<void> updatePasswordOnly(String newPassword) async {
+    await _authRepository.updatePassword(newPassword);
+  }
+
+  Future<void> verifyOtpForPasswordReset({
+    required String email,
+    required String otp,
+  }) async {
+    _passwordResetMode = true;
+    try {
+      await _authRepository.verifyOtpForPasswordReset(email: email, otp: otp);
+    } catch (e) {
+      _passwordResetMode = false;
+      rethrow;
+    }
+  }
+
+  Future<void> updatePasswordAndFinishReset(String newPassword) async {
+    try {
+      await _authRepository.updatePassword(newPassword);
+      await _authRepository.signOut();
+    } finally {
+      _passwordResetMode = false;
+      emit(AuthUnauthenticated());
+    }
+  }
+
+  // Called if the sheet is dismissed after OTP verification but before password update.
+  Future<void> cancelPasswordReset() async {
+    _passwordResetMode = false;
+    try {
+      await _authRepository.signOut();
+    } catch (_) {}
+    emit(AuthUnauthenticated());
+  }
+
+  Future<void> signInWithApple() async {
+    emit(AuthLoading());
+    try {
+      await _authRepository.signInWithApple();
+      // auth listener handles navigation via _loadUserProfile
+    } catch (e) {
+      final msg = e.toString().contains('canceled')
+          ? 'تم إلغاء تسجيل الدخول'
+          : 'فشل تسجيل الدخول عبر Apple، يرجى المحاولة لاحقاً';
       emit(AuthError(msg));
     }
   }

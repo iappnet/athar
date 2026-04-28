@@ -6,6 +6,7 @@ import 'package:athar/core/services/file_service.dart';
 import 'package:athar/features/habits/data/models/habit_model.dart';
 import 'package:athar/features/habits/domain/repositories/habit_repository.dart';
 import 'package:athar/features/space/data/models/space_model.dart'; // ✅ استيراد المساحات
+import 'package:athar/features/space/data/models/space_member_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -437,7 +438,7 @@ class SyncService {
     try {
       memberships = await _supabase
           .from('space_members')
-          .select('space_id')
+          .select('space_id, role, joined_at')
           .eq('user_id', userId);
     } on PostgrestException catch (e) {
       if (e.code == '42P17' && kDebugMode) {
@@ -476,6 +477,7 @@ class SyncService {
         .toList();
 
     await _isar.writeTxn(() async {
+      // Save space records
       for (var remoteSpace in remoteSpaces) {
         final localSpace = await _isar.spaceModels
             .filter()
@@ -488,15 +490,41 @@ class SyncService {
             await _isar.spaceModels.put(remoteSpace);
           }
         } else {
-          // دمج (الأحدث يفوز)
           final remoteTime = remoteSpace.updatedAt ?? DateTime(2000);
           final localTime = localSpace.updatedAt ?? DateTime(2000);
 
           if (remoteTime.isAfter(localTime)) {
-            remoteSpace.id = localSpace.id; // الحفاظ على ID المحلي
+            remoteSpace.id = localSpace.id;
             remoteSpace.isSynced = true;
             await _isar.spaceModels.put(remoteSpace);
           }
+        }
+      }
+
+      // Save SpaceMemberModel records so watchMySpaces() stream can include
+      // spaces where this user is a member but not the owner.
+      for (final membership in memberships) {
+        final spaceId = membership['space_id'] as String?;
+        if (spaceId == null) continue;
+
+        // Use a deterministic key so the same membership is never duplicated.
+        final memberUuid = 'member_${userId}_$spaceId';
+        final existing = await _isar.spaceMemberModels
+            .filter()
+            .uuidEqualTo(memberUuid)
+            .findFirst();
+
+        if (existing == null) {
+          final member = SpaceMemberModel()
+            ..uuid = memberUuid
+            ..spaceId = spaceId
+            ..userId = userId
+            ..role = membership['role'] as String? ?? 'member'
+            ..joinedAt = membership['joined_at'] != null
+                ? DateTime.tryParse(membership['joined_at'].toString())
+                : null
+            ..isSynced = true;
+          await _isar.spaceMemberModels.put(member);
         }
       }
     });

@@ -18,6 +18,14 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
   final SubscriptionRepository _repository;
   StreamSubscription<SubscriptionStatus>? _statusSubscription;
 
+  // Completer that resolves once the first status load completes (success or
+  // failure). Other cubits await this before calling hasUnlimitedTasksAndHabits
+  // to avoid falsely capping Pro users during the startup loading window.
+  final Completer<void> _readyCompleter = Completer<void>();
+
+  /// Resolves when the first [loadStatus] call settles (either loaded or error).
+  Future<void> get ready => _readyCompleter.future;
+
   SubscriptionCubit(this._repository) : super(SubscriptionInitial());
 
   /// Called once at app start — fetches status and listens for live updates.
@@ -27,6 +35,7 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
       final status = await _repository.getStatus();
       if (isClosed) return;
       emit(SubscriptionLoaded(status));
+      if (!_readyCompleter.isCompleted) _readyCompleter.complete();
 
       _statusSubscription?.cancel();
       _statusSubscription = _repository.watchStatus().listen((s) {
@@ -36,6 +45,8 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
     } catch (_) {
       if (isClosed) return;
       emit(const SubscriptionError('تعذر تحميل حالة الاشتراك'));
+      // Complete even on error so dependent cubits are never permanently blocked.
+      if (!_readyCompleter.isCompleted) _readyCompleter.complete();
     }
   }
 
@@ -108,7 +119,10 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
   Future<void> presentCustomerCenter(BuildContext context) async {
     try {
       await RevenueCatUI.presentCustomerCenter();
-    } catch (_) {}
+    } catch (_) {
+      if (isClosed) return;
+      emit(const SubscriptionError('تعذر فتح مركز الاشتراكات'));
+    }
   }
 
   // ── Synchronous access helpers (used by other cubits via getIt) ──────────

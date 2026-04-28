@@ -347,7 +347,7 @@ class _AtharButtonState extends State<AtharButton>
       return Icon(widget.icon, size: s.iconSize, color: fg);
     }
     if (widget.icon == null && widget.label != null) {
-      return Text(widget.label!, style: s.textStyle.copyWith(color: fg));
+      return Text(widget.label!, style: s.textStyle.copyWith(color: fg), textAlign: TextAlign.center);
     }
 
     final icon = Icon(widget.icon, size: s.iconSize, color: fg);
@@ -851,7 +851,7 @@ class _Style {
 //       return Icon(widget.icon, size: s.iconSize, color: fg);
 //     }
 //     if (widget.icon == null && widget.label != null) {
-//       return Text(widget.label!, style: s.textStyle.copyWith(color: fg));
+//       return Text(widget.label!, style: s.textStyle.copyWith(color: fg), textAlign: TextAlign.center);
 //     }
 
 //     final icon = Icon(widget.icon, size: s.iconSize, color: fg);

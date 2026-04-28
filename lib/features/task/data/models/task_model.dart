@@ -99,7 +99,7 @@ class TaskModel with TimeSlotMixin {
   // ═══════════════════════════════════════════════════════════════════════════
 
   /// نوع تحديد الوقت (ثابت / نسبي للصلاة / فترة)
-  /// 0 = fixed, 1 = relativeToprayer, 2 = period
+  /// 0 = fixed, 1 = relativeToPrayer, 2 = period
   int timeTypeIndex = 0;
 
   /// ✅ Getter للحصول على الـ enum
@@ -213,9 +213,9 @@ class TaskModel with TimeSlotMixin {
           TimeOfDay(hour: fixedHour!, minute: fixedMinute ?? 0),
         );
 
-      case TimeSpecificationType.relativeToprayer:
+      case TimeSpecificationType.relativeToPrayer:
         if (referencePrayer == null) return null;
-        return TimeSlotSettings.relativeToprayer(
+        return TimeSlotSettings.relativeToPrayer(
           prayer: referencePrayer!,
           relation: prayerRelation ?? PrayerRelativeTime.after,
           offsetMinutes: offsetMinutes,
@@ -260,7 +260,7 @@ class TaskModel with TimeSlotMixin {
         }
         break;
 
-      case TimeSpecificationType.relativeToprayer:
+      case TimeSpecificationType.relativeToPrayer:
         referencePrayer = settings.referencePrayer;
         prayerRelation = settings.prayerRelation;
         offsetMinutes = settings.offsetMinutes;
@@ -285,7 +285,7 @@ class TaskModel with TimeSlotMixin {
     int offset = 0,
   }) {
     applyTimeSettings(
-      TimeSlotSettings.relativeToprayer(
+      TimeSlotSettings.relativeToPrayer(
         prayer: prayer,
         relation: relation,
         offsetMinutes: offset,
@@ -316,7 +316,7 @@ class TaskModel with TimeSlotMixin {
         final m = settings.fixedTime!.minute.toString().padLeft(2, '0');
         return '$h:$m';
 
-      case TimeSpecificationType.relativeToprayer:
+      case TimeSpecificationType.relativeToPrayer:
         final prayerName = _getPrayerName(settings.referencePrayer);
         if (settings.offsetMinutes == 0) {
           return settings.prayerRelation == PrayerRelativeTime.iqama

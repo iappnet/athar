@@ -476,7 +476,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
     switch (_timeSettings!.type) {
       case TimeSpecificationType.fixed:
         return Icons.access_time;
-      case TimeSpecificationType.relativeToprayer:
+      case TimeSpecificationType.relativeToPrayer:
         return Icons.mosque_outlined;
       case TimeSpecificationType.period:
         return Icons.wb_sunny_outlined;
@@ -489,7 +489,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
     switch (_timeSettings!.type) {
       case TimeSpecificationType.fixed:
         return 'وقت محدد';
-      case TimeSpecificationType.relativeToprayer:
+      case TimeSpecificationType.relativeToPrayer:
         return 'نسبي للصلاة';
       case TimeSpecificationType.period:
         return 'فترة زمنية';
@@ -509,7 +509,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
         final hour12 = hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour);
         return '$hour12:$minute $period';
 
-      case TimeSpecificationType.relativeToprayer:
+      case TimeSpecificationType.relativeToPrayer:
         final prayerName = _getPrayerName(_timeSettings!.referencePrayer);
         if (_timeSettings!.offsetMinutes == 0) return prayerName;
         final relation =

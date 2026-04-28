@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:math';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../domain/repositories/auth_repository.dart';
 
@@ -37,19 +41,25 @@ class AuthRepositoryImpl implements AuthRepository {
       // ب. إذا تأخر التريجر، نقوم نحن بإنشاء الصف.
 
       final profileData = {
-        'user_id': userId, // ✅ تصحيح: استخدام الاسم الجديد user_id بدلاً من id
-        'full_name': fullName, // تأكد أن هذه الأعمدة موجودة في جدول profiles
+        'user_id': userId,
+        'full_name': fullName,
         'username': username,
         'updated_at': DateTime.now().toIso8601String(),
       };
 
-      // نستخدم upsert لضمان النجاح في الحالتين
-      await _supabase
-          .from('profiles')
-          .upsert(
-            profileData,
-            onConflict: 'user_id', // ✅ مهم جداً: تحديد عمود التعارض
-          );
+      // Try saving with email (requires an `email` column in profiles).
+      // Fall back gracefully if the column doesn't exist yet.
+      try {
+        await _supabase.from('profiles').upsert(
+          {...profileData, 'email': email.trim().toLowerCase()},
+          onConflict: 'user_id',
+        );
+      } catch (_) {
+        await _supabase.from('profiles').upsert(
+          profileData,
+          onConflict: 'user_id',
+        );
+      }
     } on AuthException catch (e) {
       // معالجة خاصة لأخطاء المصادقة
       throw e.message;
@@ -143,6 +153,80 @@ class AuthRepositoryImpl implements AuthRepository {
 
     // 2. عملية واحدة (Atomic Operation) لضمان الحفظ
     await _supabase.from('profiles').upsert(profileData, onConflict: 'user_id');
+  }
+
+  @override
+  Future<String?> getEmailByUsername(String username) async {
+    try {
+      final response = await _supabase
+          .from('profiles')
+          .select('email')
+          .eq('username', username.trim().toLowerCase())
+          .maybeSingle();
+      return response?['email'] as String?;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  @override
+  Future<void> sendPasswordResetEmail(String email) async {
+    await _supabase.auth.resetPasswordForEmail(email.trim().toLowerCase());
+  }
+
+  @override
+  Future<void> sendOtpForPasswordReset(String email) async {
+    await _supabase.auth.signInWithOtp(
+      email: email.trim().toLowerCase(),
+      shouldCreateUser: false,
+    );
+  }
+
+  @override
+  Future<void> verifyOtpForPasswordReset({
+    required String email,
+    required String otp,
+  }) async {
+    await _supabase.auth.verifyOTP(
+      email: email.trim().toLowerCase(),
+      token: otp.trim(),
+      type: OtpType.email,
+    );
+  }
+
+  @override
+  Future<void> updatePassword(String newPassword) async {
+    await _supabase.auth.updateUser(UserAttributes(password: newPassword));
+  }
+
+  @override
+  Future<void> signInWithApple() async {
+    final rawNonce = _generateNonce();
+    final nonce = sha256.convert(utf8.encode(rawNonce)).toString();
+
+    final credential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+      nonce: nonce,
+    );
+
+    await _supabase.auth.signInWithIdToken(
+      provider: OAuthProvider.apple,
+      idToken: credential.identityToken!,
+      nonce: rawNonce,
+    );
+  }
+
+  String _generateNonce([int length = 32]) {
+    const charset =
+        '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
+    final random = Random.secure();
+    return List.generate(
+      length,
+      (_) => charset[random.nextInt(charset.length)],
+    ).join();
   }
 
   @override

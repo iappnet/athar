@@ -11,10 +11,15 @@ class DualCalendarWidget extends StatefulWidget {
   final DateTime selectedDate;
   final Function(DateTime) onDateSelected;
 
+  /// When provided, the widget skips its own async settings read and uses
+  /// this value directly — eliminating the one-shot reactive gap.
+  final bool? isHijriMode;
+
   const DualCalendarWidget({
     super.key,
     required this.selectedDate,
     required this.onDateSelected,
+    this.isHijriMode,
   });
 
   @override
@@ -33,7 +38,23 @@ class _DualCalendarWidgetState extends State<DualCalendarWidget> {
   void initState() {
     super.initState();
     _focusedMonth = widget.selectedDate;
-    _loadCalendarPreference();
+    if (widget.isHijriMode != null) {
+      _isGregorianPrimary = !widget.isHijriMode!;
+      _isLoading = false;
+    } else {
+      _loadCalendarPreference();
+    }
+  }
+
+  @override
+  void didUpdateWidget(DualCalendarWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.isHijriMode != null &&
+        widget.isHijriMode != oldWidget.isHijriMode) {
+      setState(() {
+        _isGregorianPrimary = !widget.isHijriMode!;
+      });
+    }
   }
 
   Future<void> _loadCalendarPreference() async {
@@ -283,289 +304,3 @@ class _DualCalendarWidgetState extends State<DualCalendarWidget> {
     );
   }
 }
-//-----------------------------------------------------------------------
-// import 'package:athar/features/settings/domain/repositories/settings_repository.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:intl/intl.dart';
-// import '../../../../core/design_system/themes/app_colors.dart';
-// import '../../../../core/di/injection.dart';
-// import '../../../../core/services/hijri_service.dart';
-
-// class DualCalendarWidget extends StatefulWidget {
-//   final DateTime selectedDate;
-//   final Function(DateTime) onDateSelected;
-
-//   const DualCalendarWidget({
-//     super.key,
-//     required this.selectedDate,
-//     required this.onDateSelected,
-//   });
-
-//   @override
-//   State<DualCalendarWidget> createState() => _DualCalendarWidgetState();
-// }
-
-// class _DualCalendarWidgetState extends State<DualCalendarWidget> {
-//   late DateTime _focusedMonth;
-//   final HijriService _hijriService = getIt<HijriService>();
-//   final SettingsRepository _settingsRepo =
-//       getIt<SettingsRepository>(); // ✅ حقن الإعدادات
-
-//   // 1. متغير الحالة للتبديل (الافتراضي: الميلادي هو الرئيسي)
-//   // المتغير الآن ليس ثابتاً، بل سيتم تحميله
-//   bool _isGregorianPrimary = true;
-//   bool _isLoading = true;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _focusedMonth = widget.selectedDate;
-//     _loadCalendarPreference(); // ✅ تحميل التفضيل عند البدء
-//   }
-
-//   // تحميل التفضيل المحفوظ
-//   Future<void> _loadCalendarPreference() async {
-//     final settings = await _settingsRepo.getSettings();
-//     if (mounted) {
-//       setState(() {
-//         // إذا كان النمط الهجري هو المفعل (true)، إذن الميلادي ليس الرئيسي
-//         _isGregorianPrimary = !settings.isHijriMode;
-//         _isLoading = false;
-//       });
-//     }
-//   }
-
-//   void _changeMonth(int offset) {
-//     setState(() {
-//       _focusedMonth = DateTime(
-//         _focusedMonth.year,
-//         _focusedMonth.month + offset,
-//         1,
-//       );
-//     });
-//   }
-
-//   // دالة لتبديل الوضع
-//   void _toggleCalendarMode() async {
-//     setState(() {
-//       _isGregorianPrimary = !_isGregorianPrimary;
-//     });
-
-//     // حفظ في قاعدة البيانات
-//     final settings = await _settingsRepo.getSettings();
-//     settings.isHijriMode = !_isGregorianPrimary;
-//     await _settingsRepo.updateSettings(settings);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     if (_isLoading) return const SizedBox.shrink(); // انتظار التحميل
-//     final daysInMonth = DateUtils.getDaysInMonth(
-//       _focusedMonth.year,
-//       _focusedMonth.month,
-//     );
-//     final firstDayOfMonth = DateTime(
-//       _focusedMonth.year,
-//       _focusedMonth.month,
-//       1,
-//     );
-//     final firstWeekday = firstDayOfMonth.weekday % 7;
-
-//     // تحويل الشهر الحالي للهجري
-//     final hijriMonth = _hijriService.toHijri(_focusedMonth);
-
-//     // تجهيز النصوص للعناوين بناءً على الوضع المختار
-//     final String mainTitle = _isGregorianPrimary
-//         ? DateFormat('MMMM yyyy', 'ar').format(_focusedMonth)
-//         : "${hijriMonth.longMonthName} ${hijriMonth.hYear}";
-
-//     final String subTitle = _isGregorianPrimary
-//         ? "${hijriMonth.longMonthName} ${hijriMonth.hYear}"
-//         : DateFormat('MMMM yyyy', 'ar').format(_focusedMonth);
-
-//     return Container(
-//       padding: EdgeInsets.all(16.w),
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.vertical(bottom: Radius.circular(30.r)),
-//         boxShadow: [
-//           BoxShadow(
-//             color: Colors.black.withValues(alpha: 0.05),
-//             blurRadius: 10,
-//             offset: const Offset(0, 5),
-//           ),
-//         ],
-//       ),
-//       child: Column(
-//         children: [
-//           // --- 1. رأس التقويم (مع زر التبديل الجديد) ---
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               IconButton(
-//                 icon: const Icon(Icons.arrow_back_ios, size: 16),
-//                 onPressed: () => _changeMonth(-1),
-//               ),
-
-//               // العنوان وزر التبديل
-//               InkWell(
-//                 onTap:
-//                     _toggleCalendarMode, // التبديل عند الضغط على العنوان أيضاً
-//                 borderRadius: BorderRadius.circular(12.r),
-//                 child: Padding(
-//                   padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-//                   child: Row(
-//                     children: [
-//                       Column(
-//                         children: [
-//                           // العنوان الرئيسي (الكبير)
-//                           Text(
-//                             mainTitle,
-//                             style: TextStyle(
-//                               fontSize: 18.sp,
-//                               fontWeight: FontWeight.bold,
-//                               color: AppColors.textPrimary,
-//                             ),
-//                           ),
-//                           // العنوان الثانوي (الصغير والملون)
-//                           Text(
-//                             subTitle,
-//                             style: TextStyle(
-//                               fontSize: 12.sp,
-//                               color: AppColors.primary, // لون مميز للثانوي
-//                               fontFamily: 'Cairo',
-//                               fontWeight: FontWeight.w600,
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//                       SizedBox(width: 8.w),
-//                       // أيقونة التبديل
-//                       Icon(
-//                         Icons.swap_vert_circle_outlined,
-//                         color: AppColors.primary.withValues(alpha: 0.5),
-//                         size: 20.sp,
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-
-//               IconButton(
-//                 icon: const Icon(Icons.arrow_forward_ios, size: 16),
-//                 onPressed: () => _changeMonth(1),
-//               ),
-//             ],
-//           ),
-//           SizedBox(height: 20.h),
-
-//           // --- 2. أيام الأسبوع ---
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceAround,
-//             children: ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س']
-//                 .map(
-//                   (day) => SizedBox(
-//                     width: 40.w,
-//                     child: Center(
-//                       child: Text(
-//                         day,
-//                         style: TextStyle(
-//                           color: Colors.grey,
-//                           fontWeight: FontWeight.bold,
-//                           fontSize: 14.sp,
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 )
-//                 .toList(),
-//           ),
-//           SizedBox(height: 10.h),
-
-//           // --- 3. شبكة الأيام ---
-//           GridView.builder(
-//             shrinkWrap: true,
-//             physics: const NeverScrollableScrollPhysics(),
-//             itemCount: daysInMonth + firstWeekday,
-//             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-//               crossAxisCount: 7,
-//               childAspectRatio: 0.85,
-//             ),
-//             itemBuilder: (context, index) {
-//               if (index < firstWeekday) return const SizedBox();
-
-//               final day = index - firstWeekday + 1;
-//               final date = DateTime(
-//                 _focusedMonth.year,
-//                 _focusedMonth.month,
-//                 day,
-//               );
-//               final isSelected = DateUtils.isSameDay(date, widget.selectedDate);
-//               final isToday = DateUtils.isSameDay(date, DateTime.now());
-
-//               final hijriDate = _hijriService.toHijri(date);
-
-//               // تحديد النصوص بناءً على الوضع
-//               final String primaryText = _isGregorianPrimary
-//                   ? "$day"
-//                   : "${hijriDate.hDay}";
-
-//               final String secondaryText = _isGregorianPrimary
-//                   ? "${hijriDate.hDay}"
-//                   : "$day";
-
-//               return GestureDetector(
-//                 onTap: () => widget.onDateSelected(date),
-//                 child: Container(
-//                   margin: EdgeInsets.all(2.w),
-//                   decoration: BoxDecoration(
-//                     color: isSelected
-//                         ? AppColors.primary
-//                         : (isToday
-//                               ? AppColors.primary.withValues(alpha: 0.1)
-//                               : Colors.transparent),
-//                     borderRadius: BorderRadius.circular(12.r),
-//                     border: isToday && !isSelected
-//                         ? Border.all(color: AppColors.primary)
-//                         : null,
-//                   ),
-//                   child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     children: [
-//                       // الرقم الرئيسي (كبير وواضح)
-//                       Text(
-//                         primaryText,
-//                         style: TextStyle(
-//                           fontSize: 16.sp,
-//                           fontWeight: FontWeight.bold,
-//                           color: isSelected
-//                               ? Colors.white
-//                               : AppColors.textPrimary,
-//                         ),
-//                       ),
-
-//                       // الرقم الثانوي (صغير وملون ليميزه)
-//                       Text(
-//                         secondaryText,
-//                         style: TextStyle(
-//                           fontSize: 10.sp,
-//                           // إذا كانت الخلية مختارة يكون أبيض شفاف، وإلا يكون باللون الأساسي للتميز
-//                           color: isSelected
-//                               ? Colors.white70
-//                               : AppColors.primary,
-//                           fontWeight: FontWeight.w600,
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               );
-//             },
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-//-----------------------------------------------------------------------

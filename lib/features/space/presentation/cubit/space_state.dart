@@ -16,5 +16,13 @@ class SpaceLoaded extends SpaceState {
 
 class SpaceError extends SpaceState {
   final String message;
-  SpaceError(this.message);
+  // Carried so the listener can retry creation after a successful paywall.
+  final String? pendingSpaceName;
+  final bool pendingIsShared;
+
+  SpaceError(
+    this.message, {
+    this.pendingSpaceName,
+    this.pendingIsShared = false,
+  });
 }

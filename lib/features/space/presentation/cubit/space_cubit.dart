@@ -77,8 +77,16 @@ class SpaceCubit extends Cubit<SpaceState> {
     try {
       // Shared spaces require the Spaces Pro subscription.
       if (isShared) {
-        if (!getIt<SubscriptionCubit>().hasSpacesPro) {
-          emit(SpaceError('spaces_pro_required'));
+        final subCubit = getIt<SubscriptionCubit>();
+        if (subCubit.state is! SubscriptionLoaded) {
+          await subCubit.loadStatus();
+        }
+        if (!subCubit.hasSpacesPro) {
+          emit(SpaceError(
+            'spaces_pro_required',
+            pendingSpaceName: name,
+            pendingIsShared: true,
+          ));
           loadSpaces();
           return;
         }

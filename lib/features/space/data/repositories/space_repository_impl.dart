@@ -320,6 +320,15 @@ class SpaceRepositoryImpl implements SpaceRepository {
 
   @override
   Future<void> claimLocalSpaces(String odUserId) async {
+    // If the user just signed up after exploring demo data, delete the demo
+    // instead of claiming it — they haven't done any real work yet.
+    final settings = await _getOrCreateSettings();
+    if (settings.sampleDataShown && !settings.sampleDataDismissed) {
+      await dismissSampleData();
+      debugPrint("🗑️ Demo data cleared on new account signup");
+      return;
+    }
+
     final localSpaces = await _isar.spaceModels
         .filter()
         .ownerIdEqualTo('guest')

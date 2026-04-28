@@ -7,10 +7,14 @@ class FocusSession {
   Id id = Isar.autoIncrement;
 
   late DateTime startTime;
-  late int durationMinutes; // مدة التركيز بالدقائق
+  late int durationMinutes;
 
-  @Index() // للفهرسة السريعة عند البحث بالتاريخ
-  late DateTime date; // تاريخ اليوم فقط (بدون وقت) للتجميع
+  @Index()
+  late DateTime date;
 
-  bool isCompleted = true; // هل أكمل الجلسة للنهاية أم أوقفها؟
+  bool isCompleted = true;
+
+  // AtharTimePeriod.index — the Islamic time period when the session started.
+  // null for sessions recorded before this field was added.
+  int? timePeriodIndex;
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prayer_widget_description">يعرض وقت الصلاة القادمة</string>
+    <string name="task_widget_description">يعرض مهام اليوم</string>
+    <string name="habit_widget_description">يعرض عادات اليوم</string>
+</resources>

@@ -102,6 +102,7 @@
   "signIn": "Sign In",
   "signOut": "Sign Out",
   "email": "Email",
+  "emailOrUsername": "Email or username",
   "password": "Password",
   "confirmPassword": "Confirm Password",
   "currentPassword": "Current Password",
@@ -513,14 +514,30 @@
   "getStarted": "Get Started",
   "letsStart": "Let's Start",
   "welcomeToApp": "Welcome to Athar",
-  "onboardingTitle1": "Organize Your Life",
-  "onboardingDesc1": "Manage your tasks and habits easily and effectively",
-  "onboardingTitle2": "Keep Your Prayers",
-  "onboardingDesc2": "Accurate prayer time reminders and Qibla direction",
-  "onboardingTitle3": "Focus and Achieve",
-  "onboardingDesc3": "Use Pomodoro technique for maximum productivity",
-  "onboardingTitle4": "Track Your Health",
-  "onboardingDesc4": "Log your medicines, appointments, and health metrics",
+  "onboardingCategory1": "Tasks & Habits",
+  "onboardingTitle1": "Own Your Day",
+  "onboardingDesc1": "Organize your tasks and habits in one place.\nStart your day with clarity and end it with pride.",
+  "onboardingChip11": "Smart Tasks",
+  "onboardingChip12": "Daily Habits",
+  "onboardingChip13": "Track Progress",
+  "onboardingCategory2": "Prayer & Dhikr",
+  "onboardingTitle2": "Never Miss a Prayer",
+  "onboardingDesc2": "Accurate prayer times based on your location,\nwith Qibla direction and daily dhikr.",
+  "onboardingChip21": "Prayer Times",
+  "onboardingChip22": "Qibla",
+  "onboardingChip23": "Dhikr",
+  "onboardingCategory3": "Focus & Productivity",
+  "onboardingTitle3": "Focus on What Matters",
+  "onboardingDesc3": "Focus mode blocks distractions\nand tracks your time for real results.",
+  "onboardingChip31": "Pomodoro",
+  "onboardingChip32": "Block Distractions",
+  "onboardingChip33": "Statistics",
+  "onboardingCategory4": "Get Started",
+  "onboardingTitle4": "Live with More Impact",
+  "onboardingDesc4": "Join those building healthy habits\nand a productive, balanced life every day.",
+  "onboardingChip41": "Free to Start",
+  "onboardingChip42": "No Ads",
+  "onboardingChip43": "Full Privacy",
    "selectedCountLabel": "{count} selected",
   "completeAll": "Complete All",
   "postponeAll": "Postpone All",
@@ -1365,6 +1382,87 @@
       "count": { "type": "int" }
     }
   },
+  "statsRange7Days": "7 days",
+  "statsRange30Days": "30 days",
+  "statsTodaySection": "Today",
+  "statsTodayTasks": "{done}/{total} tasks",
+  "@statsTodayTasks": {
+    "placeholders": {
+      "done": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "statsTodayHabits": "{done}/{total} habits",
+  "@statsTodayHabits": {
+    "placeholders": {
+      "done": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "statsTodayFocus": "{minutes}m focus",
+  "@statsTodayFocus": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "statsTasksSection": "Tasks",
+  "statsCompletionRate": "{pct}% done",
+  "@statsCompletionRate": {
+    "placeholders": {
+      "pct": { "type": "int" }
+    }
+  },
+  "statsOverdueTasks": "{count} overdue",
+  "@statsOverdueTasks": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "statsAvgDelay": "Avg delay {days}d",
+  "@statsAvgDelay": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "statsTasksByPriority": "By priority",
+  "statsPriorityHigh": "High",
+  "statsPriorityMedium": "Medium",
+  "statsPriorityLow": "Low",
+  "statsDailyCompletion": "Daily completion",
+  "statsHabitsSection": "Habits",
+  "statsConsistency": "{pct}% consistency",
+  "@statsConsistency": {
+    "placeholders": {
+      "pct": { "type": "int" }
+    }
+  },
+  "statsTopStreaks": "Top Streaks",
+  "statsStreakDays": "{days}d",
+  "@statsStreakDays": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "statsHeatmapTitle": "Habit heatmap",
+  "statsFocusSection": "Focus",
+  "statsFocusTotal": "Total focus",
+  "statsFocusHours": "{h}h {m}m",
+  "@statsFocusHours": {
+    "placeholders": {
+      "h": { "type": "int" },
+      "m": { "type": "int" }
+    }
+  },
+  "statsPeriodsSection": "Productivity by period",
+  "statsDomainsSection": "Domains",
+  "statsDomainNeglected": "Needs attention",
+  "statsDomainOverloaded": "Overloaded",
+  "statsInsightsSection": "Insights",
+  "statsNoData": "Not enough data",
+  "statsNoDataSub": "Add tasks and habits to see a full analysis",
+  "statsUpgradeTitle": "Detailed Statistics",
+  "statsUpgradeBody": "Subscribe to unlock full reports and advanced analytics",
+  "statsUpgradeCta": "Subscribe Now",
   "statsCardTitle": "Athar Statistics",
   "statsCardSubtitle": "View your performance and focus summary",
   "reminderToggleLabel": "Enable Reminder",

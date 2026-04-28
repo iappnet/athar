@@ -19,7 +19,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/design_system/themes/app_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'features/home/presentation/pages/onboarding_page.dart';
 import 'features/home/presentation/pages/splash_page.dart';
+import 'features/settings/presentation/cubit/settings_state.dart';
 import 'core/di/injection.dart';
 import 'dart:math';
 import 'package:athar/features/auth/presentation/cubit/auth_cubit.dart';
@@ -32,9 +34,11 @@ import 'features/home/presentation/pages/main_page.dart';
 import 'features/auth/presentation/pages/login_page.dart';
 // ✅ استيراد خدمة الروابط للوصول للمفتاح
 import 'package:athar/core/services/deep_link_service.dart';
+import 'package:athar/features/calendar/presentation/cubit/calendar_cubit.dart';
 
 class AtharApp extends StatefulWidget {
-  const AtharApp({super.key});
+  const AtharApp({super.key, required this.hasSeenOnboarding});
+  final bool hasSeenOnboarding;
 
   @override
   State<AtharApp> createState() => _AtharAppState();
@@ -69,7 +73,10 @@ class _AtharAppState extends State<AtharApp> {
   }
 
   late final WidgetsBindingObserver _lifecycleObserver = _AppLifecycleObserver(
-    onResume: _clearNotificationBadges,
+    onResume: () async {
+      await _clearNotificationBadges();
+      getIt<SubscriptionCubit>().loadStatus();
+    },
   );
 
   Future<void> _clearNotificationBadges() async {
@@ -116,6 +123,9 @@ class _AtharAppState extends State<AtharApp> {
         ),
 
         // 5. الميزات الجديدة (الأصول والقوائم)
+        BlocProvider(
+          create: (_) => getIt<CalendarCubit>()..selectDate(DateTime.now()),
+        ),
         BlocProvider(create: (context) => getIt<AssetsCubit>()), // ✅ الأصول
         BlocProvider(
           create: (context) => getIt<ListCubit>(),
@@ -138,11 +148,17 @@ class _AtharAppState extends State<AtharApp> {
         splitScreenMode: true,
         builder: (context, child) {
           final locale = context.watch<LocaleCubit>().state.locale;
+          final settingsState = context.watch<SettingsCubit>().state;
+          final isDark = settingsState is SettingsLoaded
+              ? settingsState.settings.isDarkMode
+              : false;
           return MaterialApp(
             navigatorKey: DeepLinkService.navigatorKey,
             debugShowCheckedModeBanner: false,
             title: 'Athar | أثر',
             theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
             locale: locale,
             supportedLocales: const [Locale('ar', 'SA'), Locale('en', 'US')],
             localizationsDelegates: [
@@ -151,7 +167,9 @@ class _AtharAppState extends State<AtharApp> {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            home: const SplashPage(),
+            home: widget.hasSeenOnboarding
+                ? const SplashPage()
+                : const OnboardingPage(),
             routes: {
               '/join-space': (context) {
                 final token =
@@ -171,6 +189,20 @@ class _AtharAppState extends State<AtharApp> {
                     listener: (context, state) {
                       if (state is CelebrationTriggered) {
                         _confettiController.play();
+                      }
+                    },
+                    child: const SizedBox.shrink(),
+                  ),
+                  BlocListener<SubscriptionCubit, SubscriptionState>(
+                    listenWhen: (_, curr) => curr is SubscriptionError,
+                    listener: (context, state) {
+                      if (state is SubscriptionError) {
+                        ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+                          SnackBar(
+                            content: Text(state.message),
+                            behavior: SnackBarBehavior.floating,
+                          ),
+                        );
                       }
                     },
                     child: const SizedBox.shrink(),

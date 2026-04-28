@@ -40,12 +40,15 @@ class InvitationRepositoryImpl implements InvitationRepository {
     }
 
     try {
+      // Include email in select and OR filter so users can be found by email too.
+      final orFilter = normalizedQuery.contains('@')
+          ? 'email.ilike.%$normalizedQuery%'
+          : 'username.ilike.%$normalizedQuery%,full_name.ilike.%$normalizedQuery%,email.ilike.%$normalizedQuery%';
+
       final response = await _supabase
           .from('profiles')
-          .select('user_id, username, full_name, avatar_url')
-          .or(
-            'username.ilike.%$normalizedQuery%,full_name.ilike.%$normalizedQuery%',
-          )
+          .select('user_id, username, full_name, avatar_url, email')
+          .or(orFilter)
           .limit(20);
 
       return (response as List).map((row) {
@@ -53,9 +56,24 @@ class InvitationRepositoryImpl implements InvitationRepository {
         data['id'] = data['user_id'];
         return SearchResultDto.fromJson(data);
       }).toList();
-    } catch (e) {
-      debugPrint('❌ Fallback profile search failed: $e');
-      return [];
+    } catch (_) {
+      // Fallback without email column (older schema)
+      try {
+        final response = await _supabase
+            .from('profiles')
+            .select('user_id, username, full_name, avatar_url')
+            .or('username.ilike.%$normalizedQuery%,full_name.ilike.%$normalizedQuery%')
+            .limit(20);
+
+        return (response as List).map((row) {
+          final data = Map<String, dynamic>.from(row as Map);
+          data['id'] = data['user_id'];
+          return SearchResultDto.fromJson(data);
+        }).toList();
+      } catch (e) {
+        debugPrint('❌ Fallback profile search failed: $e');
+        return [];
+      }
     }
   }
 
@@ -96,20 +114,20 @@ class InvitationRepositoryImpl implements InvitationRepository {
     final currentUserId = _supabase.auth.currentUser!.id;
     final token = const Uuid().v4();
 
-    await _supabase.from('invitations').insert({
+    final payload = <String, dynamic>{
       'uuid': const Uuid().v4(),
       'token': token,
       'space_id': spaceId,
       'inviter_id': currentUserId,
-      'invitee_id': userId,
-      'invitee_email': email,
       'type': 'direct_user',
       'status': 'pending',
-      'expires_at': DateTime.now()
-          .add(const Duration(days: 7))
-          .toIso8601String(),
+      'expires_at': DateTime.now().add(const Duration(days: 7)).toIso8601String(),
       'created_at': DateTime.now().toIso8601String(),
-    });
+    };
+    if (userId != null && userId.isNotEmpty) payload['invitee_id'] = userId;
+    if (email != null && email.isNotEmpty) payload['invitee_email'] = email;
+
+    await _supabase.from('invitations').insert(payload);
   }
 
   // ═══════════════════════════════════════════════════════════════════

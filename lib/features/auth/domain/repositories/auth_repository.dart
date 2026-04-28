@@ -28,9 +28,30 @@ abstract class AuthRepository {
   Future<void> createDefaultProfile({
     required String userId,
     required String email,
-    String? fullName, // جديد
-    String? username, // جديد
+    String? fullName,
+    String? username,
   });
+
+  /// Returns the email stored in profiles for the given username, or null.
+  Future<String?> getEmailByUsername(String username);
+
+  /// Sends a password-reset email to [email].
+  Future<void> sendPasswordResetEmail(String email);
+
+  /// Sends a 6-digit OTP to [email] for password reset.
+  Future<void> sendOtpForPasswordReset(String email);
+
+  /// Verifies [otp] for [email] and signs the user in temporarily.
+  Future<void> verifyOtpForPasswordReset({
+    required String email,
+    required String otp,
+  });
+
+  /// Updates the current user's password (call after OTP verification).
+  Future<void> updatePassword(String newPassword);
+
+  /// Signs in natively with Apple (iOS only).
+  Future<void> signInWithApple();
 
   Stream<AuthState> get authStateChanges;
 }

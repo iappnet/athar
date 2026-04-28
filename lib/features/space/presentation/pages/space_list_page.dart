@@ -76,13 +76,6 @@ class _SpaceListPageState extends State<SpaceListPage> {
           AtharGap.hSm,
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _showCreateSpaceDialog(context, l10n, colorScheme),
-        label: Text(l10n.spaceListNewSpace),
-        icon: const Icon(Icons.add_location_alt_rounded),
-        backgroundColor: colorScheme.primary,
-        foregroundColor: colorScheme.onPrimary,
-      ),
       body: Center(
         child: ConstrainedBox(
           // ✅ Adaptive UI - تحديد العرض الأقصى للتابلت
@@ -96,9 +89,23 @@ class _SpaceListPageState extends State<SpaceListPage> {
             listener: (context, state) {
               if (state is SpaceError &&
                   state.message == 'spaces_pro_required') {
+                final pendingName = state.pendingSpaceName;
+                final pendingShared = state.pendingIsShared;
                 context
                     .read<SubscriptionCubit>()
-                    .presentSpacesPaywall(context);
+                    .presentSpacesPaywall(context)
+                    .then((purchased) {
+                  if (purchased && pendingName != null && context.mounted) {
+                    context.read<SpaceCubit>().createSpace(
+                          pendingName,
+                          isShared: pendingShared,
+                        );
+                  }
+                });
+              } else if (state is SpaceError) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(state.message)),
+                );
               }
             },
             builder: (context, state) {
@@ -375,78 +382,6 @@ class _SpaceListPageState extends State<SpaceListPage> {
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // حوار إنشاء مساحة جديدة
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  void _showCreateSpaceDialog(
-    BuildContext context,
-    AppLocalizations l10n,
-    ColorScheme colorScheme,
-  ) {
-    final controller = TextEditingController();
-    bool isShared = false;
-
-    showDialog(
-      context: context,
-      builder: (ctx) => StatefulBuilder(
-        builder: (dialogContext, setState) => AlertDialog(
-          title: Text(
-            l10n.spaceListCreateTitle,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: controller,
-                autofocus: true,
-                decoration: InputDecoration(
-                  labelText: l10n.spaceListNameLabel,
-                  border: const OutlineInputBorder(),
-                ),
-              ),
-              AtharGap.lg,
-              SwitchListTile(
-                title: Text(l10n.spaceListSharedQuestion),
-                subtitle: Text(
-                  isShared
-                      ? l10n.spaceListSharedSubtitle
-                      : l10n.spaceListPrivateSubtitle,
-                  style: TextStyle(fontSize: 12.sp),
-                ),
-                value: isShared,
-                onChanged: (val) => setState(() => isShared = val),
-                activeThumbColor: colorScheme.primary,
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: Text(l10n.spaceListCancel),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (controller.text.isNotEmpty) {
-                  context.read<SpaceCubit>().createSpace(
-                    controller.text,
-                    isShared: isShared,
-                  );
-                  Navigator.pop(ctx);
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: colorScheme.primary,
-                foregroundColor: colorScheme.onPrimary,
-              ),
-              child: Text(l10n.spaceListCreate),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   // ═══════════════════════════════════════════════════════════════════════════
   // حوار الحذف
   // ═══════════════════════════════════════════════════════════════════════════

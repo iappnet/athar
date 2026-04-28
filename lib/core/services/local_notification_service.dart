@@ -10,7 +10,7 @@ import 'package:athar/features/prayer/presentation/pages/prayer_page.dart';
 import 'package:athar/features/task/presentation/pages/task_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:app_badge_plus/app_badge_plus.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:isar/isar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -491,11 +491,7 @@ class LocalNotificationService {
 
   Future<void> setAppBadge(int count) async {
     try {
-      if (count == 0) {
-        await FlutterAppBadger.removeBadge();
-      } else {
-        await FlutterAppBadger.updateBadgeCount(count);
-      }
+      await AppBadgePlus.updateBadge(count);
     } catch (e) {
       if (kDebugMode) {
         debugPrint('⚠️ Could not set app badge to $count: $e');

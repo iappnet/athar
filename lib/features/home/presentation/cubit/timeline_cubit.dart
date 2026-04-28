@@ -81,8 +81,8 @@ class TimelineCubit extends Cubit<TimelineState> {
             }, onError: (e) => emit(TimelineError("فشل تحميل الجدول الزمني")));
   }
 
-  void loadGlobalTimeline() {
-    emit(TimelineLoading());
+  void loadGlobalTimeline({bool showLoading = true}) {
+    if (showLoading) emit(TimelineLoading());
     _subscription?.cancel();
 
     _subscription =
@@ -115,20 +115,10 @@ class TimelineCubit extends Cubit<TimelineState> {
             }, onError: (e) => emit(TimelineError("فشل تحديث مركز العمليات")));
   }
 
-  // ✅ تغيير الفلتر من الواجهة
   void setFilter(String filter) {
+    if (_currentFilter == filter) return;
     _currentFilter = filter;
-    // نعيد إطلاق الحالة لتطبيق الفلتر على البيانات الموجودة
-    if (state is TimelineLoaded) {
-      final currentState = state as TimelineLoaded;
-      emit(
-        TimelineLoaded(
-          currentState.items,
-          activeZone: currentState.activeZone,
-          activeFilter: _currentFilter,
-        ),
-      );
-    }
+    loadGlobalTimeline(showLoading: false);
   }
 
   List<DailyItem> _mergeAndSortWithSmartZone(
@@ -140,10 +130,13 @@ class TimelineCubit extends Cubit<TimelineState> {
     List<DailyItem> timeline = [];
     final now = DateTime.now();
 
-    // 1. معالجة المهام (تضاف فقط إذا كان الفلتر 'all' أو 'task')
-    if (_currentFilter == 'all' || _currentFilter == 'task') {
+    // 1. معالجة المهام
+    if (_currentFilter == 'all' ||
+        _currentFilter == 'task' ||
+        _currentFilter == 'urgent') {
       for (var task in tasks) {
         if (task.isCompleted) continue;
+        if (_currentFilter == 'urgent' && !task.isUrgent) continue;
         bool isFromCurrentZone = _checkTaskZoneMatch(task, currentZone);
         timeline.add(
           DailyItem(
@@ -155,7 +148,7 @@ class TimelineCubit extends Cubit<TimelineState> {
                 ? "🎯 تركيزك الآن"
                 : (task.isUrgent ? "🚨 عاجل" : null),
             isCompleted: task.isCompleted,
-            hasReminder: task.reminderTime != null, // ✅ إضافة
+            hasReminder: task.reminderTime != null,
             originalData: task,
           ),
         );

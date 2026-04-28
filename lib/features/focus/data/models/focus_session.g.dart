@@ -36,6 +36,11 @@ const FocusSessionSchema = CollectionSchema(
       id: 3,
       name: r'startTime',
       type: IsarType.dateTime,
+    ),
+    r'timePeriodIndex': PropertySchema(
+      id: 4,
+      name: r'timePeriodIndex',
+      type: IsarType.long,
     )
   },
   estimateSize: _focusSessionEstimateSize,
@@ -85,6 +90,7 @@ void _focusSessionSerialize(
   writer.writeLong(offsets[1], object.durationMinutes);
   writer.writeBool(offsets[2], object.isCompleted);
   writer.writeDateTime(offsets[3], object.startTime);
+  writer.writeLong(offsets[4], object.timePeriodIndex);
 }
 
 FocusSession _focusSessionDeserialize(
@@ -99,6 +105,7 @@ FocusSession _focusSessionDeserialize(
   object.id = id;
   object.isCompleted = reader.readBool(offsets[2]);
   object.startTime = reader.readDateTime(offsets[3]);
+  object.timePeriodIndex = reader.readLongOrNull(offsets[4]);
   return object;
 }
 
@@ -117,6 +124,8 @@ P _focusSessionDeserializeProp<P>(
       return (reader.readBool(offset)) as P;
     case 3:
       return (reader.readDateTime(offset)) as P;
+    case 4:
+      return (reader.readLongOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -542,6 +551,80 @@ extension FocusSessionQueryFilter
       ));
     });
   }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterFilterCondition>
+      timePeriodIndexIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'timePeriodIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterFilterCondition>
+      timePeriodIndexIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'timePeriodIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterFilterCondition>
+      timePeriodIndexEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'timePeriodIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterFilterCondition>
+      timePeriodIndexGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'timePeriodIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterFilterCondition>
+      timePeriodIndexLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'timePeriodIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterFilterCondition>
+      timePeriodIndexBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'timePeriodIndex',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
 extension FocusSessionQueryObject
@@ -600,6 +683,20 @@ extension FocusSessionQuerySortBy
   QueryBuilder<FocusSession, FocusSession, QAfterSortBy> sortByStartTimeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'startTime', Sort.desc);
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterSortBy>
+      sortByTimePeriodIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'timePeriodIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterSortBy>
+      sortByTimePeriodIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'timePeriodIndex', Sort.desc);
     });
   }
 }
@@ -668,6 +765,20 @@ extension FocusSessionQuerySortThenBy
       return query.addSortBy(r'startTime', Sort.desc);
     });
   }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterSortBy>
+      thenByTimePeriodIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'timePeriodIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QAfterSortBy>
+      thenByTimePeriodIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'timePeriodIndex', Sort.desc);
+    });
+  }
 }
 
 extension FocusSessionQueryWhereDistinct
@@ -694,6 +805,13 @@ extension FocusSessionQueryWhereDistinct
   QueryBuilder<FocusSession, FocusSession, QDistinct> distinctByStartTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'startTime');
+    });
+  }
+
+  QueryBuilder<FocusSession, FocusSession, QDistinct>
+      distinctByTimePeriodIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'timePeriodIndex');
     });
   }
 }
@@ -727,6 +845,12 @@ extension FocusSessionQueryProperty
   QueryBuilder<FocusSession, DateTime, QQueryOperations> startTimeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'startTime');
+    });
+  }
+
+  QueryBuilder<FocusSession, int?, QQueryOperations> timePeriodIndexProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'timePeriodIndex');
     });
   }
 }

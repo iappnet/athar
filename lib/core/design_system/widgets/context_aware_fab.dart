@@ -58,7 +58,7 @@ class ContextAwareFabController {
   final VoidCallback? onAddMedicine;
   final VoidCallback? onAddHabit;
   final VoidCallback? onAddSpace;
-  final VoidCallback? onAddModule;
+  final void Function(String type)? onAddModule;
   
   // بيانات المساحة (لداخل المساحة)
   final String? spaceId;
@@ -198,8 +198,7 @@ class ContextAwareFabController {
   }
 
   void _addModule(String type) {
-    onAddModule?.call();
-    // TODO: تمرير النوع للـ callback
+    onAddModule?.call(type);
   }
 
   /// عرض Bottom Sheet زجاجي

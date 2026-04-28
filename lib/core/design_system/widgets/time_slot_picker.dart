@@ -66,7 +66,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
         _mode = _TimePickerMode.custom;
         _customTime = settings.fixedTime;
         break;
-      case TimeSpecificationType.relativeToprayer:
+      case TimeSpecificationType.relativeToPrayer:
         _mode = _TimePickerMode.prayer;
         _selectedPrayer = settings.referencePrayer;
         _relation = settings.prayerRelation ?? PrayerRelativeTime.after;
@@ -651,7 +651,7 @@ class _TimeSlotPickerState extends State<TimeSlotPicker> {
     switch (_mode) {
       case _TimePickerMode.prayer:
         if (_selectedPrayer == null) return;
-        settings = TimeSlotSettings.relativeToprayer(
+        settings = TimeSlotSettings.relativeToPrayer(
           prayer: _selectedPrayer!,
           relation: _relation,
           offsetMinutes: _offsetMinutes,
@@ -766,7 +766,7 @@ class TimeSlotDisplay extends StatelessWidget {
         final hour12 = hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour);
         return '$hour12:$minute $period';
 
-      case TimeSpecificationType.relativeToprayer:
+      case TimeSpecificationType.relativeToPrayer:
         final prayerName = _getPrayerName(s.referencePrayer);
         if (s.offsetMinutes == 0) return prayerName;
         final relation = s.prayerRelation == PrayerRelativeTime.before
@@ -796,7 +796,7 @@ class TimeSlotDisplay extends StatelessWidget {
     switch (s.type) {
       case TimeSpecificationType.fixed:
         return Icons.access_time;
-      case TimeSpecificationType.relativeToprayer:
+      case TimeSpecificationType.relativeToPrayer:
         return Icons.mosque_outlined;
       case TimeSpecificationType.period:
         return Icons.wb_sunny_outlined;

@@ -9,12 +9,14 @@ import 'package:athar/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:athar/features/settings/presentation/cubit/settings_state.dart';
 import 'package:athar/features/settings/presentation/pages/location_settings_page.dart';
 import 'package:athar/features/settings/presentation/pages/smart_zones_page.dart';
+import 'package:athar/features/settings/presentation/widgets/delete_account_dialog.dart';
 import 'package:athar/features/subscription/presentation/pages/subscription_page.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
 
 class GeneralSettingsPage extends StatelessWidget {
   const GeneralSettingsPage({super.key});
@@ -74,7 +76,8 @@ class GeneralSettingsPage extends StatelessWidget {
                       iconColor: const Color(0xFF5C35C9),
                       title: l10n.darkMode,
                       value: settings?.isDarkMode ?? false,
-                      onChanged: (_) {},
+                      onChanged: (v) =>
+                          context.read<SettingsCubit>().toggleDarkMode(v),
                     ),
                   ]),
                   AtharGap.lg,
@@ -217,6 +220,21 @@ class GeneralSettingsPage extends StatelessWidget {
                       ),
                       _Divider(),
                       _NavTile(
+                        icon: Icons.lock_reset_rounded,
+                        iconColor: const Color(0xFF0288D1),
+                        title: l10n.resetPassword,
+                        onTap: () => _confirmResetPassword(context, l10n),
+                      ),
+                      _Divider(),
+                      _NavTile(
+                        icon: Icons.delete_outline_rounded,
+                        iconColor: Colors.red.shade600,
+                        title: l10n.deleteAccount,
+                        titleColor: Colors.red.shade600,
+                        onTap: () => _showDeleteAccount(context),
+                      ),
+                      _Divider(),
+                      _NavTile(
                         icon: Icons.logout_rounded,
                         iconColor: Colors.red.shade600,
                         title: l10n.logout,
@@ -273,8 +291,7 @@ class GeneralSettingsPage extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: Text(l10n.cancel,
-                style: const TextStyle(fontFamily: 'Cairo')),
+            child: Text(l10n.cancel, style: const TextStyle(fontFamily: 'Cairo')),
           ),
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: Colors.red.shade600),
@@ -292,6 +309,116 @@ class GeneralSettingsPage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _confirmResetPassword(BuildContext context, AppLocalizations l10n) {
+    final email = Supabase.instance.client.auth.currentUser?.email ?? '';
+    final colorScheme = Theme.of(context).colorScheme;
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: AtharRadii.radiusLg),
+        title: Row(
+          children: [
+            Icon(Icons.lock_reset_rounded, color: colorScheme.primary, size: 24),
+            const SizedBox(width: 8),
+            Text(
+              l10n.resetPassword,
+              style: const TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.w700),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'سيتم إرسال رابط إعادة تعيين كلمة المرور إلى:',
+              style: TextStyle(fontFamily: 'Cairo', fontSize: 14, color: colorScheme.onSurfaceVariant),
+            ),
+            const SizedBox(height: 8),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              decoration: BoxDecoration(
+                color: colorScheme.surfaceContainerLow,
+                borderRadius: AtharRadii.radiusMd,
+                border: Border.all(color: colorScheme.outlineVariant),
+              ),
+              child: Text(
+                email,
+                style: TextStyle(
+                  fontFamily: 'Cairo',
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: colorScheme.onSurface,
+                ),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(l10n.cancel, style: const TextStyle(fontFamily: 'Cairo')),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: colorScheme.primary),
+            onPressed: () async {
+              Navigator.pop(ctx);
+              try {
+                await context.read<AuthCubit>().sendPasswordResetEmail(email);
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text(
+                        'تم إرسال رابط إعادة التعيين. تحقق من بريدك الإلكتروني.',
+                        style: TextStyle(fontFamily: 'Cairo'),
+                      ),
+                      backgroundColor: colorScheme.primary,
+                    ),
+                  );
+                }
+              } catch (_) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text(
+                        'تعذّر الإرسال. حاول مجدداً.',
+                        style: TextStyle(fontFamily: 'Cairo'),
+                      ),
+                      backgroundColor: colorScheme.error,
+                    ),
+                  );
+                }
+              }
+            },
+            child: const Text(
+              'إرسال الرابط',
+              style: TextStyle(fontFamily: 'Cairo', color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showDeleteAccount(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => DeleteAccountDialog(
+        onConfirm: (deleteLocal) {
+          // deleteLocal=true → delete cloud + local (keepLocalData=false)
+          // deleteLocal=false → delete cloud only (keepLocalData=true)
+          context.read<AuthCubit>().deleteAccount(keepLocalData: !deleteLocal);
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (_) => const LoginPage()),
+            (_) => false,
+          );
+        },
       ),
     );
   }

@@ -31,7 +31,7 @@ class SmartZoneHelper {
     }
 
     // 6. إذا لم ينطبق أي شيء، نعتبره وقتاً حراً افتراضياً
-    return 'perconal';
+    return 'personal';
   }
 
   // --- الدوال المساعدة (Helpers) ---

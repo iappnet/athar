@@ -224,7 +224,7 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
         Text(l10n.everyInterval, style: TextStyle(fontSize: 14.sp)),
         AtharGap.hMd,
         SizedBox(
-          width: 60.w,
+          width: 75.w,
           child: DropdownButtonFormField<int>(
             initialValue: _interval,
             items: List.generate(30, (i) => i + 1)

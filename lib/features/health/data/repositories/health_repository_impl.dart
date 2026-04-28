@@ -150,6 +150,17 @@ class HealthRepositoryImpl implements HealthRepository {
   }
 
   @override
+  Future<List<AppointmentModel>> getAppointmentsForDay(DateTime date) async {
+    final start = DateTime(date.year, date.month, date.day);
+    final end = DateTime(date.year, date.month, date.day, 23, 59, 59);
+    return await _isar.appointmentModels
+        .filter()
+        .appointmentDateBetween(start, end)
+        .sortByAppointmentDate()
+        .findAll();
+  }
+
+  @override
   Future<List<AppointmentModel>> getAppointmentsWithReminders() async {
     final now = DateTime.now();
 

@@ -317,6 +317,16 @@ class SettingsCubit extends Cubit<SettingsState> {
     await _repository.updateSettings(currentSettings);
   }
 
+  Future<void> toggleDarkMode(bool enabled) async {
+    try {
+      final currentSettings = await _repository.getSettings();
+      currentSettings.isDarkMode = enabled;
+      await _repository.updateSettings(currentSettings);
+    } catch (e) {
+      if (kDebugMode) print('❌ Error toggling dark mode: $e');
+    }
+  }
+
   Future<void> toggleHijriMode(bool value) async {
     final currentSettings = await _repository.getSettings();
     currentSettings.isHijriMode = value;

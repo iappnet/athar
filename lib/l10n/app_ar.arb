@@ -107,6 +107,7 @@
   "signIn": "الدخول",
   "signOut": "الخروج",
   "email": "البريد الإلكتروني",
+  "emailOrUsername": "البريد الإلكتروني أو اسم المستخدم",
   "password": "كلمة المرور",
   "confirmPassword": "تأكيد كلمة المرور",
   "currentPassword": "كلمة المرور الحالية",
@@ -539,14 +540,30 @@
   "getStarted": "ابدأ الآن",
   "letsStart": "هيا نبدأ",
   "welcomeToApp": "مرحباً بك في أثر",
-  "onboardingTitle1": "نظّم حياتك",
-  "onboardingDesc1": "أدر مهامك وعاداتك بطريقة سهلة وفعالة",
-  "onboardingTitle2": "حافظ على صلاتك",
-  "onboardingDesc2": "تذكيرات دقيقة بأوقات الصلاة واتجاه القبلة",
-  "onboardingTitle3": "ركّز وأنجز",
-  "onboardingDesc3": "استخدم تقنية بومودورو لتحقيق أقصى إنتاجية",
-  "onboardingTitle4": "تابع صحتك",
-  "onboardingDesc4": "سجّل أدويتك ومواعيدك ومؤشراتك الصحية",
+  "onboardingCategory1": "المهام والعادات",
+  "onboardingTitle1": "يومك بيدك",
+  "onboardingDesc1": "نظّم مهامك وعاداتك في مكان واحد.\nابدأ يومك بوضوح وأنهِه بفخر.",
+  "onboardingChip11": "مهام ذكية",
+  "onboardingChip12": "عادات يومية",
+  "onboardingChip13": "تتبع التقدم",
+  "onboardingCategory2": "الصلاة والذكر",
+  "onboardingTitle2": "لا يفوتك وقت صلاة",
+  "onboardingDesc2": "أوقات صلاة دقيقة حسب موقعك،\nمع اتجاه القبلة وأذكار اليوم.",
+  "onboardingChip21": "أوقات الصلاة",
+  "onboardingChip22": "القبلة",
+  "onboardingChip23": "الأذكار",
+  "onboardingCategory3": "التركيز والإنتاجية",
+  "onboardingTitle3": "أنجز ما يهمّك فعلاً",
+  "onboardingDesc3": "وضع التركيز يمنع المشتّتات\nويتتبّع وقتك لإنجاز حقيقي.",
+  "onboardingChip31": "بومودورو",
+  "onboardingChip32": "حجب المشتّتات",
+  "onboardingChip33": "إحصاءات",
+  "onboardingCategory4": "ابدأ الآن",
+  "onboardingTitle4": "حياة أكثر أثراً",
+  "onboardingDesc4": "انضم إلى من يبنون عادات صحية\nوحياة منتجة ومتوازنة كل يوم.",
+  "onboardingChip41": "مجاني للبدء",
+  "onboardingChip42": "بدون إعلانات",
+  "onboardingChip43": "خصوصية تامة",
   "selectedCountLabel": "{count} محدد",
   "@selectedCountLabel": {"placeholders": {"count": {"type": "int"}}},
   "completeAll": "إكمال الكل",
@@ -1462,6 +1479,87 @@
       "count": { "type": "int" }
     }
   },
+  "statsRange7Days": "٧ أيام",
+  "statsRange30Days": "٣٠ يوماً",
+  "statsTodaySection": "يومك اليوم",
+  "statsTodayTasks": "{done}/{total} مهمة",
+  "@statsTodayTasks": {
+    "placeholders": {
+      "done": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "statsTodayHabits": "{done}/{total} عادة",
+  "@statsTodayHabits": {
+    "placeholders": {
+      "done": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "statsTodayFocus": "{minutes} د تركيز",
+  "@statsTodayFocus": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "statsTasksSection": "المهام",
+  "statsCompletionRate": "{pct}% مُنجز",
+  "@statsCompletionRate": {
+    "placeholders": {
+      "pct": { "type": "int" }
+    }
+  },
+  "statsOverdueTasks": "{count} متأخرة",
+  "@statsOverdueTasks": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "statsAvgDelay": "متوسط التأخير {days} يوم",
+  "@statsAvgDelay": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "statsTasksByPriority": "حسب الأولوية",
+  "statsPriorityHigh": "عالية",
+  "statsPriorityMedium": "متوسطة",
+  "statsPriorityLow": "منخفضة",
+  "statsDailyCompletion": "الإنجاز اليومي",
+  "statsHabitsSection": "العادات",
+  "statsConsistency": "{pct}% استمرارية",
+  "@statsConsistency": {
+    "placeholders": {
+      "pct": { "type": "int" }
+    }
+  },
+  "statsTopStreaks": "أفضل السلاسل",
+  "statsStreakDays": "{days} يوم",
+  "@statsStreakDays": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "statsHeatmapTitle": "خريطة العادات",
+  "statsFocusSection": "التركيز",
+  "statsFocusTotal": "إجمالي التركيز",
+  "statsFocusHours": "{h}س {m}د",
+  "@statsFocusHours": {
+    "placeholders": {
+      "h": { "type": "int" },
+      "m": { "type": "int" }
+    }
+  },
+  "statsPeriodsSection": "الإنتاجية حسب الوقت",
+  "statsDomainsSection": "المجالات",
+  "statsDomainNeglected": "يحتاج اهتماماً",
+  "statsDomainOverloaded": "محمّل بكثير",
+  "statsInsightsSection": "التحليلات",
+  "statsNoData": "لا توجد بيانات كافية للعرض",
+  "statsNoDataSub": "أضف مهاماً وعادات لرؤية تحليل شامل",
+  "statsUpgradeTitle": "إحصائيات تفصيلية",
+  "statsUpgradeBody": "اشترك للوصول إلى التقارير الكاملة والتحليلات المتقدمة",
+  "statsUpgradeCta": "اشترك الآن",
   "statsCardTitle": "إحصائيات الأثر",
   "statsCardSubtitle": "شاهد ملخص أدائك وتركيزك",
   "reminderToggleLabel": "تفعيل التذكير",

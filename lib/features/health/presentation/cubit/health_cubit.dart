@@ -7,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 import 'package:athar/core/iam/permission_service.dart';
+import 'package:athar/core/services/appointment_notifier.dart';
 import 'package:athar/core/services/automation_service.dart';
 import 'package:athar/core/services/medication_notification_scheduler.dart';
 import 'package:athar/features/health/data/models/appointment_model.dart';
@@ -25,6 +26,7 @@ class HealthCubit extends Cubit<HealthState> {
   final AutomationService _automationService;
   final MedicationNotificationScheduler _medicationScheduler;
   final AppointmentNotificationScheduler _appointmentScheduler;
+  final AppointmentNotifier _appointmentNotifier;
 
   StreamSubscription? _medicinesSubscription;
   ModuleModel? _currentModule;
@@ -35,6 +37,7 @@ class HealthCubit extends Cubit<HealthState> {
     this._automationService,
     this._medicationScheduler,
     this._appointmentScheduler,
+    this._appointmentNotifier,
   ) : super(HealthInitial());
 
   // دالة مساعدة لتحديث السياق (يستدعيها UI عند الدخول)
@@ -308,6 +311,7 @@ class HealthCubit extends Cubit<HealthState> {
       }
 
       emit(HealthOperationSuccess("تم حجز الموعد"));
+      _appointmentNotifier.notify();
       loadHealthData(appointment.moduleId); // تحديث القائمة
     } catch (e) {
       emit(HealthError("فشل حفظ الموعد"));
@@ -339,6 +343,7 @@ class HealthCubit extends Cubit<HealthState> {
       }
 
       emit(HealthOperationSuccess("تم تحديث الموعد"));
+      _appointmentNotifier.notify();
       loadHealthData(appointment.moduleId);
     } catch (e) {
       emit(HealthError("فشل تحديث الموعد"));
@@ -364,6 +369,7 @@ class HealthCubit extends Cubit<HealthState> {
       await _appointmentScheduler.cancelAppointment(appointment.uuid);
       await _repository.deleteAppointment(appointment.id);
       emit(HealthOperationSuccess("تم حذف الموعد"));
+      _appointmentNotifier.notify();
     } catch (e) {
       emit(HealthError("فشل حذف الموعد"));
     }

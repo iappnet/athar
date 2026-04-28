@@ -4,15 +4,18 @@ import 'package:athar/core/di/injection.dart';
 import 'package:athar/core/services/biometric_service.dart';
 import 'package:athar/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:athar/features/auth/presentation/cubit/auth_state.dart';
+import 'package:athar/features/home/presentation/pages/onboarding_page.dart';
 import 'package:athar/features/settings/domain/repositories/settings_repository.dart';
 import 'package:athar/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:athar/features/settings/presentation/cubit/settings_state.dart';
-import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// SPLASH PAGE — brand-aligned animated entry screen
+// SPLASH PAGE
+// Shown only on return launches (first launch goes straight to OnboardingPage).
+// Design: deep-dark cosmic background · self-drawing Islamic star · floating
+// particles · "أثر" slides up · shimmer progress bar.
 // ═══════════════════════════════════════════════════════════════════════════
 
 class SplashPage extends StatefulWidget {
@@ -22,69 +25,96 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
+class _SplashPageState extends State<SplashPage>
+    with TickerProviderStateMixin {
   bool _isTimerDone = false;
   AuthState? _lastState;
 
-  late final AnimationController _logoCtrl;
-  late final AnimationController _pulseCtrl;
-  late final AnimationController _patternCtrl;
+  // Star draw animation
+  late final AnimationController _starCtrl;
+  late final Animation<double> _starProgress;
 
-  late final Animation<double> _logoScale;
-  late final Animation<double> _logoOpacity;
+  // Text entry
+  late final AnimationController _textCtrl;
+  late final Animation<double> _textOpacity;
+  late final Animation<double> _textSlide;
   late final Animation<double> _taglineOpacity;
-  late final Animation<double> _taglineSlide;
-  late final Animation<double> _pulse;
-  late final Animation<double> _patternAngle;
+
+  // Bottom progress shimmer
+  late final AnimationController _progressCtrl;
+  late final Animation<double> _progressWidth;
+
+  // Ambient pulse on star glow
+  late final AnimationController _glowCtrl;
+  late final Animation<double> _glowRadius;
 
   @override
   void initState() {
     super.initState();
     _lastState = context.read<AuthCubit>().state;
 
-    _logoCtrl = AnimationController(
+    // ── Star self-draw ────────────────────────────────────────────────────
+    _starCtrl = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 900),
+      duration: const Duration(milliseconds: 1400),
     );
-    _logoScale = _logoCtrl
-        .drive(CurveTween(curve: Curves.elasticOut))
-        .drive(Tween(begin: 0.4, end: 1.0));
-    _logoOpacity = _logoCtrl
-        .drive(CurveTween(curve: const Interval(0.0, 0.5, curve: Curves.easeIn)))
-        .drive(Tween(begin: 0.0, end: 1.0));
-    _taglineOpacity = _logoCtrl
-        .drive(CurveTween(curve: const Interval(0.55, 1.0, curve: Curves.easeIn)))
-        .drive(Tween(begin: 0.0, end: 1.0));
-    _taglineSlide = _logoCtrl
-        .drive(CurveTween(curve: const Interval(0.55, 1.0, curve: Curves.easeOut)))
-        .drive(Tween(begin: 16.0, end: 0.0));
+    _starProgress = CurvedAnimation(
+      parent: _starCtrl,
+      curve: Curves.easeInOut,
+    );
 
-    _pulseCtrl = AnimationController(
+    // ── Text ─────────────────────────────────────────────────────────────
+    _textCtrl = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2200),
+      duration: const Duration(milliseconds: 700),
+    );
+    _textOpacity = CurvedAnimation(parent: _textCtrl, curve: Curves.easeIn);
+    _textSlide = _textCtrl
+        .drive(CurveTween(curve: Curves.easeOut))
+        .drive(Tween(begin: 22.0, end: 0.0));
+    _taglineOpacity = CurvedAnimation(
+      parent: _textCtrl,
+      curve: const Interval(0.4, 1.0, curve: Curves.easeIn),
+    );
+
+    // ── Progress bar ─────────────────────────────────────────────────────
+    _progressCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 3000),
+    );
+    _progressWidth = CurvedAnimation(
+      parent: _progressCtrl,
+      curve: Curves.easeInOut,
+    );
+
+    // ── Glow pulse ───────────────────────────────────────────────────────
+    _glowCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 2400),
     )..repeat(reverse: true);
-    _pulse = _pulseCtrl
+    _glowRadius = _glowCtrl
         .drive(CurveTween(curve: Curves.easeInOut))
-        .drive(Tween(begin: 0.92, end: 1.08));
+        .drive(Tween(begin: 0.7, end: 1.0));
 
-    _patternCtrl = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 30),
-    )..repeat();
-    _patternAngle = _patternCtrl.drive(Tween(begin: 0.0, end: 2 * math.pi));
+    // ── Sequence ─────────────────────────────────────────────────────────
+    _starCtrl.forward().then((_) {
+      _textCtrl.forward();
+    });
+    _progressCtrl.forward();
 
-    _logoCtrl.forward();
-
-    Timer(const Duration(milliseconds: 2400), () {
-      if (mounted) setState(() => _isTimerDone = true);
+    Timer(const Duration(milliseconds: 3000), () {
+      if (!mounted) return;
+      setState(() => _isTimerDone = true);
+      if (_lastState != null) _navigate(_lastState!);
     });
   }
 
   @override
   void dispose() {
-    _logoCtrl.dispose();
-    _pulseCtrl.dispose();
-    _patternCtrl.dispose();
+    _starCtrl.dispose();
+    _textCtrl.dispose();
+    _progressCtrl.dispose();
+    _glowCtrl.dispose();
     super.dispose();
   }
 
@@ -115,23 +145,29 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
         Navigator.of(context).pushReplacementNamed('/home');
       }
     } else if (authState is AuthGuest) {
-      _toOnboarding();
+      await _toOnboarding();
     } else if (authState is AuthProfileIncomplete) {
       Navigator.of(context).pushReplacementNamed('/complete_profile');
     } else {
-      _toOnboarding();
+      await _toOnboarding();
     }
   }
 
-  void _toOnboarding() {
-    Navigator.of(context).pushReplacement(
-      PageRouteBuilder(
-        pageBuilder: (_, _, _) => const OnboardingPage(),
-        transitionDuration: const Duration(milliseconds: 600),
-        transitionsBuilder: (_, anim, _, child) =>
-            FadeTransition(opacity: anim, child: child),
-      ),
-    );
+  Future<void> _toOnboarding() async {
+    final seen = await OnboardingPage.hasBeenSeen();
+    if (!mounted) return;
+    if (seen) {
+      Navigator.of(context).pushReplacementNamed('/login');
+    } else {
+      Navigator.of(context).pushReplacement(
+        PageRouteBuilder(
+          pageBuilder: (_, _, _) => const OnboardingPage(),
+          transitionDuration: const Duration(milliseconds: 500),
+          transitionsBuilder: (_, anim, _, child) =>
+              FadeTransition(opacity: anim, child: child),
+        ),
+      );
+    }
   }
 
   @override
@@ -146,168 +182,246 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
           if (_isTimerDone && _lastState != null) _navigate(_lastState!);
         },
         child: Scaffold(
+          backgroundColor: const Color(0xFF07111A),
           body: AnimatedBuilder(
-            animation: Listenable.merge([_logoCtrl, _pulseCtrl, _patternCtrl]),
-            builder: (_, _) => _buildBody(),
+            animation: Listenable.merge(
+                [_starCtrl, _textCtrl, _progressCtrl, _glowCtrl]),
+            builder: (_, _) => _buildBody(context),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildBody() {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFF0D4A28),
-            Color(0xFF1A6B3C),
-            Color(0xFF22854C),
-          ],
-          stops: [0.0, 0.55, 1.0],
-        ),
-      ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          // Slow-rotating geometric pattern
-          Positioned.fill(
-            child: Transform.rotate(
-              angle: _patternAngle.value,
-              child: Transform.scale(
-                scale: _pulse.value,
-                child: CustomPaint(painter: _IslamicPatternPainter()),
-              ),
+  Widget _buildBody(BuildContext context) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        // ── Background gradient ─────────────────────────────────────────
+        const DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFF07111A), // deep navy
+                Color(0xFF0A1C12), // deep forest
+                Color(0xFF060E0A), // near black
+              ],
+              stops: [0.0, 0.55, 1.0],
             ),
           ),
+        ),
 
-          // Radial glow
-          Container(
-            width: 240,
-            height: 240,
+        // ── Subtle arabesque lattice ────────────────────────────────────
+        Positioned.fill(
+          child: CustomPaint(painter: _LatticePainter()),
+        ),
+
+        // ── Floating star particles ─────────────────────────────────────
+        ...List.generate(10, (i) => _FloatingParticle(seed: i * 37 + 11)),
+
+        // ── Central ambient glow behind star ────────────────────────────
+        Center(
+          child: Container(
+            width: 200 * _glowRadius.value,
+            height: 200 * _glowRadius.value,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  Colors.white.withValues(alpha: 0.08),
+                  const Color(0xFF22A05B).withValues(alpha: 0.12),
                   Colors.transparent,
                 ],
               ),
             ),
           ),
+        ),
 
-          // Logo + text
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ScaleTransition(
-                scale: _logoScale,
-                child: FadeTransition(
-                  opacity: _logoOpacity,
-                  child: _LogoMark(),
-                ),
+        // ── Hero content ────────────────────────────────────────────────
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Self-drawing star
+            SizedBox(
+              width: 120,
+              height: 120,
+              child: CustomPaint(
+                painter: _StarDrawPainter(progress: _starProgress.value),
               ),
-              const SizedBox(height: 24),
-              FadeTransition(
-                opacity: _logoOpacity,
+            ),
+
+            const SizedBox(height: 36),
+
+            // "أثر" title
+            Transform.translate(
+              offset: Offset(0, _textSlide.value),
+              child: Opacity(
+                opacity: _textOpacity.value,
                 child: const Text(
                   'أثر',
                   style: TextStyle(
                     fontFamily: 'Cairo',
-                    fontSize: 52,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 64,
+                    fontWeight: FontWeight.w800,
                     color: Colors.white,
-                    letterSpacing: 2,
-                    height: 1.1,
+                    height: 1.0,
+                    letterSpacing: 3,
                   ),
                 ),
               ),
-              const SizedBox(height: 8),
-              Transform.translate(
-                offset: Offset(0, _taglineSlide.value),
-                child: FadeTransition(
-                  opacity: _taglineOpacity,
-                  child: const Text(
-                    'حياة متوازنة · أثر مستدام',
-                    style: TextStyle(
-                      fontFamily: 'Cairo',
-                      fontSize: 15,
-                      color: Colors.white70,
-                      letterSpacing: 0.5,
+            ),
+
+            const SizedBox(height: 10),
+
+            // Tagline
+            Opacity(
+              opacity: _taglineOpacity.value,
+              child: const Text(
+                'حياة متوازنة · أثر مستدام',
+                style: TextStyle(
+                  fontFamily: 'Cairo',
+                  fontSize: 14,
+                  color: Color(0xFF6EAF8A),
+                  letterSpacing: 0.8,
+                ),
+              ),
+            ),
+          ],
+        ),
+
+        // ── Bottom progress bar ─────────────────────────────────────────
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 64,
+          child: Column(
+            children: [
+              SizedBox(
+                width: 160,
+                height: 2,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(1),
+                  child: Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: FractionallySizedBox(
+                      widthFactor: _progressWidth.value,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(1),
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFF1A6B3C), Color(0xFF4ADE80)],
+                          ),
+                        ),
+                        child: const SizedBox.expand(),
+                      ),
                     ),
                   ),
                 ),
               ),
             ],
           ),
-
-          // Bottom dots
-          Positioned(
-            bottom: 56,
-            child: FadeTransition(
-              opacity: _taglineOpacity,
-              child: const _PulsingDots(),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
 
-// ─── Logo circle ──────────────────────────────────────────────────────────────
-class _LogoMark extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 100,
-      height: 100,
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.12),
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.3),
-          width: 1.5,
-        ),
-      ),
-      child: Center(
-        child: CustomPaint(
-          size: const Size(56, 56),
-          painter: _AtharMarkPainter(),
-        ),
-      ),
-    );
-  }
-}
+// ─── Self-drawing 8-pointed Islamic star ─────────────────────────────────────
+class _StarDrawPainter extends CustomPainter {
+  final double progress;
+  _StarDrawPainter({required this.progress});
 
-// ─── Islamic 8-pointed star pattern ──────────────────────────────────────────
-class _IslamicPatternPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.04)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.0;
-
     final cx = size.width / 2;
     final cy = size.height / 2;
-    final maxR = size.width * 0.8;
+    final R = size.width * 0.44; // outer radius
+    final r = R * 0.42; // inner radius
+    const pts = 8;
 
-    for (int ring = 1; ring <= 4; ring++) {
-      final r = maxR * ring / 4;
-      _drawStar8(canvas, cx, cy, r, paint);
-      canvas.drawCircle(Offset(cx, cy), r * 0.7, paint);
+    // Build the star path
+    final path = Path();
+    for (int i = 0; i < pts * 2; i++) {
+      final angle = (i * math.pi / pts) - math.pi / 2;
+      final radius = i.isEven ? R : r;
+      final x = cx + radius * math.cos(angle);
+      final y = cy + radius * math.sin(angle);
+      i == 0 ? path.moveTo(x, y) : path.lineTo(x, y);
+    }
+    path.close();
+
+    // Draw the traced portion
+    final metrics = path.computeMetrics().toList();
+    if (metrics.isEmpty) return;
+    final metric = metrics.first;
+    final drawLen = metric.length * progress;
+
+    final tracePaint = Paint()
+      ..color = Colors.white.withValues(alpha: 0.9)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.8
+      ..strokeCap = StrokeCap.round;
+
+    if (drawLen > 0) {
+      canvas.drawPath(metric.extractPath(0, drawLen), tracePaint);
+    }
+
+    // Glow fill when nearly complete
+    if (progress > 0.85) {
+      final fillOpacity = ((progress - 0.85) / 0.15).clamp(0.0, 1.0);
+      final fillPaint = Paint()
+        ..color = const Color(0xFF22A05B).withValues(alpha: 0.08 * fillOpacity)
+        ..style = PaintingStyle.fill;
+      canvas.drawPath(path, fillPaint);
+    }
+
+    // Centre dot (appears when drawing completes)
+    if (progress > 0.7) {
+      final dotOpacity = ((progress - 0.7) / 0.3).clamp(0.0, 1.0);
+      canvas.drawCircle(
+        Offset(cx, cy),
+        3.5,
+        Paint()
+          ..color = Colors.white.withValues(alpha: dotOpacity)
+          ..style = PaintingStyle.fill,
+      );
     }
   }
 
-  void _drawStar8(Canvas canvas, double cx, double cy, double r, Paint paint) {
-    final path = Path();
-    const pts = 8;
+  @override
+  bool shouldRepaint(_StarDrawPainter old) => old.progress != progress;
+}
+
+// ─── Ultra-subtle arabesque lattice background ────────────────────────────────
+class _LatticePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.white.withValues(alpha: 0.025)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 0.8;
+
+    const spacing = 56.0;
+    final cols = (size.width / spacing).ceil() + 1;
+    final rows = (size.height / spacing).ceil() + 1;
+
+    for (int r = 0; r < rows; r++) {
+      for (int c = 0; c < cols; c++) {
+        final cx = c * spacing;
+        final cy = r * spacing;
+        _drawMiniStar(canvas, cx, cy, spacing * 0.28, paint);
+      }
+    }
+  }
+
+  void _drawMiniStar(
+      Canvas canvas, double cx, double cy, double r, Paint paint) {
     final inner = r * 0.4;
+    const pts = 4;
+    final path = Path();
     for (int i = 0; i < pts * 2; i++) {
-      final angle = (i * math.pi / pts) - math.pi / 2;
+      final angle = (i * math.pi / pts) - math.pi / 4;
       final radius = i.isEven ? r : inner;
       final x = cx + radius * math.cos(angle);
       final y = cy + radius * math.sin(angle);
@@ -321,160 +435,42 @@ class _IslamicPatternPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter _) => false;
 }
 
-// ─── Stylised "أ" mark ───────────────────────────────────────────────────────
-class _AtharMarkPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final stroke = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.5
-      ..strokeCap = StrokeCap.round;
-
-    final w = size.width;
-    final h = size.height;
-
-    canvas.drawLine(Offset(w * 0.5, h * 0.1), Offset(w * 0.5, h * 0.75), stroke);
-
-    final base = Path()
-      ..moveTo(w * 0.15, h * 0.75)
-      ..cubicTo(w * 0.15, h * 0.95, w * 0.85, h * 0.95, w * 0.85, h * 0.75);
-    canvas.drawPath(base, stroke);
-
-    canvas.drawCircle(
-      Offset(w * 0.5, h * 0.25),
-      3.5,
-      Paint()
-        ..color = Colors.white
-        ..style = PaintingStyle.fill,
-    );
-  }
+// ─── Individual floating star particle ───────────────────────────────────────
+class _FloatingParticle extends StatefulWidget {
+  final int seed;
+  const _FloatingParticle({required this.seed});
 
   @override
-  bool shouldRepaint(covariant CustomPainter _) => false;
+  State<_FloatingParticle> createState() => _FloatingParticleState();
 }
 
-// ─── Pulsing loading dots ────────────────────────────────────────────────────
-class _PulsingDots extends StatefulWidget {
-  const _PulsingDots();
-
-  @override
-  State<_PulsingDots> createState() => _PulsingDotsState();
-}
-
-class _PulsingDotsState extends State<_PulsingDots> with TickerProviderStateMixin {
-  late final List<AnimationController> _controllers;
-  late final List<Animation<double>> _anims;
+class _FloatingParticleState extends State<_FloatingParticle>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _ctrl;
+  late final double _x;
+  late final double _startY;
+  late final double _size;
+  late final double _driftX;
 
   @override
   void initState() {
     super.initState();
-    _controllers = List.generate(
-      3,
-      (_) => AnimationController(
-        vsync: this,
-        duration: const Duration(milliseconds: 600),
-      )..repeat(reverse: true),
-    );
-    for (int i = 0; i < 3; i++) {
-      Future.delayed(Duration(milliseconds: i * 200), () {
-        if (mounted) _controllers[i].forward();
-      });
-    }
-    _anims = _controllers
-        .map((c) => c
-            .drive(CurveTween(curve: Curves.easeInOut))
-            .drive(Tween(begin: 0.4, end: 1.0)))
-        .toList();
+    final rng = math.Random(widget.seed);
+    _x = rng.nextDouble();
+    _startY = 0.3 + rng.nextDouble() * 0.6;
+    _size = 1.5 + rng.nextDouble() * 2.0;
+    _driftX = (rng.nextDouble() - 0.5) * 0.06;
+
+    final duration = Duration(milliseconds: 3500 + rng.nextInt(3000));
+    _ctrl = AnimationController(vsync: this, duration: duration)
+      ..repeat();
+
+    // stagger start
+    final delay = Duration(milliseconds: rng.nextInt(3000));
+    Future.delayed(delay, () {
+      if (mounted) _ctrl.forward();
+    });
   }
-
-  @override
-  void dispose() {
-    for (final c in _controllers) {
-      c.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: List.generate(3, (i) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4),
-          child: AnimatedBuilder(
-            animation: _anims[i],
-            builder: (_, _) => Opacity(
-              opacity: _anims[i].value,
-              child: const SizedBox(
-                width: 6,
-                height: 6,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      }),
-    );
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// ONBOARDING PAGE
-// ═══════════════════════════════════════════════════════════════════════════
-
-class OnboardingPage extends StatefulWidget {
-  const OnboardingPage({super.key});
-
-  @override
-  State<OnboardingPage> createState() => _OnboardingPageState();
-}
-
-class _OnboardingPageState extends State<OnboardingPage> {
-  final _ctrl = PageController();
-  int _current = 0;
-
-  static const _pages = <_OnboardData>[
-    _OnboardData(
-      icon: Icons.checklist_rounded,
-      color: Color(0xFF1A6B3C),
-      accentColor: Color(0xFFD4EDDA),
-    ),
-    _OnboardData(
-      icon: Icons.mosque_outlined,
-      color: Color(0xFF1565C0),
-      accentColor: Color(0xFFE3F2FD),
-    ),
-    _OnboardData(
-      icon: Icons.timer_outlined,
-      color: Color(0xFF6A1B9A),
-      accentColor: Color(0xFFF3E5F5),
-    ),
-    _OnboardData(
-      icon: Icons.favorite_outline_rounded,
-      color: Color(0xFFC62828),
-      accentColor: Color(0xFFFFEBEE),
-    ),
-  ];
-
-  void _next() {
-    if (_current < _pages.length - 1) {
-      _ctrl.nextPage(
-        duration: const Duration(milliseconds: 400),
-        curve: Curves.easeInOut,
-      );
-    } else {
-      _finish();
-    }
-  }
-
-  void _finish() => Navigator.of(context).pushReplacementNamed('/login');
 
   @override
   void dispose() {
@@ -484,170 +480,39 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final isLast = _current == _pages.length - 1;
-    final accentColor = _pages[_current].color;
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Align(
-              alignment: AlignmentDirectional.topEnd,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                child: TextButton(
-                  onPressed: _finish,
-                  child: Text(
-                    l10n.skip,
-                    style: const TextStyle(
-                      fontFamily: 'Cairo',
-                      color: Color(0xFF636E72),
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-            Expanded(
-              child: PageView.builder(
-                controller: _ctrl,
-                onPageChanged: (i) => setState(() => _current = i),
-                itemCount: _pages.length,
-                itemBuilder: (_, i) => _OnboardSlide(data: _pages[i], index: i),
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(_pages.length, (i) {
-                      final active = i == _current;
-                      return AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        width: active ? 24 : 8,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          color: active ? accentColor : const Color(0xFFDFE6E9),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      );
-                    }),
-                  ),
-                  const SizedBox(height: 24),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 52,
-                    child: FilledButton(
-                      onPressed: _next,
-                      style: FilledButton.styleFrom(
-                        backgroundColor: accentColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                      ),
-                      child: Text(
-                        isLast ? l10n.getStarted : l10n.next,
-                        style: const TextStyle(
-                          fontFamily: 'Cairo',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+    final size = MediaQuery.of(context).size;
+    return AnimatedBuilder(
+      animation: _ctrl,
+      builder: (_, _) {
+        final t = _ctrl.value;
+        final opacity =
+            (t < 0.15 ? t / 0.15 : t > 0.75 ? (1 - t) / 0.25 : 1.0)
+                .clamp(0.0, 1.0);
+        final x = (_x + _driftX * t) * size.width;
+        final y = (_startY - t * 0.35) * size.height;
+        return Positioned(
+          left: x,
+          top: y,
+          child: Opacity(
+            opacity: opacity * 0.7,
+            child: Container(
+              width: _size,
+              height: _size,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF4ADE80).withValues(alpha: 0.6),
+                    blurRadius: _size * 2,
+                    spreadRadius: _size * 0.5,
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _OnboardData {
-  final IconData icon;
-  final Color color;
-  final Color accentColor;
-
-  const _OnboardData({
-    required this.icon,
-    required this.color,
-    required this.accentColor,
-  });
-}
-
-class _OnboardSlide extends StatelessWidget {
-  final _OnboardData data;
-  final int index;
-
-  const _OnboardSlide({required this.data, required this.index});
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final titles = [
-      l10n.onboardingTitle1,
-      l10n.onboardingTitle2,
-      l10n.onboardingTitle3,
-      l10n.onboardingTitle4,
-    ];
-    final descs = [
-      l10n.onboardingDesc1,
-      l10n.onboardingDesc2,
-      l10n.onboardingDesc3,
-      l10n.onboardingDesc4,
-    ];
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 180,
-            height: 180,
-            decoration: BoxDecoration(
-              color: data.accentColor,
-              shape: BoxShape.circle,
-            ),
-            child: Center(
-              child: Icon(data.icon, size: 88, color: data.color),
-            ),
           ),
-          const SizedBox(height: 48),
-          Text(
-            titles[index],
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: 'Cairo',
-              fontSize: 26,
-              fontWeight: FontWeight.w700,
-              color: data.color,
-              height: 1.3,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            descs[index],
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontFamily: 'Cairo',
-              fontSize: 15,
-              color: Color(0xFF636E72),
-              height: 1.7,
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

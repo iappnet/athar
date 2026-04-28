@@ -318,6 +318,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get email => 'البريد الإلكتروني';
 
   @override
+  String get emailOrUsername => 'البريد الإلكتروني أو اسم المستخدم';
+
+  @override
   String get password => 'كلمة المرور';
 
   @override
@@ -1592,28 +1595,80 @@ class AppLocalizationsAr extends AppLocalizations {
   String get welcomeToApp => 'مرحباً بك في أثر';
 
   @override
-  String get onboardingTitle1 => 'نظّم حياتك';
+  String get onboardingCategory1 => 'المهام والعادات';
 
   @override
-  String get onboardingDesc1 => 'أدر مهامك وعاداتك بطريقة سهلة وفعالة';
+  String get onboardingTitle1 => 'يومك بيدك';
 
   @override
-  String get onboardingTitle2 => 'حافظ على صلاتك';
+  String get onboardingDesc1 =>
+      'نظّم مهامك وعاداتك في مكان واحد.\nابدأ يومك بوضوح وأنهِه بفخر.';
 
   @override
-  String get onboardingDesc2 => 'تذكيرات دقيقة بأوقات الصلاة واتجاه القبلة';
+  String get onboardingChip11 => 'مهام ذكية';
 
   @override
-  String get onboardingTitle3 => 'ركّز وأنجز';
+  String get onboardingChip12 => 'عادات يومية';
 
   @override
-  String get onboardingDesc3 => 'استخدم تقنية بومودورو لتحقيق أقصى إنتاجية';
+  String get onboardingChip13 => 'تتبع التقدم';
 
   @override
-  String get onboardingTitle4 => 'تابع صحتك';
+  String get onboardingCategory2 => 'الصلاة والذكر';
 
   @override
-  String get onboardingDesc4 => 'سجّل أدويتك ومواعيدك ومؤشراتك الصحية';
+  String get onboardingTitle2 => 'لا يفوتك وقت صلاة';
+
+  @override
+  String get onboardingDesc2 =>
+      'أوقات صلاة دقيقة حسب موقعك،\nمع اتجاه القبلة وأذكار اليوم.';
+
+  @override
+  String get onboardingChip21 => 'أوقات الصلاة';
+
+  @override
+  String get onboardingChip22 => 'القبلة';
+
+  @override
+  String get onboardingChip23 => 'الأذكار';
+
+  @override
+  String get onboardingCategory3 => 'التركيز والإنتاجية';
+
+  @override
+  String get onboardingTitle3 => 'أنجز ما يهمّك فعلاً';
+
+  @override
+  String get onboardingDesc3 =>
+      'وضع التركيز يمنع المشتّتات\nويتتبّع وقتك لإنجاز حقيقي.';
+
+  @override
+  String get onboardingChip31 => 'بومودورو';
+
+  @override
+  String get onboardingChip32 => 'حجب المشتّتات';
+
+  @override
+  String get onboardingChip33 => 'إحصاءات';
+
+  @override
+  String get onboardingCategory4 => 'ابدأ الآن';
+
+  @override
+  String get onboardingTitle4 => 'حياة أكثر أثراً';
+
+  @override
+  String get onboardingDesc4 =>
+      'انضم إلى من يبنون عادات صحية\nوحياة منتجة ومتوازنة كل يوم.';
+
+  @override
+  String get onboardingChip41 => 'مجاني للبدء';
+
+  @override
+  String get onboardingChip42 => 'بدون إعلانات';
+
+  @override
+  String get onboardingChip43 => 'خصوصية تامة';
 
   @override
   String selectedCountLabel(int count) {
@@ -4046,6 +4101,124 @@ class AppLocalizationsAr extends AppLocalizations {
   String statsMinutesAbbr(int count) {
     return '$count د';
   }
+
+  @override
+  String get statsRange7Days => '٧ أيام';
+
+  @override
+  String get statsRange30Days => '٣٠ يوماً';
+
+  @override
+  String get statsTodaySection => 'يومك اليوم';
+
+  @override
+  String statsTodayTasks(int done, int total) {
+    return '$done/$total مهمة';
+  }
+
+  @override
+  String statsTodayHabits(int done, int total) {
+    return '$done/$total عادة';
+  }
+
+  @override
+  String statsTodayFocus(int minutes) {
+    return '$minutes د تركيز';
+  }
+
+  @override
+  String get statsTasksSection => 'المهام';
+
+  @override
+  String statsCompletionRate(int pct) {
+    return '$pct% مُنجز';
+  }
+
+  @override
+  String statsOverdueTasks(int count) {
+    return '$count متأخرة';
+  }
+
+  @override
+  String statsAvgDelay(int days) {
+    return 'متوسط التأخير $days يوم';
+  }
+
+  @override
+  String get statsTasksByPriority => 'حسب الأولوية';
+
+  @override
+  String get statsPriorityHigh => 'عالية';
+
+  @override
+  String get statsPriorityMedium => 'متوسطة';
+
+  @override
+  String get statsPriorityLow => 'منخفضة';
+
+  @override
+  String get statsDailyCompletion => 'الإنجاز اليومي';
+
+  @override
+  String get statsHabitsSection => 'العادات';
+
+  @override
+  String statsConsistency(int pct) {
+    return '$pct% استمرارية';
+  }
+
+  @override
+  String get statsTopStreaks => 'أفضل السلاسل';
+
+  @override
+  String statsStreakDays(int days) {
+    return '$days يوم';
+  }
+
+  @override
+  String get statsHeatmapTitle => 'خريطة العادات';
+
+  @override
+  String get statsFocusSection => 'التركيز';
+
+  @override
+  String get statsFocusTotal => 'إجمالي التركيز';
+
+  @override
+  String statsFocusHours(int h, int m) {
+    return '$hس $mد';
+  }
+
+  @override
+  String get statsPeriodsSection => 'الإنتاجية حسب الوقت';
+
+  @override
+  String get statsDomainsSection => 'المجالات';
+
+  @override
+  String get statsDomainNeglected => 'يحتاج اهتماماً';
+
+  @override
+  String get statsDomainOverloaded => 'محمّل بكثير';
+
+  @override
+  String get statsInsightsSection => 'التحليلات';
+
+  @override
+  String get statsNoData => 'لا توجد بيانات كافية للعرض';
+
+  @override
+  String get statsNoDataSub => 'أضف مهاماً وعادات لرؤية تحليل شامل';
+
+  @override
+  String get statsUpgradeTitle => 'إحصائيات تفصيلية';
+
+  @override
+  String get statsUpgradeBody =>
+      'اشترك للوصول إلى التقارير الكاملة والتحليلات المتقدمة';
+
+  @override
+  String get statsUpgradeCta => 'اشترك الآن';
 
   @override
   String get statsCardTitle => 'إحصائيات الأثر';

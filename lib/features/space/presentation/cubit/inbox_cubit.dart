@@ -22,6 +22,13 @@ class InboxError extends InboxState {
   InboxError(this.message);
 }
 
+class InboxAcceptSuccess extends InboxState {
+  final String spaceName;
+  InboxAcceptSuccess(this.spaceName);
+}
+
+class InboxRejectSuccess extends InboxState {}
+
 // --- Cubit ---
 @injectable
 class InboxCubit extends Cubit<InboxState> {
@@ -29,7 +36,6 @@ class InboxCubit extends Cubit<InboxState> {
 
   InboxCubit(this._repository) : super(InboxInitial());
 
-  // تحميل الدعوات
   Future<void> loadInvites() async {
     emit(InboxLoading());
     try {
@@ -40,22 +46,29 @@ class InboxCubit extends Cubit<InboxState> {
         emit(InboxLoaded(invites));
       }
     } catch (e) {
-      emit(InboxError("فشل تحميل الدعوات"));
+      emit(InboxError('فشل تحميل الدعوات'));
     }
   }
 
-  // قبول الدعوة
-  Future<void> acceptInvite(String token) async {
-    // نُظهر تحميل مؤقت (أو نبقي القائمة ونظهر مؤشر loading)
-    // للتبسيط، سنبقي الحالة الحالية ونعيد التحميل بعد النجاح
+  Future<void> acceptInvite(String token, String spaceName) async {
     try {
       await _repository.acceptInvite(token);
-      // بعد القبول، نعيد تحميل القائمة لإزالة الدعوة المقبولة
+      emit(InboxAcceptSuccess(spaceName));
       await loadInvites();
     } catch (e) {
-      // يمكن إرسال SnackBar من الـ UI عبر BlocListener
-      // هنا سنعيد تحميل القائمة فقط
-      loadInvites();
+      emit(InboxError('فشل قبول الدعوة'));
+      await loadInvites();
+    }
+  }
+
+  Future<void> rejectInvite(String token) async {
+    try {
+      await _repository.rejectInvite(token);
+      emit(InboxRejectSuccess());
+      await loadInvites();
+    } catch (e) {
+      emit(InboxError('فشل رفض الدعوة'));
+      await loadInvites();
     }
   }
 }

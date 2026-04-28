@@ -18,7 +18,7 @@ enum TimeSpecificationType {
   fixed,
   
   /// نسبي للصلاة (مثل بعد الفجر بـ 15 دقيقة)
-  relativeToprayer,
+  relativeToPrayer,
   
   /// فترة زمنية (مثل الصباح)
   period,
@@ -32,7 +32,7 @@ class TimeSlotSettings {
   /// الوقت الثابت (إذا كان type = fixed)
   final TimeOfDay? fixedTime;
   
-  /// الصلاة المرجعية (إذا كان type = relativeToprayer)
+  /// الصلاة المرجعية (إذا كان type = relativeToPrayer)
   final ReferencePrayer? referencePrayer;
   
   /// العلاقة بالصلاة (قبل/بعد/إقامة)
@@ -66,13 +66,13 @@ class TimeSlotSettings {
   }
 
   /// إنشاء من صلاة
-  factory TimeSlotSettings.relativeToprayer({
+  factory TimeSlotSettings.relativeToPrayer({
     required ReferencePrayer prayer,
     PrayerRelativeTime relation = PrayerRelativeTime.after,
     int offsetMinutes = 0,
   }) {
     return TimeSlotSettings(
-      type: TimeSpecificationType.relativeToprayer,
+      type: TimeSpecificationType.relativeToPrayer,
       referencePrayer: prayer,
       prayerRelation: relation,
       offsetMinutes: offsetMinutes,
@@ -210,7 +210,7 @@ mixin TimeSlotMixin {
           settings.fixedTime!.minute,
         );
 
-      case TimeSpecificationType.relativeToprayer:
+      case TimeSpecificationType.relativeToPrayer:
         if (settings.referencePrayer == null) return null;
         return RelativeTimeParser.calculateActualTime(
           prayer: settings.referencePrayer!,
@@ -346,7 +346,7 @@ mixin TimeSlotMixin {
         if (settings.fixedTime == null) return 'غير محدد';
         return _formatTimeOfDay(settings.fixedTime!);
 
-      case TimeSpecificationType.relativeToprayer:
+      case TimeSpecificationType.relativeToPrayer:
         return _formatRelativeTime(settings);
 
       case TimeSpecificationType.period:
@@ -488,7 +488,7 @@ extension ReferencePrayerToSettings on ReferencePrayer {
   TimeSlotSettings toTimeSlotSettings({
     PrayerRelativeTime relation = PrayerRelativeTime.after,
     int offsetMinutes = 0,
-  }) => TimeSlotSettings.relativeToprayer(
+  }) => TimeSlotSettings.relativeToPrayer(
     prayer: this,
     relation: relation,
     offsetMinutes: offsetMinutes,

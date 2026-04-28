@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:athar/core/services/widget_data_service.dart';
 import 'package:athar/features/settings/domain/repositories/settings_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,13 +12,16 @@ import 'prayer_state.dart';
 class PrayerCubit extends Cubit<PrayerState> {
   final PrayerRepository _prayerRepository;
   final SettingsRepository _settingsRepository;
+  final WidgetDataService _widgetDataService;
   Timer? _timer;
 
   PrayerCubit({
     required PrayerRepository prayerRepository,
     required SettingsRepository settingsRepository,
+    required WidgetDataService widgetDataService,
   }) : _prayerRepository = prayerRepository,
        _settingsRepository = settingsRepository,
+       _widgetDataService = widgetDataService,
        super(PrayerInitial());
 
   Future<void> loadPrayerTimes() async {
@@ -51,6 +55,16 @@ class PrayerCubit extends Cubit<PrayerState> {
           nextPrayer: nextPrayer,
           allPrayers: todayPrayers,
           cityName: settings.cityName ?? "الرياض",
+        ),
+      );
+
+      // Push next prayer data to home screen widget (fire-and-forget)
+      unawaited(
+        _widgetDataService.pushPrayerData(
+          nameAr: nextPrayer.nameArabic,
+          nameEn: nextPrayer.nameEnglish,
+          time: nextPrayer.time,
+          city: settings.cityName ?? 'الرياض',
         ),
       );
     } catch (e) {

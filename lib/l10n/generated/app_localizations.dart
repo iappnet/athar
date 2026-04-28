@@ -704,6 +704,12 @@ abstract class AppLocalizations {
   /// **'البريد الإلكتروني'**
   String get email;
 
+  /// No description provided for @emailOrUsername.
+  ///
+  /// In ar, this message translates to:
+  /// **'البريد الإلكتروني أو اسم المستخدم'**
+  String get emailOrUsername;
+
   /// No description provided for @password.
   ///
   /// In ar, this message translates to:
@@ -3164,53 +3170,149 @@ abstract class AppLocalizations {
   /// **'مرحباً بك في أثر'**
   String get welcomeToApp;
 
+  /// No description provided for @onboardingCategory1.
+  ///
+  /// In ar, this message translates to:
+  /// **'المهام والعادات'**
+  String get onboardingCategory1;
+
   /// No description provided for @onboardingTitle1.
   ///
   /// In ar, this message translates to:
-  /// **'نظّم حياتك'**
+  /// **'يومك بيدك'**
   String get onboardingTitle1;
 
   /// No description provided for @onboardingDesc1.
   ///
   /// In ar, this message translates to:
-  /// **'أدر مهامك وعاداتك بطريقة سهلة وفعالة'**
+  /// **'نظّم مهامك وعاداتك في مكان واحد.\nابدأ يومك بوضوح وأنهِه بفخر.'**
   String get onboardingDesc1;
+
+  /// No description provided for @onboardingChip11.
+  ///
+  /// In ar, this message translates to:
+  /// **'مهام ذكية'**
+  String get onboardingChip11;
+
+  /// No description provided for @onboardingChip12.
+  ///
+  /// In ar, this message translates to:
+  /// **'عادات يومية'**
+  String get onboardingChip12;
+
+  /// No description provided for @onboardingChip13.
+  ///
+  /// In ar, this message translates to:
+  /// **'تتبع التقدم'**
+  String get onboardingChip13;
+
+  /// No description provided for @onboardingCategory2.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصلاة والذكر'**
+  String get onboardingCategory2;
 
   /// No description provided for @onboardingTitle2.
   ///
   /// In ar, this message translates to:
-  /// **'حافظ على صلاتك'**
+  /// **'لا يفوتك وقت صلاة'**
   String get onboardingTitle2;
 
   /// No description provided for @onboardingDesc2.
   ///
   /// In ar, this message translates to:
-  /// **'تذكيرات دقيقة بأوقات الصلاة واتجاه القبلة'**
+  /// **'أوقات صلاة دقيقة حسب موقعك،\nمع اتجاه القبلة وأذكار اليوم.'**
   String get onboardingDesc2;
+
+  /// No description provided for @onboardingChip21.
+  ///
+  /// In ar, this message translates to:
+  /// **'أوقات الصلاة'**
+  String get onboardingChip21;
+
+  /// No description provided for @onboardingChip22.
+  ///
+  /// In ar, this message translates to:
+  /// **'القبلة'**
+  String get onboardingChip22;
+
+  /// No description provided for @onboardingChip23.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأذكار'**
+  String get onboardingChip23;
+
+  /// No description provided for @onboardingCategory3.
+  ///
+  /// In ar, this message translates to:
+  /// **'التركيز والإنتاجية'**
+  String get onboardingCategory3;
 
   /// No description provided for @onboardingTitle3.
   ///
   /// In ar, this message translates to:
-  /// **'ركّز وأنجز'**
+  /// **'أنجز ما يهمّك فعلاً'**
   String get onboardingTitle3;
 
   /// No description provided for @onboardingDesc3.
   ///
   /// In ar, this message translates to:
-  /// **'استخدم تقنية بومودورو لتحقيق أقصى إنتاجية'**
+  /// **'وضع التركيز يمنع المشتّتات\nويتتبّع وقتك لإنجاز حقيقي.'**
   String get onboardingDesc3;
+
+  /// No description provided for @onboardingChip31.
+  ///
+  /// In ar, this message translates to:
+  /// **'بومودورو'**
+  String get onboardingChip31;
+
+  /// No description provided for @onboardingChip32.
+  ///
+  /// In ar, this message translates to:
+  /// **'حجب المشتّتات'**
+  String get onboardingChip32;
+
+  /// No description provided for @onboardingChip33.
+  ///
+  /// In ar, this message translates to:
+  /// **'إحصاءات'**
+  String get onboardingChip33;
+
+  /// No description provided for @onboardingCategory4.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ الآن'**
+  String get onboardingCategory4;
 
   /// No description provided for @onboardingTitle4.
   ///
   /// In ar, this message translates to:
-  /// **'تابع صحتك'**
+  /// **'حياة أكثر أثراً'**
   String get onboardingTitle4;
 
   /// No description provided for @onboardingDesc4.
   ///
   /// In ar, this message translates to:
-  /// **'سجّل أدويتك ومواعيدك ومؤشراتك الصحية'**
+  /// **'انضم إلى من يبنون عادات صحية\nوحياة منتجة ومتوازنة كل يوم.'**
   String get onboardingDesc4;
+
+  /// No description provided for @onboardingChip41.
+  ///
+  /// In ar, this message translates to:
+  /// **'مجاني للبدء'**
+  String get onboardingChip41;
+
+  /// No description provided for @onboardingChip42.
+  ///
+  /// In ar, this message translates to:
+  /// **'بدون إعلانات'**
+  String get onboardingChip42;
+
+  /// No description provided for @onboardingChip43.
+  ///
+  /// In ar, this message translates to:
+  /// **'خصوصية تامة'**
+  String get onboardingChip43;
 
   /// No description provided for @selectedCountLabel.
   ///
@@ -7765,6 +7867,204 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'{count} د'**
   String statsMinutesAbbr(int count);
+
+  /// No description provided for @statsRange7Days.
+  ///
+  /// In ar, this message translates to:
+  /// **'٧ أيام'**
+  String get statsRange7Days;
+
+  /// No description provided for @statsRange30Days.
+  ///
+  /// In ar, this message translates to:
+  /// **'٣٠ يوماً'**
+  String get statsRange30Days;
+
+  /// No description provided for @statsTodaySection.
+  ///
+  /// In ar, this message translates to:
+  /// **'يومك اليوم'**
+  String get statsTodaySection;
+
+  /// No description provided for @statsTodayTasks.
+  ///
+  /// In ar, this message translates to:
+  /// **'{done}/{total} مهمة'**
+  String statsTodayTasks(int done, int total);
+
+  /// No description provided for @statsTodayHabits.
+  ///
+  /// In ar, this message translates to:
+  /// **'{done}/{total} عادة'**
+  String statsTodayHabits(int done, int total);
+
+  /// No description provided for @statsTodayFocus.
+  ///
+  /// In ar, this message translates to:
+  /// **'{minutes} د تركيز'**
+  String statsTodayFocus(int minutes);
+
+  /// No description provided for @statsTasksSection.
+  ///
+  /// In ar, this message translates to:
+  /// **'المهام'**
+  String get statsTasksSection;
+
+  /// No description provided for @statsCompletionRate.
+  ///
+  /// In ar, this message translates to:
+  /// **'{pct}% مُنجز'**
+  String statsCompletionRate(int pct);
+
+  /// No description provided for @statsOverdueTasks.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} متأخرة'**
+  String statsOverdueTasks(int count);
+
+  /// No description provided for @statsAvgDelay.
+  ///
+  /// In ar, this message translates to:
+  /// **'متوسط التأخير {days} يوم'**
+  String statsAvgDelay(int days);
+
+  /// No description provided for @statsTasksByPriority.
+  ///
+  /// In ar, this message translates to:
+  /// **'حسب الأولوية'**
+  String get statsTasksByPriority;
+
+  /// No description provided for @statsPriorityHigh.
+  ///
+  /// In ar, this message translates to:
+  /// **'عالية'**
+  String get statsPriorityHigh;
+
+  /// No description provided for @statsPriorityMedium.
+  ///
+  /// In ar, this message translates to:
+  /// **'متوسطة'**
+  String get statsPriorityMedium;
+
+  /// No description provided for @statsPriorityLow.
+  ///
+  /// In ar, this message translates to:
+  /// **'منخفضة'**
+  String get statsPriorityLow;
+
+  /// No description provided for @statsDailyCompletion.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإنجاز اليومي'**
+  String get statsDailyCompletion;
+
+  /// No description provided for @statsHabitsSection.
+  ///
+  /// In ar, this message translates to:
+  /// **'العادات'**
+  String get statsHabitsSection;
+
+  /// No description provided for @statsConsistency.
+  ///
+  /// In ar, this message translates to:
+  /// **'{pct}% استمرارية'**
+  String statsConsistency(int pct);
+
+  /// No description provided for @statsTopStreaks.
+  ///
+  /// In ar, this message translates to:
+  /// **'أفضل السلاسل'**
+  String get statsTopStreaks;
+
+  /// No description provided for @statsStreakDays.
+  ///
+  /// In ar, this message translates to:
+  /// **'{days} يوم'**
+  String statsStreakDays(int days);
+
+  /// No description provided for @statsHeatmapTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'خريطة العادات'**
+  String get statsHeatmapTitle;
+
+  /// No description provided for @statsFocusSection.
+  ///
+  /// In ar, this message translates to:
+  /// **'التركيز'**
+  String get statsFocusSection;
+
+  /// No description provided for @statsFocusTotal.
+  ///
+  /// In ar, this message translates to:
+  /// **'إجمالي التركيز'**
+  String get statsFocusTotal;
+
+  /// No description provided for @statsFocusHours.
+  ///
+  /// In ar, this message translates to:
+  /// **'{h}س {m}د'**
+  String statsFocusHours(int h, int m);
+
+  /// No description provided for @statsPeriodsSection.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإنتاجية حسب الوقت'**
+  String get statsPeriodsSection;
+
+  /// No description provided for @statsDomainsSection.
+  ///
+  /// In ar, this message translates to:
+  /// **'المجالات'**
+  String get statsDomainsSection;
+
+  /// No description provided for @statsDomainNeglected.
+  ///
+  /// In ar, this message translates to:
+  /// **'يحتاج اهتماماً'**
+  String get statsDomainNeglected;
+
+  /// No description provided for @statsDomainOverloaded.
+  ///
+  /// In ar, this message translates to:
+  /// **'محمّل بكثير'**
+  String get statsDomainOverloaded;
+
+  /// No description provided for @statsInsightsSection.
+  ///
+  /// In ar, this message translates to:
+  /// **'التحليلات'**
+  String get statsInsightsSection;
+
+  /// No description provided for @statsNoData.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد بيانات كافية للعرض'**
+  String get statsNoData;
+
+  /// No description provided for @statsNoDataSub.
+  ///
+  /// In ar, this message translates to:
+  /// **'أضف مهاماً وعادات لرؤية تحليل شامل'**
+  String get statsNoDataSub;
+
+  /// No description provided for @statsUpgradeTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إحصائيات تفصيلية'**
+  String get statsUpgradeTitle;
+
+  /// No description provided for @statsUpgradeBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'اشترك للوصول إلى التقارير الكاملة والتحليلات المتقدمة'**
+  String get statsUpgradeBody;
+
+  /// No description provided for @statsUpgradeCta.
+  ///
+  /// In ar, this message translates to:
+  /// **'اشترك الآن'**
+  String get statsUpgradeCta;
 
   /// No description provided for @statsCardTitle.
   ///

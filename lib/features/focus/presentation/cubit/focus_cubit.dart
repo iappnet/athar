@@ -4,8 +4,10 @@
 import 'dart:async';
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/core/services/local_notification_service.dart';
+import 'package:athar/core/time_engine/athar_time_calculator.dart';
 import 'package:athar/features/focus/data/repositories/focus_repository.dart';
 import 'package:athar/features/focus/presentation/cubit/focus_state.dart';
+import 'package:athar/features/stats/domain/repositories/i_stats_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -164,12 +166,22 @@ class FocusCubit extends Cubit<FocusState> {
 
   Future<void> _saveSessionData() async {
     try {
-      // حساب المدة الفعلية
       final actualDuration = _sessionStartTime != null
           ? DateTime.now().difference(_sessionStartTime!).inSeconds
           : _selectedDuration;
 
-      await _repository.saveSession(actualDuration);
+      // Approximate period from clock only — avoids injecting PrayerCubit.
+      final periodIndex =
+          AtharTimeCalculator.approximatePeriod(_sessionStartTime).index;
+
+      await _repository.saveSession(
+        actualDuration,
+        timePeriodIndex: periodIndex,
+      );
+
+      // FIX(cache-invalidation): invalidate stats so the completed session
+      // appears immediately the next time StatsPage calls getStats().
+      getIt<IStatsRepository>().invalidateCache();
 
       if (kDebugMode) {
         print('✅ Focus session saved: ${actualDuration ~/ 60} minutes');

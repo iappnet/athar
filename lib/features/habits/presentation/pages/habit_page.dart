@@ -3,10 +3,12 @@
 // ✅ MIGRATED - Phase 5 | Part 1 | File 1
 // ═══════════════════════════════════════════════════════════════════════════════
 
+import 'package:athar/core/config/subscription_config.dart';
 import 'package:athar/core/utils/responsive_helper.dart';
 import 'package:athar/features/notifications/presentation/widgets/notification_center_button.dart';
 import 'package:athar/features/dhikr/presentation/widgets/dhikr_bottom_sheet.dart';
 import 'package:athar/features/settings/data/models/user_settings.dart';
+import 'package:athar/features/subscription/presentation/widgets/pro_gate_widget.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -67,10 +69,23 @@ class _HabitsPageState extends State<HabitsPage> {
     final colorScheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context);
 
-    return BlocListener<CelebrationCubit, void>(
-      listener: (context, state) {
-        _confettiController.play();
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<CelebrationCubit, void>(
+          listener: (context, _) => _confettiController.play(),
+        ),
+        BlocListener<HabitCubit, HabitState>(
+          listener: (context, state) {
+            if (state is HabitFreeLimitReached) {
+              showUpgradeNudge(
+                context,
+                message: 'لقد وصلت إلى الحد المجاني للعادات. قم بالترقية للحصول على عادات غير محدودة',
+                entitlementId: SubscriptionConfig.entitlementSpacesPro,
+              );
+            }
+          },
+        ),
+      ],
       child: Scaffold(
         // ✅ AppColors.background → colors.background
         backgroundColor: colorScheme.surface,

@@ -65,7 +65,7 @@ abstract class RegisterModule {
       MedicineLogModelSchema,
       AppointmentModelSchema,
       VitalSignModelSchema,
-      NotificationModelSchema, // ✅ إضافة سكيمة التنبيهات
+      NotificationModelSchema,
     ], directory: dir.path);
   }
 }

@@ -30,7 +30,6 @@ class TaskLoaded extends TaskState {
     this.availableFilters = const [
       FixedFilterType.all,
       FixedFilterType.urgent,
-      FixedFilterType.important,
     ],
   }) : completedCount = tasks.where((t) => t.isCompleted).length,
        totalCount = tasks.length;
@@ -42,9 +41,9 @@ class TaskLoaded extends TaskState {
       switch (activeFilter as FixedFilterType) {
         case FixedFilterType.urgent:
           return tasks.where((t) => t.isUrgent).toList();
-        case FixedFilterType.important:
-          return tasks.where((t) => t.isImportant).toList();
         case FixedFilterType.all:
+          return tasks;
+        default:
           return tasks;
       }
     }
