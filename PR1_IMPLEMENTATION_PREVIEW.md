@@ -1,8 +1,39 @@
 # PR1 — Tokens & Theme: Implementation Preview
 
-**Status:** AWAITING APPROVAL — do not merge or implement until user explicitly approves  
+**Status:** AWAITING FINAL APPROVAL — do not implement until user explicitly approves  
+**Last validated:** 2026-05-08 (against handoff_v2-2)  
 **Scope:** Token value updates only. No layout changes. No component changes. No new files.  
-**Spec authority:** `handoff_v2/colors_and_type.css`
+**Spec authority:** `handoff_v2-2/colors_and_type.css` + `handoff_v2-2/DESIGN_SYSTEM_GAP_VALIDATION.md`
+
+---
+
+## Validation Status (2026-05-08)
+
+| Check | Result |
+|-------|--------|
+| colors_and_type.css values re-verified | ✅ All hex values confirmed match PR1 mappings below |
+| DESIGN_SYSTEM_GAP_VALIDATION.md read | ✅ Typography authority lockdown confirmed (2026-05-08) |
+| FINAL_PACKAGE_MANIFEST.md changelog reviewed | ✅ Two changes post-date session state — neither affects PR1 scope |
+| PACKAGE_C_DECISIONS.md reviewed | ✅ No PR1-scope changes |
+| THEME_DARK_SPEC.md reviewed | ✅ Dark surface tokens are NOT in PR1 scope |
+| PR1 isolation: 10 scope checks | ✅ All 10 pass — see table below |
+
+---
+
+## PR1 Scope Isolation — 10 Checks
+
+| Isolation Check | Status | Notes |
+|----------------|--------|-------|
+| Tokens / theme / typography / font assets / pubspec only | ✅ PASS | Exact scope |
+| No onboarding logic changes | ✅ PASS | Onboarding is PR-ONBOARD-AB |
+| No calendar rebuild work | ✅ PASS | Calendar is PR4a/PR4b |
+| No widget redesign work | ✅ PASS | Widgets is PR9 |
+| No Spaces refactors | ✅ PASS | Spaces is PR8 |
+| No Isar schema changes | ✅ PASS | No entity files touched |
+| No routing changes | ✅ PASS | No route file touched |
+| No auth changes | ✅ PASS | No auth file touched |
+| No Supabase changes | ✅ PASS | No repository/remote changes |
+| No settings behavior changes | ✅ PASS | `isAutoModeEnabled` wiring is PR-THEME |
 
 ---
 
@@ -12,8 +43,8 @@
 
 | File | Change Type | Lines Affected |
 |------|-------------|----------------|
-| `lib/core/design_system/tokens/athar_colors.dart` | Value updates (light + dark palettes) | ~30 value lines |
-| `lib/core/design_system/tokens/athar_typography.dart` | Font family + new numericMono style | ~5 lines |
+| `lib/core/design_system/tokens/athar_colors.dart` | Value updates (light + dark palettes) | ~11 value lines |
+| `lib/core/design_system/tokens/athar_typography.dart` | Font family names + new numericMono style | ~5 lines |
 
 ### Unchanged (Confirmed Match)
 
@@ -27,7 +58,7 @@
 | `lib/core/design_system/themes/typography.dart` | Empty stub — not part of PR1 |
 | `lib/core/design_system/themes/athar_light_theme.dart` | Consumes AtharColors by field reference — auto-propagates |
 | `lib/core/design_system/themes/athar_dark_theme.dart` | Same — auto-propagates |
-| `pubspec.yaml` | Font assets (Calibri .ttf) are a BLOCKER — see section below |
+| `pubspec.yaml` | Font assets (Calibri .ttf) are Step B — see Calibri section |
 
 ---
 
@@ -55,7 +86,7 @@
 - `error: Color(0xFFFF7675)` — matches `--error`
 - `warning: Color(0xFFFDCB6E)` — matches `--warning`
 - `border: Color(0xFFDFE6E9)` — matches `--border`
-- `prayerCardGradient` — matches CSS gradient spec, must NOT change
+- `prayerCardGradient` — already matches spec, **MUST NOT change**
 
 ### `AtharColors.dark` — Color Changes
 
@@ -66,15 +97,17 @@
 | `--primary-dark` | `#1A6B3C` | `primaryDark` | `Color(0xFF6C63FF)` | `Color(0xFF1A6B3C)` |
 | `--border-focused` | `#2E8B57` | `borderFocused` | `Color(0xFF8B85FF)` | `Color(0xFF2E8B57)` |
 
-**Note:** CSS spec does not define dark secondary variants. Keep existing dark secondary values unless confirmed otherwise.
+> **Note:** `THEME_DARK_SPEC.md` specifies new green-tinted dark surface tokens (`surface #1A2520`, `background #0E1714`, `text-primary #EDE6C8`) that differ from `colors_and_type.css`. These dark surface changes are **explicitly out of PR1 scope** — they represent a larger dark-mode redesign. Flagged as DRIFT-2 in `IMPLEMENTATION_SESSION_STATE.md`. Requires designer resolution before dark surface PR.
+
+**Dark secondary variants:** CSS dark spec does not define dark secondary. Keep existing dark secondary values unchanged.
 
 ### `AtharTypography` — Font Family Changes
 
-| Constant | Current Value | New Value | Reason |
+| Constant | Current Value | New Value | Authority |
 |---|---|---|---|
-| `fontFamilyAr` | `'Cairo'` | `'Calibri'` | CSS `--font-ar` primary is Calibri |
-| `fontFamilyEn` | `'Inter'` | `'Calibri'` | CSS `--font-en` primary is Calibri |
-| `fontFamilyMono` | `'JetBrains Mono'` | unchanged | Matches CSS `--font-mono` |
+| `fontFamilyAr` | `'Cairo'` | `'Calibri'` | `colors_and_type.css --font-ar`, `DESIGN_SYSTEM_GAP_VALIDATION.md` |
+| `fontFamilyEn` | `'Inter'` | `'Calibri'` | `colors_and_type.css --font-en`, `DESIGN_SYSTEM_GAP_VALIDATION.md` |
+| `fontFamilyMono` | `'JetBrains Mono'` | unchanged | Matches `--font-mono` |
 
 **New constant to add:**
 
@@ -87,35 +120,41 @@ static const TextStyle numericMono = TextStyle(
 );
 ```
 
-> Exact `fontSize` and `fontWeight` defaults TBD — PR1 ships a baseline; consuming components override as needed.
+**Fallback stack:** Cairo remains in pubspec as OS-level fallback for AR rendering. Inter remains as OS-level fallback for EN rendering. Neither is a design-authority font. Both are fallbacks only if Calibri fails to load entirely.
 
-**Fallback stack (do NOT remove from pubspec):**
-- Cairo remains in pubspec as fallback for AR rendering
-- Inter remains in pubspec as fallback for EN rendering
-- Both are fallbacks in the Calibri font-family stack per CSS spec
+---
+
+## Typography Authority (Locked — 2026-05-08)
+
+**Calibri is the sole canonical brand typeface across the entire Athar experience — Arabic AND English.** This is locked by:
+- `DESIGN_SYSTEM_GAP_VALIDATION.md` (locked 2026-05-08)
+- `FINAL_PACKAGE_MANIFEST.md` "Typography authority" section
+- `colors_and_type.css` — all five `--font-*` variables use `'Calibri', system-ui, sans-serif`
+
+Cairo is NOT the Arabic primary. It carries no design authority. It may appear only as a last-resort emergency OS-level fallback.
 
 ---
 
 ## Calibri Font Handling Plan
 
-### The Blocker
+### The Blocker (B1 — unchanged)
 
-Calibri `.ttf` files are bundled in `handoff_v2/fonts/`:
-- `calibri-light.ttf` (300)
-- `calibri-regular.ttf` (400)
-- `calibri-bold.ttf` (700)
+Calibri `.ttf` files are in `handoff_v2-2/fonts/`:
+- `calibri-light.ttf` (weight 300)
+- `calibri-regular.ttf` (weight 400)
+- `calibri-bold.ttf` (weight 700)
 
-These files are **not yet in the Flutter project**. PR1 Dart changes reference `'Calibri'` — without the asset registration, Flutter silently falls through to Cairo/Inter. The feature works, but the font spec is not applied.
+These files are **not yet in the Flutter project**. PR1 Dart changes reference `'Calibri'` — without the asset registration, Flutter silently falls through to Cairo/Inter. The feature works, but the visual spec is not applied.
 
 ### Two-Step Approach
 
-**Step A — Dart changes only (safe, mergeable now):**
+**Step A — Dart changes only (safe, ready to implement):**
 - Update `fontFamilyAr` and `fontFamilyEn` to `'Calibri'`
 - Flutter falls back to Cairo/Inter — no visual regression, no crash
-- This step can merge as a preparatory commit
+- Mergeable immediately once user approves this diff list
 
-**Step B — Font wiring (blocked, merge separately):**
-1. Copy `.ttf` files from `handoff_v2/fonts/` → `assets/fonts/`
+**Step B — Font wiring (blocked on B1):**
+1. Copy `.ttf` files from `handoff_v2-2/fonts/` → `assets/fonts/`
 2. Register in `pubspec.yaml` under `flutter.fonts`
 3. Confirm App Store licence with designer
 4. Merge only after licence confirmation
@@ -128,15 +167,18 @@ These files are **not yet in the Flutter project**. PR1 Dart changes reference `
 
 | Item | Where it belongs |
 |------|------------------|
-| `isAutoModeEnabled` → `ThemeMode.system` wiring | PR-THEME (3-line fix in app.dart) |
-| `AtharColors.copyWith` / `lerp` method updates | PR1 (these are structural, update alongside values) |
+| `isAutoModeEnabled` → `ThemeMode.system` wiring | PR-THEME (3-line fix in app.dart:162–172) |
+| Dark surface/background/text tokens (THEME_DARK_SPEC.md values) | Future dark-mode surface PR — needs designer resolution |
+| `AtharColors.copyWith` / `lerp` method updates | PR1 (update alongside values) |
 | `adaptive_scaffold.dart` rename | PR2 |
+| Bottom-nav FAB position (standalone pill outside bar) | PR2 (via PACKAGE_C_DECISIONS.md #2, locked 2026-05-08) |
 | Prayer card gradient | Already matches spec — no change |
 | `AppColors` flat class | Not part of ThemeExtension system — leave as-is |
 | `typography.dart` empty stub | Leave as-is |
 | Any component or layout change | PR2+ |
-| Adhan audio asset wiring | PR-ASSETS |
-| Calendar dual-date display | PR-CAL |
+| Adhan audio asset wiring | PR-ADHAN |
+| Calibri font file copy + pubspec registration | Step B (blocked on licence B1) |
+| Calendar dual-date display | PR4a/PR4b |
 | Dark mode secondary gradient colors | Spec gap — seek designer input |
 
 ---
@@ -145,12 +187,12 @@ These files are **not yet in the Flutter project**. PR1 Dart changes reference `
 
 ### Visual Changes After PR1
 
-1. **All primary-colored elements shift from purple → green.**
+1. **All primary-colored elements shift from purple → Islamic green.**
    - AppBar fill color (primary)
    - Active NavBar tab indicator
    - Primary buttons (ElevatedButton)
    - Toggle/switch active color
-   - Text using `Theme.of(context).colorScheme.primary`
+   - Any component using `Theme.of(context).colorScheme.primary`
    - Any component using `context.colors.primary`
 
 2. **All secondary-colored elements shift from teal-cyan → teal-green.**
@@ -160,9 +202,9 @@ These files are **not yet in the Flutter project**. PR1 Dart changes reference `
 
 3. **Font family name changes — no visual change until Calibri font files are added.**
    - Without font files: Cairo/Inter continue to render (transparent to user)
-   - With font files: all text shifts to Calibri weight 300/400/700
+   - With font files (Step B): all text shifts to Calibri weight 300/400/700
 
-4. **No layout changes.** No spacing changes. No radius changes.
+4. **No layout changes. No spacing changes. No radius changes.**
 
 ### Screens Most Visibly Affected
 
@@ -181,23 +223,24 @@ These files are **not yet in the Flutter project**. PR1 Dart changes reference `
 
 | Risk | Likelihood | Mitigation |
 |------|------------|------------|
-| Purple-dependent hardcoded colors now clash with green surroundings | Medium | Audit `grep -r "6C63FF\|9D97FF\|8B85FF" lib/` post-merge |
-| Prayer card gradient accidentally overwritten | Low | Explicitly document as DO-NOT-CHANGE in PR diff |
-| Calibri font fallback silent failure | Low | Flutter renders Cairo — no crash, only visual delta |
+| Purple-dependent hardcoded colors clash with green | Medium | Audit `grep -r "6C63FF\|9D97FF\|8B85FF" lib/` post-merge |
+| Prayer card gradient overwritten | Low | `prayerCardGradient` explicitly DO-NOT-CHANGE in commit |
+| Calibri fallback silent failure | Low | Flutter renders Cairo/Inter — no crash, only visual delta |
 | `context.colors.primary` consumer reads old value in cached build | Low | Hot restart clears; no runtime cache |
-| Dark mode primary still shows purple if dark const not updated | High | PR1 MUST update both `.light` and `.dark` instances |
+| Dark mode primary shows purple if dark const not updated | High | PR1 MUST update both `.light` and `.dark` primary instances |
 
 ---
 
 ## Spec References
 
-| This file section | Canonical source |
+| Section | Canonical Source |
 |---|---|
-| Light palette values | `handoff_v2/colors_and_type.css` `:root` block |
-| Dark palette values | `handoff_v2/colors_and_type.css` `[data-theme="dark"]` block |
-| Font family stack | `handoff_v2/colors_and_type.css` `--font-ar`, `--font-en`, `--font-mono` |
-| Calibri font authority | `handoff_v2/PACKAGE_A_DECISIONS.md` — Calibri primary, licence risk accepted |
-| numericMono requirement | `handoff_v2/CLAUDE_CODE_PROMPT.md` typography section |
+| Light palette values | `handoff_v2-2/colors_and_type.css` `:root` block |
+| Dark primary values | `handoff_v2-2/colors_and_type.css` `[data-theme="dark"]` block |
+| Dark surface values | `handoff_v2-2/THEME_DARK_SPEC.md` — **NOT in PR1 scope** |
+| Font family stack | `handoff_v2-2/colors_and_type.css` `--font-ar`, `--font-en`, `--font-mono` |
+| Calibri authority | `handoff_v2-2/DESIGN_SYSTEM_GAP_VALIDATION.md`, `handoff_v2-2/PACKAGE_A_DECISIONS.md` |
+| numericMono requirement | `handoff_v2-2/CLAUDE_CODE_PROMPT.md` PR1 section |
 | Prayer gradient preserve | `lib/core/design_system/tokens/athar_colors.dart` — already matches spec |
 
 ---
@@ -210,21 +253,24 @@ Before any Dart file is edited, confirm:
 - [ ] Designer has confirmed Calibri App Store licence status (or Step A only is proceeding)
 - [ ] Screenshot of current purple UI captured for before/after comparison
 - [ ] `flutter analyze` runs clean on current branch
-- [ ] `prayerCardGradient` is explicitly marked DO-NOT-CHANGE in the commit
+- [ ] `prayerCardGradient` is explicitly marked DO-NOT-CHANGE in the commit message
+- [ ] Dark surface token discrepancy (DRIFT-2) is acknowledged and deferred to future PR
+- [ ] Security review cleared (✅ 2026-05-08)
 
 ---
 
 ## Recommended Commit Message
 
 ```
-feat(tokens): migrate color palette from purple to Islamic green (PR1)
+feat(tokens): migrate color palette from purple to Islamic green (PR1 Step A)
 
 - AtharColors.light: primary/secondary family → CSS spec #1A6B3C/#0D7377
 - AtharColors.dark: primary family → CSS spec #2E8B57
-- AtharTypography: fontFamilyAr/En → 'Calibri' (falls back to Cairo/Inter until font assets wired)
+- AtharTypography: fontFamilyAr/En → 'Calibri' (falls back to Cairo/Inter
+  until font assets wired in Step B, pending App Store licence confirm)
 - AtharTypography: add numericMono with tabularFigures
 
-Spec: handoff_v2/colors_and_type.css
+Spec: handoff_v2-2/colors_and_type.css + DESIGN_SYSTEM_GAP_VALIDATION.md
 Prayer card gradient intentionally unchanged (already matches spec).
-Font asset wiring deferred to Step B pending licence confirmation.
+Dark surface tokens (THEME_DARK_SPEC.md) deferred — separate PR.
 ```

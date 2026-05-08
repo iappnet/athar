@@ -187,14 +187,14 @@ class AtharColors extends ThemeExtension<AtharColors> {
   static const AtharColors light = AtharColors(
     // Primary
     primary: Color(0xFF1A6B3C),
-    primaryLight: Color(0xFF2D8A54),
-    primaryDark: Color(0xFF0F4828),
+    primaryLight: Color(0xFF2E8B57),
+    primaryDark: Color(0xFF0F4A28),
     onPrimary: Color(0xFFFFFFFF),
 
     // Secondary
     secondary: Color(0xFF0D7377),
-    secondaryLight: Color(0xFF1A9EA3),
-    secondaryDark: Color(0xFF075258),
+    secondaryLight: Color(0xFF14A098),
+    secondaryDark: Color(0xFF0B5A5C),
     onSecondary: Color(0xFFFFFFFF),
 
     // Background
@@ -256,12 +256,12 @@ class AtharColors extends ThemeExtension<AtharColors> {
     primaryGradient: LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [Color(0xFF1A6B3C), Color(0xFF0F4828)],
+      colors: [Color(0xFF1A6B3C), Color(0xFF0F4A28)],
     ),
     secondaryGradient: LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [Color(0xFF0D7377), Color(0xFF075258)],
+      colors: [Color(0xFF0D7377), Color(0xFF0B5A5C)],
     ),
     surfaceGradient: LinearGradient(
       begin: Alignment.topCenter,
@@ -275,8 +275,8 @@ class AtharColors extends ThemeExtension<AtharColors> {
   // ═══════════════════════════════════════════════════════════════════
   static const AtharColors dark = AtharColors(
     // Primary
-    primary: Color(0xFF4DA878),
-    primaryLight: Color(0xFF71C49A),
+    primary: Color(0xFF2E8B57),
+    primaryLight: Color(0xFF4DAD7A),
     primaryDark: Color(0xFF1A6B3C),
     onPrimary: Color(0xFF000000),
 
@@ -286,19 +286,19 @@ class AtharColors extends ThemeExtension<AtharColors> {
     secondaryDark: Color(0xFF0D7377),
     onSecondary: Color(0xFF000000),
 
-    // Background
-    background: Color(0xFF121212),
-    surface: Color(0xFF1E1E1E),
-    surfaceVariant: Color(0xFF2D2D2D),
-    surfaceContainer: Color(0xFF252525),
+    // Background — warm green-tinted dark (THEME_DARK_SPEC.md)
+    background: Color(0xFF0E1714),
+    surface: Color(0xFF1A2520),
+    surfaceVariant: Color(0xFF22302B),
+    surfaceContainer: Color(0xFF2A3833),
     surfaceContainerHigh: Color(0xFF353535),
     surfaceContainerLow: Color(0xFF1A1A1A),
-    scaffoldBackground: Color(0xFF121212),
+    scaffoldBackground: Color(0xFF0E1714),
 
-    // Text
-    textPrimary: Color(0xFFE4E4E4),
-    textSecondary: Color(0xFFB0B0B0),
-    textTertiary: Color(0xFF808080),
+    // Text — cream-tinted (THEME_DARK_SPEC.md)
+    textPrimary: Color(0xFFEDE6C8),
+    textSecondary: Color(0xFF9BA8A2),
+    textTertiary: Color(0xFF6B7771),
     textDisabled: Color(0xFF5C5C5C),
     textOnPrimary: Color(0xFF000000),
     textOnSecondary: Color(0xFF000000),
@@ -325,8 +325,8 @@ class AtharColors extends ThemeExtension<AtharColors> {
 
     // Border
     border: Color(0xFF404040),
-    borderLight: Color(0xFF333333),
-    borderFocused: Color(0xFF4DA878),
+    borderLight: Color(0xFF2A3833),
+    borderFocused: Color(0xFF2E8B57),
     divider: Color(0xFF333333),
 
     // Shadow
@@ -334,8 +334,8 @@ class AtharColors extends ThemeExtension<AtharColors> {
     shadowLight: Color(0x20000000),
 
     // Shimmer
-    shimmerBase: Color(0xFF2D2D2D),
-    shimmerHighlight: Color(0xFF404040),
+    shimmerBase: Color(0xFF22302B),
+    shimmerHighlight: Color(0xFF2A3833),
 
     // Overlay
     overlay: Color(0xCC000000),
@@ -345,7 +345,7 @@ class AtharColors extends ThemeExtension<AtharColors> {
     primaryGradient: LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [Color(0xFF4DA878), Color(0xFF1A6B3C)],
+      colors: [Color(0xFF2E8B57), Color(0xFF1A6B3C)],
     ),
     secondaryGradient: LinearGradient(
       begin: Alignment.topLeft,
@@ -355,7 +355,7 @@ class AtharColors extends ThemeExtension<AtharColors> {
     surfaceGradient: LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
-      colors: [Color(0xFF1E1E1E), Color(0xFF121212)],
+      colors: [Color(0xFF1A2520), Color(0xFF0E1714)],
     ),
   );
 

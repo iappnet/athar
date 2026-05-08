@@ -20,11 +20,11 @@ abstract class AtharTypography {
   // FONT FAMILIES - عائلات الخطوط
   // ─────────────────────────────────────────────────────────────────
 
-  /// الخط الرئيسي للعربية
-  static const String fontFamilyAr = 'Cairo';
+  /// الخط الرئيسي للعربية والإنجليزية (Calibri — الخط الرسمي الوحيد لأثر)
+  static const String fontFamilyAr = 'Calibri';
 
-  /// الخط الرئيسي للإنجليزية
-  static const String fontFamilyEn = 'Inter';
+  /// الخط الرئيسي للإنجليزية (Calibri — canonical brand font)
+  static const String fontFamilyEn = 'Calibri';
 
   /// خط الأرقام والكود
   static const String fontFamilyMono = 'JetBrains Mono';
@@ -515,6 +515,14 @@ abstract class AtharTypography {
     fontFamily: fontFamilyMono,
   );
 
+  /// للأرقام المحاذاة (عدادات، إحصاءات، مؤقتات) — JetBrains Mono مع أرقام جدولية
+  static const TextStyle numericMono = TextStyle(
+    fontFamily: fontFamilyMono,
+    fontFeatures: [FontFeature.tabularFigures()],
+    fontSize: sizeSm,
+    fontWeight: regular,
+  );
+
   /// للـ Quote - 16px Italic
   static const TextStyle quote = TextStyle(
     fontSize: sizeMd,
@@ -534,10 +542,10 @@ extension AtharTextStyleExtension on TextStyle {
   // FONT FAMILY
   // ─────────────────────────────────────────────────────────────────
 
-  /// تطبيق خط عربي (Cairo)
+  /// تطبيق خط عربي (Calibri)
   TextStyle get arabic => copyWith(fontFamily: AtharTypography.fontFamilyAr);
 
-  /// تطبيق خط إنجليزي (Inter)
+  /// تطبيق خط إنجليزي (Calibri)
   TextStyle get english => copyWith(fontFamily: AtharTypography.fontFamilyEn);
 
   /// تطبيق خط monospace
