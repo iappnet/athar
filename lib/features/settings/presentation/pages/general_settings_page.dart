@@ -79,6 +79,7 @@ class GeneralSettingsPage extends StatelessWidget {
                       icon: Icons.dark_mode_outlined,
                       iconColor: const Color(0xFF5C35C9),
                       title: l10n.darkMode,
+                      subtitle: l10n.darkModeDesc,
                       value: settings?.isDarkMode ?? false,
                       onChanged: (v) =>
                           context.read<SettingsCubit>().toggleDarkMode(v),

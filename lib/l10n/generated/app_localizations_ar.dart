@@ -492,6 +492,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get darkMode => 'الوضع الداكن';
 
   @override
+  String get darkModeDesc => 'عند إيقافه، يتبع أثر مظهر الجهاز.';
+
+  @override
   String get systemMode => 'حسب النظام';
 
   @override

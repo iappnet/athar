@@ -1,10 +1,10 @@
 # Implementation Session State
 
 **Last updated:** 2026-05-09  
-**Session phase:** Post-PR1 — roadmap verified, migration branch strategy set, all governance complete  
+**Session phase:** PR-THEME complete — ThemeMode.system wired, gen-l10n run, analyze 0 issues, tests 29/29  
 **Canonical migration branch:** `feat/athar-v2-pr1-tokens-theme` (long-running; do NOT merge to `main`)  
-**Checkpoint tag:** `athar-v2-pr1-complete` at `72f902d`  
-**Next action:** PR-THEME — wire `UserSettings.isAutoModeEnabled` → `ThemeMode.system` in `app.dart:162–172`
+**Checkpoint tag:** `athar-v2-pr1-complete` at `72f902d` | `athar-v2-prtheme-complete` (to be tagged after commit)  
+**Next action:** Screenshot review → then PR2 (read IPAD_OPTIMIZATION.md + REDESIGN_AUDIT.md + INVESTIGATION_REPORT.md first)
 
 ---
 
@@ -26,7 +26,7 @@
 
 | Item | Blocked On |
 |------|-----------|
-| PR-THEME (isAutoModeEnabled → ThemeMode) | None — ready to start |
+| PR-THEME (ThemeMode.system wiring) | ✅ Complete — `flutter analyze` 0 issues, `flutter test` 29/29 |
 | PR2 (AdaptiveShell + nav bar) | PR-THEME |
 | PR3+ | PR2 |
 | B1: Calibri App Store licence | Designer confirmation |
@@ -64,7 +64,7 @@
 | PR | Name | Status | Depends On |
 |----|------|--------|-----------|
 | PR1 | Tokens & Theme (Step A: Dart + Step B: Calibri font) | ✅ **COMPLETE** (`61d741a`) | — |
-| PR-THEME | Auto dark mode wiring (app.dart:162–172) | 🟡 READY | PR1 ✅ |
+| PR-THEME | Auto dark mode wiring (app.dart:172) | ✅ COMPLETE | PR1 ✅ |
 | PR2 | AdaptiveShell (rename adaptive_scaffold → adaptive_shell; breakpoints; nav bar shape) | ⬜ Not started | PR1 |
 | PR3 | Prayer card refresh (PRAYER_CARD_SPEC.md) | ⬜ Not started | PR2 |
 | PR-ADHAN | Bundle adhan.mp3/caf (build gate) | ⬜ Not started | Asset ready |
@@ -120,6 +120,13 @@ Drifts are changes in the handoff_v2-2 package that post-date the previous sessi
 - `THEME_DARK_SPEC.md` — now read ✅ (surfaced DRIFT-2)
 - `PACKAGE_C_DECISIONS.md` — now read ✅ (confirms bottom-nav decision #2)
 - Remaining unread: `INVESTIGATION_REPORT.md`, `REDESIGN_AUDIT.md`, `ONBOARDING_AB_SPEC.md`, `IPAD_OPTIMIZATION.md`, `CALENDAR_FOCUS_REDESIGN.md`, `FOCUS_OIL_SPEC.md`
+
+### DRIFT-6: isAutoModeEnabled naming collision (2026-05-09 — CRITICAL)
+- **Source:** Live code investigation for PR-THEME readiness preview
+- **Finding:** `UserSettings.isAutoModeEnabled` is the Smart Zones auto-scheduling toggle, used in `smart_zone_helper.dart:9`, `prayer_conflict_service.dart:97`, and `task_cubit.dart:236`. It has NO connection to dark mode.
+- **Handoff document B2 error:** `INVESTIGATION_RECONCILIATION.md` decision B2 says "PR-THEME uses `UserSettings.isAutoModeEnabled`" — this is incorrect. The investigation that produced B2 mistook the Smart Zones auto mode field for a theme auto mode field.
+- **Resolution:** PR-THEME uses `UserSettings.isDarkMode` only. Change `app.dart:172` from `ThemeMode.light` → `ThemeMode.system` when `isDarkMode=false`. No new field required. `isAutoModeEnabled` must NOT be touched by PR-THEME.
+- **Full details:** `PR_THEME_IMPLEMENTATION_PREVIEW.md`
 
 ### DRIFT-5: UserSettings.theme field discrepancy
 - **THEME_DARK_SPEC.md §1:** References `UserSettings.theme: 'system' | 'light' | 'dark'`

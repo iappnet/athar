@@ -169,7 +169,7 @@ class _AtharAppState extends State<AtharApp> {
             title: 'Athar | أثر',
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
-            themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+            themeMode: isDark ? ThemeMode.dark : ThemeMode.system,
             locale: locale,
             supportedLocales: const [Locale('ar', 'SA'), Locale('en', 'US')],
             localeResolutionCallback: (deviceLocale, supportedLocales) {

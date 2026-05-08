@@ -159,6 +159,7 @@
   "theme": "Theme",
   "lightMode": "Light Mode",
   "darkMode": "Dark Mode",
+  "darkModeDesc": "When off, Athar follows your device appearance.",
   "systemMode": "System Default",
   "language": "Language",
   "arabic": "العربية",

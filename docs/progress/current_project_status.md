@@ -1,5 +1,5 @@
 # Athar — Current Project Status
-_Last updated: 2026-05-09 (PR1 — Athar v2 tokens + Calibri font complete)_
+_Last updated: 2026-05-09 (PR-THEME complete — ThemeMode.system wired, 0 analyzer issues, 29/29 tests)_
 
 ## Completed Work
 
@@ -80,9 +80,17 @@ _Last updated: 2026-05-09 (PR1 — Athar v2 tokens + Calibri font complete)_
 - `flutter analyze`: 0 issues | `flutter test`: 29/29 passed
 - **Blocker B1 open:** Calibri App Store licence — designer confirmation required before TestFlight submission
 
-### Next PR — PR-THEME (no blockers)
+### PR-THEME — Complete ✅
 
-Wire `isAutoModeEnabled` from `UserSettings` into `app.dart:162–172` to drive `ThemeMode`. Dark tokens are correct from PR1 — only the `ThemeMode` switch is missing.
+- `app.dart:172` — `ThemeMode.light` → `ThemeMode.system` (app now follows OS dark/light when `isDarkMode=false`)
+- `general_settings_page.dart` — Dark Mode switch subtitle added (`darkModeDesc`)
+- `app_en.arb` + `app_ar.arb` — `darkModeDesc` key added; `flutter gen-l10n` run
+- `flutter analyze`: 0 issues | `flutter test`: 29/29
+- DRIFT-6 resolved: `isAutoModeEnabled` is Smart Zones only — PR-THEME did not touch it
+
+### Next PR — PR2 (AdaptiveShell) — UNBLOCKED
+
+Read before starting: `handoff_v2-2/IPAD_OPTIMIZATION.md`, `handoff_v2-2/REDESIGN_AUDIT.md`, `handoff_v2-2/INVESTIGATION_REPORT.md`, `preview/comp-nav.html`
 
 See `IMPLEMENTATION_MASTER_STATUS.md` for PR sequence, `PROGRAM_IMPLEMENTATION_STATUS.md` for full program view, `MIGRATION_BRANCH_STRATEGY.md` for branch governance, and `MIGRATION_ROADMAP_VERIFICATION.md` for verified canonical roadmap (8 discrepancies corrected from proposed roadmap).
 

@@ -493,6 +493,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get darkMode => 'Dark Mode';
 
   @override
+  String get darkModeDesc => 'When off, Athar follows your device appearance.';
+
+  @override
   String get systemMode => 'System Default';
 
   @override

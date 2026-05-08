@@ -29,7 +29,7 @@
 | PR | Name | Purpose | Status | Depends on | Blockers |
 |----|------|---------|--------|------------|---------|
 | **PR1** | Tokens & Theme | Green brand palette (light + dark); Calibri font; `numericMono` TextStyle; dark surface tokens per `THEME_DARK_SPEC.md` | ✅ **Complete** `61d741a` | — | — |
-| **PR-THEME** | Auto Dark Mode Wiring | Wire `UserSettings.isAutoModeEnabled` → `ThemeMode` in `app.dart:162–172` | 🟡 Ready | PR1 ✅ | None |
+| **PR-THEME** | Auto Dark Mode Wiring | Change `app.dart:172` from `ThemeMode.light` → `ThemeMode.system` when `isDarkMode=false`; `isAutoModeEnabled` is Smart Zones (NOT theme) — see DRIFT-6; preview: `PR_THEME_IMPLEMENTATION_PREVIEW.md` | 🟡 Preview Ready | PR1 ✅ | None |
 | **PR2** | AdaptiveShell | Rename `adaptive_scaffold` → `adaptive_shell`; iPad breakpoints; 4-tab nav bar shape; FAB pill outside bar (RTL/LTR) | 🔲 Not started | PR-THEME | Must read: `IPAD_OPTIMIZATION.md`, `REDESIGN_AUDIT.md`, `preview/comp-nav.html` |
 | **PR3** | Prayer Card Refresh | Visual redesign per `PRAYER_CARD_SPEC.md`; four-level toggle must not regress | 🔲 Not started | PR2 | `PRAYER_CARD_SPEC.md` must be read |
 | **PR-ADHAN** | Audio Asset Bundle | Bundle `adhan.mp3` / `.caf`; build gate for existing player | 🔲 Not started | Asset from designer | Asset not yet received |
@@ -311,7 +311,7 @@ PR-THEME is the only PR with no blockers. It was explicitly placed second in the
 ### What PR-THEME affects
 
 - **`lib/app.dart` lines 162–172 only** — the `MaterialApp` `themeMode:` argument
-- Reads `UserSettings.isAutoModeEnabled` from the settings cubit/repository
+- Changes `app.dart:172` from `ThemeMode.light` → `ThemeMode.system` (see DRIFT-6: `isAutoModeEnabled` is Smart Zones, not theme)
 - Maps: `isAutoModeEnabled == true` → `ThemeMode.system`; `false` → `ThemeMode.light`
 - No new files. No new logic. No structural changes.
 
@@ -325,7 +325,7 @@ PR-THEME is a single-argument change in `app.dart`. The dark theme extension (`A
 2. **Dark mode activates:** Setting `isAutoModeEnabled = true` on a device with dark system appearance must switch the app to the dark token set.
 3. **System follows device:** `ThemeMode.system` must respond to device appearance changes without app restart.
 4. **Prayer card unchanged:** `prayerCardGradient` (navy static gradient) must render correctly against the new dark background `0xFF0E1714` — verify contrast is acceptable.
-5. **B4 investigation:** Confirm which settings UI control drives `isAutoModeEnabled` — the settings page may need a corresponding toggle added or verified.
+5. ~~**B4 investigation:**~~ **Closed (DRIFT-6)** — `isAutoModeEnabled` is Smart Zones only. PR-THEME uses `isDarkMode` existing field. No settings UI change required beyond optional subtitle.
 
 **Before starting PR-THEME:** Read `IMPLEMENTATION_EXECUTION_PLAN.md` § PR-THEME and confirm `UserSettings.isAutoModeEnabled` field path.
 

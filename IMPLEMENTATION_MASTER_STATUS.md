@@ -33,8 +33,8 @@
 | # | PR | Name | Status | Tag | Blocker |
 |---|----|----- |--------|-----|---------|
 | 1 | **PR1** | Tokens & Theme — green palette, Calibri, dark surfaces | ✅ Complete | `athar-v2-pr1-complete` | — |
-| 2 | **PR-THEME** | `isAutoModeEnabled` → `ThemeMode.system`; disable manual toggle | 🟡 Ready | — | None |
-| 3 | **PR2** | AdaptiveShell rename + iPad breakpoints + 4-tab nav + FAB pill | 🔲 Not started | — | PR-THEME |
+| 2 | **PR-THEME** | `app.dart:172` `ThemeMode.light` → `ThemeMode.system`; `darkModeDesc` subtitle added | ✅ Complete | `athar-v2-prtheme-complete` | — |
+| 3 | **PR2** | AdaptiveShell rename + iPad breakpoints + 4-tab nav + FAB pill | 🔲 Not started | — | Read IPAD_OPTIMIZATION.md + REDESIGN_AUDIT.md + INVESTIGATION_REPORT.md first |
 | 4 | **PR3** | Prayer card refresh (`PRAYER_CARD_SPEC.md`) | 🔲 Not started | — | PR2 |
 | 5 | **PR-ADHAN** | Bundle `adhan.mp3` + `adhan.caf`; build gate if absent | 🔲 Not started | — | Asset from designer |
 | 6 | **PR4a** | Calendar visual refresh + `CalendarCubit` 4-source fan-in | 🔲 Not started | — | PR2 |
@@ -47,7 +47,7 @@
 | 13 | **PR-ONBOARD-AB** | Four-variant onboarding A/B/C/D; Variant A must not regress | 🔲 Not started | — | PR2 + designer |
 | 14 | **PR-CLEANUP** | Hardcoded colour sweep (files untouched by other PRs) | 🔲 Not started | — | All others |
 
-**Total PRs:** 14 · **Complete:** 1 · **Ready:** 1 · **Blocked:** 12
+**Total PRs:** 14 · **Complete:** 2 · **Ready:** 0 · **Blocked:** 12 (PR2 now unblocked pending screenshot review)
 
 ---
 
@@ -58,7 +58,7 @@
 | v2 Design System PRs | 1 | 14 | **7%** |
 | Design system token migration | ✅ Foundation layer done | Component + screen migration pending | ~5% |
 | Typography migration | Tokens updated | Component-level `.arabic`/`.english` callsites still use Cairo/Inter in some files | ~10% |
-| Dark-mode migration | Tokens correct | `ThemeMode` switching not yet wired (PR-THEME) | ~15% |
+| Dark-mode migration | Tokens correct + `ThemeMode.system` wired (PR-THEME ✅) | Component-level migration pending (PR2+) | ~50% |
 | Component library | 0 components migrated | PR2+ | 0% |
 | iOS widget visual refresh | 0 | PR9 | 0% |
 
@@ -71,7 +71,7 @@
 | B1 | **Calibri App Store licence** — designer must confirm before submission | Medium | App Store submission only (not dev/build) |
 | B2 | Dark secondary gradient variants not in CSS spec | Low | Dark mode secondary gradient in PR-THEME or later |
 | B3 | Calendar dual-display requires dedicated designer spec | Medium | PR4b |
-| B4 | `isAutoModeEnabled` settings UI location unknown — needs investigation | Low | PR-THEME UX (wiring is known; UI control location is not) |
+| B4 | ~~`isAutoModeEnabled` settings UI unknown~~ | **Closed** | DRIFT-6: field is Smart Zones only; PR-THEME used `isDarkMode` + `ThemeMode.system` |
 | B5 | ~~Dark surface token conflict~~ | **Closed** | Resolved: `THEME_DARK_SPEC.md` adopted as canonical |
 
 ---
