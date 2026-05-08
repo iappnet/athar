@@ -165,7 +165,7 @@ Prerequisite reads: `IPAD_OPTIMIZATION.md`, `REDESIGN_AUDIT.md`, `preview/comp-n
 
 **Status: 🔲 Not started — blocked on PR2**
 
-See `IMPLEMENTATION_MASTER_STATUS.md` for full sequence (14 PRs total).
+See `IMPLEMENTATION_MASTER_STATUS.md` for PR sequence and `PROGRAM_IMPLEMENTATION_STATUS.md` for full program-level roadmap (14 PRs, completion %, risk rankings).
 
 ---
 

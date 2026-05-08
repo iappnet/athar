@@ -84,7 +84,7 @@ _Last updated: 2026-05-09 (PR1 — Athar v2 tokens + Calibri font complete)_
 
 Wire `isAutoModeEnabled` from `UserSettings` into `app.dart:162–172` to drive `ThemeMode`. Dark tokens are correct from PR1 — only the `ThemeMode` switch is missing.
 
-See `IMPLEMENTATION_MASTER_STATUS.md` for full PR sequence.
+See `IMPLEMENTATION_MASTER_STATUS.md` for PR sequence and `PROGRAM_IMPLEMENTATION_STATUS.md` for full program-level view.
 
 ---
 
