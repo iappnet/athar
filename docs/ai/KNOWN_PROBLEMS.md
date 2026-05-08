@@ -10,6 +10,22 @@ _All P1/P2/P3 have been fixed. Pending physical device verification._
 
 ---
 
+## OPEN — Design System v2 (Post-PR1)
+
+### B1: Calibri App Store licence unconfirmed
+`assets/fonts/calibri-*.ttf` (3 files) are in the repo and declared in `pubspec.yaml`. Calibri is a Microsoft typeface — its licence for App Store distribution has not been confirmed by the designer.
+- **Impact:** Submission gate only. Development builds and TestFlight internal builds are unaffected.
+- **Action required:** Designer must confirm Calibri licence before any external TestFlight or App Store submission.
+- **Files:** `assets/fonts/calibri-light.ttf`, `assets/fonts/calibri-regular.ttf`, `assets/fonts/calibri-bold.ttf`, `pubspec.yaml`, `lib/core/design_system/tokens/athar_typography.dart`
+
+### B2: `isAutoModeEnabled` → `ThemeMode` not yet wired
+Dark palette tokens are correct (PR1 complete) but `ThemeMode` in `app.dart` does not yet respond to `UserSettings.isAutoModeEnabled`. The app always uses light mode regardless of the device theme setting.
+- **Impact:** Dark mode visuals invisible until PR-THEME ships.
+- **Target PR:** PR-THEME
+- **Target file:** `lib/app.dart:162–172`
+
+---
+
 ## OPEN — NavBar Add Workflow
 
 ### P4: Task/Habit added via NavBar + may not appear (unconfirmed)

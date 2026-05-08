@@ -1,8 +1,8 @@
 # Implementation Session State
 
-**Last updated:** 2026-05-08  
-**Session phase:** Pre-PR1 — final validation complete, awaiting explicit user approval  
-**Next action:** User approves PR1 diff list → implement Step A only (Dart changes)
+**Last updated:** 2026-05-09  
+**Session phase:** Post-PR1 — governance update complete, SocratiCode re-indexed  
+**Next action:** PR-THEME — wire `UserSettings.isAutoModeEnabled` → `ThemeMode` in `app.dart:162–172`
 
 ---
 
@@ -24,11 +24,10 @@
 
 | Item | Blocked On |
 |------|-----------|
-| PR1 Dart implementation (Step A) | User explicit approval of `PR1_IMPLEMENTATION_PREVIEW.md` |
-| PR1 font wiring (Step B) | B1: Calibri App Store licence confirmation from designer |
-| PR-THEME (isAutoModeEnabled) | Separate PR after PR1 |
-| Dark surface token resolution | B5: Conflict between THEME_DARK_SPEC.md and colors_and_type.css |
-| PR2+ | PR1 merged |
+| PR-THEME (isAutoModeEnabled → ThemeMode) | None — ready to start |
+| PR2 (AdaptiveShell + nav bar) | PR-THEME |
+| PR3+ | PR2 |
+| B1: Calibri App Store licence | Designer confirmation |
 
 ---
 
@@ -62,9 +61,8 @@
 
 | PR | Name | Status | Depends On |
 |----|------|--------|-----------|
-| PR1 | Tokens & Theme (Step A: Dart only) | 🟡 READY (awaiting approval) | Nothing |
-| PR1-B | Calibri font assets + pubspec | ⛔ BLOCKED on B1 | B1: licence confirm |
-| PR-THEME | Auto dark mode wiring (app.dart:162–172) | ⬜ Not started | PR1 |
+| PR1 | Tokens & Theme (Step A: Dart + Step B: Calibri font) | ✅ **COMPLETE** (`61d741a`) | — |
+| PR-THEME | Auto dark mode wiring (app.dart:162–172) | 🟡 READY | PR1 ✅ |
 | PR2 | AdaptiveShell (rename adaptive_scaffold → adaptive_shell; breakpoints; nav bar shape) | ⬜ Not started | PR1 |
 | PR3 | Prayer card refresh (PRAYER_CARD_SPEC.md) | ⬜ Not started | PR2 |
 | PR-ADHAN | Bundle adhan.mp3/caf (build gate) | ⬜ Not started | Asset ready |

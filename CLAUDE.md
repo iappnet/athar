@@ -106,16 +106,33 @@ Full tree + all cubits: `docs/ai/STATE_MANAGEMENT_INDEX.md`.
 ## Design System
 
 Token barrel: `import 'package:athar/core/design_system/tokens/tokens.dart'`
-Design size: 375×812 (`ScreenUtilInit`). Font: **Cairo**.
+Design size: 375×812 (`ScreenUtilInit`). Font: **Calibri** (canonical brand font as of PR1).
+
+**PR1 complete (2026-05-09, commit `61d741a`):**
+- Color tokens: green brand palette (light) + warm green-tinted dark surfaces (`THEME_DARK_SPEC.md`)
+- Typography: `fontFamilyAr/En = 'Calibri'`; `numericMono` TextStyle added
+- Font assets: `calibri-light.ttf`, `calibri-regular.ttf`, `calibri-bold.ttf` in `assets/fonts/`
+- Dark mode `ThemeMode` wiring: **NOT YET** — target PR-THEME
+
+**Token authority:**
+- Light tokens: `handoff_v2-2/colors_and_type.css`
+- Dark surfaces/text: `handoff_v2-2/THEME_DARK_SPEC.md` (overrides CSS)
+- Implementation: `lib/core/design_system/tokens/athar_colors.dart` + `athar_typography.dart`
+
+**v2 implementation status:** See `IMPLEMENTATION_MASTER_STATUS.md` for full PR sequence (14 PRs, PR1 complete).
 
 ---
 
 ## Known Open Bugs
 
-See `docs/ai/KNOWN_PROBLEMS.md` for current Phase 5 issues:
-- P1: Widget locale not updated on language change
-- P2: `toggleTaskCompletionByUuid` cache miss drops widget action
-- P3: `completeHabitByUuid`/`incrementHabitProgressByUuid` cache miss
+See `docs/ai/KNOWN_PROBLEMS.md` for full issue list.
+
+Active open items:
+- B1: Calibri App Store licence unconfirmed (submission gate — not a dev/build blocker)
+- B2: `isAutoModeEnabled` → `ThemeMode` not wired (target: PR-THEME)
+- P4: Task/Habit added via NavBar may not appear (unconfirmed; see KNOWN_PROBLEMS.md)
+
+Previously fixed: P1 (widget locale), P2 (task UUID cache miss), P3 (habit UUID cache miss)
 
 ---
 

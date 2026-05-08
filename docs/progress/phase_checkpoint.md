@@ -70,6 +70,25 @@
 
 ---
 
+## PR1 Checkpoint — 2026-05-09
+
+- Phase: PR1 — Athar v2 Tokens & Theme (Step A: Dart + Step B: Calibri font)
+- Branch: `feat/athar-v2-pr1-tokens-theme`
+- Commit: `61d741a`
+- Task type: Implementation (Dart + pubspec + font assets)
+- Result: success
+- Files changed: `athar_colors.dart`, `athar_typography.dart`, `pubspec.yaml`, `assets/fonts/calibri-*.ttf` (3 files)
+- Files inspected: `handoff_v2-2/colors_and_type.css`, `handoff_v2-2/THEME_DARK_SPEC.md`, `handoff_v2-2/DESIGN_SYSTEM_GAP_VALIDATION.md`
+- Bugs fixed: none — token corrections only
+- Verified: `flutter pub get` ✅ · `flutter analyze` 0 issues ✅ · `flutter test` 29/29 ✅
+- Not verified: Visual regression on device (manual screenshot checklist in `PR1_FINAL_REPORT.md`)
+- Accepted risks: B1 Calibri App Store licence (submission gate, not dev gate)
+- Remaining work: PR-THEME → PR2 → PR3 … (see `IMPLEMENTATION_MASTER_STATUS.md`)
+- Next step: PR-THEME — `isAutoModeEnabled` → `ThemeMode` wiring in `app.dart`
+- Next prompt: Implement PR-THEME — wire `UserSettings.isAutoModeEnabled` to `ThemeMode` in `app.dart:162–172`. Read `IMPLEMENTATION_EXECUTION_PLAN.md` § PR-THEME first.
+
+---
+
 ## Phase Checkpoint — 2026-05-03 (Session 5)
 
 - Phase: Phase 4 — Hardening + Edge Cases + Prayer Widget Polish

@@ -1,6 +1,6 @@
 # Athar Phase Tracker
 
-_Last updated: 2026-05-03_
+_Last updated: 2026-05-09_
 
 ---
 
@@ -124,6 +124,48 @@ Remaining:
 - Regression test: language switch (AR↔EN) while widget is on Home Screen → widget updates locale
 - Regression test: app kill immediately after widget tap → action replayed on next cold start
 - App Store / TestFlight submission checklist: entitlements, App Group provisioning, widget display names
+
+---
+
+---
+
+## v2 Design System PR Track
+
+_Authority: `handoff_v2-2/CLAUDE_CODE_PROMPT.md` + `handoff_v2-2/FINAL_PACKAGE_MANIFEST.md`_
+
+### PR1 — Tokens & Theme
+
+**Status: ✅ Complete — commit `61d741a` on `feat/athar-v2-pr1-tokens-theme`**
+
+Completed items:
+- `athar_colors.dart` — 6 light palette corrections + 16 dark palette corrections (green brand + THEME_DARK_SPEC.md warm dark surfaces)
+- `athar_typography.dart` — `fontFamilyAr/En` → `'Calibri'`; `numericMono` TextStyle added
+- `pubspec.yaml` — Calibri font family registered (weights 300/400/700)
+- `assets/fonts/` — `calibri-light.ttf`, `calibri-regular.ttf`, `calibri-bold.ttf` added
+- `flutter analyze`: 0 issues; `flutter test`: 29/29 passed
+
+Remaining:
+- B1: Calibri App Store licence confirmation (submission gate only — does not block development)
+
+### PR-THEME — Auto Dark Mode Wiring
+
+**Status: 🟡 Ready — no blockers**
+
+Scope: Wire `isAutoModeEnabled` from `UserSettings` into `ThemeMode` at `app.dart:162–172`.  
+Prerequisite reads before starting: `IMPLEMENTATION_EXECUTION_PLAN.md` § PR-THEME.
+
+### PR2 — AdaptiveShell
+
+**Status: 🔲 Not started — blocked on PR-THEME**
+
+Scope: Rename `adaptive_scaffold.dart` → `adaptive_shell.dart`; iPad breakpoints; 4-tab nav bar; FAB pill outside bar.  
+Prerequisite reads: `IPAD_OPTIMIZATION.md`, `REDESIGN_AUDIT.md`, `preview/comp-nav.html`.
+
+### PR3 through PR-CLEANUP
+
+**Status: 🔲 Not started — blocked on PR2**
+
+See `IMPLEMENTATION_MASTER_STATUS.md` for full sequence (14 PRs total).
 
 ---
 

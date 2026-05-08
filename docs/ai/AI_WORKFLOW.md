@@ -104,6 +104,30 @@ The central NavBar `+` button is the only add entry point. Duplicate FABs are a 
 
 ---
 
+## Design System Workflow (v2 — active from PR1 onwards)
+
+### Token authority (post-PR1)
+- Light tokens → `handoff_v2-2/colors_and_type.css` (canonical)
+- Dark surfaces/text → `handoff_v2-2/THEME_DARK_SPEC.md` (overrides CSS — DRIFT-2)
+- Typography → `handoff_v2-2/DESIGN_SYSTEM_GAP_VALIDATION.md` (Calibri sole canonical)
+- Implementation token source → `lib/core/design_system/tokens/athar_colors.dart` + `athar_typography.dart`
+
+### Before any design-system PR
+1. Read `IMPLEMENTATION_MASTER_STATUS.md` — check PR sequence and blockers
+2. Read the relevant handoff_v2-2 spec doc (listed in master status)
+3. Write audit doc in `design-context/_audit_<feature>.md` BEFORE touching Dart
+4. No Dart edits without audit sign-off
+
+### After any design-system PR
+1. Run `flutter pub get` + `flutter analyze` + `flutter test`
+2. Update `IMPLEMENTATION_MASTER_STATUS.md` — mark PR complete, unblock next
+3. Update `docs/progress/phase_tracker.md` + `current_project_status.md`
+4. Add checkpoint to `docs/progress/phase_checkpoint.md`
+5. Create change log in `docs/ai/change-logs/`
+6. Re-index SocratiCode: `codebase_update`
+
+---
+
 ## Codebase Health Check (run periodically)
 
 ```bash

@@ -1,5 +1,5 @@
 # Athar — Current Project Status
-_Last updated: 2026-05-03 (Phase 4 hardening + prayer widget polish complete)_
+_Last updated: 2026-05-09 (PR1 — Athar v2 tokens + Calibri font complete)_
 
 ## Completed Work
 
@@ -66,6 +66,25 @@ _Last updated: 2026-05-03 (Phase 4 hardening + prayer widget polish complete)_
   - `app.dart` `onResume` calls `HabitCubit.processWidgetPendingActions()`
   - `WidgetKeys.pendingHabitActions` + `consumePendingHabitActions()` added to `WidgetDataService`
   - flutter analyze clean; AtharHabitWidgetExtension BUILD SUCCEEDED
+
+---
+
+## v2 Design System Status
+
+### PR1 — Complete (`61d741a` on `feat/athar-v2-pr1-tokens-theme`)
+
+- **`athar_colors.dart`** — 22 token corrections: green brand palette (light) + warm green-tinted dark surfaces/cream text (THEME_DARK_SPEC.md)
+- **`athar_typography.dart`** — `fontFamilyAr/En` → `'Calibri'`; `numericMono` (JetBrains Mono + tabularFigures) added
+- **`pubspec.yaml`** — Calibri font family: Light 300 / Regular 400 / Bold 700
+- **Font assets** — `calibri-light.ttf`, `calibri-regular.ttf`, `calibri-bold.ttf` added to `assets/fonts/`
+- `flutter analyze`: 0 issues | `flutter test`: 29/29 passed
+- **Blocker B1 open:** Calibri App Store licence — designer confirmation required before TestFlight submission
+
+### Next PR — PR-THEME (no blockers)
+
+Wire `isAutoModeEnabled` from `UserSettings` into `app.dart:162–172` to drive `ThemeMode`. Dark tokens are correct from PR1 — only the `ThemeMode` switch is missing.
+
+See `IMPLEMENTATION_MASTER_STATUS.md` for full PR sequence.
 
 ---
 
