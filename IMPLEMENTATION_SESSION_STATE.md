@@ -1,8 +1,10 @@
 # Implementation Session State
 
 **Last updated:** 2026-05-09  
-**Session phase:** Post-PR1 — governance update complete, SocratiCode re-indexed  
-**Next action:** PR-THEME — wire `UserSettings.isAutoModeEnabled` → `ThemeMode` in `app.dart:162–172`
+**Session phase:** Post-PR1 — roadmap verified, migration branch strategy set, all governance complete  
+**Canonical migration branch:** `feat/athar-v2-pr1-tokens-theme` (long-running; do NOT merge to `main`)  
+**Checkpoint tag:** `athar-v2-pr1-complete` at `72f902d`  
+**Next action:** PR-THEME — wire `UserSettings.isAutoModeEnabled` → `ThemeMode.system` in `app.dart:162–172`
 
 ---
 

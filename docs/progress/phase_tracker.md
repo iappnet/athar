@@ -131,7 +131,9 @@ Remaining:
 
 ## v2 Design System PR Track
 
-_Authority: `handoff_v2-2/CLAUDE_CODE_PROMPT.md` + `handoff_v2-2/FINAL_PACKAGE_MANIFEST.md`_
+_Authority: `handoff_v2-2/CLAUDE_CODE_PROMPT.md` + `handoff_v2-2/FINAL_PACKAGE_MANIFEST.md`_  
+_Branch: `feat/athar-v2-pr1-tokens-theme` (long-running migration branch — do NOT merge to `main` until complete)_  
+_Roadmap verified 2026-05-09 — see `MIGRATION_ROADMAP_VERIFICATION.md` for corrected canonical sequence_
 
 ### PR1 — Tokens & Theme
 

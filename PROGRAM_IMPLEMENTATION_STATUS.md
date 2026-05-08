@@ -3,7 +3,10 @@
 **Last updated:** 2026-05-09  
 **Program:** Athar v2 Design System — Full Flutter Migration  
 **Canonical handoff:** `handoff_v2-2/`  
-**Canonical branch:** `feat/athar-v2-pr1-tokens-theme`  
+**Canonical migration branch:** `feat/athar-v2-pr1-tokens-theme` ← long-running; do NOT merge to `main` until migration complete  
+**main:** stable legacy baseline at `32e59c3` — no touches until migration merge gate  
+**Roadmap verification:** `MIGRATION_ROADMAP_VERIFICATION.md` (verified 2026-05-09; 8 discrepancies corrected)  
+**Branch strategy:** `MIGRATION_BRANCH_STRATEGY.md`  
 **Authoritative PR sequence:** `handoff_v2-2/CLAUDE_CODE_PROMPT.md` + `handoff_v2-2/FINAL_PACKAGE_MANIFEST.md`
 
 ---

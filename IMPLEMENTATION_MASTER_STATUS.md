@@ -1,10 +1,13 @@
 # Implementation Master Status — Athar v2 Design System
 
 **Last updated:** 2026-05-09  
-**Updated by:** PR1 completion + program-level status report  
-**Program-level view:** See `PROGRAM_IMPLEMENTATION_STATUS.md`  
+**Updated by:** Roadmap verification + migration branch strategy  
+**Program-level view:** `PROGRAM_IMPLEMENTATION_STATUS.md`  
+**Branch strategy:** `MIGRATION_BRANCH_STRATEGY.md`  
+**Roadmap verification:** `MIGRATION_ROADMAP_VERIFICATION.md`  
 **Canonical handoff package:** `handoff_v2-2/`  
-**Canonical branch:** `feat/athar-v2-pr1-tokens-theme`  
+**Canonical migration branch:** `feat/athar-v2-pr1-tokens-theme` ← do NOT merge to `main` until migration complete  
+**main:** stable legacy baseline at `32e59c3` — do not touch  
 **Authoritative sequence:** `handoff_v2-2/CLAUDE_CODE_PROMPT.md` + `handoff_v2-2/FINAL_PACKAGE_MANIFEST.md`
 
 ---
@@ -24,27 +27,27 @@
 
 ### v2 Design System PR Track
 
-| PR | Name | Status | Blocker |
-|----|------|--------|---------|
-| PR1 | Tokens & Theme (Step A: Dart + Step B: Calibri font) | ✅ **Complete** (`61d741a`) | — |
-| PR-THEME | Auto dark mode wiring (`isAutoModeEnabled` → `ThemeMode`) | 🟡 Ready to start | None |
-| PR2 | AdaptiveShell (rename + breakpoints + nav bar shape + FAB pill) | 🔲 Not started | PR-THEME |
-| PR3 | Prayer card visual refresh (`PRAYER_CARD_SPEC.md`) | 🔲 Not started | PR2 |
-| PR-ADHAN | Bundle `adhan.mp3` / `.caf` assets (build gate) | 🔲 Not started | Asset ready from designer |
-| PR4a | Calendar visual refresh (keep toggle; extend `CalendarCubit`) | 🔲 Not started | PR2 |
-| PR4b | Calendar dual-display rebuild (`DualDate` VO + `CalendarCell` + `DualMonthSwitcher`) | 🔲 Not started | PR4a + designer spec |
-| PR5 | Settings: Accessibility section (Reduce Motion, Disable Gyroscope, Eastern Numerals) | 🔲 Not started | PR2 |
-| PR6 | Stats redesign (`STATS_KPI_SPEC.md`) | 🔲 Not started | PR2 |
-| PR7 | Athkar feature (net-new; curated sets v1) | 🔲 Not started | PR2 + designer review |
-| PR8 | Focus screen oil-fill (`FOCUS_OIL_SPEC.md`) | 🔲 Not started | PR2 |
-| PR9 | iOS widgets visual refresh (visuals only; infra exists) | 🔲 Not started | PR2 |
-| PR-ONBOARD-AB | Four-variant onboarding A/B/C/D | 🔲 Not started | PR2 + designer approval |
-| PR-CLEANUP | Hardcoded colour sweep (88 files) | 🔲 Not started | All others |
+> PRs are **logical migration checkpoints** on `feat/athar-v2-pr1-tokens-theme`, not immediate merges to `main`.  
+> `main` stays at `32e59c3` until full migration + QA is complete. See `MIGRATION_BRANCH_STRATEGY.md`.
 
-**Total PRs:** 14  
-**Complete:** 1 (PR1)  
-**Ready to start:** 1 (PR-THEME)  
-**Blocked:** 12
+| # | PR | Name | Status | Tag | Blocker |
+|---|----|----- |--------|-----|---------|
+| 1 | **PR1** | Tokens & Theme — green palette, Calibri, dark surfaces | ✅ Complete | `athar-v2-pr1-complete` | — |
+| 2 | **PR-THEME** | `isAutoModeEnabled` → `ThemeMode.system`; disable manual toggle | 🟡 Ready | — | None |
+| 3 | **PR2** | AdaptiveShell rename + iPad breakpoints + 4-tab nav + FAB pill | 🔲 Not started | — | PR-THEME |
+| 4 | **PR3** | Prayer card refresh (`PRAYER_CARD_SPEC.md`) | 🔲 Not started | — | PR2 |
+| 5 | **PR-ADHAN** | Bundle `adhan.mp3` + `adhan.caf`; build gate if absent | 🔲 Not started | — | Asset from designer |
+| 6 | **PR4a** | Calendar visual refresh + `CalendarCubit` 4-source fan-in | 🔲 Not started | — | PR2 |
+| 7 | **PR4b** | Calendar dual-display (`DualDate` VO + `CalendarCell` + `DualMonthSwitcher`) | 🔲 Not started | — | PR4a + spec |
+| 8 | **PR5** | Settings: Accessibility section (Reduce Motion, Gyroscope, Eastern Numerals) | 🔲 Not started | — | PR2 |
+| 9 | **PR6** | Stats redesign (`STATS_KPI_SPEC.md`) | 🔲 Not started | — | PR2 |
+| 10 | **PR7** | Athkar feature net-new (curated sets v1; designer review before screens) | 🔲 Not started | — | PR2 + designer |
+| 11 | **PR8** | Focus screen oil-fill (`FOCUS_OIL_SPEC.md`; procedural colour carve-out) | 🔲 Not started | — | PR2 |
+| 12 | **PR9** | iOS widgets visual refresh (infra complete; visuals only) | 🔲 Not started | — | PR2 |
+| 13 | **PR-ONBOARD-AB** | Four-variant onboarding A/B/C/D; Variant A must not regress | 🔲 Not started | — | PR2 + designer |
+| 14 | **PR-CLEANUP** | Hardcoded colour sweep (files untouched by other PRs) | 🔲 Not started | — | All others |
+
+**Total PRs:** 14 · **Complete:** 1 · **Ready:** 1 · **Blocked:** 12
 
 ---
 
