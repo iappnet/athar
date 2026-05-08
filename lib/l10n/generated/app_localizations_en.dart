@@ -916,6 +916,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get prayerCard => 'Prayer Card';
+
+  @override
+  String get prayerNotifications => 'Prayer Notifications';
+
+  @override
   String get prayerReminder => 'Prayer Reminder';
 
   @override
@@ -2370,6 +2376,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get autoSyncDesc => 'Save your data to the cloud automatically';
+
+  @override
+  String get syncNow => 'Sync Now';
+
+  @override
+  String lastSyncedAt(String time) {
+    return 'Last sync: $time';
+  }
 
   @override
   String get loginRequired => 'Login Required';
@@ -4308,6 +4322,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get prayerCardChangeLocation => 'Change Location';
+
+  @override
+  String get prayerLabelUpcoming => 'Next Prayer';
+
+  @override
+  String get prayerLabelJustStarted => 'It\'s Prayer Time';
+
+  @override
+  String get prayerLabelCurrent => 'Current Prayer';
 
   @override
   String get taskRibbonInProgress => 'In Progress';

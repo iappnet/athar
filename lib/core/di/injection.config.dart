@@ -244,9 +244,9 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i62.SpaceCubit(gh<_i26.SpaceRepository>()));
     gh.factory<_i63.StatsCubit>(
         () => _i63.StatsCubit(gh<_i52.IStatsRepository>()));
-    gh.factory<_i64.SubscriptionCubit>(
+    gh.lazySingleton<_i64.SubscriptionCubit>(
         () => _i64.SubscriptionCubit(gh<_i28.SubscriptionRepository>()));
-    gh.factory<_i65.SyncCubit>(() => _i65.SyncCubit(
+    gh.lazySingleton<_i65.SyncCubit>(() => _i65.SyncCubit(
           gh<_i31.SyncRepository>(),
           gh<_i23.SettingsRepository>(),
         ));

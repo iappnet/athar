@@ -34,6 +34,7 @@ import 'features/home/presentation/pages/main_page.dart';
 import 'features/auth/presentation/pages/login_page.dart';
 // ✅ استيراد خدمة الروابط للوصول للمفتاح
 import 'package:athar/core/services/deep_link_service.dart';
+import 'package:athar/core/services/widget_data_service.dart';
 import 'package:athar/features/calendar/presentation/cubit/calendar_cubit.dart';
 
 class AtharApp extends StatefulWidget {
@@ -76,6 +77,14 @@ class _AtharAppState extends State<AtharApp> {
     onResume: () async {
       await _clearNotificationBadges();
       getIt<SubscriptionCubit>().loadStatus();
+      // Refresh prayer times immediately when app returns to foreground so the
+      // widget data and prayer card never show stale info after backgrounding.
+      final ctx = DeepLinkService.navigatorKey.currentContext;
+      if (ctx != null && ctx.mounted) {
+        ctx.read<PrayerCubit>().loadPrayerTimes();
+        ctx.read<TaskCubit>().processWidgetPendingActions();
+        ctx.read<HabitCubit>().processWidgetPendingActions();
+      }
     },
   );
 
@@ -102,14 +111,14 @@ class _AtharAppState extends State<AtharApp> {
         // 1. الأساسيات والأنظمة العامة
         BlocProvider(create: (_) => getIt<CelebrationCubit>()),
         BlocProvider(create: (_) => getIt<SettingsCubit>()..loadSettings()),
-        BlocProvider(create: (_) => getIt<SyncCubit>()..triggerSync()),
+        BlocProvider.value(value: getIt<SyncCubit>()),
         BlocProvider(create: (_) => getIt<AuthCubit>()),
         BlocProvider(
           create: (_) => getIt<NotificationsCubit>()..watchNotifications(),
         ),
 
         // 2. الميزات الرئيسية (إسلاميات، عادات)
-        BlocProvider(create: (_) => getIt<PrayerCubit>()..loadPrayerTimes()),
+        BlocProvider(create: (_) => getIt<PrayerCubit>()..loadPrayerTimes()..startAutoRefresh()),
         BlocProvider(create: (_) => getIt<HabitCubit>()..loadHabits()),
         BlocProvider(create: (_) => getIt<CategoryCubit>()),
 
@@ -138,8 +147,10 @@ class _AtharAppState extends State<AtharApp> {
 
         // 7. اللغة
         BlocProvider(
-          create: (_) =>
-              LocaleCubit(const FlutterSecureStorage())..loadLocale(),
+          create: (_) => LocaleCubit(
+            const FlutterSecureStorage(),
+            getIt<WidgetDataService>(),
+          )..loadLocale(),
         ),
       ],
       child: ScreenUtilInit(
@@ -161,6 +172,12 @@ class _AtharAppState extends State<AtharApp> {
             themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
             locale: locale,
             supportedLocales: const [Locale('ar', 'SA'), Locale('en', 'US')],
+            localeResolutionCallback: (deviceLocale, supportedLocales) {
+              if (deviceLocale == null) return const Locale('en', 'US');
+              if (deviceLocale.languageCode == 'ar') return const Locale('ar', 'SA');
+              if (deviceLocale.languageCode == 'en') return const Locale('en', 'US');
+              return const Locale('en', 'US');
+            },
             localizationsDelegates: [
               AppLocalizations.delegate, // ← هذا كان مفقوداً!
               GlobalMaterialLocalizations.delegate,

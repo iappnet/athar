@@ -32,6 +32,8 @@ class SettingsCubit extends Cubit<SettingsState> {
   Future<void> loadSettings() async {
     if (state is! SettingsLoaded) emit(SettingsLoading());
 
+    await _runPrayerMigrationIfNeeded();
+
     await _settingsSubscription?.cancel();
 
     _settingsSubscription = _repository.watchSettings().listen((settings) {
@@ -39,65 +41,102 @@ class SettingsCubit extends Cubit<SettingsState> {
     });
   }
 
+  /// One-time migration: carry `isPrayerEnabled` forward into `isPrayerCardEnabled`
+  /// for existing users who had the prayer feature on before the split.
+  Future<void> _runPrayerMigrationIfNeeded() async {
+    try {
+      final settings = await _repository.getSettings();
+      if (settings.didMigratePrayerFeatureSettings) return;
+      settings.isPrayerCardEnabled = settings.isPrayerEnabled;
+      settings.didMigratePrayerFeatureSettings = true;
+      await _repository.updateSettings(settings);
+      if (kDebugMode) print('🔄 Prayer settings migration complete');
+    } catch (e) {
+      if (kDebugMode) print('❌ Prayer migration error: $e');
+    }
+  }
+
   // ═══════════════════════════════════════════════════════════════════
   // ✅✅✅ دوال إدارة التنبيهات - الإصلاح الرئيسي
   // ═══════════════════════════════════════════════════════════════════
 
-  /// ✅ تفعيل/تعطيل مواقيت الصلاة مع إدارة التنبيهات
+  /// Master toggle for the prayer feature.
+  /// Turning OFF cancels all scheduled notifications regardless of sub-settings.
   Future<void> togglePrayerEnabled(bool enabled) async {
     try {
       final currentSettings = await _repository.getSettings();
       currentSettings.isPrayerEnabled = enabled;
+      await _repository.updateSettings(currentSettings);
+      if (!enabled) {
+        await getIt<PrayerNotificationScheduler>().disableNotifications();
+        if (kDebugMode) print('🕌 Prayer master OFF — notifications cancelled');
+      } else {
+        if (kDebugMode) print('🕌 Prayer master ON');
+      }
+    } catch (e) {
+      if (kDebugMode) print('❌ Error toggling prayer master: $e');
+    }
+  }
+
+  /// Sub-toggle: show/hide prayer card on dashboard.
+  /// No scheduling side effects.
+  Future<void> togglePrayerCardEnabled(bool enabled) async {
+    try {
+      final currentSettings = await _repository.getSettings();
+      currentSettings.isPrayerCardEnabled = enabled;
+      await _repository.updateSettings(currentSettings);
+      if (kDebugMode) {
+        print(enabled ? '🃏 Prayer card shown' : '🃏 Prayer card hidden');
+      }
+    } catch (e) {
+      if (kDebugMode) print('❌ Error toggling prayer card: $e');
+    }
+  }
+
+  /// تفعيل/تعطيل إشعارات الصلاة (الأذان).
+  /// مستقل عن ظهور بطاقة الصلاة في لوحة التحكم.
+  Future<void> togglePrayerNotificationsEnabled(bool enabled) async {
+    try {
+      final currentSettings = await _repository.getSettings();
+      currentSettings.isPrayerNotificationsEnabled = enabled;
+
+      // Save first so the scheduler reads the correct value from Isar.
+      await _repository.updateSettings(currentSettings);
 
       final prayerScheduler = getIt<PrayerNotificationScheduler>();
 
       if (!enabled) {
-        // ❌ إلغاء جميع تنبيهات الصلاة
         await prayerScheduler.disableNotifications();
-        if (kDebugMode) {
-          print('🔕 Prayer notifications cancelled');
-        }
+        if (kDebugMode) print('🔕 Prayer notifications cancelled');
       } else {
-        // ✅ إعادة جدولة التنبيهات
         await prayerScheduler.initializeScheduling();
-        if (kDebugMode) {
-          print('🔔 Prayer notifications scheduled');
-        }
+        if (kDebugMode) print('🔔 Prayer notifications scheduled');
       }
-
-      await _repository.updateSettings(currentSettings);
     } catch (e) {
-      if (kDebugMode) {
-        print('❌ Error toggling prayer: $e');
-      }
+      if (kDebugMode) print('❌ Error toggling prayer notifications: $e');
     }
   }
 
-  /// ✅ تفعيل/تعطيل تذكيرات الصلاة (قبل 15 دقيقة)
+  /// تفعيل/تعطيل تذكيرات الصلاة (قبل 15 دقيقة). إعداد فرعي تحت إشعارات الصلاة.
   Future<void> togglePrayerReminders(bool enabled) async {
     try {
       final currentSettings = await _repository.getSettings();
       currentSettings.enablePrayerReminders = enabled;
 
-      // إعادة جدولة لتطبيق التغيير
-      if (currentSettings.isPrayerEnabled) {
+      // Save first so the scheduler reads the correct value from Isar.
+      await _repository.updateSettings(currentSettings);
+
+      // Reschedule only when both master and notifications are enabled.
+      if (currentSettings.isPrayerEnabled && currentSettings.isPrayerNotificationsEnabled) {
         final prayerScheduler = getIt<PrayerNotificationScheduler>();
         await prayerScheduler.scheduleSevenDays();
       }
 
-      await _repository.updateSettings(currentSettings);
-
       if (kDebugMode) {
-        print(
-          enabled
-              ? '🔔 Prayer reminders enabled'
-              : '🔕 Prayer reminders disabled',
-        );
+        print(enabled ? '🔔 Prayer reminders enabled' : '🔕 Prayer reminders disabled');
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('❌ Error toggling prayer reminders: $e');
-      }
+      if (kDebugMode) print('❌ Error toggling prayer reminders: $e');
     }
   }
 

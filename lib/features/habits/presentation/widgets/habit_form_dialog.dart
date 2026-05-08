@@ -14,6 +14,7 @@ import 'package:athar/core/design_system/tokens.dart';
 
 import '../../data/models/habit_model.dart';
 import '../cubit/habit_cubit.dart';
+import '../cubit/habit_state.dart';
 
 class HabitFormSheet extends StatefulWidget {
   final HabitModel? habitToEdit;
@@ -44,6 +45,8 @@ class _HabitFormSheetState extends State<HabitFormSheet> {
 
   DateTime? _reminderTime;
   bool _isReminderEnabled = true;
+  String? _titleError;
+  bool _isSaving = false;
 
   @override
   void initState() {
@@ -119,9 +122,13 @@ class _HabitFormSheetState extends State<HabitFormSheet> {
             // 1. اسم العادة
             TextField(
               controller: titleController,
+              onChanged: (_) {
+                if (_titleError != null) setState(() => _titleError = null);
+              },
               decoration: InputDecoration(
                 // ✅ l10n: "ما هي عادتك القادمة؟"
                 hintText: l10n.habitFormNameHint,
+                errorText: _titleError,
                 filled: true,
                 // ✅ AppColors.background → colors.background
                 fillColor: colorScheme.surface,
@@ -212,7 +219,7 @@ class _HabitFormSheetState extends State<HabitFormSheet> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: _saveHabit,
+                onPressed: _isSaving ? null : _saveHabit,
                 style: ElevatedButton.styleFrom(
                   // ✅ AppColors.primary → colors.primary
                   backgroundColor: colorScheme.primary,
@@ -221,14 +228,23 @@ class _HabitFormSheetState extends State<HabitFormSheet> {
                     borderRadius: AtharRadii.radiusMd,
                   ),
                 ),
-                child: Text(
-                  // ✅ l10n: "حفظ التعديلات" / "ابدأ العادة الآن"
-                  isEditing ? l10n.habitFormSaveEdits : l10n.habitFormStartNow,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: _isSaving
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : Text(
+                        // ✅ l10n: "حفظ التعديلات" / "ابدأ العادة الآن"
+                        isEditing ? l10n.habitFormSaveEdits : l10n.habitFormStartNow,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
               ),
             ),
           ],
@@ -318,32 +334,56 @@ class _HabitFormSheetState extends State<HabitFormSheet> {
         ),
       );
 
-  void _saveHabit() {
-    if (titleController.text.isNotEmpty) {
-      int target = int.tryParse(targetController.text) ?? 1;
-      final cubit = context.read<HabitCubit>();
+  Future<void> _saveHabit() async {
+    final trimmedTitle = titleController.text.trim();
+    if (trimmedTitle.isEmpty) {
+      setState(() => _titleError = 'يرجى إدخال اسم العادة');
+      return;
+    }
+    setState(() {
+      _titleError = null;
+      _isSaving = true;
+    });
 
+    final cubit = context.read<HabitCubit>();
+    final int target = int.tryParse(targetController.text) ?? 1;
+
+    try {
       if (widget.habitToEdit != null) {
         final habit = widget.habitToEdit!.copyWith(
-          title: titleController.text,
+          title: trimmedTitle,
           frequency: selectedFreq,
           period: selectedPeriod,
           target: target,
           reminderEnabled: _isReminderEnabled,
           reminderTime: _isReminderEnabled ? _reminderTime : null,
         );
-        cubit.updateHabit(habit);
+        await cubit.updateHabit(habit);
       } else {
-        final newHabit = HabitModel(title: titleController.text)
+        final newHabit = HabitModel(title: trimmedTitle)
           ..frequency = selectedFreq
           ..period = selectedPeriod
           ..target = target
           ..reminderEnabled = _isReminderEnabled
           ..reminderTime = _isReminderEnabled ? _reminderTime : null
           ..createdAt = DateTime.now();
-        cubit.addHabit(newHabit);
+        await cubit.addHabit(newHabit);
       }
+
+      if (!mounted) return;
+      // addHabit() emits HabitFreeLimitReached or HabitError on failure;
+      // HabitLoaded on success. Keep the sheet open so the BlocListener in
+      // HabitPage can show the upgrade nudge / error snackbar while the
+      // form is still visible.
+      final postState = cubit.state;
+      if (postState is HabitFreeLimitReached || postState is HabitError) {
+        setState(() => _isSaving = false);
+        return;
+      }
+
       Navigator.pop(context);
+    } catch (_) {
+      if (mounted) setState(() => _isSaving = false);
     }
   }
 }

@@ -1,6 +1,6 @@
 abstract class SyncRepository {
-  /// بدء عملية المزامنة الكاملة (مهام وعادات)
-  Future<void> syncEverything();
+  /// بدء عملية المزامنة الكاملة — returns the number of item-level conflicts resolved.
+  Future<int> syncEverything();
 }
 
 class SyncSkippedException implements Exception {

@@ -1,189 +1,166 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+**Athar (أثر)** — Islamic productivity Flutter app. iOS + Android. Arabic-first.
+Stack: Flutter/Dart, Supabase (remote), Isar (local), Firebase FCM, RevenueCat.
 
-## Project Overview
+> **For detailed references, use `docs/ai/`.**
+> Start every session by checking `docs/ai/KNOWN_PROBLEMS.md` and `docs/ai/AI_WORKFLOW.md`.
 
-**Athar (أثر)** is an Islamic productivity Flutter app targeting iOS and Android. Core features: prayer times, dhikr, habits, tasks, calendar, focus mode, health tracking, assets management, spaces (collaborative workspaces), and subscription management. The app is Arabic-first (locale `ar-SA`), uses Supabase as the remote backend, Isar for local persistence, and Firebase for push notifications (FCM).
+---
 
 ## Setup
 
-A `.env` file must exist at the project root before the app will launch — it is loaded before Firebase/Supabase init:
-
+`.env` at project root is required:
 ```
-SUPABASE_URL=your_supabase_url
-SUPABASE_ANON_KEY=your_anon_key
+SUPABASE_URL=...
+SUPABASE_ANON_KEY=...
 ```
 
 ## Commands
 
 ```bash
-# Install dependencies
 flutter pub get
-
-# Run app
 flutter run
-
-# Static analysis / lint
-flutter analyze
-
-# Run tests
+flutter analyze                                              # must be zero issues before any commit
 flutter test
-
-# Run a single test file
-flutter test test/widget_test.dart
-
-# Code generation (injectable DI + Isar schemas) — run after adding @injectable annotations or Isar collections
-flutter pub run build_runner build --delete-conflicting-outputs
-
-# Watch mode during development (re-runs codegen on save)
-dart run build_runner watch --delete-conflicting-outputs
-
-# Regenerate localizations (after editing lib/l10n/app_ar.arb or app_en.arb)
-flutter gen-l10n
-
-# iOS deployment via Fastlane (run from ios/ directory)
-cd ios && fastlane beta       # Build + upload to TestFlight
-cd ios && fastlane release    # Build + upload to App Store
-cd ios && fastlane metadata   # Upload metadata only
-cd ios && fastlane screenshots # Upload screenshots only
+flutter pub run build_runner build --delete-conflicting-outputs   # after @injectable or Isar model changes
+flutter gen-l10n                                             # after editing lib/l10n/app_ar.arb or app_en.arb
+cd ios && fastlane beta                                      # TestFlight build
 ```
+
+---
 
 ## Architecture
 
-The app follows **Clean Architecture** with a feature-based module structure:
+**Clean Architecture** + feature modules. Each feature: `data/` → `domain/` → `presentation/`.
+State: **Cubit** (flutter_bloc). DI: **GetIt + Injectable**.
+Full details: `docs/ai/ARCHITECTURE_INDEX.md`.
 
-```
-lib/
-  main.dart          # Bootstraps Firebase, Supabase, RevenueCat, GetIt, schedulers
-  app.dart           # AtharApp widget — MultiBlocProvider + MaterialApp + routing
-  core/              # Shared infrastructure
-  features/          # Feature modules
-  l10n/              # ARB files + generated AppLocalizations
-  firebase_options.dart
-```
-
-### Feature Module Structure
-
-Every feature follows this identical layered layout:
-
-```
-features/<name>/
-  data/
-    datasources/     # Remote (Supabase) and/or local (Isar) data sources
-    models/          # Data models with fromJson/toJson + Isar @collection/@embedded annotations
-    repositories/    # Concrete implementations of domain repository interfaces
-  domain/
-    entities/        # Pure Dart entities (Equatable)
-    repositories/    # Abstract repository contracts
-    usecases/        # Single-responsibility use cases returning Either<Failure, T>
-  presentation/
-    cubit/           # Cubit + State classes (flutter_bloc)
-    pages/           # Full-screen route pages
-    widgets/         # Feature-specific widgets
-```
-
-**Features**: `auth`, `home`, `prayer`, `dhikr`, `habits`, `task`, `calendar`, `focus`, `health`, `assets`, `space`, `notifications`, `stats`, `subscription`, `sync`, `settings`
-
-Note: the `task` feature has only a remote datasource (`task_remote_source.dart`) — no local Isar collection. Most other features have both local and remote datasources.
-
-### Core Module
-
-```
-core/
-  di/            # GetIt setup (injection.dart + generated injection.config.dart)
-  config/        # App constants, subscription config; routes.dart is an unused GoRouter stub
-  error/         # failures.dart (stub — Failure types are defined inline in features)
-  services/      # All app-wide services (25+ files, see Services section)
-  design_system/ # Atomic design: tokens → atoms → molecules → organisms → templates
-    tokens/      # athar_colors, athar_typography, athar_spacing, athar_radii, athar_shadows, athar_animations
-    tokens.dart  # Barrel export for all tokens
-  iam/           # RBAC for space permissions: permission_service, role_service, permission_cache, models/
-  time_engine/   # Prayer time logic: AtharTimeCalculator, AtharTimePeriods, SmartTimeParser, RelativeTimeParser
-  models/        # Shared data models (e.g. upload queue)
-  layouts/       # Responsive layout wrappers
-  utils/         # Shared utilities
-  presentation/cubit/  # CelebrationCubit (global confetti), LocaleCubit (language switching)
-  constants/     # athkar_data.dart — static Islamic dhikr content database
-```
-
-### Dependency Injection
-
-DI uses **GetIt** + **Injectable**. All injectable classes use `@injectable`, `@singleton`, or `@lazySingleton` annotations. After modifying DI annotations, regenerate with `build_runner`. The entry point is `configureDependencies()` in `core/di/injection.dart`, which calls the generated `injection.config.dart`. Access the service locator via the global `getIt` instance.
-
-### State Management
-
-All state is managed via **Cubit** (from `flutter_bloc`). Cubits are registered in GetIt and provided globally in `app.dart` via `MultiBlocProvider` (18+ cubits at app root). Feature-scoped cubits may be provided locally at the page/widget level.
-
-### Data Layer
-
-- **Local**: Isar database. Models use `@collection` / `@embedded` annotations. Schema files (`*.g.dart`) are generated by `isar_generator` via `build_runner`. Never edit `.g.dart` files manually.
-- **Remote**: Supabase (PostgreSQL). Credentials loaded from `.env` via `flutter_dotenv`.
-- **Sync**: `SyncService` handles Isar → Supabase synchronization, triggered at startup via `SyncCubit` and manually. Background sync uses `workmanager`.
+### Key files
+- `lib/main.dart` — startup sequence (Firebase → Supabase → RevenueCat → DI → runApp)
+- `lib/app.dart` — global MultiBlocProvider (18+ cubits), routes, `onResume` widget action handler
+- `lib/core/di/injection.config.dart` — generated, never edit
+- `lib/core/services/widget_data_service.dart` — Flutter ↔ iOS widget bridge
 
 ### Navigation
+Named routes in `app.dart`. No GoRouter (`core/config/routes.dart` is an unused stub).
+Global navigator key: `DeepLinkService.navigatorKey`.
 
-Routing is defined in `app.dart` using `MaterialApp.routes` with named routes:
+---
 
-- `/home` → `MainPage`
-- `/login` → `LoginPage`
-- `/complete_profile` → `CompleteProfilePage`
-- `/join-space` → `JoinSpaceScreen` (receives an invitation token via `settings.arguments`)
+## Features
 
-`DeepLinkService.navigatorKey` is the global navigator key (passed to `MaterialApp`), used by deep links and notification taps to push routes after the app is running. Cold-start notification payloads are consumed in `AtharApp.initState` via `LocalNotificationService.consumeColdStartPayload()`.
+16 feature modules under `lib/features/`. Full list: `docs/ai/FEATURE_INDEX.md`.
 
-> `core/config/routes.dart` contains a GoRouter stub but is **not used** — routing is handled entirely in `app.dart`.
+Critical per-feature notes:
+- **task**: No local Isar datasource class. Display is via `TimelineCubit` (Isar stream), NOT `TaskCubit`.
+- **habits**: `HabitType.regular` only shown in widget. Athkar excluded by design.
+- **home/MainPage**: Provides local `TaskCubit` and `HabitCubit` that shadow the global ones.
 
-### Startup Sequence
+---
 
-`main()` splits initialization into two phases:
+## iOS Native Widgets
 
-1. **Critical (before `runApp`)**: dotenv load → Firebase → Supabase → RevenueCat → `configureDependencies()`
-2. **Deferred (`_initBackground`, fires after first frame)**: WidgetDataService → SpaceRepository.initDefaultData → SyncService → HabitRepository.ensureSystemHabits → intl → DeepLinkService → LocalNotificationService → FCMService → notification schedulers
+Three extensions: `AtharPrayerWidget`, `AtharTaskWidget`, `AtharHabitWidget`.
+All use App Group `group.com.iappsnet.athar`. iOS 17.0 minimum.
+Full details: `docs/ai/WIDGET_INDEX.md`.
 
-This keeps the splash screen appearing immediately while background services warm up concurrently.
+**WidgetKeys** (`widget_data_service.dart`) — constants map to UserDefaults keys on installed devices. **Never rename them.**
 
-### Notifications
+---
 
-`LocalNotificationService` is the central hub. Feature-specific schedulers handle scheduling:
+## State Management Traps
 
-- `PrayerNotificationScheduler`, `MedicationNotificationScheduler`, `TaskNotificationScheduler`, `HabitNotificationScheduler`, `AppointmentNotificationScheduler`, `AssetNotificationScheduler`, `ProjectNotificationScheduler`
+Three `TaskCubit` instances exist at runtime:
+1. Global (app.dart) — shadowed by 2 and 3
+2. MainPage (local) — used by add sheet, onResume action handler
+3. UnifiedTasksPage (local, no `watchTasks()`) — effectively empty; display uses TimelineCubit
 
-Auto-renewal payloads (e.g. `auto_reschedule_prayers`) fire from a scheduled notification and are routed back to the appropriate scheduler via `_handleAutoRenewal` in `main.dart`. `FCMService` handles remote push via Firebase.
+Full tree + all cubits: `docs/ai/STATE_MANAGEMENT_INDEX.md`.
 
-### IAM & Space Permissions
+---
 
-`core/iam/` implements RBAC scoped to the `space` feature:
+## Non-Negotiable Rules
 
-- `RoleService` — resolves the current user's role within a space
-- `PermissionService` — checks capabilities (create/edit/delete/invite) based on role
-- `PermissionCache` — caches role lookups to avoid redundant Supabase queries
-- `core/iam/models/` — role enums and permission definitions
+| Rule | Reason |
+|------|--------|
+| Never rename `WidgetKeys` constants | Breaks installed widgets on all user devices |
+| Never change App Group ID `group.com.iappsnet.athar` | Breaks widget data on all installed devices |
+| Never edit `*.g.dart` files | Overwritten on next `build_runner` run |
+| Never add page-level FABs to TaskPage or HabitPage | Central NavBar `+` is the only add entry point |
+| iOS deployment target stays 17.0 | Required for AppIntentConfiguration (interactive widgets) |
+| Do not use GoRouter | Stub only; all routing in app.dart named routes |
 
-### Native Home Widgets
+---
 
-Three iOS widget extensions and four Android widget types bridge to Flutter via the `home_widget` package. `WidgetDataService` (`core/services/widget_data_service.dart`) is the Flutter-side bridge — it serializes data and writes it to the shared app group/intent so native widgets can read it. Call `WidgetDataService.init()` at startup (already done in `_initBackground`).
+## Localization
 
-### Subscriptions
+- Primary: `ar-SA`. Secondary: `en-US`.
+- ARBs: `lib/l10n/app_ar.arb`, `lib/l10n/app_en.arb`. Run `flutter gen-l10n` after edits.
+- `LocaleCubit` stores `'ar'`/`'en'` in `FlutterSecureStorage('preferred_locale')`; null = system.
+- `MaterialApp` has `localeResolutionCallback`: ar→ar-SA, en→en-US, other→en-US.
+- **Widget locale bug (Phase 5 open)**: `LocaleCubit.setLocale()` does not update `athar_app_locale` in UserDefaults. Fix documented in `docs/ai/KNOWN_PROBLEMS.md`.
 
-RevenueCat (`purchases_flutter`) manages in-app subscriptions. `SubscriptionCubit` loads status at app start. `SubscriptionConfig` in `core/config/subscription_config.dart` holds the RevenueCat API key. Use `SubscriptionCubit` state to gate pro features.
+---
 
-### Localization
+## Design System
 
-- Arabic (`app_ar.arb`) is the template/primary locale; English (`app_en.arb`) is secondary.
-- `l10n.yaml` configures code generation into `lib/l10n/generated/app_localizations.dart`.
-- Run `flutter gen-l10n` after editing ARB files.
-- `missing_translations.txt` is auto-generated and tracks untranslated keys.
-- `LocaleCubit` (provided globally) handles runtime language switching; locale is persisted via `FlutterSecureStorage`.
+Token barrel: `import 'package:athar/core/design_system/tokens/tokens.dart'`
+Design size: 375×812 (`ScreenUtilInit`). Font: **Cairo**.
 
-### Design System
+---
 
-Design tokens live in `core/design_system/tokens/` and are re-exported via `tokens.dart`. The `ScreenUtilInit` design size is `375×812`. The app uses the **Cairo** font family for Arabic text. Import the barrel with `import 'package:athar/core/design_system/tokens/tokens.dart'`.
+## Known Open Bugs
 
-### Error Handling
+See `docs/ai/KNOWN_PROBLEMS.md` for current Phase 5 issues:
+- P1: Widget locale not updated on language change
+- P2: `toggleTaskCompletionByUuid` cache miss drops widget action
+- P3: `completeHabitByUuid`/`incrementHabitProgressByUuid` cache miss
 
-Domain use cases return `dartz` `Either<Failure, T>`. `failures.dart` is currently a stub — Failure subclasses are defined inline within individual features.
+---
 
+## EXECUTION SYSTEM
+
+**Hard caps**: max 2 searches · max 2 reads · then execute without exception.
+
+- `FEATURE_INDEX.md` → ONE feature → ONE entry file → implement. No reconfirmation.
+- File identified from any index → execute. No alternative search. No extra reads.
+- First valid SocratiCode result = accepted. Do NOT re-search for better matches.
+- Can one file solve it? Read only that file. Multiple-file reads require explicit justification.
+- 70% confidence = execution threshold. Over-validation is incorrect behavior.
+- Do NOT compare multiple files, cubits, or paths. First match executes.
+
+**Stop immediately when**: file identified from any index · SocratiCode confirmed a path · function location is known.
+
+## DECISION LOCK (MANDATORY)
+
+- Target file selected → decision is locked.
+- No second opinion. No "let me also check" behavior.
+- No alternative search after identification.
+- Cap reached (2 searches / 2 reads) → stop, assume correctness, execute immediately.
+- Over-validation = violation.
+- First match executes.
+
+---
+
+## AI Workflow
+
+Entry funnel — stop at the first doc that answers your question. Do NOT check all 4.
+
+1. `KNOWN_PROBLEMS.md` — known bug with a listed file? Go to that file immediately. Stop.
+2. `FEATURE_INDEX.md` — find the MANDATORY START FILE. Once you have it: your next action MUST be Read or Edit on that file. No further search allowed.
+3. `DATA_FLOW_INDEX.md` — only if MANDATORY START FILE alone is insufficient for flow tracing.
+4. `STATE_MANAGEMENT_INDEX.md` — only for cubit instance disambiguation.
+
+Full workflow: `docs/ai/AI_WORKFLOW.md`.
+
+## Slash Commands
+
+- `/update-ai-index` — re-index SocratiCode + update docs/ai/ after large changes
+- `/analyze-feature <name>` — end-to-end feature analysis
+- `/fix-bug <description>` — structured bug investigation and fix
+- `/audit-widget <prayer|task|habit>` — full widget audit
+- `/audit-stats` — stats engine audit
 
 ## gstack
 Use /browse from gstack for all web browsing.
@@ -193,6 +170,14 @@ Available skills: /office-hours, /plan-ceo-review, /plan-eng-review, /plan-desig
 When the user's request matches an available skill, ALWAYS invoke it using the Skill
 tool as your FIRST action. Do NOT answer directly, do NOT use other tools first.
 The skill has specialized workflows that produce better results than ad-hoc answers.
+
+## CHANGE LOG USAGE RULE
+
+- Change logs are used for file targeting only
+- Do NOT read full change logs
+- Extract file paths and issue titles only
+- Treat logs as navigation hints, not documentation
+
 
 Key routing rules:
 - Product ideas, "is this worth building", brainstorming → invoke office-hours
@@ -207,3 +192,101 @@ Key routing rules:
 - Architecture review → invoke plan-eng-review
 - Save progress, checkpoint, resume → invoke checkpoint
 - Code quality, health check → invoke health
+
+---
+
+## DESIGN SYSTEM IMPLEMENTATION RULES
+
+### Source of Truth
+- Design system: `/Users/itech/Development/new_projects/Athar Design System/`
+- Contract: `HANDOFF.md` → read in full before any design work
+- Read order (non-negotiable): SKILL.md → colors_and_type.css → REDESIGN_AUDIT.md → CALENDAR_FOCUS_REDESIGN.md → FOCUS_OIL_SPEC.md → IPAD_OPTIMIZATION.md → design-context/_manifest.json → design-context/_core_extract.dart
+- Visual targets: `ui_kits/athar_app/*.jsx` and `preview/*.html` — reference only, do not port JS/HTML
+
+### Audit-First Workflow
+- Before touching any UI file, write `design-context/_audit_<feature>.md`
+- Audit must list: files inspected, what's already there (✅), gaps (❌), open questions
+- Push audit. Wait for designer sign-off. Then implement.
+- No implementation without audit sign-off — this is not optional
+
+### No Implementation Before Approval
+- Do NOT modify Dart UI code during an audit session
+- Do NOT refactor screens during an audit session
+- Do NOT migrate tokens during an audit session
+- The audit and implementation are separate phases, separate PRs
+
+### No Dart Changes During Audit Phase
+- Audit sessions: read files, write markdown docs only
+- Implementation sessions: edit Dart files only after audit is approved
+- Never mix audit and implementation in the same session
+
+### Do-Not-Break Constraints
+- Prayer toggle hierarchy: isPrayerEnabled → isPrayerCardEnabled → isPrayerNotificationsEnabled → enablePrayerReminders (Phase 8.1)
+- SubscriptionCubit must remain @lazySingleton (Phase 1 critical fix)
+- WidgetKeys constants must never be renamed
+- App Group ID `group.com.iappsnet.athar` must never change
+- injection.config.dart is generated — never edit directly
+- Central NavBar `+` FAB is the ONLY add entry point (no page FABs)
+- All prayer notifications via PrayerNotificationScheduler only
+- All strings in app_ar.arb + app_en.arb only
+
+### Prayer Architecture Caution
+- Four-level toggle: master → card → notifications → 15-min reminder
+- Save-ordering rule: updateSettings() BEFORE scheduler call
+- Scheduler guard: !isPrayerEnabled || !isPrayerNotificationsEnabled
+- Migration flag: didMigratePrayerFeatureSettings (one-time)
+- DO NOT simplify to a single boolean without full Phase 6/8/8.1 review
+
+### Athkar Is Not a Habit Clone
+- HabitType.athkar is a separate type — fixed items, counter-based, no edit
+- lib/features/dhikr/ is the dhikr domain; athkar_card.dart + athkar_session_sheet.dart are in habits presentation
+- Gate by isAthkarEnabled
+- Do NOT merge Athkar into habits feature
+- Do NOT redesign Athkar without an explicit Athkar UX spec from the designer
+- Athkar iOS widget rows are read-only (no Button(intent:...))
+
+### Calendar Dual Hijri/Gregorian Preservation
+- package:hijri is already a dep — do NOT remove
+- HijriService exists at lib/core/services/hijri_service.dart — do NOT remove
+- Current dual_calendar_widget.dart has a TOGGLE (Hijri ⇄ Gregorian)
+- Design spec requires SIMULTANEOUS display (both numerals in every cell)
+- This is a near-complete calendar rebuild — requires dedicated designer spec sign-off
+- DualDate value object, CalendarCell, DualMonthSwitcher must all be created
+- isHijriMode setting still needed for primary numeral RTL position
+
+### iOS Widget / AppIntent Caution
+- Never rename WidgetKeys constants (breaks installed widgets on user devices)
+- Never change App Group ID (breaks widget data on all installed devices)
+- iOS 17.0 deployment target must stay (required for AppIntentConfiguration)
+- Widget locale resolution: use Locale.current.language.languageCode?.identifier (Phase 4 fix)
+- Athkar in widget: read-only rows, tp field a/r (Phase 5 fix)
+- Short labels in small widget (Phase 4 fix)
+- Any Swift change requires device test
+
+### RTL/LTR Rules
+- Always EdgeInsetsDirectional — never EdgeInsets.only(left/right)
+- Always AlignmentDirectional — never Alignment.centerLeft/centerRight
+- Always start/end — never left/right in Row/Stack context
+- Icons implying direction must flip in RTL
+- Prayer card, Hijri date: Arabic-Indic numeral option per locale
+- Calendar: in RTL, Hijri numeral is primary (top-right), Gregorian secondary (bottom-left)
+
+### Arabic / English Rules
+- All user-facing strings in app_ar.arb + app_en.arb — no exceptions
+- Run flutter gen-l10n after any ARB edit
+- Cairo (AR primary font, 4 weights loaded), Inter (EN), JetBrains Mono (numbers)
+- Font decision: Calibri (design spec primary) vs Cairo (current Flutter) — UNRESOLVED. Do not ship Calibri without designer confirmation and pubspec update.
+- Tabular figures (fontFeatures: [FontFeature.tabularFigures()]) on all counters, timers, stats
+
+### Required Logging / Change-Log Rules
+- Every design-related session must produce a change log at: docs/ai/change-logs/CHANGE_LOG_YYYY-MM-DD_HH-mm.md
+- Change log must include: files read, files created/updated, audit scope, key conclusions
+- Change log must confirm: no Dart code modified, no UI implementation started
+- All audit output files go to design-context/ in the Flutter project root
+
+### Required Evidence-Based Reporting
+- Never claim a component is "covered" unless you have read the file
+- Never claim a spec is "implemented" unless you have verified it in Dart code
+- If a file was not read, classify as "Unclear" not "Covered"
+- If a screen cannot be found, say "not found" clearly
+- Every claim in an audit doc must cite the evidence file

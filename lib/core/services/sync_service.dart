@@ -275,6 +275,7 @@ class SyncService {
 
       if (unsyncedHabits.isNotEmpty) {
         List<Map<String, dynamic>> habitsData = [];
+        final List<HabitModel> habitsToUpload = [];
 
         for (var h in unsyncedHabits) {
           // 🛑 1. حماية المعرفات
@@ -311,18 +312,23 @@ class SyncService {
           }
           json['user_id'] = userId;
           habitsData.add(json);
+          habitsToUpload.add(h);
         }
 
         if (habitsData.isNotEmpty) {
           await _supabase.from('habits').upsert(habitsData, onConflict: 'uuid');
         }
 
-        await _isar.writeTxn(() async {
-          for (var habit in unsyncedHabits) {
-            habit.isSynced = true;
-            await _isar.habitModels.put(habit);
-          }
-        });
+        // Only mark habits that actually passed the firewall and were uploaded.
+        // Firewall-excluded habits keep isSynced = false so they are retried.
+        if (habitsToUpload.isNotEmpty) {
+          await _isar.writeTxn(() async {
+            for (var habit in habitsToUpload) {
+              habit.isSynced = true;
+              await _isar.habitModels.put(habit);
+            }
+          });
+        }
       }
     }
   }
@@ -667,7 +673,14 @@ class SyncService {
     if (local.deletedAt != null) return local;
     final localTime = local.updatedAt ?? DateTime(2000);
     final remoteTime = remote.updatedAt ?? DateTime(2000);
-    return remoteTime.isAfter(localTime) ? remote : local;
+    final winner = remoteTime.isAfter(localTime) ? remote : local;
+    if (kDebugMode && identical(winner, remote) && localTime != DateTime(2000)) {
+      debugPrint(
+        '⚔️ Sync conflict resolved (remote wins): task=${local.uuid} '
+        'local=$localTime remote=$remoteTime',
+      );
+    }
+    return winner;
   }
 
   bool _isSameDay(DateTime d1, DateTime d2) {

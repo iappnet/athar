@@ -60,6 +60,7 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
 
     return StreamBuilder<PrayerTimerStatus>(
       stream: _timerService.timerStream,
@@ -71,18 +72,23 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
           return const SizedBox.shrink();
         }
 
-        // Color logic (Islamic card special design)
-        Color displayColor = status.statusColor;
-        String timePrefix = l10n.prayerCardTimePrefix;
-
-        if (status.statusLabel.contains("حان الآن")) {
-          // Prayer is now — use dark-mode success (card always has dark background)
-          displayColor = AtharColors.dark.success;
-          timePrefix = "";
-        } else if (status.statusLabel.contains("الحالية")) {
-          // Current prayer period — use dark-mode info
-          displayColor = AtharColors.dark.info;
-          timePrefix = "";
+        // Color and label logic — driven by PrayerTimerLabel enum (locale-safe).
+        final Color displayColor;
+        final String statusLabelText;
+        final String timePrefix;
+        switch (status.label) {
+          case PrayerTimerLabel.justStarted:
+            displayColor = AtharColors.dark.success;
+            statusLabelText = l10n.prayerLabelJustStarted;
+            timePrefix = '';
+          case PrayerTimerLabel.current:
+            displayColor = AtharColors.dark.info;
+            statusLabelText = l10n.prayerLabelCurrent;
+            timePrefix = '';
+          case PrayerTimerLabel.upcoming:
+            displayColor = status.statusColor;
+            statusLabelText = l10n.prayerLabelUpcoming;
+            timePrefix = l10n.prayerCardTimePrefix;
         }
 
         return Container(
@@ -183,7 +189,7 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              status.statusLabel,
+                              statusLabelText,
                               style: TextStyle(
                                 color: displayColor,
                                 fontSize: 12.sp,
@@ -193,7 +199,7 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
                             ),
                             AtharGap.xxxs,
                             Text(
-                              status.prayerName,
+                              isArabic ? status.prayerNameAr : status.prayerNameEn,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 26.sp,
@@ -208,7 +214,7 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
                       ),
                       AtharGap.hSm,
                       Text(
-                        status.timeDisplay,
+                        isArabic ? status.timeDisplay : status.timeDisplayEn,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 26.sp,
@@ -240,6 +246,7 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
     PrayerTimerStatus status,
     AppLocalizations l10n,
   ) {
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -267,7 +274,7 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: AtharSpacing.xxxs),
                     child: Text(
-                      status.fullDate,
+                      isArabic ? status.fullDate : status.fullDateEn,
                       style: TextStyle(color: Colors.white54, fontSize: 11.sp),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -355,6 +362,7 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
     Color displayColor,
     String timePrefix,
   ) {
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
     return Column(
       children: [
         Row(
@@ -363,7 +371,7 @@ class _NextPrayerCardState extends State<NextPrayerCard> {
             // ✅ FIX: Flexible حول النص
             Flexible(
               child: Text(
-                "$timePrefix${status.timeLeft}",
+                "$timePrefix${isArabic ? status.timeLeft : status.timeLeftEn}",
                 style: TextStyle(color: Colors.white70, fontSize: 12.sp),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

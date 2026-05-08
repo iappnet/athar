@@ -26,7 +26,9 @@ import 'package:athar/features/task/domain/models/conflict_result.dart';
 
 // Cubits
 import 'package:athar/features/task/presentation/cubit/task_cubit.dart';
+import 'package:athar/features/task/presentation/cubit/task_state.dart';
 import 'package:athar/features/health/presentation/cubit/health_cubit.dart';
+import 'package:athar/features/health/presentation/cubit/health_state.dart';
 import 'package:athar/features/settings/presentation/cubit/category_cubit.dart';
 import 'package:athar/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:athar/features/settings/presentation/cubit/settings_state.dart';
@@ -923,6 +925,7 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
       if (finalConflict != null) {
         final shouldProceed = await showDialog<bool>(
           context: context,
+          barrierDismissible: false,
           builder: (ctx) => ConflictDialog(
             conflict: finalConflict!,
             onForceSave: () => Navigator.pop(ctx, true),
@@ -983,6 +986,15 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
           reminderTime: validReminder,
           recurrence: _selectedRecurrence,
         );
+        // addTask() swallows errors internally and emits TaskError or
+        // TaskFreeLimitReached. Check state before closing the sheet so
+        // the user's form data is not lost on failure.
+        if (!mounted) return;
+        final postSaveState = taskCubit.state;
+        if (postSaveState is TaskFreeLimitReached || postSaveState is TaskError) {
+          setState(() => _isSaving = false);
+          return;
+        }
       } else if (_selectedType == EntityType.medicine) {
         // ✅ بناء قائمة الأوقات الثابتة
         final timesList = _fixedTimes
@@ -1016,7 +1028,12 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
           intervalHours: _schedulingType == 'interval' ? _intervalHours : null,
           isActive: true,
         );
-        healthCubit.addMedicine(med);
+        await healthCubit.addMedicine(med);
+        if (!mounted) return;
+        if (healthCubit.state is HealthError) {
+          setState(() => _isSaving = false);
+          return;
+        }
       } else {
         final appt = AppointmentModel(
           uuid: const Uuid().v4(),
@@ -1036,7 +1053,12 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
           reminderEnabled: _isReminderEnabled,
           reminderTime: validReminder,
         );
-        healthCubit.addAppointment(appt);
+        await healthCubit.addAppointment(appt);
+        if (!mounted) return;
+        if (healthCubit.state is HealthError) {
+          setState(() => _isSaving = false);
+          return;
+        }
       }
 
       if (mounted) navigator.pop();

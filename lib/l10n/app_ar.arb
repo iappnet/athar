@@ -308,6 +308,8 @@
   "timeRemaining": "الوقت المتبقي",
   "timeRemainingValue": "{time} متبقي",
   "@timeRemainingValue": {"placeholders": {"time": {"type": "String"}}},
+  "prayerCard": "بطاقة الصلاة",
+  "prayerNotifications": "إشعارات الصلاة",
   "prayerReminder": "تذكير الصلاة",
   "enablePrayerReminder": "تفعيل تذكير الصلاة",
   "reminderBefore": "التذكير قبل",
@@ -827,6 +829,13 @@
   "syncAndData": "المزامنة والبيانات",
   "autoSync": "المزامنة التلقائية",
   "autoSyncDesc": "حفظ بياناتك في السحابة تلقائياً",
+  "syncNow": "مزامنة الآن",
+  "lastSyncedAt": "آخر مزامنة: {time}",
+  "@lastSyncedAt": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
   "loginRequired": "مطلوب تسجيل الدخول",
   "syncRequiresAccount": "المزامنة السحابية تتطلب حساباً.\nهل تود تسجيل الدخول الآن؟",
   "login": "تسجيل الدخول",
@@ -1589,6 +1598,9 @@
   "prayerCardQiyamTime": "وقت قيام الليل - الثلث الأخير",
   "prayerCardSetLocation": "تحديد الموقع",
   "prayerCardChangeLocation": "تغيير الموقع",
+  "prayerLabelUpcoming": "الصلاة القادمة",
+  "prayerLabelJustStarted": "حان الآن موعد الصلاة",
+  "prayerLabelCurrent": "الصلاة الحالية",
   "taskRibbonInProgress": "جاري العمل",
   "taskRibbonNew": "جديد",
   "taskStatusOptions": "خيارات الحالة",

@@ -3,6 +3,7 @@ import 'package:athar/core/services/widget_data_service.dart';
 import 'package:athar/features/settings/domain/repositories/settings_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import '../../domain/repositories/prayer_repository.dart';
 import 'package:athar/features/prayer/domain/entities/prayer_time.dart';
@@ -26,35 +27,89 @@ class PrayerCubit extends Cubit<PrayerState> {
 
   Future<void> loadPrayerTimes() async {
     try {
-      emit(PrayerLoading()); // ✅ إضافة loading state
+      emit(PrayerLoading());
+
+      // Read app locale — stored by LocaleCubit under 'preferred_locale'.
+      // null → key deleted → system default; guard against 'ar' fallback here
+      // so the widget receives 'system' instead of a forced locale.
+      const storage = FlutterSecureStorage();
+      final locale = await storage.read(key: 'preferred_locale') ?? 'system';
 
       // 1. جلب الإعدادات
       final settings = await _settingsRepository.getSettings();
 
-      // 2. ✅ جلب مواقيت اليوم (PrayerTime بدلاً من adhan.PrayerTimes)
+      // 2. جلب مواقيت اليوم
       final now = DateTime.now();
       final todayPrayers = await _prayerRepository.getPrayerTimesForDate(now);
 
-      // 3. تحديد الصلاة القادمة
+      // 3. تحديد الصلاة القادمة والسابقة
+      // prayersForProgress excludes sunrise so the widget bar always spans
+      // two actual prayer times (Fajr→Dhuhr, not Sunrise→Dhuhr).
+      final prayersForProgress = todayPrayers
+          .where((p) => p.type != PrayerType.sunrise)
+          .toList();
+
       PrayerTime? nextPrayer;
+      PrayerTime? prevPrayer;
       try {
-        // البحث عن أول صلاة وقتها بعد الآن
-        nextPrayer = todayPrayers.firstWhere((p) => p.time.isAfter(now));
+        final nextIdx = todayPrayers.indexWhere((p) => p.time.isAfter(now));
+        nextPrayer = todayPrayers[nextIdx];
+        // Find the last non-sunrise prayer before nextPrayer by time.
+        final candidates = prayersForProgress
+            .where((p) => !p.time.isAfter(now))
+            .toList();
+        prevPrayer = candidates.isNotEmpty ? candidates.last : null;
       } catch (e) {
-        // إذا لم نجد (بعد العشاء)، نحسب فجر اليوم التالي
         final tomorrowPrayers = await _prayerRepository.getPrayerTimesForDate(
           now.add(const Duration(days: 1)),
         );
-
         nextPrayer = tomorrowPrayers.first.copyWith(isNext: true);
+        prevPrayer = prayersForProgress.isNotEmpty
+            ? prayersForProgress.last
+            : null;
       }
 
-      // 4. ✅ إرسال الحالة (بدون dependency على task feature)
+      // 4. Compute nafl windows (mirrors PrayerTimerService._emitStatus logic)
+      bool isDuhaTime = false;
+      bool isQiyamTime = false;
+      try {
+        final sunrise = todayPrayers.firstWhere(
+          (p) => p.type == PrayerType.sunrise,
+        );
+        final dhuhr = todayPrayers.firstWhere(
+          (p) => p.type == PrayerType.dhuhr,
+        );
+        final duhaStart = sunrise.time.add(const Duration(minutes: 15));
+        final duhaEnd = dhuhr.time.subtract(const Duration(minutes: 15));
+        isDuhaTime = now.isAfter(duhaStart) && now.isBefore(duhaEnd);
+      } catch (_) {}
+      try {
+        final isha = todayPrayers.lastWhere((p) => p.type == PrayerType.isha);
+        final fajr = todayPrayers.firstWhere(
+          (p) => p.type == PrayerType.fajr,
+        );
+        final DateTime nightStart;
+        final DateTime nightEnd;
+        if (now.hour >= 12) {
+          nightStart = isha.time;
+          nightEnd = fajr.time.add(const Duration(days: 1));
+        } else {
+          nightStart = isha.time.subtract(const Duration(days: 1));
+          nightEnd = fajr.time;
+        }
+        final duration = nightEnd.difference(nightStart);
+        final lastThirdStart = nightEnd.subtract(
+          Duration(minutes: (duration.inMinutes / 3).round()),
+        );
+        isQiyamTime = now.isAfter(lastThirdStart) && now.isBefore(nightEnd);
+      } catch (_) {}
+
+      // 5. إرسال الحالة
       emit(
         PrayerLoaded(
           nextPrayer: nextPrayer,
           allPrayers: todayPrayers,
-          cityName: settings.cityName ?? "الرياض",
+          cityName: settings.cityName ?? 'Riyadh',
         ),
       );
 
@@ -63,8 +118,15 @@ class PrayerCubit extends Cubit<PrayerState> {
         _widgetDataService.pushPrayerData(
           nameAr: nextPrayer.nameArabic,
           nameEn: nextPrayer.nameEnglish,
+          prayerType: nextPrayer.type.name,
           time: nextPrayer.time,
-          city: settings.cityName ?? 'الرياض',
+          prevTime: prevPrayer?.time,
+          prevNameAr: prevPrayer?.nameArabic ?? '',
+          prevNameEn: prevPrayer?.nameEnglish ?? '',
+          city: settings.cityName ?? 'Riyadh',
+          locale: locale,
+          isDuhaTime: isDuhaTime,
+          isQiyamTime: isQiyamTime,
         ),
       );
     } catch (e) {

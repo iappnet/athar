@@ -12,7 +12,7 @@ import 'package:athar/core/services/local_notification_service.dart';
 import 'package:athar/core/services/medication_notification_scheduler.dart';
 import 'package:athar/core/services/prayer_notification_scheduler.dart';
 import 'package:athar/core/services/task_notification_scheduler.dart';
-import 'package:athar/core/services/sync_service.dart';
+import 'package:athar/features/sync/presentation/cubit/sync_cubit.dart';
 import 'package:athar/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:athar/features/auth/presentation/cubit/auth_state.dart';
 import 'package:athar/features/habits/domain/repositories/habit_repository.dart';
@@ -97,6 +97,10 @@ void main() async {
 
   await configureDependencies();
 
+  // ── Widget App Group must be set BEFORE runApp so the global cubits'
+  // first widget-data push lands in the correct UserDefaults suite.
+  await getIt<WidgetDataService>().init();
+
   // First-run check: skip splash on first launch so onboarding shows immediately.
   // On all subsequent launches show the splash while background APIs warm up.
   final hasSeenOnboarding = await OnboardingPage.hasBeenSeen();
@@ -111,11 +115,12 @@ void main() async {
 }
 
 Future<void> _initBackground() async {
-  await getIt<WidgetDataService>().init();
+  // WidgetDataService.init() is called before runApp() — do not repeat here.
   await getIt<SpaceRepository>().initDefaultData();
-  getIt<SyncService>().syncTasks();
+  getIt<SyncCubit>().triggerSync();
   await getIt<HabitRepository>().ensureSystemHabits();
   await initializeDateFormatting('ar', null);
+  await initializeDateFormatting('en_US', null);
   await getIt<DeepLinkService>().init();
 
   if (kDebugMode) print('📱 Initializing LocalNotificationService...');

@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-platform :ios, '16.0'
+platform :ios, '17.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -70,8 +70,8 @@ post_install do |installer|
     flutter_additional_ios_build_settings(target)
 
     target.build_configurations.each do |config|
-      # ✅ توحيد deployment target
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '16.0'
+      # ✅ توحيد deployment target — must match native targets (17.0)
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '17.0'
 
       # ✅ Fix: prevents Xcode from injecting get-task-allow into pod frameworks
       # (that entitlement is only valid on app binaries, not frameworks —

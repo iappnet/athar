@@ -1,4 +1,5 @@
 import 'package:athar/core/di/injection.dart';
+import 'package:athar/features/stats/domain/repositories/i_stats_repository.dart';
 import 'package:athar/features/subscription/presentation/cubit/subscription_cubit.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,10 +10,10 @@ import 'package:athar/features/settings/domain/repositories/settings_repository.
 import '../../domain/repositories/sync_repository.dart';
 import 'sync_state.dart';
 
-@injectable
+@lazySingleton
 class SyncCubit extends Cubit<SyncState> {
   final SyncRepository _syncRepository;
-  final SettingsRepository _settingsRepository; // ✅ حقن الإعدادات
+  final SettingsRepository _settingsRepository;
 
   SyncCubit(this._syncRepository, this._settingsRepository)
     : super(SyncInitial());
@@ -48,12 +49,10 @@ class SyncCubit extends Cubit<SyncState> {
     final bool hasInternet = await InternetConnection().hasInternetAccess;
     if (!hasInternet) {
       if (isManual) {
-        // إذا كان المستخدم هو من ضغط الزر، يجب أن نخبره بالحقيقة
-        emit(SyncError("لا يوجد اتصال بالإنترنت"));
+        emit(SyncOffline());
         await Future.delayed(const Duration(seconds: 3));
         emit(SyncInitial());
       } else {
-        // أما إذا كانت تلقائية، نفشل بصمت لكي لا نزعجه
         if (kDebugMode) print("Skipping Sync: No Internet.");
       }
       return;
@@ -63,9 +62,18 @@ class SyncCubit extends Cubit<SyncState> {
     emit(SyncLoading());
 
     try {
-      await _syncRepository.syncEverything();
+      final int conflicts = await _syncRepository.syncEverything();
+      getIt<IStatsRepository>().invalidateCache();
 
-      emit(SyncSuccess());
+      final now = DateTime.now();
+      try {
+        final settings = await _settingsRepository.getSettings();
+        settings.lastSyncAt = now;
+        settings.lastSyncError = null;
+        await _settingsRepository.updateSettings(settings);
+      } catch (_) {}
+
+      emit(SyncSuccess(syncedAt: now, conflictsResolved: conflicts));
 
       await Future.delayed(const Duration(seconds: 2));
       emit(SyncInitial());
@@ -79,8 +87,12 @@ class SyncCubit extends Cubit<SyncState> {
       // الأخطاء الحقيقية
       final msg = e.toString().replaceAll("Exception: ", "");
 
-      // لا نظهر الخطأ للمستخدم إلا إذا كانت المزامنة يدوية أو الخطأ جسيم
       if (isManual) {
+        try {
+          final settings = await _settingsRepository.getSettings();
+          settings.lastSyncError = msg;
+          await _settingsRepository.updateSettings(settings);
+        } catch (_) {}
         emit(SyncError(msg));
         await Future.delayed(const Duration(seconds: 3));
       } else {

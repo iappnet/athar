@@ -54,18 +54,13 @@ class PrayerTimerService {
     if (activeWindow <= 0) activeWindow = 30;
     activeWindow = activeWindow.clamp(15, 45);
 
-    // حالات خاصة (باستخدام النص لأن المصدر عربي)
-    if (prevPrayer.nameArabic.contains("المغرب")) {
-      activeWindow = 20;
-    }
-    if (prevPrayer.nameArabic.contains("الفجر")) {
-      activeWindow = 40;
-    }
+    if (prevPrayer.type == PrayerType.maghrib) activeWindow = 20;
+    if (prevPrayer.type == PrayerType.fajr) activeWindow = 40;
 
     const labelWindow = 10;
 
     PrayerTime displayPrayer;
-    String label;
+    PrayerTimerLabel label;
     Color color;
     bool showBtn = false;
     String timeLeftStr;
@@ -76,11 +71,11 @@ class PrayerTimerService {
       showBtn = true;
 
       if (minutesSincePrev < labelWindow) {
-        label = "حان الآن موعد";
+        label = PrayerTimerLabel.justStarted;
         color = const Color(0xFF4CAF50);
         timeLeftStr = "الآن";
       } else {
-        label = "الصلاة الحالية";
+        label = PrayerTimerLabel.current;
         color = const Color(0xFF29B6F6);
         timeLeftStr = "منذ ${_toArabicNumerals(minutesSincePrev.toString())} د";
       }
@@ -88,7 +83,7 @@ class PrayerTimerService {
       progress = (minutesSincePrev / activeWindow).clamp(0.0, 1.0);
     } else {
       displayPrayer = nextPrayer;
-      label = "الصلاة القادمة";
+      label = PrayerTimerLabel.upcoming;
       color = Colors.amber;
       showBtn = false;
 
@@ -155,18 +150,25 @@ class PrayerTimerService {
     } catch (_) {}
 
     final dateStr = _getFormattedDate(now);
+    final dateStrEn = _getFormattedDateEn(now);
     final timeDisplay = _formatTime(displayPrayer.time);
+    final timeDisplayEn = _formatTimeEn(displayPrayer.time);
+    final timeLeftStrEn = _computeTimeLeftEn(label, minutesSincePrev, nextPrayer.time, now);
 
     _controller.add(
       PrayerTimerStatus(
-        prayerName: displayPrayer.nameArabic,
+        prayerNameAr: displayPrayer.nameArabic,
+        prayerNameEn: displayPrayer.nameEnglish,
         timeDisplay: timeDisplay,
+        timeDisplayEn: timeDisplayEn,
         timeLeft: _toArabicNumerals(timeLeftStr),
+        timeLeftEn: timeLeftStrEn,
         progress: progress,
-        statusLabel: label,
+        label: label,
         statusColor: color,
         showDhikrButton: showBtn,
         fullDate: dateStr,
+        fullDateEn: dateStrEn,
         isDuhaTime: isDuha,
         isQiyamTime: isQiyam,
       ),
@@ -234,16 +236,58 @@ class PrayerTimerService {
     return _toArabicNumerals("$dayName، $hijriStr - $gregorian");
   }
 
+  String _getFormattedDateEn(DateTime now) {
+    final dayName = DateFormat('EEE', 'en_US').format(now);     // "Fri"
+    final gregorian = DateFormat('d MMM', 'en_US').format(now); // "2 May"
+    final hijri = HijriCalendar.fromDate(now);
+    HijriCalendar.setLocal('en');
+    final hijriStr = hijri.toFormat("dd MMMM yyyy");            // "02 Dhul Hijja 1446"
+    HijriCalendar.setLocal('ar');                               // reset for Arabic formatting
+    return "$dayName, $gregorian · $hijriStr";
+  }
+
   String _formatDuration(int h, int m, int s) {
     if (h > 0) return "$hس $mد $sث";
     if (m > 0) return "$mد $sث";
     return "$sث";
   }
 
+  String _formatDurationEn(int h, int m, int s) {
+    if (h > 0) return "${h}h ${m}m ${s}s";
+    if (m > 0) return "${m}m ${s}s";
+    return "${s}s";
+  }
+
   String _formatTime(DateTime time) {
     final timeStr = DateFormat('h:mm', 'ar').format(time);
     final amPmStr = DateFormat('a', 'ar').format(time);
     return _toArabicNumerals("$timeStr $amPmStr");
+  }
+
+  String _formatTimeEn(DateTime time) {
+    return DateFormat('h:mm a', 'en_US').format(time);
+  }
+
+  /// Compute English countdown/elapsed string for the timer card.
+  String _computeTimeLeftEn(
+    PrayerTimerLabel label,
+    int minutesSincePrev,
+    DateTime nextPrayerTime,
+    DateTime now,
+  ) {
+    switch (label) {
+      case PrayerTimerLabel.justStarted:
+        return 'Now';
+      case PrayerTimerLabel.current:
+        return '${minutesSincePrev}m ago';
+      case PrayerTimerLabel.upcoming:
+        final diff = nextPrayerTime.difference(now);
+        if (diff.isNegative) return 'Now';
+        final h = diff.inHours;
+        final m = diff.inMinutes.remainder(60);
+        final s = diff.inSeconds.remainder(60);
+        return _formatDurationEn(h, m, s);
+    }
   }
 
   String _toArabicNumerals(String input) {

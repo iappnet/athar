@@ -5,7 +5,6 @@ import 'package:athar/core/services/habit_notification_scheduler.dart';
 import 'package:athar/features/stats/domain/repositories/i_stats_repository.dart';
 import 'package:athar/core/services/widget_data_service.dart';
 import 'package:athar/features/subscription/presentation/cubit/subscription_cubit.dart';
-import 'package:athar/features/health/presentation/cubit/health_state.dart';
 import 'package:athar/features/settings/domain/repositories/settings_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -369,9 +368,12 @@ class HabitCubit extends Cubit<HabitState> {
 
   // داخل HabitCubit
   Future<void> addHabit(HabitModel habit) async {
+    debugPrint('[addHabit] called: title=${habit.title}');
     // Await first subscription load so Pro users on slow networks are not
     // incorrectly capped at the free limit during the startup race window.
+    debugPrint('[addHabit] awaiting SubscriptionCubit.ready...');
     await getIt<SubscriptionCubit>().ready;
+    debugPrint('[addHabit] SubscriptionCubit.ready resolved');
     // Free-tier limit: count only regular (non-athkar) habits.
     if (!getIt<SubscriptionCubit>().hasUnlimitedTasksAndHabits) {
       final regularCount = _cachedHabits
@@ -384,15 +386,16 @@ class HabitCubit extends Cubit<HabitState> {
     }
 
     try {
+      debugPrint('[addHabit] writing to repository...');
       await _habitRepository.addHabit(habit);
+      debugPrint('[addHabit] repository write complete');
       getIt<IStatsRepository>().invalidateCache();
-      // ✅ جدولة التذكير فوراً
       if (habit.reminderEnabled && habit.reminderTime != null) {
         await getIt<HabitNotificationScheduler>().scheduleHabit(habit);
       }
-      await loadHabits(); // تحديث القائمة
+      await loadHabits();
     } catch (e) {
-      emit(HealthError("فشل إضافة العادة") as HabitState);
+      emit(HabitError("فشل إضافة العادة: $e"));
     }
   }
 
@@ -406,7 +409,7 @@ class HabitCubit extends Cubit<HabitState> {
       }
       await loadHabits();
     } catch (e) {
-      emit(HealthError("فشل تحديث العادة") as HabitState);
+      emit(HabitError("فشل تحديث العادة: $e"));
     }
   }
 
@@ -496,7 +499,103 @@ class HabitCubit extends Cubit<HabitState> {
     }
   }
 
-  // Future<void> toggleHabit(int id) async ... (يمكنك إضافتها إذا كانت تستخدم للتبديل السريع)
+  // ── Widget interaction methods ─────────────────────────────────────────────
+
+  /// Toggles completion of today's habit identified by [uuid].
+  /// Delegates to toggleHabitOnDate so completedDays / streak are updated correctly.
+  Future<void> completeHabitByUuid(String uuid) async {
+    try {
+      int habitId;
+      final index = _cachedHabits.indexWhere((h) => h.uuid == uuid);
+      if (index != -1) {
+        habitId = _cachedHabits[index].id;
+      } else {
+        final habit = await _habitRepository.getHabitByUuid(uuid);
+        if (habit == null) {
+          debugPrint('completeHabitByUuid: $uuid not found in cache or DB');
+          return;
+        }
+        habitId = habit.id;
+      }
+      await toggleHabitOnDate(habitId, DateTime.now());
+    } catch (e) {
+      debugPrint('completeHabitByUuid($uuid): $e');
+    }
+  }
+
+  /// Increments progress of a count-based habit by 1. Marks completed when
+  /// currentProgress reaches target, updating streak and completedDays.
+  Future<void> incrementHabitProgressByUuid(String uuid) async {
+    try {
+      final index = _cachedHabits.indexWhere((h) => h.uuid == uuid);
+      HabitModel habit;
+      if (index == -1) {
+        final fromDb = await _habitRepository.getHabitByUuid(uuid);
+        if (fromDb == null) {
+          debugPrint('incrementHabitProgressByUuid: $uuid not found in cache or DB');
+          return;
+        }
+        habit = fromDb;
+      } else {
+        habit = _cachedHabits[index];
+      }
+      if (habit.isCompleted) return;
+
+      final newProgress = (habit.currentProgress + 1).clamp(0, habit.target);
+      habit.currentProgress = newProgress;
+
+      if (newProgress >= habit.target) {
+        habit.isCompleted = true;
+        habit.lastCompletionDate = DateTime.now();
+        habit.currentStreak++;
+        habit.completedDays.add(DateTime.now());
+      }
+
+      habit.lastUpdated = DateTime.now();
+      await _habitRepository.updateHabit(habit);
+      getIt<IStatsRepository>().invalidateCache();
+
+      if (index != -1) _cachedHabits[index] = habit;
+      final settings = await _settingsRepository.getSettings();
+      final prayerTimesList =
+          await _prayerRepository.getPrayerTimesForDate(DateTime.now());
+      _emitCategorizedHabits(_cachedHabits, prayerTimesList, settings,
+          DateTime.now());
+    } catch (e) {
+      debugPrint('incrementHabitProgressByUuid($uuid): $e');
+    }
+  }
+
+  /// Reads and dispatches all pending widget actions written by the iOS
+  /// habit widget's AppIntents. Called from app.dart onResume.
+  Future<void> processWidgetPendingActions() async {
+    final actions = await _widgetDataService.consumePendingHabitActions();
+
+    // Parity dedup for complete_habit: even count per uuid = net no-op (double-tap
+    // would toggle on then off, landing back at original state — skip both).
+    final completeCounts = <String, int>{};
+    for (final a in actions) {
+      if ((a['type'] as String? ?? '') == 'complete_habit') {
+        final uuid = a['uuid'] as String? ?? '';
+        if (uuid.isNotEmpty) completeCounts[uuid] = (completeCounts[uuid] ?? 0) + 1;
+      }
+    }
+
+    final dispatched = <String>{};
+    for (final action in actions) {
+      final uuid = action['uuid'] as String?;
+      if (uuid == null || uuid.isEmpty) continue;
+      switch (action['type'] as String? ?? '') {
+        case 'complete_habit':
+          if ((completeCounts[uuid] ?? 0).isEven) continue;
+          if (dispatched.contains(uuid)) continue;
+          dispatched.add(uuid);
+          await completeHabitByUuid(uuid);
+        case 'increment_habit':
+          await incrementHabitProgressByUuid(uuid);
+      }
+    }
+  }
 
   @override
   Future<void> close() {

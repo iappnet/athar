@@ -531,14 +531,14 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                 child: Text(l10n.cancel),
               ),
               FilledButton(
-                onPressed: () {
+                onPressed: () async {
                   if (controller.text.trim().isEmpty) return;
 
-                  context.read<SpaceCubit>().createSpace(
+                  await context.read<SpaceCubit>().createSpace(
                     controller.text.trim(),
                     isShared: isShared,
                   );
-                  Navigator.pop(ctx);
+                  if (ctx.mounted) Navigator.pop(ctx);
                 },
                 child: Text(l10n.spaceListCreate),
               ),

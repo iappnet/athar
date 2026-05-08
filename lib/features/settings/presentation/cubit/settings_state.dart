@@ -18,15 +18,26 @@ class SettingsLoaded extends SettingsState {
   @override
   List<Object?> get props => [
     settings.id,
+    settings.isDarkMode,
     settings.isAutoModeEnabled,
     settings.workPeriodsSafe,
     settings.sleepPeriodsSafe,
     settings.quietPeriodsSafe,
-    // ✅ نراقب الحقول الجديدة
     settings.isAthkarEnabled,
     settings.athkarDisplayMode,
-    settings.athkarSessionViewMode, // ✅ إضافة الجديد
-    // ✅✅✅ الحقل الجديد - إخفاء شريط التنقل ✅✅✅
+    settings.athkarSessionViewMode,
     settings.hideNavOnScroll,
+    settings.isPrayerEnabled,
+    settings.isPrayerCardEnabled,
+    settings.isPrayerNotificationsEnabled,
+    settings.enablePrayerReminders,
+    settings.isTaskRemindersEnabled,
+    settings.isHijriMode,
+    settings.isBiometricEnabled,
+    settings.isAutoSyncEnabled,
+    settings.isHabitRemindersEnabled,
+    settings.isMedicationNotificationsEnabled,
+    settings.lastSyncAt,
+    settings.lastSyncError,
   ];
 }

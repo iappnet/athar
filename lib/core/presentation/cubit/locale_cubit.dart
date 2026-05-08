@@ -1,3 +1,4 @@
+import 'package:athar/core/services/widget_data_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -10,9 +11,11 @@ class LocaleState {
 
 class LocaleCubit extends Cubit<LocaleState> {
   final FlutterSecureStorage _storage;
+  final WidgetDataService _widgetDataService;
   static const _key = 'preferred_locale';
 
-  LocaleCubit(this._storage) : super(const LocaleState(null));
+  LocaleCubit(this._storage, this._widgetDataService)
+      : super(const LocaleState(null));
 
   Future<void> loadLocale() async {
     try {
@@ -27,8 +30,10 @@ class LocaleCubit extends Cubit<LocaleState> {
     try {
       if (locale == null) {
         await _storage.delete(key: _key);
+        await _widgetDataService.pushLocaleOnly('system');
       } else {
         await _storage.write(key: _key, value: locale.languageCode);
+        await _widgetDataService.pushLocaleOnly(locale.languageCode);
       }
     } catch (_) {}
     emit(LocaleState(locale));

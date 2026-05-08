@@ -13,7 +13,7 @@ import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 part 'subscription_state.dart';
 
-@injectable
+@lazySingleton
 class SubscriptionCubit extends Cubit<SubscriptionState> {
   final SubscriptionRepository _repository;
   StreamSubscription<SubscriptionStatus>? _statusSubscription;

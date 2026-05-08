@@ -311,15 +311,9 @@ class _LoginPageState extends State<LoginPage> {
               if (context.mounted) Navigator.of(context).pop();
             }
           }
-        } else {
-          if (context.mounted) {
-            _showLoadingDialog(context);
-            await syncService.executeAutomatedSync(status, user.id);
-            if (context.mounted) Navigator.of(context).pop();
-          }
         }
 
-        getIt<SyncCubit>().triggerSync();
+        getIt<SyncCubit>().triggerSync(isManual: true);
       } else {
         if (context.mounted) Navigator.of(context).pop();
       }

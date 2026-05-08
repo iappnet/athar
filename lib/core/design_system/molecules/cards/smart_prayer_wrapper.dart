@@ -26,10 +26,11 @@ class SmartPrayerCardWrapper extends StatelessWidget {
 
         final settings = settingsState.settings;
 
-        // 2. التحقق من السويتش الرئيسي (تفعيل مواقيت الصلاة)
-        if (!settings.isPrayerEnabled) {
-          return const SizedBox.shrink(); // الميزة معطلة بالكامل
-        }
+        // 2. التحقق من السويتش الرئيسي (master toggle)
+        if (!settings.isPrayerEnabled) return const SizedBox.shrink();
+
+        // 2b. التحقق من تفعيل بطاقة الصلاة
+        if (!settings.isPrayerCardEnabled) return const SizedBox.shrink();
 
         // 3. التحقق من مكان العرض (Display Mode)
         bool shouldShow = false;

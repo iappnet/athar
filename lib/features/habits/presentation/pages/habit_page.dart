@@ -82,6 +82,13 @@ class _HabitsPageState extends State<HabitsPage> {
                 message: 'لقد وصلت إلى الحد المجاني للعادات. قم بالترقية للحصول على عادات غير محدودة',
                 entitlementId: SubscriptionConfig.entitlementSpacesPro,
               );
+            } else if (state is HabitError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                ),
+              );
             }
           },
         ),

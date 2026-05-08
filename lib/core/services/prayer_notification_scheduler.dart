@@ -32,8 +32,8 @@ class PrayerNotificationScheduler {
 
       // 1. التحقق من الإعدادات
       final settings = await _settingsRepository.getSettings();
-      if (!(settings.isPrayerEnabled)) {
-        debugPrint('⏸️ Prayer notifications disabled by user');
+      if (!settings.isPrayerEnabled || !settings.isPrayerNotificationsEnabled) {
+        debugPrint('⏸️ Prayer notifications disabled (feature=${settings.isPrayerEnabled}, notif=${settings.isPrayerNotificationsEnabled})');
         await disableNotifications();
         return;
       }
@@ -205,6 +205,11 @@ class PrayerNotificationScheduler {
 
   /// ✅ معالجة إعادة الجدولة التلقائية
   Future<void> handleAutoRenewal() async {
+    final settings = await _settingsRepository.getSettings();
+    if (!settings.isPrayerEnabled || !settings.isPrayerNotificationsEnabled) {
+      debugPrint('⏸️ Auto-renewal skipped — prayer feature or notifications disabled');
+      return;
+    }
     debugPrint('🔄 Auto-renewal triggered - rescheduling prayers');
     await scheduleSevenDays();
     await _scheduleAutoRenewal();
@@ -262,6 +267,8 @@ class PrayerNotificationScheduler {
 
   /// ✅ إعادة الجدولة عند تغيير الموقع
   Future<void> onLocationChanged() async {
+    final settings = await _settingsRepository.getSettings();
+    if (!settings.isPrayerEnabled || !settings.isPrayerNotificationsEnabled) return;
     debugPrint('📍 Location changed - rescheduling prayers');
     await scheduleSevenDays();
   }

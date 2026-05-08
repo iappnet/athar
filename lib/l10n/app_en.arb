@@ -296,6 +296,8 @@
   "isha": "Isha",
   "timeRemaining": "Time Remaining",
   "timeRemainingValue": "{time} remaining",
+  "prayerCard": "Prayer Card",
+  "prayerNotifications": "Prayer Notifications",
   "prayerReminder": "Prayer Reminder",
   "enablePrayerReminder": "Enable Prayer Reminder",
   "reminderBefore": "Reminder Before",
@@ -777,6 +779,13 @@
   "syncAndData": "Sync & Data",
   "autoSync": "Auto Sync",
   "autoSyncDesc": "Save your data to the cloud automatically",
+  "syncNow": "Sync Now",
+  "lastSyncedAt": "Last sync: {time}",
+  "@lastSyncedAt": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
   "loginRequired": "Login Required",
   "syncRequiresAccount": "Cloud sync requires an account.\nWould you like to login now?",
   "login": "Login",
@@ -1492,6 +1501,9 @@
   "prayerCardQiyamTime": "Night prayer time - Last third",
   "prayerCardSetLocation": "Set Location",
   "prayerCardChangeLocation": "Change Location",
+  "prayerLabelUpcoming": "Next Prayer",
+  "prayerLabelJustStarted": "It's Prayer Time",
+  "prayerLabelCurrent": "Current Prayer",
   "taskRibbonInProgress": "In Progress",
   "taskRibbonNew": "New",
   "taskStatusOptions": "Status Options",

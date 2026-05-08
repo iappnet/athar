@@ -16,7 +16,6 @@ import 'package:athar/features/task/presentation/widgets/reflection_dialog.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/di/injection.dart';
 import '../../../../core/design_system/molecules/tiles/task_tile.dart';
 import '../cubit/task_cubit.dart';
 import '../cubit/task_state.dart';
@@ -34,8 +33,8 @@ class TasksPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<PrayerCubit>()..loadPrayerTimes(),
+    return BlocProvider.value(
+      value: context.read<PrayerCubit>(),
       child: const TasksPageView(),
     );
   }
@@ -129,6 +128,11 @@ class _TasksPageViewState extends State<TasksPageView> {
                         AtharSnackbar.error(
                           context: context,
                           message: l10n.noPermissionDelete,
+                        );
+                      } else if (state is TaskError) {
+                        AtharSnackbar.error(
+                          context: context,
+                          message: state.message,
                         );
                       } else if (state is TaskFreeLimitReached) {
                         showUpgradeNudge(

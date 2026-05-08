@@ -34,6 +34,7 @@ class _AddModuleSheetState extends State<AddModuleSheet> {
   // ✅ متغيرات التذكير الجديدة
   DateTime? _reminderTime;
   bool _isReminderEnabled = false;
+  bool _isSaving = false;
 
   final List<Color> _colors = const [
     Color(0xFF4CAF50),
@@ -180,48 +181,72 @@ class _AddModuleSheetState extends State<AddModuleSheet> {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: _save,
+        onPressed: _isSaving ? null : _save,
         style: ElevatedButton.styleFrom(
           backgroundColor: colorScheme.primary,
           foregroundColor: colorScheme.onPrimary,
           padding: EdgeInsets.symmetric(vertical: 14.h),
           shape: RoundedRectangleBorder(borderRadius: AtharRadii.card),
         ),
-        child: Text(
-          l10n.addModuleSave,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
+        child: _isSaving
+            ? const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: Colors.white,
+                ),
+              )
+            : Text(
+                l10n.addModuleSave,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
       ),
     );
   }
 
-  void _save() {
+  Future<void> _save() async {
     if (_nameController.text.isEmpty) return;
+
+    setState(() => _isSaving = true);
 
     final cubit = context.read<ModuleCubit>();
     final spaceId = widget.spaceId ?? "default_space";
 
-    if (widget.moduleToEdit != null) {
-      final updated = widget.moduleToEdit!
-        ..name = _nameController.text
-        ..description = _descController.text
-        ..color = _selectedColor
-        ..endDate = _endDate
-        ..reminderEnabled = _isReminderEnabled
-        ..reminderTime = _reminderTime;
-      cubit.updateModule(updated);
-    } else {
-      cubit.createModule(
-        spaceId,
-        _nameController.text,
-        widget.forcedType ?? 'project',
-        description: _descController.text,
-        endDate: _endDate,
-        reminderEnabled: _isReminderEnabled,
-        reminderTime: _reminderTime,
-      );
+    try {
+      if (widget.moduleToEdit != null) {
+        final updated = widget.moduleToEdit!
+          ..name = _nameController.text
+          ..description = _descController.text
+          ..color = _selectedColor
+          ..endDate = _endDate
+          ..reminderEnabled = _isReminderEnabled
+          ..reminderTime = _reminderTime;
+        await cubit.updateModule(updated);
+      } else {
+        await cubit.createModule(
+          spaceId,
+          _nameController.text,
+          widget.forcedType ?? 'project',
+          description: _descController.text,
+          endDate: _endDate,
+          reminderEnabled: _isReminderEnabled,
+          reminderTime: _reminderTime,
+        );
+      }
+
+      if (!mounted) return;
+      // createModule/updateModule emits ModuleError on failure — keep the sheet
+      // open so the error is visible while the SpacePage BlocListener shows it.
+      if (cubit.state is ModuleError) {
+        setState(() => _isSaving = false);
+        return;
+      }
+
+      Navigator.pop(context);
+    } catch (_) {
+      if (mounted) setState(() => _isSaving = false);
     }
-    Navigator.pop(context);
   }
 }
 //----------------------------------------------------------------------

@@ -1868,6 +1868,18 @@ abstract class AppLocalizations {
   /// **'{time} متبقي'**
   String timeRemainingValue(String time);
 
+  /// No description provided for @prayerCard.
+  ///
+  /// In ar, this message translates to:
+  /// **'بطاقة الصلاة'**
+  String get prayerCard;
+
+  /// No description provided for @prayerNotifications.
+  ///
+  /// In ar, this message translates to:
+  /// **'إشعارات الصلاة'**
+  String get prayerNotifications;
+
   /// No description provided for @prayerReminder.
   ///
   /// In ar, this message translates to:
@@ -4603,6 +4615,18 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'حفظ بياناتك في السحابة تلقائياً'**
   String get autoSyncDesc;
+
+  /// No description provided for @syncNow.
+  ///
+  /// In ar, this message translates to:
+  /// **'مزامنة الآن'**
+  String get syncNow;
+
+  /// No description provided for @lastSyncedAt.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر مزامنة: {time}'**
+  String lastSyncedAt(String time);
 
   /// No description provided for @loginRequired.
   ///
@@ -8209,6 +8233,24 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تغيير الموقع'**
   String get prayerCardChangeLocation;
+
+  /// No description provided for @prayerLabelUpcoming.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصلاة القادمة'**
+  String get prayerLabelUpcoming;
+
+  /// No description provided for @prayerLabelJustStarted.
+  ///
+  /// In ar, this message translates to:
+  /// **'حان الآن موعد الصلاة'**
+  String get prayerLabelJustStarted;
+
+  /// No description provided for @prayerLabelCurrent.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصلاة الحالية'**
+  String get prayerLabelCurrent;
 
   /// No description provided for @taskRibbonInProgress.
   ///

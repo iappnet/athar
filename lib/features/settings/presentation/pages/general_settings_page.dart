@@ -1,5 +1,6 @@
 import 'package:athar/core/design_system/tokens.dart';
 import 'package:athar/core/presentation/cubit/locale_cubit.dart';
+import 'package:intl/intl.dart';
 import 'package:athar/core/utils/navigation_utils.dart';
 import 'package:athar/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:athar/features/auth/presentation/cubit/auth_state.dart';
@@ -7,6 +8,8 @@ import 'package:athar/features/auth/presentation/pages/login_page.dart';
 import 'package:athar/features/auth/presentation/pages/profile_page.dart';
 import 'package:athar/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:athar/features/settings/presentation/cubit/settings_state.dart';
+import 'package:athar/features/sync/presentation/cubit/sync_cubit.dart';
+import 'package:athar/features/sync/presentation/cubit/sync_state.dart';
 import 'package:athar/features/settings/presentation/pages/location_settings_page.dart';
 import 'package:athar/features/settings/presentation/pages/smart_zones_page.dart';
 import 'package:athar/features/settings/presentation/widgets/delete_account_dialog.dart';
@@ -55,6 +58,7 @@ class GeneralSettingsPage extends StatelessWidget {
         buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
         builder: (context, authState) {
           return BlocBuilder<SettingsCubit, SettingsState>(
+            buildWhen: (prev, curr) => prev != curr,
             builder: (context, settingsState) {
               final settings =
                   settingsState is SettingsLoaded ? settingsState.settings : null;
@@ -85,25 +89,51 @@ class GeneralSettingsPage extends StatelessWidget {
                   // ── Prayer & Worship ────────────────────────────────────
                   _SectionHeader(l10n.prayerSettings),
                   _SettingsCard(children: [
+                    // Master toggle — enables all prayer sub-features
                     _SwitchTile(
                       icon: Icons.mosque_outlined,
                       iconColor: const Color(0xFF1A6B3C),
                       title: l10n.prayerTimes,
-                      value: settings?.isPrayerEnabled ?? true,
+                      value: settings?.isPrayerEnabled ?? false,
                       onChanged: (v) =>
                           context.read<SettingsCubit>().togglePrayerEnabled(v),
                     ),
-                    if (settings?.isPrayerEnabled ?? true) ...[
+                    if (settings?.isPrayerEnabled ?? false) ...[
                       _Divider(),
+                      // Sub: prayer card on dashboard
+                      _SwitchTile(
+                        icon: Icons.calendar_today_outlined,
+                        iconColor: const Color(0xFF1A6B3C),
+                        title: l10n.prayerCard,
+                        value: settings?.isPrayerCardEnabled ?? false,
+                        onChanged: (v) => context
+                            .read<SettingsCubit>()
+                            .togglePrayerCardEnabled(v),
+                      ),
+                      _Divider(),
+                      // Sub: prayer athan notifications
                       _SwitchTile(
                         icon: Icons.notifications_outlined,
                         iconColor: const Color(0xFF1A6B3C),
-                        title: l10n.prayerReminder,
-                        value: settings?.enablePrayerReminders ?? true,
+                        title: l10n.prayerNotifications,
+                        value: settings?.isPrayerNotificationsEnabled ?? false,
                         onChanged: (v) => context
                             .read<SettingsCubit>()
-                            .togglePrayerReminders(v),
+                            .togglePrayerNotificationsEnabled(v),
                       ),
+                      if (settings?.isPrayerNotificationsEnabled ?? false) ...[
+                        _Divider(),
+                        // Sub-sub: 15-min early reminder
+                        _SwitchTile(
+                          icon: Icons.alarm_outlined,
+                          iconColor: const Color(0xFF1A6B3C),
+                          title: l10n.prayerReminder,
+                          value: settings?.enablePrayerReminders ?? true,
+                          onChanged: (v) => context
+                              .read<SettingsCubit>()
+                              .togglePrayerReminders(v),
+                        ),
+                      ],
                       _Divider(),
                       _NavTile(
                         icon: Icons.location_on_outlined,
@@ -193,6 +223,78 @@ class GeneralSettingsPage extends StatelessWidget {
                         value: settings?.isAutoSyncEnabled ?? false,
                         onChanged: (v) =>
                             context.read<SettingsCubit>().toggleAutoSync(v),
+                      ),
+                      _Divider(),
+                      BlocBuilder<SyncCubit, SyncState>(
+                        buildWhen: (prev, curr) =>
+                            prev.runtimeType != curr.runtimeType,
+                        builder: (context, syncState) {
+                          final isLoading = syncState is SyncLoading;
+                          final isOffline = syncState is SyncOffline;
+                          final isError = syncState is SyncError;
+                          final locale = Localizations.localeOf(context).languageCode;
+
+                          // --- subtitle ---
+                          String? subtitle;
+                          if (isLoading) {
+                            subtitle = l10n.syncing;
+                          } else if (isOffline) {
+                            subtitle = l10n.offline;
+                          } else if (syncState is SyncError) {
+                            subtitle = syncState.message;
+                          } else if (syncState is SyncSuccess) {
+                            final formatted = DateFormat.jm(locale).format(syncState.syncedAt);
+                            subtitle = l10n.lastSyncedAt(formatted);
+                          } else {
+                            // Idle — read persisted state from settings
+                            final persistedError = settings?.lastSyncError;
+                            final persistedAt = settings?.lastSyncAt;
+                            if (persistedError != null) {
+                              subtitle = persistedError;
+                            } else if (persistedAt != null) {
+                              final formatted = DateFormat.jm(locale).format(persistedAt);
+                              subtitle = l10n.lastSyncedAt(formatted);
+                            }
+                          }
+
+                          // --- icon & color ---
+                          final bool showErrorState = isError ||
+                              (syncState is SyncInitial &&
+                                  settings?.lastSyncError != null &&
+                                  settings?.lastSyncAt == null);
+                          final IconData icon = isLoading
+                              ? Icons.sync_outlined
+                              : isOffline
+                                  ? Icons.wifi_off_rounded
+                                  : showErrorState
+                                      ? Icons.cloud_off_outlined
+                                      : Icons.cloud_upload_outlined;
+                          final Color iconColor = isOffline
+                              ? Colors.orange
+                              : showErrorState
+                                  ? Theme.of(context).colorScheme.error
+                                  : const Color(0xFF0288D1);
+
+                          return _NavTile(
+                            icon: icon,
+                            iconColor: iconColor,
+                            title: l10n.syncNow,
+                            subtitle: subtitle,
+                            trailing2: isLoading
+                                ? const SizedBox(
+                                    width: 18,
+                                    height: 18,
+                                    child: CircularProgressIndicator(
+                                        strokeWidth: 2),
+                                  )
+                                : null,
+                            onTap: isLoading
+                                ? () {}
+                                : () => context
+                                    .read<SyncCubit>()
+                                    .triggerSync(isManual: true),
+                          );
+                        },
                       ),
                     ]),
                     AtharGap.lg,

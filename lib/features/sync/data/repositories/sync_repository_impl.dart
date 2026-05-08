@@ -23,43 +23,34 @@ class SyncRepositoryImpl implements SyncRepository {
   SyncRepositoryImpl(this._isar, this._supabase);
 
   @override
-  Future<void> syncEverything() async {
+  Future<int> syncEverything() async {
     bool hasConnection = await InternetConnection().hasInternetAccess;
     if (!hasConnection) {
-      // لا نرمي خطأ هنا لكي لا نزعج المستخدم، فقط نتوقف بصمت
-      return;
+      return 0;
     }
 
     final currentUser = _supabase.auth.currentUser;
     if (currentUser == null) {
-      // إذا لم يكن مسجلاً، لا يمكن المزامنة
-      return;
+      return 0;
     }
 
     final userId = currentUser.id;
+    int conflicts = 0;
 
     try {
-      // ✅ 1. الخطوة الأهم: نقل بيانات "الضيف" للمستخدم الحالي
-      // هذا يحل مشكلة invalid uuid: "guest"
       await _migrateGuestData(userId);
-
-      // ✅ 2. الترتيب الهرمي الصارم (الآباء ثم الأبناء)
-      // هذا يحل مشكلة Foreign Key Constraint
-      await _syncSpaces(userId); // نبني البيت
-      await _syncModules(userId); // نبني الغرف
-
-      // ✅ 3. رفع المهام (الأثاث)
-      await _syncTasks(userId);
-
-      // ✅ 4. باقي البيانات
+      await _syncSpaces(userId);
+      await _syncModules(userId);
+      conflicts += await _syncTasks(userId);
       await _syncPreferences(userId);
       await _syncHabits(userId);
     } catch (e) {
       if (kDebugMode) {
         print("Sync Error Details: $e");
       }
-      // rethrow; // لا نوقف التطبيق بسبب فشل المزامنة الخلفية
     }
+
+    return conflicts;
   }
 
   // -----------------------------------------------------------------------------
@@ -166,7 +157,9 @@ class SyncRepositoryImpl implements SyncRepository {
   // -----------------------------------------------------------------------------
   // ✅ مزامنة المهام (Tasks)
   // -----------------------------------------------------------------------------
-  Future<void> _syncTasks(String userId) async {
+  Future<int> _syncTasks(String userId) async {
+    int conflicts = 0;
+
     // 1. PUSH
     final unsyncedTasks = await _isar.taskModels
         .filter()
@@ -177,7 +170,6 @@ class SyncRepositoryImpl implements SyncRepository {
       try {
         final taskData = task.toMap();
 
-        // حماية إضافية: ضمان أن المعرف ليس فارغاً أو guest
         if (taskData['created_by'] == null ||
             taskData['created_by'] == '' ||
             taskData['created_by'] == 'guest') {
@@ -252,6 +244,8 @@ class SyncRepositoryImpl implements SyncRepository {
             );
 
             if (winner == remoteTaskObj) {
+              // Remote won over a locally-modified task — count it.
+              if (localTask.updatedAt != null) conflicts++;
               remoteTaskObj.id = localTask.id;
               await _isar.taskModels.put(remoteTaskObj);
             }
@@ -261,6 +255,8 @@ class SyncRepositoryImpl implements SyncRepository {
     } catch (e) {
       if (kDebugMode) print("Pull Task Error: $e");
     }
+
+    return conflicts;
   }
 
   // -----------------------------------------------------------------------------
@@ -273,6 +269,30 @@ class SyncRepositoryImpl implements SyncRepository {
         .isSyncedEqualTo(false)
         .findAll();
     for (final habit in unsynced) {
+      // 🛑 1. UUID guard — only known athkar habits are allowed
+      if (habit.type == HabitType.athkar) {
+        if (habit.uuid != AthkarData.morningAthkarId &&
+            habit.uuid != AthkarData.eveningAthkarId &&
+            habit.uuid != AthkarData.prayerAthkarId &&
+            habit.uuid != AthkarData.sleepAthkarId) {
+          continue;
+        }
+      }
+
+      // 🛑 2. Firewall — skip athkar habits with no real data
+      if (habit.type == HabitType.athkar) {
+        bool isContentTrulyEmpty = true;
+        if (habit.athkarItems.isNotEmpty) {
+          if (habit.athkarItems.any((i) => i.currentCount > 0)) {
+            isContentTrulyEmpty = false;
+          }
+        }
+        if (habit.currentProgress > 0 || habit.streak > 0 || habit.isCompleted) {
+          isContentTrulyEmpty = false;
+        }
+        if (isContentTrulyEmpty) continue;
+      }
+
       try {
         final map = habit.toMap();
         if (habit.type == HabitType.athkar) {

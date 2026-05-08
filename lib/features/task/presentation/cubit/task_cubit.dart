@@ -309,9 +309,12 @@ class TaskCubit extends Cubit<TaskState> {
     DateTime? reminderTime,
     RecurrencePattern? recurrence,
   }) async {
+    debugPrint('[addTask] called: title=$title');
     // Await first subscription load so Pro users on slow networks are not
     // incorrectly capped at the free limit during the startup race window.
+    debugPrint('[addTask] awaiting SubscriptionCubit.ready...');
     await getIt<SubscriptionCubit>().ready;
+    debugPrint('[addTask] SubscriptionCubit.ready resolved');
     // Free-tier limit check
     if (!getIt<SubscriptionCubit>().hasUnlimitedTasksAndHabits) {
       final activeTasks = await _repository.getActiveTasks();
@@ -374,7 +377,9 @@ class TaskCubit extends Cubit<TaskState> {
         newTask.category.value = category;
       }
 
+      debugPrint('[addTask] writing to repository...');
       await _repository.addTask(newTask);
+      debugPrint('[addTask] repository write complete');
       getIt<IStatsRepository>().invalidateCache();
 
       if (validReminderTime != null) {
@@ -567,6 +572,40 @@ class TaskCubit extends Cubit<TaskState> {
       getIt<IStatsRepository>().invalidateCache();
     } catch (e) {
       debugPrint("Error toggling task: $e");
+    }
+  }
+
+  Future<void> toggleTaskCompletionByUuid(String uuid, bool isDone) async {
+    try {
+      int taskId;
+      final index = _cachedTasks.indexWhere((t) => t.uuid == uuid);
+      if (index != -1) {
+        taskId = _cachedTasks[index].id;
+      } else {
+        final task = await _repository.getTaskByUuid(uuid);
+        if (task == null) {
+          debugPrint('toggleTaskCompletionByUuid: $uuid not found in cache or DB');
+          return;
+        }
+        taskId = task.id;
+      }
+      await _repository.toggleTaskCompletion(taskId, isDone);
+      getIt<IStatsRepository>().invalidateCache();
+    } catch (e) {
+      debugPrint('toggleTaskCompletionByUuid($uuid): $e');
+    }
+  }
+
+  Future<void> processWidgetPendingActions() async {
+    final actions = await _widgetDataService.consumePendingTaskActions();
+    for (final action in actions) {
+      if (action['type'] == 'toggle_task') {
+        final uuid = action['uuid'] as String?;
+        final done = action['done'] as bool?;
+        if (uuid != null && done != null) {
+          await toggleTaskCompletionByUuid(uuid, done);
+        }
+      }
     }
   }
 
@@ -766,6 +805,7 @@ class TaskCubit extends Cubit<TaskState> {
       for (var taskId in _selectedTaskIds) {
         await _repository.toggleTaskCompletion(taskId, true);
       }
+      if (isClosed) return;
       clearSelection();
     } catch (e) {
       if (isClosed) return;
@@ -778,6 +818,7 @@ class TaskCubit extends Cubit<TaskState> {
       for (var taskId in _selectedTaskIds) {
         await deleteTask(taskId);
       }
+      if (isClosed) return;
       clearSelection();
     } catch (e) {
       if (isClosed) return;
@@ -802,6 +843,7 @@ class TaskCubit extends Cubit<TaskState> {
         await updateTask(task);
       }
 
+      if (isClosed) return;
       clearSelection();
     } catch (e) {
       if (isClosed) return;
@@ -820,6 +862,7 @@ class TaskCubit extends Cubit<TaskState> {
         await _repository.assignTask(taskUuid: task.uuid, userId: userId);
       }
 
+      if (isClosed) return;
       clearSelection();
     } catch (e) {
       if (isClosed) return;

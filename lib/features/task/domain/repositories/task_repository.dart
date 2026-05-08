@@ -20,6 +20,9 @@ abstract class TaskRepository {
   /// جلب مهمة بالمعرف
   Future<TaskModel?> getTaskById(int id);
 
+  /// جلب مهمة بالـ UUID
+  Future<TaskModel?> getTaskByUuid(String uuid);
+
   /// تبديل حالة الإنجاز
   Future<void> toggleTaskCompletion(int id, bool isCompleted);
 

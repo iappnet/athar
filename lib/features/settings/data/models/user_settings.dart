@@ -21,9 +21,24 @@ class UserSettings {
   bool isDarkMode;
   bool isAutoModeEnabled;
 
-  // ✅ 2. إضافة إعدادات الصلاة الجديدة
-  bool isPrayerEnabled = true; // السويتش الرئيسي
-  bool enablePrayerReminders = true; // ✅ تفعيل التذكير قبل 15 دقيقة (جديد)
+  // ── Prayer feature settings ────────────────────────────────────────────────
+
+  /// Master toggle for the entire prayer feature.
+  /// When false: card hidden, sub-options hidden, no scheduling.
+  bool isPrayerEnabled = false;
+
+  /// Show prayer card on dashboard. Sub-option; only effective when isPrayerEnabled is true.
+  bool isPrayerCardEnabled = false;
+
+  /// Schedule prayer athan notifications. Sub-option; only effective when isPrayerEnabled is true.
+  /// OFF by default — user must explicitly opt in.
+  bool isPrayerNotificationsEnabled = false;
+
+  /// 15-min early reminder. Sub-option under isPrayerNotificationsEnabled.
+  bool enablePrayerReminders = true;
+
+  /// Migration flag — set to true after one-time prayer settings migration.
+  bool didMigratePrayerFeatureSettings = false;
 
   // ✅✅ الإضافة الجديدة المطلوبة (المزامنة التلقائية)
   // القيمة الافتراضية true
@@ -172,11 +187,24 @@ class UserSettings {
   /// إخفاء شريط التنقل عند التمرير
   bool hideNavOnScroll = false;
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 🔄 SYNC
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /// آخر وقت نجاح للمزامنة (محفوظ بين جلسات التطبيق)
+  DateTime? lastSyncAt;
+
+  /// آخر رسالة خطأ للمزامنة (null إذا نجحت آخر محاولة)
+  String? lastSyncError;
+
   UserSettings({
     this.isDarkMode = false,
     this.isAutoModeEnabled = false,
-    this.isPrayerEnabled = true, // تأكد من إضافته للبناء
-    this.enablePrayerReminders = true, // ✅ الإضافة الجديدة
+    this.isPrayerEnabled = false,
+    this.isPrayerCardEnabled = false,
+    this.isPrayerNotificationsEnabled = false,
+    this.enablePrayerReminders = true,
+    this.didMigratePrayerFeatureSettings = false,
     this.isAutoSyncEnabled = false, // ✅ تهيئة المزامنة التلقائية
     this.isBiometricEnabled = false, // ✅ تهيئة البصمة
     this.workPeriods,

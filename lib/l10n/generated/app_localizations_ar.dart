@@ -915,6 +915,12 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get prayerCard => 'بطاقة الصلاة';
+
+  @override
+  String get prayerNotifications => 'إشعارات الصلاة';
+
+  @override
   String get prayerReminder => 'تذكير الصلاة';
 
   @override
@@ -2363,6 +2369,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get autoSyncDesc => 'حفظ بياناتك في السحابة تلقائياً';
+
+  @override
+  String get syncNow => 'مزامنة الآن';
+
+  @override
+  String lastSyncedAt(String time) {
+    return 'آخر مزامنة: $time';
+  }
 
   @override
   String get loginRequired => 'مطلوب تسجيل الدخول';
@@ -4293,6 +4307,15 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get prayerCardChangeLocation => 'تغيير الموقع';
+
+  @override
+  String get prayerLabelUpcoming => 'الصلاة القادمة';
+
+  @override
+  String get prayerLabelJustStarted => 'حان الآن موعد الصلاة';
+
+  @override
+  String get prayerLabelCurrent => 'الصلاة الحالية';
 
   @override
   String get taskRibbonInProgress => 'جاري العمل';

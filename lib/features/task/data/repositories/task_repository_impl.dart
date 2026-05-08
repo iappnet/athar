@@ -239,6 +239,11 @@ class TaskRepositoryImpl implements TaskRepository {
     return await _isar.taskModels.get(id);
   }
 
+  @override
+  Future<TaskModel?> getTaskByUuid(String uuid) async {
+    return await _isar.taskModels.filter().uuidEqualTo(uuid).findFirst();
+  }
+
   // ✅ استعدنا هذه الدالة لأنها مطلوبة
   @override
   Future<List<TaskModel>> getTasksForDay(DateTime date) async {
