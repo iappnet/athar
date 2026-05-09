@@ -1046,12 +1046,6 @@ abstract class AppLocalizations {
   /// **'الوضع الداكن'**
   String get darkMode;
 
-  /// No description provided for @darkModeDesc.
-  ///
-  /// In ar, this message translates to:
-  /// **'عند إيقافه، يتبع أثر مظهر الجهاز.'**
-  String get darkModeDesc;
-
   /// No description provided for @systemMode.
   ///
   /// In ar, this message translates to:

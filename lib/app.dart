@@ -22,6 +22,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'features/home/presentation/pages/onboarding_page.dart';
 import 'features/home/presentation/pages/splash_page.dart';
 import 'features/settings/presentation/cubit/settings_state.dart';
+import 'features/settings/data/models/user_settings.dart';
 import 'core/di/injection.dart';
 import 'dart:math';
 import 'package:athar/features/auth/presentation/cubit/auth_cubit.dart';
@@ -160,16 +161,20 @@ class _AtharAppState extends State<AtharApp> {
         builder: (context, child) {
           final locale = context.watch<LocaleCubit>().state.locale;
           final settingsState = context.watch<SettingsCubit>().state;
-          final isDark = settingsState is SettingsLoaded
-              ? settingsState.settings.isDarkMode
-              : false;
+          final themePreference = settingsState is SettingsLoaded
+              ? settingsState.settings.themePreference
+              : ThemePreference.system;
           return MaterialApp(
             navigatorKey: DeepLinkService.navigatorKey,
             debugShowCheckedModeBanner: false,
             title: 'Athar | أثر',
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
-            themeMode: isDark ? ThemeMode.dark : ThemeMode.system,
+            themeMode: switch (themePreference) {
+              ThemePreference.light  => ThemeMode.light,
+              ThemePreference.dark   => ThemeMode.dark,
+              ThemePreference.system => ThemeMode.system,
+            },
             locale: locale,
             supportedLocales: const [Locale('ar', 'SA'), Locale('en', 'US')],
             localeResolutionCallback: (deviceLocale, supportedLocales) {

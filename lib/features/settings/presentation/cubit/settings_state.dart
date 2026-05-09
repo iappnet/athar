@@ -18,7 +18,7 @@ class SettingsLoaded extends SettingsState {
   @override
   List<Object?> get props => [
     settings.id,
-    settings.isDarkMode,
+    settings.themePreference,
     settings.isAutoModeEnabled,
     settings.workPeriodsSafe,
     settings.sleepPeriodsSafe,

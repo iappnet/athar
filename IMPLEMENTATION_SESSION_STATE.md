@@ -1,10 +1,10 @@
 # Implementation Session State
 
 **Last updated:** 2026-05-09  
-**Session phase:** PR-THEME complete — ThemeMode.system wired, gen-l10n run, analyze 0 issues, tests 29/29  
+**Session phase:** PR-THEME-3MODE complete — theme architecture stabilized; PR2 readiness preview prepared  
 **Canonical migration branch:** `feat/athar-v2-pr1-tokens-theme` (long-running; do NOT merge to `main`)  
-**Checkpoint tag:** `athar-v2-pr1-complete` at `72f902d` | `athar-v2-prtheme-complete` (to be tagged after commit)  
-**Next action:** Screenshot review → then PR2 (read IPAD_OPTIMIZATION.md + REDESIGN_AUDIT.md + INVESTIGATION_REPORT.md first)
+**Checkpoint tags:** `athar-v2-pr1-complete` · `athar-v2-prtheme-complete` · `athar-v2-prtheme-3mode-complete`  
+**Next action:** Read 4 spec files → then "Implement PR2" (IPAD_OPTIMIZATION.md, REDESIGN_AUDIT.md, INVESTIGATION_REPORT.md, comp-nav.html)
 
 ---
 
@@ -27,6 +27,7 @@
 | Item | Blocked On |
 |------|-----------|
 | PR-THEME (ThemeMode.system wiring) | ✅ Complete — `flutter analyze` 0 issues, `flutter test` 29/29 |
+| PR-THEME-3MODE (Light/Dark/System picker) | ✅ Complete — `flutter analyze` 0, `flutter test` 29/29 |
 | PR2 (AdaptiveShell + nav bar) | PR-THEME |
 | PR3+ | PR2 |
 | B1: Calibri App Store licence | Designer confirmation |

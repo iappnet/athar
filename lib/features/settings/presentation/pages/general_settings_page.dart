@@ -6,6 +6,7 @@ import 'package:athar/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:athar/features/auth/presentation/cubit/auth_state.dart';
 import 'package:athar/features/auth/presentation/pages/login_page.dart';
 import 'package:athar/features/auth/presentation/pages/profile_page.dart';
+import 'package:athar/features/settings/data/models/user_settings.dart';
 import 'package:athar/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:athar/features/settings/presentation/cubit/settings_state.dart';
 import 'package:athar/features/sync/presentation/cubit/sync_cubit.dart';
@@ -75,14 +76,8 @@ class GeneralSettingsPage extends StatelessWidget {
                   _SettingsCard(children: [
                     _LanguageTile(),
                     _Divider(),
-                    _SwitchTile(
-                      icon: Icons.dark_mode_outlined,
-                      iconColor: const Color(0xFF5C35C9),
-                      title: l10n.darkMode,
-                      subtitle: l10n.darkModeDesc,
-                      value: settings?.isDarkMode ?? false,
-                      onChanged: (v) =>
-                          context.read<SettingsCubit>().toggleDarkMode(v),
+                    _ThemeTile(
+                      current: settings?.themePreference ?? ThemePreference.system,
                     ),
                   ]),
                   AtharGap.lg,
@@ -996,6 +991,131 @@ class _InfoTile extends StatelessWidget {
           fontFamily: 'Cairo',
           fontSize: 13,
           color: Theme.of(context).colorScheme.outline,
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Theme Tile ────────────────────────────────────────────────────────────────
+
+class _ThemeTile extends StatelessWidget {
+  final ThemePreference current;
+  const _ThemeTile({required this.current});
+
+  String _label(ThemePreference p, AppLocalizations l10n) => switch (p) {
+    ThemePreference.light  => l10n.lightMode,
+    ThemePreference.dark   => l10n.darkMode,
+    ThemePreference.system => l10n.systemMode,
+  };
+
+  void _showPicker(BuildContext context, AppLocalizations l10n) {
+    final cubit = context.read<SettingsCubit>();
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (sheetCtx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 8),
+            Container(
+              width: 36,
+              height: 4,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  l10n.theme,
+                  style: const TextStyle(
+                    fontFamily: 'Cairo',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 4),
+            for (final p in ThemePreference.values)
+              _ThemeOption(
+                label: _label(p, l10n),
+                isSelected: current == p,
+                onTap: () {
+                  cubit.toggleThemePreference(p);
+                  Navigator.pop(sheetCtx);
+                },
+              ),
+            const SizedBox(height: 16),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return _NavTile(
+      icon: Icons.dark_mode_outlined,
+      iconColor: const Color(0xFF5C35C9),
+      title: l10n.theme,
+      trailing2: Text(
+        _label(current, l10n),
+        style: const TextStyle(
+          fontFamily: 'Cairo',
+          fontSize: 13,
+          color: Color(0xFF636E72),
+        ),
+      ),
+      onTap: () => _showPicker(context, l10n),
+    );
+  }
+}
+
+// ─── Theme Option ──────────────────────────────────────────────────────────────
+
+class _ThemeOption extends StatelessWidget {
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+  const _ThemeOption({required this.label, required this.isSelected, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: onTap,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+      leading: Container(
+        width: 42,
+        height: 42,
+        decoration: BoxDecoration(
+          color: isSelected
+              ? const Color(0xFF1A6B3C).withValues(alpha: 0.1)
+              : Colors.grey.shade100,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          isSelected ? Icons.check_circle_rounded : Icons.radio_button_unchecked,
+          color: isSelected ? const Color(0xFF1A6B3C) : Colors.grey.shade400,
+          size: 22,
+        ),
+      ),
+      title: Text(
+        label,
+        style: TextStyle(
+          fontFamily: 'Cairo',
+          fontSize: 15,
+          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+          color: isSelected ? const Color(0xFF1A6B3C) : null,
         ),
       ),
     );

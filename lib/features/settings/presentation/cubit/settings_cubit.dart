@@ -33,6 +33,7 @@ class SettingsCubit extends Cubit<SettingsState> {
     if (state is! SettingsLoaded) emit(SettingsLoading());
 
     await _runPrayerMigrationIfNeeded();
+    await _runThemeMigrationIfNeeded();
 
     await _settingsSubscription?.cancel();
 
@@ -363,6 +364,30 @@ class SettingsCubit extends Cubit<SettingsState> {
       await _repository.updateSettings(currentSettings);
     } catch (e) {
       if (kDebugMode) print('❌ Error toggling dark mode: $e');
+    }
+  }
+
+  Future<void> toggleThemePreference(ThemePreference preference) async {
+    try {
+      final currentSettings = await _repository.getSettings();
+      currentSettings.themePreference = preference;
+      await _repository.updateSettings(currentSettings);
+    } catch (e) {
+      if (kDebugMode) print('❌ Error toggling theme preference: $e');
+    }
+  }
+
+  Future<void> _runThemeMigrationIfNeeded() async {
+    try {
+      final settings = await _repository.getSettings();
+      if (settings.didMigrateThemePreference) return;
+      settings.themePreference =
+          settings.isDarkMode ? ThemePreference.dark : ThemePreference.system;
+      settings.didMigrateThemePreference = true;
+      await _repository.updateSettings(settings);
+      if (kDebugMode) print('🎨 Theme preference migration complete');
+    } catch (e) {
+      if (kDebugMode) print('❌ Theme migration error: $e');
     }
   }
 

@@ -34,7 +34,8 @@
 |---|----|----- |--------|-----|---------|
 | 1 | **PR1** | Tokens & Theme — green palette, Calibri, dark surfaces | ✅ Complete | `athar-v2-pr1-complete` | — |
 | 2 | **PR-THEME** | `app.dart:172` `ThemeMode.light` → `ThemeMode.system`; `darkModeDesc` subtitle added | ✅ Complete | `athar-v2-prtheme-complete` | — |
-| 3 | **PR2** | AdaptiveShell rename + iPad breakpoints + 4-tab nav + FAB pill | 🔲 Not started | — | Read IPAD_OPTIMIZATION.md + REDESIGN_AUDIT.md + INVESTIGATION_REPORT.md first |
+| 2b | **PR-THEME-3MODE** | `ThemePreference` enum + migration + 3-option picker; supersedes 2-state toggle; architecture stabilized | ✅ Complete | `athar-v2-prtheme-3mode-complete` | — |
+| 3 | **PR2** | AdaptiveShell rename + iPad breakpoints + 4-tab nav + FAB pill | 🟡 Ready | — | Read 4 spec files first (PR2_READINESS_PREVIEW.md) |
 | 4 | **PR3** | Prayer card refresh (`PRAYER_CARD_SPEC.md`) | 🔲 Not started | — | PR2 |
 | 5 | **PR-ADHAN** | Bundle `adhan.mp3` + `adhan.caf`; build gate if absent | 🔲 Not started | — | Asset from designer |
 | 6 | **PR4a** | Calendar visual refresh + `CalendarCubit` 4-source fan-in | 🔲 Not started | — | PR2 |
@@ -47,7 +48,7 @@
 | 13 | **PR-ONBOARD-AB** | Four-variant onboarding A/B/C/D; Variant A must not regress | 🔲 Not started | — | PR2 + designer |
 | 14 | **PR-CLEANUP** | Hardcoded colour sweep (files untouched by other PRs) | 🔲 Not started | — | All others |
 
-**Total PRs:** 14 · **Complete:** 2 · **Ready:** 0 · **Blocked:** 12 (PR2 now unblocked pending screenshot review)
+**Total PRs:** 14 (+ PR-THEME-3MODE as 2b) · **Complete:** 3 · **Ready:** 1 (PR2) · **Blocked:** 11
 
 ---
 

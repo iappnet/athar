@@ -1,6 +1,6 @@
 # Athar Phase Tracker
 
-_Last updated: 2026-05-09_
+_Last updated: 2026-05-09 (PR-THEME-3MODE complete — theme architecture stabilized)_
 
 ---
 
@@ -162,6 +162,30 @@ Prerequisite reads before starting: `IMPLEMENTATION_EXECUTION_PLAN.md` § PR-THE
 
 Scope: Rename `adaptive_scaffold.dart` → `adaptive_shell.dart`; iPad breakpoints; 4-tab nav bar; FAB pill outside bar.  
 Prerequisite reads: `IPAD_OPTIMIZATION.md`, `REDESIGN_AUDIT.md`, `preview/comp-nav.html`.
+
+### PR-THEME-3MODE — ThemePreference enum (3-option picker)
+
+**Status: ✅ Complete — `athar-v2-prtheme-3mode-complete`**
+
+- `ThemePreference` enum (`system` / `light` / `dark`) added to `UserSettings`
+- One-time migration: `isDarkMode=true` → `ThemePreference.dark`; `isDarkMode=false` → `ThemePreference.system`
+- `_ThemeTile` + bottom-sheet picker replaces Dark Mode toggle in Settings
+- `app.dart` uses exhaustive Dart 3 `switch` expression
+- `flutter analyze`: 0 issues | `flutter test`: 29/29
+- Theme architecture: **STABLE**
+- Full details: `ARCHITECTURE_STABILIZATION_REPORT.md`
+
+---
+
+### PR2 — AdaptiveShell
+
+**Status: 🟡 Ready — blocked on reading 4 required spec files**
+
+Read before starting: `IPAD_OPTIMIZATION.md`, `REDESIGN_AUDIT.md`, `INVESTIGATION_REPORT.md`, `preview/comp-nav.html`
+
+Full readiness preview: `PR2_READINESS_PREVIEW.md`
+
+---
 
 ### PR3 through PR-CLEANUP
 

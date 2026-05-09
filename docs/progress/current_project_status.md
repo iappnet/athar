@@ -1,5 +1,5 @@
 # Athar — Current Project Status
-_Last updated: 2026-05-09 (PR-THEME complete — ThemeMode.system wired, 0 analyzer issues, 29/29 tests)_
+_Last updated: 2026-05-09 (PR-THEME-3MODE complete — ThemePreference enum, 3-option picker, architecture stabilized, 0 analyzer issues, 29/29 tests)_
 
 ## Completed Work
 
@@ -80,17 +80,26 @@ _Last updated: 2026-05-09 (PR-THEME complete — ThemeMode.system wired, 0 analy
 - `flutter analyze`: 0 issues | `flutter test`: 29/29 passed
 - **Blocker B1 open:** Calibri App Store licence — designer confirmation required before TestFlight submission
 
-### PR-THEME — Complete ✅
+### PR-THEME — Complete ✅ (superseded by PR-THEME-3MODE)
 
-- `app.dart:172` — `ThemeMode.light` → `ThemeMode.system` (app now follows OS dark/light when `isDarkMode=false`)
-- `general_settings_page.dart` — Dark Mode switch subtitle added (`darkModeDesc`)
-- `app_en.arb` + `app_ar.arb` — `darkModeDesc` key added; `flutter gen-l10n` run
+`ThemeMode.system` wired when `isDarkMode=false`. Superseded by PR-THEME-3MODE.
+
+### PR-THEME-3MODE — Complete ✅
+
+- `ThemePreference` enum (`system` / `light` / `dark`) added to `UserSettings` with `@Enumerated(EnumType.name)`
+- One-time migration: `isDarkMode=true` → `ThemePreference.dark`; `isDarkMode=false` → `ThemePreference.system`
+- Dark Mode toggle replaced by 3-option picker tile in Settings → Appearance
+- `app.dart` uses exhaustive Dart 3 `switch` expression
+- `build_runner` + `gen-l10n` run; `darkModeDesc` removed from ARBs
 - `flutter analyze`: 0 issues | `flutter test`: 29/29
-- DRIFT-6 resolved: `isAutoModeEnabled` is Smart Zones only — PR-THEME did not touch it
+- Theme architecture: **STABLE** — see `ARCHITECTURE_STABILIZATION_REPORT.md`
+- Tag: `athar-v2-prtheme-3mode-complete`
 
-### Next PR — PR2 (AdaptiveShell) — UNBLOCKED
+### Next PR — PR2 (AdaptiveShell) — READY
 
-Read before starting: `handoff_v2-2/IPAD_OPTIMIZATION.md`, `handoff_v2-2/REDESIGN_AUDIT.md`, `handoff_v2-2/INVESTIGATION_REPORT.md`, `preview/comp-nav.html`
+Read before starting: `handoff_v2-2/IPAD_OPTIMIZATION.md`, `handoff_v2-2/REDESIGN_AUDIT.md`, `handoff_v2-2/INVESTIGATION_REPORT.md`, `handoff_v2-2/preview/comp-nav.html`  
+Readiness preview: `PR2_READINESS_PREVIEW.md`  
+Approval phrase: **"Implement PR2"**
 
 See `IMPLEMENTATION_MASTER_STATUS.md` for PR sequence, `PROGRAM_IMPLEMENTATION_STATUS.md` for full program view, `MIGRATION_BRANCH_STRATEGY.md` for branch governance, and `MIGRATION_ROADMAP_VERIFICATION.md` for verified canonical roadmap (8 discrepancies corrected from proposed roadmap).
 
