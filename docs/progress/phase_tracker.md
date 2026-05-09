@@ -179,11 +179,12 @@ Prerequisite reads: `IPAD_OPTIMIZATION.md`, `REDESIGN_AUDIT.md`, `preview/comp-n
 
 ### PR2 — AdaptiveShell
 
-**Status: 🟡 Ready — blocked on reading 4 required spec files**
+**Status: 🟡 Ready to implement — all 4 spec files read; awaiting "Implement PR2" approval**
 
-Read before starting: `IPAD_OPTIMIZATION.md`, `REDESIGN_AUDIT.md`, `INVESTIGATION_REPORT.md`, `preview/comp-nav.html`
+All spec files read: `IPAD_OPTIMIZATION.md` ✅ · `REDESIGN_AUDIT.md` ✅ · `INVESTIGATION_REPORT.md` ✅ · `preview/comp-nav.html` ✅
 
-Full readiness preview: `PR2_READINESS_PREVIEW.md`
+Final readiness report: `PR2_FINAL_READINESS_REPORT.md`  
+Step-by-step plan: `PR2_IMPLEMENTATION_PLAN.md`
 
 ---
 

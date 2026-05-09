@@ -95,10 +95,11 @@ _Last updated: 2026-05-09 (PR-THEME-3MODE complete — ThemePreference enum, 3-o
 - Theme architecture: **STABLE** — see `ARCHITECTURE_STABILIZATION_REPORT.md`
 - Tag: `athar-v2-prtheme-3mode-complete`
 
-### Next PR — PR2 (AdaptiveShell) — READY
+### Next PR — PR2 (AdaptiveShell) — READY TO IMPLEMENT ✅
 
-Read before starting: `handoff_v2-2/IPAD_OPTIMIZATION.md`, `handoff_v2-2/REDESIGN_AUDIT.md`, `handoff_v2-2/INVESTIGATION_REPORT.md`, `handoff_v2-2/preview/comp-nav.html`  
-Readiness preview: `PR2_READINESS_PREVIEW.md`  
+All 4 spec files read (IPAD_OPTIMIZATION.md, REDESIGN_AUDIT.md, INVESTIGATION_REPORT.md, comp-nav.html).  
+Final readiness report: `PR2_FINAL_READINESS_REPORT.md`  
+Step-by-step implementation plan: `PR2_IMPLEMENTATION_PLAN.md`  
 Approval phrase: **"Implement PR2"**
 
 See `IMPLEMENTATION_MASTER_STATUS.md` for PR sequence, `PROGRAM_IMPLEMENTATION_STATUS.md` for full program view, `MIGRATION_BRANCH_STRATEGY.md` for branch governance, and `MIGRATION_ROADMAP_VERIFICATION.md` for verified canonical roadmap (8 discrepancies corrected from proposed roadmap).

@@ -29,8 +29,8 @@
 | PR | Name | Purpose | Status | Depends on | Blockers |
 |----|------|---------|--------|------------|---------|
 | **PR1** | Tokens & Theme | Green brand palette (light + dark); Calibri font; `numericMono` TextStyle; dark surface tokens per `THEME_DARK_SPEC.md` | ✅ **Complete** `61d741a` | — | — |
-| **PR-THEME** | Auto Dark Mode Wiring | Change `app.dart:172` from `ThemeMode.light` → `ThemeMode.system` when `isDarkMode=false`; `isAutoModeEnabled` is Smart Zones (NOT theme) — see DRIFT-6; preview: `PR_THEME_IMPLEMENTATION_PREVIEW.md` | 🟡 Preview Ready | PR1 ✅ | None |
-| **PR2** | AdaptiveShell | Rename `adaptive_scaffold` → `adaptive_shell`; iPad breakpoints; 4-tab nav bar shape; FAB pill outside bar (RTL/LTR) | 🔲 Not started | PR-THEME | Must read: `IPAD_OPTIMIZATION.md`, `REDESIGN_AUDIT.md`, `preview/comp-nav.html` |
+| **PR-THEME** | Auto Dark Mode Wiring | Superseded by PR-THEME-3MODE. `ThemePreference` enum (system/light/dark) with migration + 3-option picker. `flutter analyze`: 0 · `flutter test`: 29/29. Tag: `athar-v2-prtheme-3mode-complete`. | ✅ Complete | PR1 ✅ | — |
+| **PR2** | AdaptiveShell | Rename `adaptive_scaffold` → `adaptive_shell`; iPad breakpoints; 4-tab nav bar shape; FAB pill outside bar (RTL/LTR) | 🟡 Ready to implement | PR-THEME ✅ | All 4 spec files read; see `PR2_FINAL_READINESS_REPORT.md` + `PR2_IMPLEMENTATION_PLAN.md` |
 | **PR3** | Prayer Card Refresh | Visual redesign per `PRAYER_CARD_SPEC.md`; four-level toggle must not regress | 🔲 Not started | PR2 | `PRAYER_CARD_SPEC.md` must be read |
 | **PR-ADHAN** | Audio Asset Bundle | Bundle `adhan.mp3` / `.caf`; build gate for existing player | 🔲 Not started | Asset from designer | Asset not yet received |
 | **PR4a** | Calendar Visual Refresh | Update calendar chrome, colours, typography; keep existing Hijri/Gregorian toggle; extend `CalendarCubit` | 🔲 Not started | PR2 | Must read: `CALENDAR_FOCUS_REDESIGN.md` |
@@ -63,8 +63,8 @@
 | PR | Status |
 |----|--------|
 | PR1 | ✅ Complete |
-| PR-THEME | 🟡 Ready — no blockers |
-| PR2 | 🔲 Blocked on PR-THEME |
+| PR-THEME / PR-THEME-3MODE | ✅ Complete |
+| PR2 | 🟡 Ready — all spec files read; awaiting "Implement PR2" phrase |
 | PR3 | 🔲 Blocked on PR2 |
 | PR-ADHAN | 🔲 Blocked on asset delivery |
 | PR4a | 🔲 Blocked on PR2 |
@@ -79,7 +79,7 @@
 
 **In-progress phases:** None — clean state between PRs  
 **Deferred phases:** Phase 5 (device-gated, not code-gated)  
-**Blocked phases:** PR2 through PR-CLEANUP (all await PR-THEME or later)
+**Blocked phases:** PR3 through PR-CLEANUP (all await PR2 or later)
 
 ---
 
@@ -95,7 +95,7 @@ The design system has a correct token layer (PR1), but no components, screens, o
 |---------|------|-----------|---|
 | Color tokens | ✅ All values correct | — | 100% |
 | Typography tokens | ✅ Font families set | 12 files still hardcode `fontFamily: 'Cairo'` or `'Inter'` | 97% token / 0% component |
-| Dark-mode ThemeMode wiring | ✗ Tokens correct, switch not wired | PR-THEME | 15% |
+| Dark-mode ThemeMode wiring | ✅ `ThemePreference` enum wired (PR-THEME-3MODE complete) | — | 100% |
 | Component library migration | 0 components migrated | All PR2+ | 0% |
 | Screen-level redesign | 0 screens migrated | All PR2+ | 0% |
 | Hardcoded colour elimination | ~35 `Color(0xFF...)` files + ~118 `Colors.*` files | PR-CLEANUP (last PR) | 0% |
@@ -105,7 +105,7 @@ The design system has a correct token layer (PR1), but no components, screens, o
 
 | Sub-area | Done | Remaining | % |
 |---------|------|-----------|---|
-| Handoff docs read (critical) | 8 of 14 docs read | 6 unread (needed for PR2+) | 57% |
+| Handoff docs read (critical) | 11 of 14 docs read (IPAD_OPTIMIZATION, INVESTIGATION_REPORT, REDESIGN_AUDIT now read) | 3 unread (CALENDAR, FOCUS_OIL, ONBOARDING_AB) | 79% |
 | AI workflow docs | ✅ Complete for current phase | Update needed after each PR | 85% |
 | Progress tracking | ✅ Up to date | Rolling maintenance | 80% |
 | Security review | ✅ PR1 complete | Required again for PR-THEME, PR2 | 10% |
@@ -119,7 +119,7 @@ Measures how much of the v2 Flutter implementation is done vs. the full 14-PR pr
 | Milestone | Weight | Done |
 |-----------|--------|------|
 | Token foundation (PR1) | Low (enabler) | ✅ |
-| ThemeMode wiring (PR-THEME) | Low | ✗ |
+| ThemeMode wiring (PR-THEME-3MODE) | Low | ✅ |
 | Shell & nav redesign (PR2) | High | ✗ |
 | Prayer card (PR3) | Medium | ✗ |
 | Calendar (PR4a + PR4b) | High | ✗ |
@@ -192,11 +192,11 @@ The app is functional and stable. The v2 design migration is in its earliest sta
 | ID | Description | What it unblocks |
 |----|-------------|-----------------|
 | B1 | Calibri App Store licence — designer confirmation | App Store / TestFlight submission |
-| B2 | `isAutoModeEnabled` → `ThemeMode` not wired | Dark mode visible to users |
+| B2 | ~~`isAutoModeEnabled` → `ThemeMode` not wired~~ | **Closed** — `ThemePreference` enum wired (PR-THEME-3MODE) |
 | B3 | Calendar dual-display spec not written | PR4b |
 | B4 | Adhan audio asset not received from designer | PR-ADHAN |
 | Phase 5 | Physical device required for widget validation | Device-gated, not code-gated |
-| 6 unread handoff docs | `INVESTIGATION_REPORT.md`, `REDESIGN_AUDIT.md`, `CALENDAR_FOCUS_REDESIGN.md`, `FOCUS_OIL_SPEC.md`, `IPAD_OPTIMIZATION.md`, `ONBOARDING_AB_SPEC.md` | PR2, PR4b, PR7, PR8, PR-ONBOARD-AB |
+| 3 unread handoff docs | `CALENDAR_FOCUS_REDESIGN.md`, `FOCUS_OIL_SPEC.md`, `ONBOARDING_AB_SPEC.md` | PR4b, PR8, PR-ONBOARD-AB |
 
 ### Remaining Architecture Work
 
@@ -302,32 +302,29 @@ The app is functional and stable. The v2 design migration is in its earliest sta
 
 ---
 
-## 7. Recommended Next Step — PR-THEME
+## 7. Recommended Next Step — PR2
 
-### Why PR-THEME is next
+### Why PR2 is next
 
-PR-THEME is the only PR with no blockers. It was explicitly placed second in the canonical sequence (`handoff_v2-2/CLAUDE_CODE_PROMPT.md`) because the dark palette from PR1 is inert without it — users cannot see any dark-mode changes until `ThemeMode` is responsive. All subsequent PRs (PR2 onward) benefit from an active dark mode while being developed and tested.
+PR-THEME-3MODE is complete (tag: `athar-v2-prtheme-3mode-complete`). PR2 is the next unblocked PR — the AdaptiveShell and navigation redesign that unlocks all remaining component PRs (PR3 through PR-CLEANUP). All 4 required spec files have been read. `PR2_FINAL_READINESS_REPORT.md` and `PR2_IMPLEMENTATION_PLAN.md` are complete.
 
-### What PR-THEME affects
+### What PR2 affects
 
-- **`lib/app.dart` lines 162–172 only** — the `MaterialApp` `themeMode:` argument
-- Changes `app.dart:172` from `ThemeMode.light` → `ThemeMode.system` (see DRIFT-6: `isAutoModeEnabled` is Smart Zones, not theme)
-- Maps: `isAutoModeEnabled == true` → `ThemeMode.system`; `false` → `ThemeMode.light`
-- No new files. No new logic. No structural changes.
+- **New file:** `lib/core/design_system/widgets/adaptive_shell.dart` — responsive shell with `LayoutBuilder` breakpoints
+- **`lib/features/home/presentation/pages/main_page.dart`** — wrap in AdaptiveShell; restructure dock
+- **`lib/core/design_system/widgets/liquid_glass_nav_bar.dart`** — 4 tabs; exact glass treatment; no FAB inside
+- **`lib/core/design_system/widgets/context_aware_fab.dart`** — 64×64 standalone pill with primary gradient
 
-### Why it is isolated enough
+### What must be validated before merge
 
-PR-THEME is a single-argument change in `app.dart`. The dark theme extension (`AtharColors.dark`) and `ThemeData` are already wired — they just aren't being selected. No new cubits, no new routes, no new widgets. Reverting is a one-line change. Regression surface is `app.dart` only.
+1. Phone: 4-tab nav bar + FAB right of bar (LTR) / left of bar (RTL)
+2. Active tab glass chip + forest-green icon
+3. Navigation between all 4 tabs works without BlocProvider state loss
+4. iPad/tablet simulator: NavigationRail appears at correct side
+5. `flutter analyze`: 0 issues; `flutter test`: 29+/29 passed
 
-### What must be validated before approval
-
-1. **Light mode unchanged:** App in light mode must look identical to pre-PR-THEME state.
-2. **Dark mode activates:** Setting `isAutoModeEnabled = true` on a device with dark system appearance must switch the app to the dark token set.
-3. **System follows device:** `ThemeMode.system` must respond to device appearance changes without app restart.
-4. **Prayer card unchanged:** `prayerCardGradient` (navy static gradient) must render correctly against the new dark background `0xFF0E1714` — verify contrast is acceptable.
-5. ~~**B4 investigation:**~~ **Closed (DRIFT-6)** — `isAutoModeEnabled` is Smart Zones only. PR-THEME uses `isDarkMode` existing field. No settings UI change required beyond optional subtitle.
-
-**Before starting PR-THEME:** Read `IMPLEMENTATION_EXECUTION_PLAN.md` § PR-THEME and confirm `UserSettings.isAutoModeEnabled` field path.
+**Approval phrase:** Say **"Implement PR2"** to begin implementation.  
+**Full plan:** `PR2_IMPLEMENTATION_PLAN.md`
 
 ---
 
@@ -339,20 +336,20 @@ PR-THEME is a single-argument change in `app.dart`. The dark theme extension (`A
 | **Total v2 design system PRs** | 14 |
 | **Total program milestones** | 20 |
 | **Legacy phases complete** | 5 of 6 |
-| **v2 PRs complete** | 1 of 14 (PR1) |
-| **v2 PRs ready to start** | 1 (PR-THEME) |
-| **v2 PRs blocked** | 12 |
+| **v2 PRs complete** | 3 of 14 (PR1 + PR-THEME + PR-THEME-3MODE) |
+| **v2 PRs ready to start** | 1 (PR2) |
+| **v2 PRs blocked** | 11 |
 | **v2 PRs awaiting asset/spec** | 2 (PR-ADHAN, PR4b) |
 | **Design-system completion** | ~8% |
 | **Flutter migration completion** | ~12% |
-| **Theme migration completion** | ~15% |
+| **Theme migration completion** | ~100% (ThemePreference wired) |
 | **Widget migration completion** | ~85% |
 | **Calendar migration completion** | 0% |
 | **Onboarding migration completion** | 0% |
 | **Governance completion** | ~65% |
 | **Overall v2 program completion** | **~10%** |
 | **Highest-risk remaining PR** | PR4b (Calendar dual-display) |
-| **Recommended next PR** | PR-THEME |
-| **Active blockers** | B1 (Calibri licence), B2 (ThemeMode), B3 (calendar spec), B4 (adhan asset), Phase 5 (device) |
+| **Recommended next PR** | PR2 |
+| **Active blockers** | B1 (Calibri licence), B3 (calendar spec), B4 (adhan asset), Phase 5 (device) |
 | **Current canonical branch** | `feat/athar-v2-pr1-tokens-theme` |
 | **Current canonical handoff** | `handoff_v2-2/` |

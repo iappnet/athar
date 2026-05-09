@@ -1,10 +1,10 @@
 # Implementation Session State
 
 **Last updated:** 2026-05-09  
-**Session phase:** PR-THEME-3MODE complete — theme architecture stabilized; PR2 readiness preview prepared  
+**Session phase:** PR2 readiness closure complete — all 4 spec files read; PR2_FINAL_READINESS_REPORT.md + PR2_IMPLEMENTATION_PLAN.md created; READY to implement on approval  
 **Canonical migration branch:** `feat/athar-v2-pr1-tokens-theme` (long-running; do NOT merge to `main`)  
 **Checkpoint tags:** `athar-v2-pr1-complete` · `athar-v2-prtheme-complete` · `athar-v2-prtheme-3mode-complete`  
-**Next action:** Read 4 spec files → then "Implement PR2" (IPAD_OPTIMIZATION.md, REDESIGN_AUDIT.md, INVESTIGATION_REPORT.md, comp-nav.html)
+**Next action:** "Implement PR2" — say this exact phrase to begin implementation
 
 ---
 
@@ -28,7 +28,8 @@
 |------|-----------|
 | PR-THEME (ThemeMode.system wiring) | ✅ Complete — `flutter analyze` 0 issues, `flutter test` 29/29 |
 | PR-THEME-3MODE (Light/Dark/System picker) | ✅ Complete — `flutter analyze` 0, `flutter test` 29/29 |
-| PR2 (AdaptiveShell + nav bar) | PR-THEME |
+| PR2 readiness closure | ✅ Complete — all 4 spec files read; PR2_FINAL_READINESS_REPORT.md + PR2_IMPLEMENTATION_PLAN.md created |
+| PR2 (AdaptiveShell + nav bar) | 🟡 Ready — awaiting "Implement PR2" approval |
 | PR3+ | PR2 |
 | B1: Calibri App Store licence | Designer confirmation |
 
@@ -46,15 +47,15 @@
 | `PACKAGE_C_DECISIONS.md` | ✅ | Dark mode, 4-tab, calendar, Athkar, bottom-nav locked (#2) |
 | `THEME_DARK_SPEC.md` | ✅ | Per-surface dark treatments; surface token values DIVERGE from colors_and_type.css (DRIFT-2) |
 | `colors_and_type.css` | ✅ | Canonical token target — all PR1 values extracted and verified |
-| `INVESTIGATION_REPORT.md` | ❌ NOT READ | Required context — read before PR2 |
-| `REDESIGN_AUDIT.md` | ❌ NOT READ | Required before component PRs |
+| `INVESTIGATION_REPORT.md` | ✅ Read (2026-05-09) | Current shell: `lib/core/layouts/adaptive_scaffold.dart`; `AdaptiveShell` absent from codebase |
+| `REDESIGN_AUDIT.md` | ✅ Read (2026-05-09) | Per-screen ticket list; §11 = bottom nav shape; cross-cutting checklist |
 | `CALENDAR_FOCUS_REDESIGN.md` | ❌ NOT READ | Required before PR4a/PR4b |
 | `FOCUS_OIL_SPEC.md` | ❌ NOT READ | Required before PR8 |
-| `IPAD_OPTIMIZATION.md` | ❌ NOT READ | Required before PR2 |
+| `IPAD_OPTIMIZATION.md` | ✅ Read (2026-05-09) | AdaptiveShell breakpoints; NavigationRail spec; FAB rail slot |
 | `ONBOARDING_AB_SPEC.md` | ❌ NOT READ | Required before PR-ONBOARD-AB |
-| `THEME_DARK_SPEC.md` | ✅ | Read this session — DRIFT-2 surfaced |
+| `THEME_DARK_SPEC.md` | ✅ | Read 2026-05-08 — DRIFT-2 surfaced |
 | `ui_kits/athar_app/*.jsx` | ❌ NOT READ | Visual reference only — read when needed |
-| `preview/*.html` | ❌ NOT READ | Visual reference only |
+| `preview/comp-nav.html` | ✅ Read (2026-05-09) | Dock flex, 10px gap, nav 64px/24px radius, FAB 64×64/22px radius |
 
 ---
 

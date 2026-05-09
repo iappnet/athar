@@ -35,7 +35,7 @@
 | 1 | **PR1** | Tokens & Theme — green palette, Calibri, dark surfaces | ✅ Complete | `athar-v2-pr1-complete` | — |
 | 2 | **PR-THEME** | `app.dart:172` `ThemeMode.light` → `ThemeMode.system`; `darkModeDesc` subtitle added | ✅ Complete | `athar-v2-prtheme-complete` | — |
 | 2b | **PR-THEME-3MODE** | `ThemePreference` enum + migration + 3-option picker; supersedes 2-state toggle; architecture stabilized | ✅ Complete | `athar-v2-prtheme-3mode-complete` | — |
-| 3 | **PR2** | AdaptiveShell rename + iPad breakpoints + 4-tab nav + FAB pill | 🟡 Ready | — | Read 4 spec files first (PR2_READINESS_PREVIEW.md) |
+| 3 | **PR2** | AdaptiveShell rename + iPad breakpoints + 4-tab nav + FAB pill | 🟡 Ready to implement | — | All 4 spec files read; see PR2_FINAL_READINESS_REPORT.md + PR2_IMPLEMENTATION_PLAN.md |
 | 4 | **PR3** | Prayer card refresh (`PRAYER_CARD_SPEC.md`) | 🔲 Not started | — | PR2 |
 | 5 | **PR-ADHAN** | Bundle `adhan.mp3` + `adhan.caf`; build gate if absent | 🔲 Not started | — | Asset from designer |
 | 6 | **PR4a** | Calendar visual refresh + `CalendarCubit` 4-source fan-in | 🔲 Not started | — | PR2 |
@@ -146,11 +146,11 @@ Requires creating new value objects, a new widget component, and a `CalendarCubi
 | `handoff_v2-2/PACKAGE_C_DECISIONS.md` | Dark mode, 4-tab, calendar, Athkar, bottom-nav | ✅ Read |
 | `handoff_v2-2/THEME_DARK_SPEC.md` | Per-surface dark treatments | ✅ Read |
 | `handoff_v2-2/colors_and_type.css` | Canonical token target (light + dark) | ✅ Read |
-| `handoff_v2-2/INVESTIGATION_REPORT.md` | Full codebase investigation | ❌ Not read — required before PR2 |
-| `handoff_v2-2/REDESIGN_AUDIT.md` | Component audit | ❌ Not read — required before component PRs |
+| `handoff_v2-2/INVESTIGATION_REPORT.md` | Full codebase investigation | ✅ Read (2026-05-09) — PR2 readiness closure |
+| `handoff_v2-2/REDESIGN_AUDIT.md` | Component audit | ✅ Read (2026-05-09) — PR2 readiness closure |
 | `handoff_v2-2/CALENDAR_FOCUS_REDESIGN.md` | Calendar dual-display spec | ❌ Not read — required before PR4a/PR4b |
 | `handoff_v2-2/FOCUS_OIL_SPEC.md` | Focus oil-fill animation spec | ❌ Not read — required before PR8 |
-| `handoff_v2-2/IPAD_OPTIMIZATION.md` | iPad breakpoints | ❌ Not read — required before PR2 |
+| `handoff_v2-2/IPAD_OPTIMIZATION.md` | iPad breakpoints | ✅ Read (2026-05-09) — PR2 readiness closure |
 | `handoff_v2-2/ONBOARDING_AB_SPEC.md` | Onboarding A/B variants | ❌ Not read — required before PR-ONBOARD-AB |
 
 ---
