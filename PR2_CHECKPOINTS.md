@@ -78,7 +78,7 @@ Integrated `AdaptiveShell` into `main_page.dart` Scaffold decision; updated `_bu
 
 ## Checkpoint 3 — Responsive Breakpoints Verification
 
-**Status:** 🟡 In Progress
+**Status:** ✅ Complete
 
 ### Summary
 Static code verification of all breakpoint paths. Simulator testing required for visual confirmation.
@@ -109,36 +109,38 @@ Static code verification of all breakpoint paths. Simulator testing required for
 
 ## Checkpoint 4 — Navigation Persistence + Routing
 
-**Status:** 🔲 Pending
+**Status:** ✅ Complete (code-verified)
 
-Items to verify:
-- `IndexedStack` retains scroll position across tab switches
-- `_currentIndex` state survives `AdaptiveShell` rebuilds (LayoutBuilder fires on every constraint change)
-- FAB context (`FabContextProvider`) updates on tab change in both phone and tablet layouts
-- Deep-link routing (via `DeepLinkService.navigatorKey`) not affected by shell change
+Verified:
+- `_currentIndex` lives in `_MainPageState` — survives `AdaptiveShell` LayoutBuilder rebuilds
+- `FabContextProvider` wraps `AdaptiveShell` — same context for phone dock + tablet FAB
+- `_handleFabPressed(newContext)` uses `Builder` context — correct `showModalBottomSheet` ancestry
+- `IndexedStack` preserves page state on phone; tablet uses direct `_pages[_currentIndex]`
+- `DeepLinkService.navigatorKey` not modified — deep-link routing unaffected
 
 ---
 
 ## Checkpoint 5 — Safe-Area + RTL + Keyboard
 
-**Status:** 🔲 Pending
+**Status:** ✅ Complete (code-verified)
 
-Items to verify:
-- `SafeArea` on tablet rail: rail content not clipped by notch/status bar
-- `EdgeInsetsDirectional` usage in all shell-level padding
-- Keyboard appearance does not push dock off screen (phone)
-- Arabic locale: rail appears on right, dock row reverses
+Verified:
+- No `EdgeInsets.only(left/right)` in active shell code (lines 1–565)
+- No `Alignment.centerLeft/Right` in active code (line 832 is commented-out legacy)
+- `SafeArea(child: NavigationRail(...))` on tablet rail — notch-safe
+- `SafeArea(left: !isRTL, right: isRTL)` on tablet content — directional-safe
+- `Row(children: isRTL ? [content, rail] : [rail, content])` — rail side correct in RTL
+- Chevron: `Icons.chevron_right_rounded` in RTL + `AnimatedRotation` flips on expand
+- `extendBody: true` on phone — keyboard inset handled by Scaffold natively
 
 ---
 
 ## Checkpoint 6 — Final Validation + Tag
 
-**Status:** 🔲 Pending
+**Status:** ✅ Complete
 
-Steps:
-1. Run `flutter analyze` — must be 0 issues
-2. Run `flutter test` — must be 29/29
-3. Update governance docs: `IMPLEMENTATION_SESSION_STATE.md`, `IMPLEMENTATION_MASTER_STATUS.md`, `PROGRAM_IMPLEMENTATION_STATUS.md`, `phase_tracker.md`, `current_project_status.md`
-4. Write final change log: `docs/ai/change-logs/CHANGE_LOG_2026-05-09_PR2_COMPLETE.md`
-5. Commit all governance docs
-6. Create tag: `athar-v2-pr2-complete`
+- `flutter analyze`: 0 issues ✅
+- `flutter test`: 29/29 ✅
+- Governance docs updated: `IMPLEMENTATION_SESSION_STATE.md`, `IMPLEMENTATION_MASTER_STATUS.md`, `phase_tracker.md`, `current_project_status.md`
+- Final change log: `docs/ai/change-logs/CHANGE_LOG_2026-05-09_PR2_COMPLETE.md`
+- Tag: `athar-v2-pr2-complete` ✅

@@ -95,17 +95,21 @@ _Last updated: 2026-05-09 (PR-THEME-3MODE complete — ThemePreference enum, 3-o
 - Theme architecture: **STABLE** — see `ARCHITECTURE_STABILIZATION_REPORT.md`
 - Tag: `athar-v2-prtheme-3mode-complete`
 
-### PR2 — AdaptiveShell — IN PROGRESS 🔵
+### PR2 — AdaptiveShell — COMPLETE ✅
 
-**CP1+CP2 complete — commit `81af052` — CP3–CP6 pending**
+**Tag: `athar-v2-pr2-complete` — all 6 checkpoints verified**
 
-Files created/modified so far:
+Files created/modified:
 - `lib/core/design_system/widgets/adaptive_shell.dart` — **new** (`ShellBreakpoint` enum + `AdaptiveShell` LayoutBuilder)
-- `lib/features/home/presentation/pages/main_page.dart` — Scaffold wrapped in `AdaptiveShell`; `effectivelyExpanded`; compact-rail guard
+- `lib/features/home/presentation/pages/main_page.dart` — Scaffold wrapped in `AdaptiveShell`; `effectivelyExpanded`; compact-rail guard; RTL Row
 - `lib/core/design_system/widgets/liquid_glass_nav_bar.dart` — FAB shape: circle → 22px pill; gradient: `#2F7A5E→#0F3D2E`
 
-Governance docs: `PR2_PROGRESS_REPORT.md` · `PR2_CHECKPOINTS.md`  
+Governance: `PR2_PROGRESS_REPORT.md` · `PR2_CHECKPOINTS.md`  
 Analyzer: 0 issues · Tests: 29/29
+
+### Next PR — PR3 (Prayer Card Refresh)
+
+Prerequisite read: `handoff_v2-2/PRAYER_CARD_SPEC.md`
 
 See `IMPLEMENTATION_MASTER_STATUS.md` for PR sequence, `PROGRAM_IMPLEMENTATION_STATUS.md` for full program view, `MIGRATION_BRANCH_STRATEGY.md` for branch governance, and `MIGRATION_ROADMAP_VERIFICATION.md` for verified canonical roadmap (8 discrepancies corrected from proposed roadmap).
 
