@@ -376,9 +376,11 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
   }
 
   Widget _buildFab(BuildContext context, ColorScheme colorScheme, bool isDark) {
-    final fabTop = const Color(0xFF1A6B3C);
-    final fabMid = const Color(0xFF156035);
-    final fabBottom = const Color(0xFF0D7377);
+    // Spec: 64×64, borderRadius 22px, gradient #2F7A5E→#0F3D2E (135°)
+    // Foreground: #FAF7EC (cream). comp-nav.html canonical reference.
+    const fabGradientTop = Color(0xFF2F7A5E);
+    const fabGradientBottom = Color(0xFF0F3D2E);
+    const fabForeground = Color(0xFFFAF7EC);
 
     return GestureDetector(
       onTap: () {
@@ -386,40 +388,46 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
         widget.onFabPressed();
       },
       child: Container(
-        width: 66.w,
-        height: 66.h,
+        width: 64.w,
+        height: 64.h,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [fabTop, fabMid, fabBottom],
-            stops: const [0.0, 0.42, 1.0],
+            colors: [fabGradientTop, fabGradientBottom],
           ),
-          shape: BoxShape.circle,
+          borderRadius: BorderRadius.circular(22.r),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF1A6B3C).withValues(alpha: 0.45),
-              blurRadius: 28,
+              color: const Color(0xFF0F3D2E).withValues(alpha: 0.50),
+              blurRadius: 22,
               spreadRadius: 0,
-              offset: const Offset(0, 12),
+              offset: const Offset(0, 10),
             ),
             BoxShadow(
-              color: Colors.white.withValues(alpha: 0.48),
+              color: const Color(0xFF0F3D2E).withValues(alpha: 0.22),
+              blurRadius: 6,
+              spreadRadius: 0,
+              offset: const Offset(0, 3),
+            ),
+            BoxShadow(
+              color: Colors.white.withValues(alpha: 0.40),
               blurRadius: 0,
               spreadRadius: 0,
-              offset: const Offset(-2, -2),
+              offset: const Offset(0, 1),
             ),
           ],
           border: Border.all(
-            color: Colors.white.withValues(alpha: 0.62),
-            width: 1.4,
+            color: Colors.white.withValues(alpha: 0.40),
+            width: 1.0,
           ),
         ),
         child: Stack(
           alignment: Alignment.center,
           children: [
+            // Specular highlight at top of pill
             Positioned(
-              top: 10.h,
+              top: 8.h,
               child: Container(
                 width: 28.w,
                 height: 10.h,
@@ -428,7 +436,7 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Colors.white.withValues(alpha: 0.58),
+                      Colors.white.withValues(alpha: 0.52),
                       Colors.white.withValues(alpha: 0.0),
                     ],
                   ),
@@ -436,7 +444,7 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar>
                 ),
               ),
             ),
-            Icon(widget.fabIcon, color: const Color(0xFFFFF7D6), size: 34.sp),
+            Icon(widget.fabIcon, color: fabForeground, size: 32.sp),
           ],
         ),
       ),

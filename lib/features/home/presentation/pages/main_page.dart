@@ -21,6 +21,7 @@ import 'package:athar/l10n/generated/app_localizations.dart';
 
 // Widgets
 import 'package:athar/core/design_system/widgets/liquid_glass_nav_bar.dart';
+import 'package:athar/core/design_system/widgets/adaptive_shell.dart';
 import 'package:athar/core/design_system/widgets/context_aware_fab.dart';
 
 // Features - Pages
@@ -63,12 +64,16 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Auto-expand rail in landscape on iPad, collapse in portrait
-    if (ResponsiveHelper.isTablet(context)) {
+    final width = MediaQuery.sizeOf(context).width;
+    if (width >= 840) {
+      // Expanded rail (840–1199dp): auto-expand in landscape, collapse in portrait
       final isLandscape = ResponsiveHelper.isLandscape(context);
       if (_isRailExpanded != isLandscape) {
         _isRailExpanded = isLandscape;
       }
+    } else if (width >= 600) {
+      // Compact rail (600–839dp): always start collapsed — icons only
+      if (_isRailExpanded) _isRailExpanded = false;
     }
   }
 
@@ -111,7 +116,6 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context);
-    final isTablet = ResponsiveHelper.isTablet(context);
 
     return MultiBlocProvider(
       providers: [
@@ -126,51 +130,62 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
         builder: (newContext) {
           return FabContextProvider(
             fabContext: _pageContexts[_currentIndex],
-            child: Scaffold(
-              extendBody: !isTablet,
-              // ═════════════════════════════════════════════════════════════
-              // الجسم
-              // ═════════════════════════════════════════════════════════════
-              body: isTablet
-                  ? _buildTabletLayout(colorScheme, l10n)
-                  : _buildPhoneLayout(),
+            // AdaptiveShell: LayoutBuilder-based breakpoint decision.
+            // Resolves phone / tabletCompact / tabletExpanded at render time
+            // so Split View and Stage Manager width changes take effect
+            // immediately without a full rebuild.
+            child: AdaptiveShell(
+              builder: (_, breakpoint) {
+                return Scaffold(
+                  extendBody: breakpoint.isPhone,
+                  // ═══════════════════════════════════════════════════════
+                  // الجسم
+                  // ═══════════════════════════════════════════════════════
+                  body: breakpoint.isTablet
+                      ? _buildTabletLayout(colorScheme, l10n, breakpoint)
+                      : _buildPhoneLayout(),
 
-              // ═════════════════════════════════════════════════════════════
-              // شريط التنقل الزجاجي (للهاتف فقط)
-              // ═════════════════════════════════════════════════════════════
-              bottomNavigationBar: isTablet
-                  ? null
-                  // ✅ FIX: استخدام BlocBuilder للوصول الصحيح لـ hideNavOnScroll
-                  : BlocBuilder<SettingsCubit, SettingsState>(
-                      buildWhen: (prev, curr) =>
-                          (prev is SettingsLoaded ? prev.settings.hideNavOnScroll : false) !=
-                          (curr is SettingsLoaded ? curr.settings.hideNavOnScroll : false),
-                      builder: (context, settingsState) {
-                        // ✅ FIX: الوصول الصحيح عبر SettingsLoaded.settings
-                        final hideOnScroll = settingsState is SettingsLoaded
-                            ? settingsState.settings.hideNavOnScroll
-                            : false;
+                  // ═══════════════════════════════════════════════════════
+                  // شريط التنقل الزجاجي (للهاتف فقط)
+                  // ═══════════════════════════════════════════════════════
+                  bottomNavigationBar: breakpoint.isPhone
+                      ? BlocBuilder<SettingsCubit, SettingsState>(
+                          buildWhen: (prev, curr) =>
+                              (prev is SettingsLoaded
+                                  ? prev.settings.hideNavOnScroll
+                                  : false) !=
+                              (curr is SettingsLoaded
+                                  ? curr.settings.hideNavOnScroll
+                                  : false),
+                          builder: (context, settingsState) {
+                            final hideOnScroll = settingsState is SettingsLoaded
+                                ? settingsState.settings.hideNavOnScroll
+                                : false;
 
-                        return LiquidGlassNavBar(
-                          items: _buildNavItems(l10n),
-                          currentIndex: _currentIndex,
-                          onTap: _onTabTapped,
-                          onFabPressed: () => _handleFabPressed(newContext),
-                          fabColor: colorScheme.primary,
-                          hideOnScroll: hideOnScroll,
-                          scrollController: _scrollController,
-                          backgroundOpacity: 0.75,
-                          blurSigma: 25.0,
-                        );
-                      },
-                    ),
+                            return LiquidGlassNavBar(
+                              items: _buildNavItems(l10n),
+                              currentIndex: _currentIndex,
+                              onTap: _onTabTapped,
+                              onFabPressed: () =>
+                                  _handleFabPressed(newContext),
+                              fabColor: colorScheme.primary,
+                              hideOnScroll: hideOnScroll,
+                              scrollController: _scrollController,
+                              backgroundOpacity: 0.75,
+                              blurSigma: 25.0,
+                            );
+                          },
+                        )
+                      : null,
 
-              // ═════════════════════════════════════════════════════════════
-              // FAB للتابلت فقط
-              // ═════════════════════════════════════════════════════════════
-              floatingActionButton: isTablet
-                  ? _buildTabletFab(newContext, colorScheme)
-                  : null,
+                  // ═══════════════════════════════════════════════════════
+                  // FAB للتابلت فقط
+                  // ═══════════════════════════════════════════════════════
+                  floatingActionButton: breakpoint.isTablet
+                      ? _buildTabletFab(newContext, colorScheme)
+                      : null,
+                );
+              },
             ),
           );
         },
@@ -222,12 +237,15 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   // Layout التابلت مع NavigationRail
   // ═══════════════════════════════════════════════════════════════════════════
 
-  Widget _buildTabletLayout(ColorScheme colorScheme, AppLocalizations l10n) {
+  Widget _buildTabletLayout(ColorScheme colorScheme, AppLocalizations l10n, ShellBreakpoint breakpoint) {
     final isRTL = Directionality.of(context) == TextDirection.rtl;
+    // Compact rail (600–839dp): icon-only regardless of user toggle.
+    // Expanded rail (≥840dp): user-togglable between 72pt and 240pt.
+    final effectivelyExpanded = !breakpoint.usesCompactRail && _isRailExpanded;
 
     final rail = AnimatedContainer(
       duration: AtharAnimations.normal,
-      width: _isRailExpanded ? 200.w : 72.w,
+      width: effectivelyExpanded ? 200.w : 72.w,
       decoration: BoxDecoration(
         color: colorScheme.surface,
         border: Border(
@@ -249,10 +267,10 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
         child: NavigationRail(
           selectedIndex: _currentIndex,
           onDestinationSelected: _onTabTapped,
-          extended: _isRailExpanded,
+          extended: effectivelyExpanded,
           minExtendedWidth: 200.w,
           minWidth: 72.w,
-          labelType: _isRailExpanded
+          labelType: effectivelyExpanded
               ? NavigationRailLabelType.none
               : NavigationRailLabelType.all,
           backgroundColor: Colors.transparent,
@@ -268,7 +286,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
             color: colorScheme.onSurfaceVariant,
             fontSize: 13.sp,
           ),
-          leading: _buildRailLeading(colorScheme, isRTL),
+          leading: _buildRailLeading(colorScheme, isRTL, effectivelyExpanded, breakpoint),
           trailing: _buildRailTrailing(colorScheme),
           destinations: [
             NavigationRailDestination(
@@ -310,22 +328,28 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildRailLeading(ColorScheme colorScheme, bool isRTL) {
+  Widget _buildRailLeading(
+    ColorScheme colorScheme,
+    bool isRTL,
+    bool effectivelyExpanded,
+    ShellBreakpoint breakpoint,
+  ) {
+    // Compact rail (600–839dp): no expand toggle — always icon-only at this width
+    if (breakpoint.usesCompactRail) return const SizedBox.shrink();
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 12.h),
       child: IconButton(
         onPressed: () => setState(() => _isRailExpanded = !_isRailExpanded),
         icon: AnimatedRotation(
-          // In RTL: chevron_right collapses to the right, in LTR: chevron_left collapses left
           turns: isRTL
-              ? (_isRailExpanded ? 0.0 : 0.5)
-              : (_isRailExpanded ? 0.5 : 0.0),
+              ? (effectivelyExpanded ? 0.0 : 0.5)
+              : (effectivelyExpanded ? 0.5 : 0.0),
           duration: AtharAnimations.fast,
           child: Icon(
             isRTL ? Icons.chevron_right_rounded : Icons.chevron_left_rounded,
           ),
         ),
-        tooltip: _isRailExpanded ? 'تصغير القائمة' : 'توسيع القائمة',
+        tooltip: effectivelyExpanded ? 'تصغير القائمة' : 'توسيع القائمة',
       ),
     );
   }
