@@ -1,10 +1,10 @@
 # Implementation Session State
 
 **Last updated:** 2026-05-09  
-**Session phase:** PR2 readiness closure complete — all 4 spec files read; PR2_FINAL_READINESS_REPORT.md + PR2_IMPLEMENTATION_PLAN.md created; READY to implement on approval  
+**Session phase:** PR2 implementation IN PROGRESS — CP1+CP2 complete (commit `81af052`); CP3–CP6 pending  
 **Canonical migration branch:** `feat/athar-v2-pr1-tokens-theme` (long-running; do NOT merge to `main`)  
 **Checkpoint tags:** `athar-v2-pr1-complete` · `athar-v2-prtheme-complete` · `athar-v2-prtheme-3mode-complete`  
-**Next action:** "Implement PR2" — say this exact phrase to begin implementation
+**Next action:** Continue PR2 — Checkpoint 3 (responsive breakpoints + iPad behavior verification)
 
 ---
 
@@ -29,7 +29,7 @@
 | PR-THEME (ThemeMode.system wiring) | ✅ Complete — `flutter analyze` 0 issues, `flutter test` 29/29 |
 | PR-THEME-3MODE (Light/Dark/System picker) | ✅ Complete — `flutter analyze` 0, `flutter test` 29/29 |
 | PR2 readiness closure | ✅ Complete — all 4 spec files read; PR2_FINAL_READINESS_REPORT.md + PR2_IMPLEMENTATION_PLAN.md created |
-| PR2 (AdaptiveShell + nav bar) | 🟡 Ready — awaiting "Implement PR2" approval |
+| PR2 (AdaptiveShell + nav bar) | 🔵 In Progress — CP1+CP2 complete (`81af052`); CP3–CP6 pending |
 | PR3+ | PR2 |
 | B1: Calibri App Store licence | Designer confirmation |
 

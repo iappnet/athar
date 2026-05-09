@@ -179,12 +179,19 @@ Prerequisite reads: `IPAD_OPTIMIZATION.md`, `REDESIGN_AUDIT.md`, `preview/comp-n
 
 ### PR2 — AdaptiveShell
 
-**Status: 🟡 Ready to implement — all 4 spec files read; awaiting "Implement PR2" approval**
+**Status: 🔵 In Progress — CP1+CP2 complete (`81af052`); CP3–CP6 pending**
 
 All spec files read: `IPAD_OPTIMIZATION.md` ✅ · `REDESIGN_AUDIT.md` ✅ · `INVESTIGATION_REPORT.md` ✅ · `preview/comp-nav.html` ✅
 
-Final readiness report: `PR2_FINAL_READINESS_REPORT.md`  
-Step-by-step plan: `PR2_IMPLEMENTATION_PLAN.md`
+CP1 ✅ `adaptive_shell.dart` created — `ShellBreakpoint` enum + `AdaptiveShell` LayoutBuilder  
+CP2 ✅ `main_page.dart` + `liquid_glass_nav_bar.dart` updated — AdaptiveShell wired; FAB shape fixed  
+CP3 🟡 Responsive breakpoints + iPad behavior — code-verified; simulator pending  
+CP4 🔲 Navigation persistence + routing  
+CP5 🔲 Safe-area + RTL + keyboard  
+CP6 🔲 Final validation + tag `athar-v2-pr2-complete`
+
+Governance: `PR2_PROGRESS_REPORT.md` · `PR2_CHECKPOINTS.md`  
+Analyzer: 0 issues · Tests: 29/29 at CP2
 
 ---
 
