@@ -8234,6 +8234,36 @@ abstract class AppLocalizations {
   /// **'تغيير الموقع'**
   String get prayerCardChangeLocation;
 
+  /// No description provided for @prayerCardNow.
+  ///
+  /// In ar, this message translates to:
+  /// **'الآن'**
+  String get prayerCardNow;
+
+  /// No description provided for @prayerCardStartedAt.
+  ///
+  /// In ar, this message translates to:
+  /// **'بدأت {time}'**
+  String prayerCardStartedAt(String time);
+
+  /// No description provided for @prayerCardPostPrayerAthkar.
+  ///
+  /// In ar, this message translates to:
+  /// **'أذكار ما بعد الصلاة'**
+  String get prayerCardPostPrayerAthkar;
+
+  /// No description provided for @prayerSunset.
+  ///
+  /// In ar, this message translates to:
+  /// **'الغروب'**
+  String get prayerSunset;
+
+  /// No description provided for @prayerCardEnableLocation.
+  ///
+  /// In ar, this message translates to:
+  /// **'فعّل الموقع لأوقات صلاة دقيقة'**
+  String get prayerCardEnableLocation;
+
   /// No description provided for @prayerLabelUpcoming.
   ///
   /// In ar, this message translates to:

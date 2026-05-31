@@ -4324,6 +4324,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get prayerCardChangeLocation => 'Change Location';
 
   @override
+  String get prayerCardNow => 'Now';
+
+  @override
+  String prayerCardStartedAt(String time) {
+    return 'Started at $time';
+  }
+
+  @override
+  String get prayerCardPostPrayerAthkar => 'Post-prayer athkar';
+
+  @override
+  String get prayerSunset => 'Sunset';
+
+  @override
+  String get prayerCardEnableLocation =>
+      'Enable location for accurate prayer times';
+
+  @override
   String get prayerLabelUpcoming => 'Next Prayer';
 
   @override

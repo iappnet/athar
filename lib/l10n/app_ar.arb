@@ -1598,6 +1598,16 @@
   "prayerCardQiyamTime": "وقت قيام الليل - الثلث الأخير",
   "prayerCardSetLocation": "تحديد الموقع",
   "prayerCardChangeLocation": "تغيير الموقع",
+  "prayerCardNow": "الآن",
+  "prayerCardStartedAt": "بدأت {time}",
+  "@prayerCardStartedAt": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "prayerCardPostPrayerAthkar": "أذكار ما بعد الصلاة",
+  "prayerSunset": "الغروب",
+  "prayerCardEnableLocation": "فعّل الموقع لأوقات صلاة دقيقة",
   "prayerLabelUpcoming": "الصلاة القادمة",
   "prayerLabelJustStarted": "حان الآن موعد الصلاة",
   "prayerLabelCurrent": "الصلاة الحالية",

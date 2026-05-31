@@ -1501,6 +1501,16 @@
   "prayerCardQiyamTime": "Night prayer time - Last third",
   "prayerCardSetLocation": "Set Location",
   "prayerCardChangeLocation": "Change Location",
+  "prayerCardNow": "Now",
+  "prayerCardStartedAt": "Started at {time}",
+  "@prayerCardStartedAt": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "prayerCardPostPrayerAthkar": "Post-prayer athkar",
+  "prayerSunset": "Sunset",
+  "prayerCardEnableLocation": "Enable location for accurate prayer times",
   "prayerLabelUpcoming": "Next Prayer",
   "prayerLabelJustStarted": "It's Prayer Time",
   "prayerLabelCurrent": "Current Prayer",

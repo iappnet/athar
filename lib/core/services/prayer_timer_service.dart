@@ -155,6 +155,41 @@ class PrayerTimerService {
     final timeDisplayEn = _formatTimeEn(displayPrayer.time);
     final timeLeftStrEn = _computeTimeLeftEn(label, minutesSincePrev, nextPrayer.time, now);
 
+    // PR3 additive fields
+    final hijri = HijriCalendar.fromDate(now);
+    HijriCalendar.setLocal('ar');
+    final hijriDateStr = _toArabicNumerals(hijri.toFormat("dd MMMM yyyy"));
+    HijriCalendar.setLocal('en');
+    final hijriDateEnStr = hijri.toFormat("dd MMMM yyyy");
+    HijriCalendar.setLocal('ar');
+
+    final gregDateStr = _toArabicNumerals(DateFormat('EEE، d MMM', 'ar').format(now));
+    final gregDateEnStr = DateFormat('EEE, d MMM', 'en_US').format(now);
+
+    int secsRemaining = 0;
+    if (label == PrayerTimerLabel.upcoming) {
+      final diff = nextPrayer.time.difference(now);
+      secsRemaining = diff.isNegative ? 0 : diff.inSeconds;
+    }
+
+    String? sunriseAr, sunriseEn, sunsetAr, sunsetEn;
+    try {
+      final sunrise = _todayPrayers.firstWhere(
+        (p) => p.type == PrayerType.sunrise,
+        orElse: () => throw StateError('no sunrise'),
+      );
+      sunriseAr = _formatTime(sunrise.time);
+      sunriseEn = _formatTimeEn(sunrise.time);
+    } catch (_) {}
+    try {
+      final maghrib = _todayPrayers.firstWhere(
+        (p) => p.type == PrayerType.maghrib,
+        orElse: () => throw StateError('no maghrib'),
+      );
+      sunsetAr = _formatTime(maghrib.time);
+      sunsetEn = _formatTimeEn(maghrib.time);
+    } catch (_) {}
+
     _controller.add(
       PrayerTimerStatus(
         prayerNameAr: displayPrayer.nameArabic,
@@ -171,6 +206,15 @@ class PrayerTimerService {
         fullDateEn: dateStrEn,
         isDuhaTime: isDuha,
         isQiyamTime: isQiyam,
+        hijriDate: hijriDateStr,
+        gregorianDate: gregDateStr,
+        hijriDateEn: hijriDateEnStr,
+        gregorianDateEn: gregDateEnStr,
+        secondsRemaining: secsRemaining,
+        sunriseTime: sunriseAr,
+        sunriseTimeEn: sunriseEn,
+        sunsetTime: sunsetAr,
+        sunsetTimeEn: sunsetEn,
       ),
     );
   }

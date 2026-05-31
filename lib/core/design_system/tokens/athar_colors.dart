@@ -106,15 +106,20 @@ class AtharColors extends ThemeExtension<AtharColors> {
   // ثابتة دائماً (لا تتغير بين الوضع الفاتح والداكن)
   // ─────────────────────────────────────────────────────────────────
 
-  /// تدرج بطاقة الصلاة — سماء الليل الإسلامية
+  /// تدرج بطاقة الصلاة — forest brand gradient (PR3)
   static const LinearGradient prayerCardGradient = LinearGradient(
-    colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
+    colors: [Color(0xFF0F3D2E), Color(0xFF1A5A45)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
+    transform: GradientRotation(135 * 3.14159 / 180),
   );
 
-  /// ظل بطاقة الصلاة
-  static const Color prayerCardShadow = Color(0xFF0F172A);
+  /// ظل بطاقة الصلاة — forest palette
+  static const Color prayerCardShadowDeep = Color(0xFF0F3D2E);
+  static const Color prayerCardShadowMid = Color(0xFF1A5A45);
+
+  /// لون التمييز في بطاقة الصلاة (تيل) — نافل، تقدم
+  static const Color prayerCardAccent = Color(0xFF7FE3DA);
 
   // ═══════════════════════════════════════════════════════════════════
   // CONSTRUCTOR
