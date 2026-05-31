@@ -29,8 +29,8 @@ abstract class AtharTypography {
   /// خط الأرقام والكود
   static const String fontFamilyMono = 'JetBrains Mono';
 
-  /// قائمة الخطوط الاحتياطية
-  static const List<String> fontFallback = ['Roboto', 'Arial', 'sans-serif'];
+  /// قائمة الخطوط الاحتياطية — Cairo أولاً لضمان دعم الحروف العربية
+  static const List<String> fontFallback = ['Cairo', 'Roboto', 'Arial', 'sans-serif'];
 
   // ─────────────────────────────────────────────────────────────────
   // FONT WEIGHTS - أوزان الخطوط
@@ -112,13 +112,16 @@ abstract class AtharTypography {
   /// 36.0 - عنوان كبير
   static const double sizeDisplayMd = 36.0;
 
-  /// 40.0 - عنوان ضخم
+  /// 40.0 - عنوان ضخم / countdown على الهواتف الصغيرة
   static const double sizeDisplayLg = 40.0;
+
+  /// 44.0 - عداد تنازلي بطاقة الصلاة (PR3)
+  static const double sizeDisplay44 = 44.0;
 
   /// 48.0 - عنوان عملاق
   static const double sizeDisplayXl = 48.0;
 
-  /// 56.0 - أكبر عنوان
+  /// 56.0 - أكبر عنوان / countdown على iPad
   static const double sizeDisplayXxl = 56.0;
 
   // ─────────────────────────────────────────────────────────────────
@@ -188,6 +191,7 @@ abstract class AtharTypography {
     fontWeight: bold,
     height: lineHeightTight,
     letterSpacing: letterSpacingTight,
+    fontFamilyFallback: fontFallback,
   );
 
   /// عنوان عرض كبير - 40px Bold
@@ -196,6 +200,7 @@ abstract class AtharTypography {
     fontWeight: bold,
     height: lineHeightTight,
     letterSpacing: letterSpacingTight,
+    fontFamilyFallback: fontFallback,
   );
 
   /// عنوان عرض متوسط - 32px Bold
@@ -204,6 +209,7 @@ abstract class AtharTypography {
     fontWeight: bold,
     height: lineHeightTight,
     letterSpacing: letterSpacingSnug,
+    fontFamilyFallback: fontFallback,
   );
 
   // ─────────────────────────────────────────────────────────────────
@@ -216,6 +222,7 @@ abstract class AtharTypography {
     fontWeight: semiBold,
     height: lineHeightSnug,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   /// عنوان متوسط - 24px SemiBold
@@ -224,6 +231,7 @@ abstract class AtharTypography {
     fontWeight: semiBold,
     height: lineHeightSnug,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   /// عنوان صغير - 20px SemiBold
@@ -232,6 +240,7 @@ abstract class AtharTypography {
     fontWeight: semiBold,
     height: lineHeightNormal,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   // ─────────────────────────────────────────────────────────────────
@@ -244,6 +253,7 @@ abstract class AtharTypography {
     fontWeight: semiBold,
     height: lineHeightNormal,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   /// عنوان فرعي متوسط - 16px SemiBold
@@ -252,6 +262,7 @@ abstract class AtharTypography {
     fontWeight: semiBold,
     height: lineHeightNormal,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   /// عنوان فرعي صغير - 14px SemiBold
@@ -260,6 +271,7 @@ abstract class AtharTypography {
     fontWeight: semiBold,
     height: lineHeightNormal,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   // ─────────────────────────────────────────────────────────────────
@@ -272,6 +284,7 @@ abstract class AtharTypography {
     fontWeight: regular,
     height: lineHeightRelaxed,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   /// نص متوسط - 14px Regular
@@ -280,6 +293,7 @@ abstract class AtharTypography {
     fontWeight: regular,
     height: lineHeightRelaxed,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   /// نص صغير - 12px Regular
@@ -288,6 +302,7 @@ abstract class AtharTypography {
     fontWeight: regular,
     height: lineHeightRelaxed,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   // ─────────────────────────────────────────────────────────────────
@@ -300,6 +315,7 @@ abstract class AtharTypography {
     fontWeight: medium,
     height: lineHeightNormal,
     letterSpacing: letterSpacingWide,
+    fontFamilyFallback: fontFallback,
   );
 
   /// تسمية متوسطة - 12px Medium
@@ -308,6 +324,7 @@ abstract class AtharTypography {
     fontWeight: medium,
     height: lineHeightNormal,
     letterSpacing: letterSpacingWide,
+    fontFamilyFallback: fontFallback,
   );
 
   /// تسمية صغيرة - 10px Medium
@@ -316,6 +333,7 @@ abstract class AtharTypography {
     fontWeight: medium,
     height: lineHeightNormal,
     letterSpacing: letterSpacingWider,
+    fontFamilyFallback: fontFallback,
   );
 
   // ═══════════════════════════════════════════════════════════════════
@@ -328,6 +346,7 @@ abstract class AtharTypography {
     fontWeight: semiBold,
     height: lineHeightNone,
     letterSpacing: letterSpacingWide,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للأزرار الصغيرة - 14px SemiBold
@@ -336,6 +355,7 @@ abstract class AtharTypography {
     fontWeight: semiBold,
     height: lineHeightNone,
     letterSpacing: letterSpacingWide,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للأزرار الكبيرة - 18px SemiBold
@@ -344,6 +364,7 @@ abstract class AtharTypography {
     fontWeight: semiBold,
     height: lineHeightNone,
     letterSpacing: letterSpacingWide,
+    fontFamilyFallback: fontFallback,
   );
 
   /// لحقول الإدخال - 16px Regular
@@ -352,6 +373,7 @@ abstract class AtharTypography {
     fontWeight: regular,
     height: lineHeightBase,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   /// لـ placeholder - 16px Regular
@@ -360,6 +382,7 @@ abstract class AtharTypography {
     fontWeight: regular,
     height: lineHeightBase,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   /// لـ hint - 14px Regular
@@ -368,6 +391,7 @@ abstract class AtharTypography {
     fontWeight: regular,
     height: lineHeightNormal,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   /// لـ helper text - 12px Regular
@@ -376,6 +400,7 @@ abstract class AtharTypography {
     fontWeight: regular,
     height: lineHeightNormal,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   /// لـ error text - 12px Regular
@@ -384,6 +409,7 @@ abstract class AtharTypography {
     fontWeight: regular,
     height: lineHeightNormal,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للروابط - 16px Medium Underline
@@ -392,6 +418,7 @@ abstract class AtharTypography {
     fontWeight: medium,
     height: lineHeightBase,
     decoration: TextDecoration.underline,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للروابط الصغيرة - 14px Medium Underline
@@ -400,6 +427,7 @@ abstract class AtharTypography {
     fontWeight: medium,
     height: lineHeightNormal,
     decoration: TextDecoration.underline,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للـ caption - 12px Regular
@@ -408,6 +436,7 @@ abstract class AtharTypography {
     fontWeight: regular,
     height: lineHeightNormal,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للـ overline - 10px Medium Uppercase
@@ -416,6 +445,7 @@ abstract class AtharTypography {
     fontWeight: medium,
     height: lineHeightNormal,
     letterSpacing: letterSpacingWidest,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للأرقام الكبيرة - 32px Bold
@@ -424,6 +454,7 @@ abstract class AtharTypography {
     fontWeight: bold,
     height: lineHeightTight,
     letterSpacing: letterSpacingTight,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للأرقام المتوسطة - 24px SemiBold
@@ -432,6 +463,7 @@ abstract class AtharTypography {
     fontWeight: semiBold,
     height: lineHeightTight,
     letterSpacing: letterSpacingTight,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للأرقام الصغيرة - 18px SemiBold
@@ -440,6 +472,7 @@ abstract class AtharTypography {
     fontWeight: semiBold,
     height: lineHeightTight,
     letterSpacing: letterSpacingTight,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للـ Badge - 10px SemiBold
@@ -448,6 +481,7 @@ abstract class AtharTypography {
     fontWeight: semiBold,
     height: lineHeightNone,
     letterSpacing: letterSpacingWide,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للـ Chip - 12px Medium
@@ -456,6 +490,7 @@ abstract class AtharTypography {
     fontWeight: medium,
     height: lineHeightNone,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للـ Tab - 14px SemiBold
@@ -464,6 +499,7 @@ abstract class AtharTypography {
     fontWeight: semiBold,
     height: lineHeightNone,
     letterSpacing: letterSpacingWide,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للـ AppBar Title - 18px SemiBold
@@ -472,6 +508,7 @@ abstract class AtharTypography {
     fontWeight: semiBold,
     height: lineHeightNormal,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للـ Dialog Title - 20px SemiBold
@@ -480,6 +517,7 @@ abstract class AtharTypography {
     fontWeight: semiBold,
     height: lineHeightSnug,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للـ Card Title - 16px SemiBold
@@ -488,6 +526,7 @@ abstract class AtharTypography {
     fontWeight: semiBold,
     height: lineHeightNormal,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للـ List Item Title - 16px Medium
@@ -496,6 +535,7 @@ abstract class AtharTypography {
     fontWeight: medium,
     height: lineHeightNormal,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للـ List Item Subtitle - 14px Regular
@@ -504,6 +544,7 @@ abstract class AtharTypography {
     fontWeight: regular,
     height: lineHeightNormal,
     letterSpacing: letterSpacingNormal,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للـ Code - 14px Mono
@@ -513,11 +554,14 @@ abstract class AtharTypography {
     height: lineHeightRelaxed,
     letterSpacing: letterSpacingNormal,
     fontFamily: fontFamilyMono,
+    fontFamilyFallback: fontFallback,
   );
 
   /// للأرقام المحاذاة (عدادات، إحصاءات، مؤقتات) — JetBrains Mono مع أرقام جدولية
+  /// Cairo في الاحتياط لضمان رسم الحروف العربية والأرقام العربية-الهندية بدون tofu
   static const TextStyle numericMono = TextStyle(
     fontFamily: fontFamilyMono,
+    fontFamilyFallback: fontFallback,
     fontFeatures: [FontFeature.tabularFigures()],
     fontSize: sizeSm,
     fontWeight: regular,
@@ -529,6 +573,7 @@ abstract class AtharTypography {
     fontWeight: regular,
     height: lineHeightLoose,
     fontStyle: FontStyle.italic,
+    fontFamilyFallback: fontFallback,
   );
 }
 
@@ -542,14 +587,23 @@ extension AtharTextStyleExtension on TextStyle {
   // FONT FAMILY
   // ─────────────────────────────────────────────────────────────────
 
-  /// تطبيق خط عربي (Calibri)
-  TextStyle get arabic => copyWith(fontFamily: AtharTypography.fontFamilyAr);
+  /// تطبيق خط عربي (Calibri + Cairo fallback)
+  TextStyle get arabic => copyWith(
+        fontFamily: AtharTypography.fontFamilyAr,
+        fontFamilyFallback: AtharTypography.fontFallback,
+      );
 
-  /// تطبيق خط إنجليزي (Calibri)
-  TextStyle get english => copyWith(fontFamily: AtharTypography.fontFamilyEn);
+  /// تطبيق خط إنجليزي (Calibri + Cairo fallback)
+  TextStyle get english => copyWith(
+        fontFamily: AtharTypography.fontFamilyEn,
+        fontFamilyFallback: AtharTypography.fontFallback,
+      );
 
   /// تطبيق خط monospace
-  TextStyle get mono => copyWith(fontFamily: AtharTypography.fontFamilyMono);
+  TextStyle get mono => copyWith(
+        fontFamily: AtharTypography.fontFamilyMono,
+        fontFamilyFallback: AtharTypography.fontFallback,
+      );
 
   // ─────────────────────────────────────────────────────────────────
   // FONT WEIGHT
