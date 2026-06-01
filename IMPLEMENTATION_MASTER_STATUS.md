@@ -2,7 +2,7 @@
 CANONICAL-FOR: PR sequence, completion %, blockers, accepted risks, token authority, handoff reference table
 OWNER:         Claude Code
 PRECEDENCE:    3 (Tier 0 — SSOT for PR order + %; CHECKPOINT level 2 wins on "current state")
-LAST-UPDATED:  2026-06-01 · PR6 complete + Stage A
+LAST-UPDATED:  2026-06-01 · PR5 + PR6 complete + Stage A (drift-check fix)
 LOADS-AT:      Tier 0
 LEGACY-ALIASES: (future canonical name: docs/status/ROADMAP.md — Stage B pending)
 -->
@@ -14,7 +14,7 @@ LEGACY-ALIASES: (future canonical name: docs/status/ROADMAP.md — Stage B pendi
 > **SINGLE SOURCE OF TRUTH** — roadmap + % live here ONLY. Other docs must not restate these numbers.
 
 **Last updated:** 2026-06-01
-**Updated by:** PR4a complete + governance closure — SSOT established, deferred QA bucket formalised
+**Updated by:** PR5 + PR6 complete + Stage A governance install + drift-check fix
 
 **Program-level view:** `PROGRAM_IMPLEMENTATION_STATUS.md`  
 **Branch strategy:** `MIGRATION_BRANCH_STRATEGY.md`  
@@ -54,15 +54,15 @@ LEGACY-ALIASES: (future canonical name: docs/status/ROADMAP.md — Stage B pendi
 | 5 | **PR-ADHAN** | Bundle `adhan.mp3` + `adhan.caf`; build gate if absent | 🔲 Not started | — | Asset from designer |
 | 6 | **PR4a** | Calendar visual refresh — tokens, RULE 1, today state, RTL | ✅ **Complete 2026-06-01** | `athar-v2-pr4a-complete` | — |
 | 7 | **PR4b** | Calendar dual-display (`DualDate` VO + `CalendarCell` + `DualMonthSwitcher`) | 🔲 Not started | — | PR4a + spec |
-| 8 | **PR5** | Settings: Accessibility section (Reduce Motion, Gyroscope, Eastern Numerals) | 🔲 Not started | — | PR2 |
-| 9 | **PR6** | Stats redesign (`STATS_KPI_SPEC.md`) | 🔲 Not started | — | PR2 |
+| 8 | **PR5** | Settings: Accessibility section (Reduce Motion, Gyroscope, Eastern Numerals) | ✅ **Complete 2026-06-01** | `6154565` | — |
+| 9 | **PR6** | Stats redesign (`STATS_KPI_SPEC.md`) | ✅ **Complete 2026-06-01** | `2a6a46a` | — |
 | 10 | **PR7** | Athkar feature net-new (curated sets v1; designer review before screens) | 🔲 Not started | — | PR2 + designer |
 | 11 | **PR8** | Focus screen oil-fill (`FOCUS_OIL_SPEC.md`; procedural colour carve-out) | 🔲 Not started | — | PR2 |
 | 12 | **PR9** | iOS widgets visual refresh (infra complete; visuals only) | 🔲 Not started | — | PR2 |
 | 13 | **PR-ONBOARD-AB** | Four-variant onboarding A/B/C/D; Variant A must not regress | 🔲 Not started | — | PR2 + designer |
 | 14 | **PR-CLEANUP** | Hardcoded colour sweep (files untouched by other PRs) | 🔲 Not started | — | All others |
 
-**Total PRs:** 14 (+ PR-FONT-FALLBACK as 2b) · **Complete:** 6 (PR1, PR-THEME arc, PR2, PR3, PR4a) · **Ready:** 4 (PR5, PR6, PR8, PR9 — all unblocked by PR2 ✅) · **Blocked:** 5 (PR4b, PR7, PR-ONBOARD-AB need designer spec; PR-ADHAN needs audio asset; PR-CLEANUP needs all others first)
+**Total PRs:** 14 (+ PR-FONT-FALLBACK as 2b) · **Complete:** 8 (PR1, PR-THEME arc incl PR-FONT-FALLBACK, PR2, PR3, PR4a, PR5, PR6) · **Ready:** 2 (PR8, PR9 — unblocked by PR2 ✅) · **Blocked:** 5 (PR4b, PR7, PR-ONBOARD-AB need designer spec; PR-ADHAN needs audio asset; PR-CLEANUP needs all others first)
 
 ---
 
@@ -70,7 +70,7 @@ LEGACY-ALIASES: (future canonical name: docs/status/ROADMAP.md — Stage B pendi
 
 | Dimension | Complete | Total | % |
 |-----------|---------|-------|---|
-| v2 Design System PRs | 5 logical (PR1, PR-THEME arc, PR2, PR3, PR4a) | 14 | **~36%** |
+| v2 Design System PRs | 7 logical (PR1, PR-THEME arc, PR2, PR3, PR4a, PR5, PR6) | 14 | **~50%** |
 | Design system token migration | ✅ Foundation done; design system themes now live in app | Component + screen migration pending | ~20% |
 | Typography migration | Tokens + 88 theme fallbacks + 38 base styles — all correct | Component `.arabic`/`.english` callsites still use Cairo in some files | ~25% |
 | Dark-mode migration | Tokens ✅ + ThemeMode ✅ + AtharDarkTheme now wired ✅ | Component-level color migration pending (PR5+) | ~70% |
@@ -125,18 +125,17 @@ LEGACY-ALIASES: (future canonical name: docs/status/ROADMAP.md — Stage B pendi
 
 ## Recommended Next PR
 
-**PR4a ✅ complete.** Awaiting designer confirmation on next PR selection.
+**PR6 ✅ complete.** Post-PR6 QA sweep due before PR7. Awaiting Hijri 3-letter abbreviation table for PR4b.
 
-**Ready to start (all unblocked by PR2 ✅):**
+**Ready to start (unblocked by PR2 ✅, PR5+PR6 ✅):**
 
 | PR | Entry requirement | Risk |
 |----|-----------------|------|
-| **PR5** — Accessibility Settings | None | Low |
-| **PR6** — Stats Redesign | Read `STATS_KPI_SPEC.md` first | Medium |
+| **PR4b** — Calendar Dual-Display | Hijri abbreviation table from designer + post-PR6 QA sweep | High |
 | **PR8** — Focus Oil-Fill | Read `FOCUS_OIL_SPEC.md` first; designer review for procedural colours | Medium |
 | **PR9** — iOS Widget Visual Refresh | None | Low-Medium |
 
-**Lowest-risk first:** PR5 (no spec read, 3 new `UserSettings` toggles) or PR9 (widget infra stable).  
+**Lowest-risk next:** PR9 (widget infra stable, no designer spec needed).  
 See `ROADMAP_AFTER_PR4A.md` for full next-step guidance.
 
 ---

@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-01 · PR6 complete + Stage A
+LAST-UPDATED:  2026-06-01 · PR6 complete + Stage A complete + drift-check PASS
 LOADS-AT:      Tier 0
 -->
 
@@ -13,9 +13,9 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-01 (PR6 complete)  
-**Commit:** `2a6a46a` feat(PR6): stats redesign — KPI cards, period pills, token migration  
-**Note:** AR visual QA deferred to final sweep (post-PR6, pre-PR7)
+**Timestamp:** 2026-06-01 (Stage A complete + drift-check fix)  
+**Commit:** `ee39e43` docs(governance): A4 — Context Loading Directive added to CLAUDE.md  
+**Note:** Stage A governance install complete (A1–A4). Drift-check 3 failures fixed: PR5+PR6 now marked complete in IMPLEMENTATION_MASTER_STATUS.md (~50%), CURRENT_MIGRATION_STATE.md updated, CHECKPOINT internal drift fixed. AR visual QA deferred to final sweep (post-PR6, pre-PR7).
 
 ---
 
@@ -76,10 +76,19 @@ LOADS-AT:      Tier 0
 - ✅ `isHijriMode` reused in place — no new field
 - ✅ PR4b BLOCKED until after PR5 → PR6 → post-PR6 QA sweep
 
+## STAGE A — COMPLETE
+
+- ✅ A1: 6 drift fixes in-place (previous session)
+- ✅ A2: Governance file installs — `MIGRATION_REPORT.md` committed; `.claude/` files local-only (correct, gitignored) — commit `df6bf87`
+- ✅ A3: Mandatory headers on all ~20 living files + governance dir + documentation-audit dir installed — commit `077af7e`
+- ✅ A4: Context Loading Directive added to CLAUDE.md — commit `ee39e43`
+- ✅ /drift-check gate: 3 failures found and fixed (PR5+PR6 rows, %, CHECKPOINT internal drift)
+
 ## NEXT ACTION
 
 **Post-PR6 QA sweep** must run before PR7. Deferred QA bucket: 5 items (see CURRENT_MIGRATION_STATE.md).  
-**PR4b:** Design-approved. Gated behind post-PR6 QA sweep. Awaiting Hijri 3-letter abbreviation table from designer — do NOT start Dart until table arrives and sweep is done.
+**PR4b:** Design-approved. Gated behind post-PR6 QA sweep. Awaiting Hijri 3-letter abbreviation table from designer — do NOT start Dart until table arrives and sweep is done.  
+**Stage B:** Do NOT begin until product owner explicitly authorises file moves/renames.
 
 ---
 
@@ -96,6 +105,6 @@ LOADS-AT:      Tier 0
 
 ## WORKING TREE STATE
 
-**Status:** Clean — PR5 committed + pushed  
-**flutter analyze:** 0 issues ✅ (verified 2026-06-01, PR5 complete)  
-**Last commit:** `6154565` feat(PR5): accessibility settings
+**Status:** Clean — PR6 committed + pushed; Stage A governance complete  
+**flutter analyze:** 0 issues ✅ (verified 2026-06-01, PR5 complete; PR6 clean at commit)  
+**Last commit:** `ee39e43` docs(governance): A4 — Context Loading Directive added to CLAUDE.md

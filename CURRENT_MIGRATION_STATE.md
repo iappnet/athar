@@ -34,6 +34,8 @@ LOADS-AT:      Tier 1
 | **PR3** — Prayer Card Refresh | `1cd4f80` | (in branch) | ✅ `PR3_SIGNOFF.md` | 2026-06-01 |
 | **PR-THEME FINAL** — Wire AtharLightTheme/AtharDarkTheme + 88 fallbacks + RTL drawer | `bfaf863` | `athar-v2-prtheme-complete-final` | ✅ `VERIFICATION_PR_THEME.md` | 2026-06-01 |
 | **PR4a** — Calendar Visual Refresh | `85ada1e` | (in branch) | ✅ code signed off · 2 device-QA gates deferred | 2026-06-01 |
+| **PR5** — Accessibility Settings | `6154565` | (in branch) | ✅ `flutter analyze` 0 issues · AR copy designer-approved | 2026-06-01 |
+| **PR6** — Stats Redesign | `2a6a46a` | (in branch) | ✅ `flutter analyze` 0 issues · AR visual QA deferred to final sweep | 2026-06-01 |
 
 ---
 
@@ -77,7 +79,7 @@ LOADS-AT:      Tier 1
 
 ## Active PR
 
-**None.** PR4a complete (`athar-v2-pr4a-complete`, commits `85ada1e` + `1beff60`). 2 device-QA gates in Deferred QA Bucket below.
+**None.** PR6 complete (`2a6a46a`). Post-PR6 QA sweep due before PR7. Awaiting Hijri 3-letter abbreviation table from designer to unblock PR4b. See `IMPLEMENTATION_MASTER_STATUS.md` for full status.
 
 ---
 
@@ -88,7 +90,7 @@ flutter analyze → 0 issues
 flutter test → 45/45 passed (16 golden + 28 stats + 1 config)
 ```
 
-All changes committed and pushed. Last commit: governance closure (after `1beff60` sign-off).
+All changes committed and pushed. Last commit: `ee39e43` docs(governance): A4 — Context Loading Directive added to CLAUDE.md.
 
 ---
 
