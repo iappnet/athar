@@ -221,7 +221,7 @@ PR-IPAD-LAYER3: standalone deferred sweep — not before all Layer 2 screens are
 
 | PR | First prerequisite | Layer 2 ownership |
 |----|-------------------|--------------------|
-| PR4a — Calendar visual refresh | **AUDIT IN PROGRESS** — `design-context/_audit_calendar.md` written; implementation NOT started; waiting for sign-off | Calendar tablet layout → PR4b |
+| PR4a — Calendar visual refresh | ⚠️ **Code-complete `85ada1e`** — signed off 2026-06-01; 2 device-QA gates deferred (G1: iPhone SE overflow, G2: today dark alpha). Pre-approved fail actions in `CURRENT_MIGRATION_STATE.md`. | Calendar tablet layout → PR4b |
 | PR4b — Calendar dual-display | PR4a + `DualDate` designer spec | Calendar tablet layout → here |
 | PR5 — Accessibility Settings | None | Settings two-pane → here |
 | PR6 — Stats redesign | Read `STATS_KPI_SPEC.md` | Stats 2/3-col grid → here |

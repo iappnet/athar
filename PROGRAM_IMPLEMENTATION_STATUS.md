@@ -34,7 +34,7 @@
 | **PR2** | AdaptiveShell | Rename `adaptive_scaffold` → `adaptive_shell`; iPad breakpoints; 4-tab nav bar shape; FAB pill outside bar (RTL/LTR) | ✅ Complete | PR-THEME ✅ | — |
 | **PR3** | Prayer Card Refresh | Forest gradient, 44px countdown, calm states, golden test suite 16/16. Tag: in branch. | ✅ **Complete 2026-06-01** | PR2 ✅ | — |
 | **PR-ADHAN** | Audio Asset Bundle | Bundle `adhan.mp3` / `.caf`; build gate for existing player | 🔲 Not started | Asset from designer | Asset not yet received |
-| **PR4a** | Calendar Visual Refresh | Update calendar chrome, colours, typography; keep existing Hijri/Gregorian toggle; extend `CalendarCubit` | 🔲 Not started | PR2 | Must read: `CALENDAR_FOCUS_REDESIGN.md` |
+| **PR4a** | Calendar Visual Refresh | Token migration, RULE 1 fix, today state, RTL chevrons, locale date, flat bottom, LayoutBuilder cell aspect ratio. `flutter analyze`: 0 · `flutter test`: 45/45. | ⚠️ **Code-complete `85ada1e`** — 2 device-QA gates deferred (iPhone SE overflow · today dark alpha). Pre-approved fail actions in `CURRENT_MIGRATION_STATE.md`. | PR2 ✅ | — |
 | **PR4b** | Calendar Dual-Display Rebuild | Net-new: `DualDate` value object + `CalendarCell` + `DualMonthSwitcher`; simultaneous Hijri + Gregorian numerals | 🔲 Not started | PR4a + designer spec | Dedicated designer spec not yet written |
 | **PR5** | Accessibility Settings | New section: Reduce Motion, Disable Gyroscope, Eastern Numerals toggles | 🔲 Not started | PR2 | None |
 | **PR6** | Stats Redesign | New KPI layout per `STATS_KPI_SPEC.md`; adopt `numericMono` | 🔲 Not started | PR2 | `STATS_KPI_SPEC.md` must be read |
@@ -70,7 +70,7 @@
 | PR2 (AdaptiveShell) | ✅ Complete — `athar-v2-pr2-complete` |
 | PR3 (Prayer Card) | ✅ Complete — commit `1cd4f80` |
 | PR-ADHAN | 🔲 Blocked on asset delivery |
-| PR4a (Calendar visual refresh) | 🔲 Ready — unblocked by PR2 ✅ |
+| PR4a (Calendar visual refresh) | ⚠️ Code-complete `85ada1e` — 2 device-QA gates deferred |
 | PR4b (Calendar dual-display) | 🔲 Blocked on PR4a + designer spec |
 | PR5 (Accessibility Settings) | 🔲 Ready — unblocked by PR2 ✅ |
 | PR6 (Stats redesign) | 🔲 Ready — unblocked by PR2 ✅ |
@@ -82,8 +82,9 @@
 
 **In-progress phases:** None — clean state between PRs
 **Deferred phases:** Phase 5 (device-gated, not code-gated)
-**Completed:** PR1, PR-THEME arc, PR2, PR3 = 4 logical PRs (29% of 14)
-**Ready to start:** PR4a, PR5, PR6, PR8, PR9 (all unblocked by PR2 ✅)
+**Completed (code):** PR1, PR-THEME arc, PR2, PR3, PR4a = 5 logical PRs
+**Code-complete, device-QA pending:** PR4a (2 gates — iPhone SE overflow · today dark alpha)
+**Ready to start:** PR5, PR6, PR8, PR9 (all unblocked by PR2 ✅)
 
 ---
 

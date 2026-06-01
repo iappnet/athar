@@ -25,6 +25,7 @@
 | **PR-FONT-FALLBACK** — Cairo fallback on 38 base styles | `3872860` | (part of PR-THEME arc) | ✅ | 2026-06-01 |
 | **PR3** — Prayer Card Refresh | `1cd4f80` | (in branch) | ✅ `PR3_SIGNOFF.md` | 2026-06-01 |
 | **PR-THEME FINAL** — Wire AtharLightTheme/AtharDarkTheme + 88 fallbacks + RTL drawer | `bfaf863` | `athar-v2-prtheme-complete-final` | ✅ `VERIFICATION_PR_THEME.md` | 2026-06-01 |
+| **PR4a** — Calendar Visual Refresh | `85ada1e` | (in branch) | ✅ code signed off · 2 device-QA gates deferred | 2026-06-01 |
 
 ---
 
@@ -61,12 +62,13 @@
 | PR-THEME full arc | `VERIFICATION_PR_THEME.md` · `PR_THEME_FINAL_REPORT.md` |
 | PR2 | `PR2_CHECKPOINTS.md` (6/6 CPs) · `PR2_PROGRESS_REPORT.md` |
 | PR3 | `PR3_SIGNOFF.md` |
+| PR4a | Code signed off (85ada1e) · `VERIFICATION_PR4A.md` · 2 device-QA gates deferred to physical-device pass |
 
 ---
 
 ## Active PR
 
-**None.** Clean state between PRs as of 2026-06-01.
+**None.** PR4a code-complete as of 2026-06-01 (commit `85ada1e`). 2 device-QA gates deferred — see "PR4a Deferred QA Gates" below.
 
 ---
 
@@ -77,35 +79,22 @@ flutter analyze → 0 issues
 flutter test → 45/45 passed (16 golden + 28 stats + 1 config)
 ```
 
-Uncommitted governance edits (this audit session):
-- `docs/progress/phase_tracker.md` — stale PR2 "Not started" section removed; PR-FONT-FALLBACK, PR3, PR-THEME FINAL added
-- `PROGRAM_IMPLEMENTATION_STATUS.md` — all stale sections updated to reflect PR2 + PR3 + PR-THEME FINAL complete
-- `ROADMAP_RECONCILIATION_REPORT.md` — new file (audit evidence)
-- `CURRENT_MIGRATION_STATE.md` — this file
+All changes committed and pushed. Last commit: `85ada1e` (PR4a implementation).
 
 ---
 
 ## Next Recommended PR
 
-**PR4a — Calendar Visual Refresh**
+**PR4a ✅ code-complete** (commit `85ada1e`, 2026-06-01). 2 device-QA gates deferred to physical-device pass.
 
-AdaptiveShell readiness verified: `ADAPTIVESHELL_FOUNDATION_AUDIT.md` (2026-06-01).  
-PR4a scope verified: `PR4A_READINESS_SCOPE.md` (2026-06-01).  
-Layer 2 ownership mapped: `IPAD_LAYER2_OWNERSHIP_MAP.md` (2026-06-01).  
-Layer 3 deferred: `IPAD_LAYER3_DEFERRED_AFFORDANCES.md` (2026-06-01).
+**Ready to start (awaiting readiness request):** PR5, PR6, PR8, or PR9.
 
-**PR4a is cleared to start.** Scope = token migration + visual polish of existing architecture. No DualDate/CalendarCell/DualMonthSwitcher in PR4a.
-
-Prerequisites before implementation begins:
-1. `PR4A_READINESS_SCOPE.md` reviewed ✅ (this session)
-2. Write pre-implementation audit: `design-context/_audit_calendar.md`
-3. Wait for audit sign-off before touching any Dart
-
-Ready alternatives:
-- PR5 — Accessibility Settings + Settings two-pane tablet layout
-- PR6 — Stats redesign + Stats 2/3-col tablet layout (read `STATS_KPI_SPEC.md` first)
-- PR8 — Focus oil-fill + 720pt cap (read `FOCUS_OIL_SPEC.md` first)
-- PR9 — iOS widget visual refresh
+| PR | Entry requirement |
+|----|-------------------|
+| PR5 — Accessibility Settings | No spec read required — add `reduceMotion`, `disableGyroscope`, `useEasternNumerals` to `UserSettings` + Settings page |
+| PR6 — Stats redesign | Read `STATS_KPI_SPEC.md` first |
+| PR8 — Focus oil-fill | Read `FOCUS_OIL_SPEC.md` first; designer review for procedural colours |
+| PR9 — iOS widget visual refresh | No spec required; widget infra complete |
 
 ---
 
@@ -114,7 +103,7 @@ Ready alternatives:
 | PR | Status | First prerequisite |
 |----|--------|-------------------|
 | PR-ADHAN | 🔲 Blocked | Audio asset from designer (not received) |
-| PR4a | 🔲 Ready | Read `CALENDAR_FOCUS_REDESIGN.md` |
+| PR4a | ⚠️ Code-complete `85ada1e` — 2 device-QA gates deferred | See "PR4a Deferred QA Gates" below |
 | PR4b | 🔲 Blocked | PR4a ✅ + dedicated designer spec for `DualDate` |
 | PR5 | 🔲 Ready | None |
 | PR6 | 🔲 Ready | Read `STATS_KPI_SPEC.md` |
@@ -146,7 +135,7 @@ LayoutBuilder(builder: (context, constraints) {
   return bp.isTablet ? _buildTabletLayout() : _buildPhoneLayout();
 })
 ```
-Known violation identified: `calendar_page.dart:53–56` uses `context.isTablet` — fix scheduled for PR4a.
+Known violation fixed: `calendar_page.dart:52` — replaced `context.isTablet` with `LayoutBuilder(constraints.maxWidth >= 600)` in commit `85ada1e` (PR4a).
 
 ---
 
@@ -163,6 +152,38 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 
 ---
 
+## PR4a Deferred QA Gates
+
+Both gates deferred to the physical-device QA pass (same bucket as PR3 runtime checks). Pre-approved fail actions are documented — QA applies the fix without re-auditing.
+
+### GATE 1 — iPhone SE (375×667) calendar overflow
+
+**Pass condition:** 6-row month fits with no vertical overflow AND "Day events" header is visible without scrolling.
+
+**Why it may fail:** The 64pt cell-height tier triggers at `width >= 360`. iPhone SE is 375dp, which hits the 64pt tier. A 6-row month at 64pt/cell = 384pt of grid, which may push the header below the fold on a 667pt screen.
+
+**Pre-approved fail action (one-line change, no re-audit required):**
+```dart
+// In dual_calendar_widget.dart — widen the compact tier threshold:
+// Change:  constraints.maxWidth < 360 ? 54.0
+// To:      constraints.maxWidth < 390 ? 54.0
+//
+// Alternative: gate on height < 700 using MediaQuery if width alone is insufficient.
+```
+
+### GATE 2 — Today-state dark mode legibility
+
+**Pass condition:** Today background (`colorScheme.primary @ 0.13` in dark) is visually distinct from the surface on the dark forest theme.
+
+**Pre-approved fail action (one-line change, no re-audit required):**
+```dart
+// In dual_calendar_widget.dart — raise dark alpha:
+// Change:  final double todayAlpha = isDark ? 0.13 : 0.08;
+// To:      final double todayAlpha = isDark ? 0.15 : 0.08;
+```
+
+---
+
 ## Open Items / Deferred Gates
 
 | ID | Item | Gate type |
@@ -172,3 +193,5 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 | B4 | Adhan audio asset | PR-ADHAN build gate |
 | Phase 5 | Physical device validation (all 3 iOS widgets) | Release gate |
 | Device QA | Forest-dark surfaces, Cairo fallback, RTL drawer, countdown tick | Release gate |
+| PR4a-G1 | iPhone SE calendar overflow check | Device QA gate (pre-approved fix: widen compact tier to `width<390`) |
+| PR4a-G2 | Today-state dark mode legibility | Device QA gate (pre-approved fix: raise dark alpha to 0.15) |
