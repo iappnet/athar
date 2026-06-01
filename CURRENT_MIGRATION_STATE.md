@@ -2,7 +2,7 @@
 CANONICAL-FOR: Branch state, RULE 1/2 enforcement, Deferred QA bucket
 OWNER:         Claude Code
 PRECEDENCE:    4 (Tier 1 — loads after Tier-0 on any PR arc)
-LAST-UPDATED:  2026-06-01 · PR6 complete + Stage A
+LAST-UPDATED:  2026-06-01 · PR4b complete (65fc417) + drift-check fix
 LOADS-AT:      Tier 1
 -->
 
@@ -36,6 +36,7 @@ LOADS-AT:      Tier 1
 | **PR4a** — Calendar Visual Refresh | `85ada1e` | (in branch) | ✅ code signed off · 2 device-QA gates deferred | 2026-06-01 |
 | **PR5** — Accessibility Settings | `6154565` | (in branch) | ✅ `flutter analyze` 0 issues · AR copy designer-approved | 2026-06-01 |
 | **PR6** — Stats Redesign | `2a6a46a` | (in branch) | ✅ `flutter analyze` 0 issues · AR visual QA deferred to final sweep | 2026-06-01 |
+| **PR4b** — Calendar Dual-Display | `65fc417` | (in branch) | ✅ 12/12 spec items PASS · AR visual QA deferred to final sweep | 2026-06-01 |
 
 ---
 
@@ -79,7 +80,7 @@ LOADS-AT:      Tier 1
 
 ## Active PR
 
-**None.** PR6 complete (`2a6a46a`). Post-PR6 QA sweep due before PR7. Awaiting Hijri 3-letter abbreviation table from designer to unblock PR4b. See `IMPLEMENTATION_MASTER_STATUS.md` for full status.
+**None.** PR4b complete (`65fc417`). Post-PR6 QA sweep still due before PR7. See `IMPLEMENTATION_MASTER_STATUS.md` for full status.
 
 ---
 
@@ -90,7 +91,7 @@ flutter analyze → 0 issues
 flutter test → 45/45 passed (16 golden + 28 stats + 1 config)
 ```
 
-All changes committed and pushed. Last commit: `ee39e43` docs(governance): A4 — Context Loading Directive added to CLAUDE.md.
+All changes committed and pushed. Last commit: `65fc417` feat(PR4b): dual Hijri/Gregorian calendar.
 
 ---
 
@@ -160,11 +161,12 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 
 **Deferred QA Candidate Fix (UNVERIFIED — logical hypothesis, must be confirmed on device before applying):**
 ```dart
-// In dual_calendar_widget.dart — widen the compact tier threshold:
+// In calendar_page.dart _CalendarGrid LayoutBuilder — widen the compact tier threshold:
 // Change:  constraints.maxWidth < 360 ? 54.0
 // To:      constraints.maxWidth < 390 ? 54.0
 //
 // Alternative: gate on height < 700 using MediaQuery if width alone is insufficient.
+// Note: dual_calendar_widget.dart was deleted in PR4b; this fix now targets _CalendarGrid.
 ```
 
 ### PR4a-G2 — Today-state dark mode legibility
@@ -173,9 +175,10 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 
 **Deferred QA Candidate Fix (UNVERIFIED — logical hypothesis, must be confirmed on device before applying):**
 ```dart
-// In dual_calendar_widget.dart — raise dark alpha:
-// Change:  final double todayAlpha = isDark ? 0.13 : 0.08;
-// To:      final double todayAlpha = isDark ? 0.15 : 0.08;
+// In calendar_day_cell.dart — raise dark alpha for today background:
+// Change:  bgColor = colors.primary.withValues(alpha: 0.08);
+// To:      bgColor = colors.primary.withValues(alpha: isDark ? 0.15 : 0.08);
+// Note: dual_calendar_widget.dart was deleted in PR4b; today-state logic now lives in CalendarDayCell.
 ```
 
 ---
@@ -185,7 +188,7 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 | ID | Item | Gate type |
 |----|------|-----------|
 | B1 | Calibri App Store licence | Submission gate (not build gate) |
-| B3 | Calendar dual-display (`DualDate`) designer spec | PR4b start gate |
+| ~~B3~~ | ~~Calendar dual-display (`DualDate`) designer spec~~ | **Closed** — PR4b shipped `65fc417` |
 | B4 | Adhan audio asset | PR-ADHAN build gate |
 | Phase 5 | Physical device validation (all 3 iOS widgets) | Release gate |
 

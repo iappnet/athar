@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-01 · PR6 complete + Stage A complete + A5 VCS policy
+LAST-UPDATED:  2026-06-01 · PR4b complete (65fc417)
 LOADS-AT:      Tier 0
 -->
 
@@ -13,18 +13,18 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-01 (Stage A complete + A5 VCS policy)  
-**Commit:** `510cb0a` chore(vcs): ignore machine-local Claude files only  
-**Note:** Stage A governance install complete (A1–A4). Drift-check 3 failures fixed: PR5+PR6 now marked complete in IMPLEMENTATION_MASTER_STATUS.md (~50%), CURRENT_MIGRATION_STATE.md updated, CHECKPOINT internal drift fixed. AR visual QA deferred to final sweep (post-PR6, pre-PR7).
+**Timestamp:** 2026-06-01 (PR4b complete)  
+**Commit:** `65fc417` feat(PR4b): dual Hijri/Gregorian calendar — DualDate + CalendarMonthCubit, 5-source activity dots (gated prayer), Hijri boundary labels  
+**Note:** PR4b shipped. 12/12 spec-conformance items PASS. ARB copy designer-approved + byte-verified. AR visual QA deferred to final sweep (post-PR6, pre-PR7). drift-check 3 failures fixed: IMS PR4b row ✅, % updated to ~57%, dead `dual_calendar_widget.dart` path replaced, B3 blocker closed.
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** Awaiting PR4b Hijri abbreviation table (unblocks PR4b)  
-**Last completed:** PR6 — Stats Redesign (`2a6a46a`) ✅  
-**Phase:** Between PRs — post-PR6 QA sweep due before PR7 starts  
-**Exact step:** PR6 committed + pushed. AR visual QA deferred to final device sweep. Awaiting Hijri abbreviation table to start PR4b.
+**Active PR:** None — PR4b complete  
+**Last completed:** PR4b — Calendar Dual-Display (`65fc417`) ✅  
+**Phase:** Post-PR4b. Post-PR6 QA sweep still due before PR7.  
+**Next:** PR8 (Focus Oil-Fill) or PR9 (iOS Widget Refresh) — see IMPLEMENTATION_MASTER_STATUS.md.
 
 ---
 
@@ -88,7 +88,7 @@ LOADS-AT:      Tier 0
 ## NEXT ACTION
 
 **Post-PR6 QA sweep** must run before PR7. Deferred QA bucket: 5 items (see CURRENT_MIGRATION_STATE.md).  
-**PR4b:** Design-approved. Gated behind post-PR6 QA sweep. Awaiting Hijri 3-letter abbreviation table from designer — do NOT start Dart until table arrives and sweep is done.  
+**AR visual QA:** Calendar dual-display (primaryHijri on/off, dark mode, 5-dot cell, boundary labels) deferred to final device sweep.  
 **Stage B:** Do NOT begin until product owner explicitly authorises file moves/renames.
 
 ---
@@ -106,6 +106,6 @@ LOADS-AT:      Tier 0
 
 ## WORKING TREE STATE
 
-**Status:** Clean — PR6 committed + pushed; Stage A governance complete  
-**flutter analyze:** 0 issues ✅ (verified 2026-06-01, PR5 complete; PR6 clean at commit)  
-**Last commit:** `ee39e43` docs(governance): A4 — Context Loading Directive added to CLAUDE.md
+**Status:** Clean — PR4b committed + pushed  
+**flutter analyze:** 0 issues in PR4b-touched files ✅ (2 pre-existing warnings in space/task features, unrelated)  
+**Last commit:** `65fc417` feat(PR4b): dual Hijri/Gregorian calendar

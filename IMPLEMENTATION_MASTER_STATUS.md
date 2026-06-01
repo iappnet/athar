@@ -2,7 +2,7 @@
 CANONICAL-FOR: PR sequence, completion %, blockers, accepted risks, token authority, handoff reference table
 OWNER:         Claude Code
 PRECEDENCE:    3 (Tier 0 — SSOT for PR order + %; CHECKPOINT level 2 wins on "current state")
-LAST-UPDATED:  2026-06-01 · PR5 + PR6 complete + Stage A (drift-check fix)
+LAST-UPDATED:  2026-06-01 · PR4b complete (65fc417) + drift-check fix
 LOADS-AT:      Tier 0
 LEGACY-ALIASES: (future canonical name: docs/status/ROADMAP.md — Stage B pending)
 -->
@@ -14,7 +14,7 @@ LEGACY-ALIASES: (future canonical name: docs/status/ROADMAP.md — Stage B pendi
 > **SINGLE SOURCE OF TRUTH** — roadmap + % live here ONLY. Other docs must not restate these numbers.
 
 **Last updated:** 2026-06-01
-**Updated by:** PR5 + PR6 complete + Stage A governance install + drift-check fix
+**Updated by:** PR4b complete (65fc417) + drift-check fix
 
 **Program-level view:** `PROGRAM_IMPLEMENTATION_STATUS.md`  
 **Branch strategy:** `MIGRATION_BRANCH_STRATEGY.md`  
@@ -53,7 +53,7 @@ LEGACY-ALIASES: (future canonical name: docs/status/ROADMAP.md — Stage B pendi
 | 4 | **PR3** | Prayer card refresh — forest gradient, 44px countdown, calm states, 16/16 goldens | ✅ **Complete 2026-06-01** | — | — |
 | 5 | **PR-ADHAN** | Bundle `adhan.mp3` + `adhan.caf`; build gate if absent | 🔲 Not started | — | Asset from designer |
 | 6 | **PR4a** | Calendar visual refresh — tokens, RULE 1, today state, RTL | ✅ **Complete 2026-06-01** | `athar-v2-pr4a-complete` | — |
-| 7 | **PR4b** | Calendar dual-display (`DualDate` VO + `CalendarCell` + `DualMonthSwitcher`) | 🔲 Not started | — | PR4a + spec |
+| 7 | **PR4b** | Calendar dual-display (`DualDate` VO + `CalendarCell` + `DualMonthSwitcher`) | ✅ **Complete 2026-06-01** | `65fc417` | — |
 | 8 | **PR5** | Settings: Accessibility section (Reduce Motion, Gyroscope, Eastern Numerals) | ✅ **Complete 2026-06-01** | `6154565` | — |
 | 9 | **PR6** | Stats redesign (`STATS_KPI_SPEC.md`) | ✅ **Complete 2026-06-01** | `2a6a46a` | — |
 | 10 | **PR7** | Athkar feature net-new (curated sets v1; designer review before screens) | 🔲 Not started | — | PR2 + designer |
@@ -62,7 +62,7 @@ LEGACY-ALIASES: (future canonical name: docs/status/ROADMAP.md — Stage B pendi
 | 13 | **PR-ONBOARD-AB** | Four-variant onboarding A/B/C/D; Variant A must not regress | 🔲 Not started | — | PR2 + designer |
 | 14 | **PR-CLEANUP** | Hardcoded colour sweep (files untouched by other PRs) | 🔲 Not started | — | All others |
 
-**Total PRs:** 14 (+ PR-FONT-FALLBACK as 2b) · **Complete:** 8 (PR1, PR-THEME arc incl PR-FONT-FALLBACK, PR2, PR3, PR4a, PR5, PR6) · **Ready:** 2 (PR8, PR9 — unblocked by PR2 ✅) · **Blocked:** 5 (PR4b, PR7, PR-ONBOARD-AB need designer spec; PR-ADHAN needs audio asset; PR-CLEANUP needs all others first)
+**Total PRs:** 14 (+ PR-FONT-FALLBACK as 2b) · **Complete:** 9 (PR1, PR-THEME arc incl PR-FONT-FALLBACK, PR2, PR3, PR4a, PR4b, PR5, PR6) · **Ready:** 2 (PR8, PR9 — unblocked by PR2 ✅) · **Blocked:** 4 (PR7, PR-ONBOARD-AB need designer spec; PR-ADHAN needs audio asset; PR-CLEANUP needs all others first)
 
 ---
 
@@ -70,7 +70,7 @@ LEGACY-ALIASES: (future canonical name: docs/status/ROADMAP.md — Stage B pendi
 
 | Dimension | Complete | Total | % |
 |-----------|---------|-------|---|
-| v2 Design System PRs | 7 logical (PR1, PR-THEME arc, PR2, PR3, PR4a, PR5, PR6) | 14 | **~50%** |
+| v2 Design System PRs | 8 logical (PR1, PR-THEME arc, PR2, PR3, PR4a, PR4b, PR5, PR6) | 14 | **~57%** |
 | Design system token migration | ✅ Foundation done; design system themes now live in app | Component + screen migration pending | ~20% |
 | Typography migration | Tokens + 88 theme fallbacks + 38 base styles — all correct | Component `.arabic`/`.english` callsites still use Cairo in some files | ~25% |
 | Dark-mode migration | Tokens ✅ + ThemeMode ✅ + AtharDarkTheme now wired ✅ | Component-level color migration pending (PR5+) | ~70% |
@@ -116,7 +116,7 @@ LEGACY-ALIASES: (future canonical name: docs/status/ROADMAP.md — Stage B pendi
 
 | PR | Risk | Why dangerous |
 |----|------|--------------|
-| **PR4b** | High | Calendar rebuild requires `DualDate` value object, new `CalendarCell`, and `DualMonthSwitcher`. Hijri/Gregorian dual display is a significant state change in `CalendarCubit`. Requires designer spec sign-off. |
+| ~~**PR4b**~~ | ~~High~~ | ✅ **Complete** (`65fc417`) — `DualDate` VO, `CalendarMonthCubit`, 5-source activity dots, Hijri boundary labels shipped. |
 | **PR7** | High | Athkar is a net-new feature. Wrong scoping could accidentally merge Athkar into the habits domain. Must gate on designer spec + `isAthkarEnabled` flag. |
 | **PR8** | Medium | `oil_animation.dart` + `fluid_engine.dart` use procedural colours. Migrating to tokens without designer review could change the animation feel. |
 | **PR-ONBOARD-AB** | Medium | Four-variant A/B/C/D onboarding requires strict non-regression on Variant A until the experiment ships. |
@@ -125,13 +125,12 @@ LEGACY-ALIASES: (future canonical name: docs/status/ROADMAP.md — Stage B pendi
 
 ## Recommended Next PR
 
-**PR6 ✅ complete.** Post-PR6 QA sweep due before PR7. Awaiting Hijri 3-letter abbreviation table for PR4b.
+**PR4b ✅ complete (`65fc417`).** Post-PR6 QA sweep still due before PR7.
 
-**Ready to start (unblocked by PR2 ✅, PR5+PR6 ✅):**
+**Ready to start (unblocked by PR2 ✅, PR4b ✅, PR5+PR6 ✅):**
 
 | PR | Entry requirement | Risk |
 |----|-----------------|------|
-| **PR4b** — Calendar Dual-Display | Hijri abbreviation table from designer + post-PR6 QA sweep | High |
 | **PR8** — Focus Oil-Fill | Read `FOCUS_OIL_SPEC.md` first; designer review for procedural colours | Medium |
 | **PR9** — iOS Widget Visual Refresh | None | Low-Medium |
 
@@ -142,9 +141,11 @@ See `ROADMAP_AFTER_PR4A.md` for full next-step guidance.
 
 ## Highest-Risk Remaining Phase
 
-**PR4b — Calendar dual-display rebuild.**
+**PR7 — Athkar feature (net-new).**
 
-Requires creating new value objects, a new widget component, and a `CalendarCubit` extension while keeping the existing Hijri/Gregorian toggle. No designer spec exists yet. This PR must not start until `CALENDAR_FOCUS_REDESIGN.md` is read and designer sign-off is obtained.
+Net-new feature requiring curated sets v1, Athkar cubit, and screen design. Must not start without designer spec + `isAthkarEnabled` gate review. Risk of accidentally merging Athkar domain into habits feature.
+
+~~**PR4b — complete** (`65fc417`). DualDate VO, CalendarMonthCubit, 5-source activity dots, Hijri boundary labels.~~
 
 ---
 
