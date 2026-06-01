@@ -2,7 +2,7 @@
 CANONICAL-FOR: PR sequence, completion %, blockers, accepted risks, token authority, handoff reference table
 OWNER:         Claude Code
 PRECEDENCE:    3 (Tier 0 — SSOT for PR order + %; CHECKPOINT level 2 wins on "current state")
-LAST-UPDATED:  2026-06-01 · PR4b complete (65fc417) + drift-check fix
+LAST-UPDATED:  2026-06-02 · B4 — stale refs to archived files corrected; handoff_v2-2/ → docs/design-specs/
 LOADS-AT:      Tier 0
 LEGACY-ALIASES: IMPLEMENTATION_MASTER_STATUS.md (root)
 CANONICAL-SINCE: 2026-06-01
@@ -17,13 +17,11 @@ CANONICAL-SINCE: 2026-06-01
 **Last updated:** 2026-06-01
 **Updated by:** PR4b complete (65fc417) + drift-check fix
 
-**Program-level view:** `PROGRAM_IMPLEMENTATION_STATUS.md`  
-**Branch strategy:** `MIGRATION_BRANCH_STRATEGY.md`  
-**Roadmap verification:** `MIGRATION_ROADMAP_VERIFICATION.md`  
-**Canonical handoff package:** `handoff_v2-2/`  
+**Branch strategy:** `docs/status/MIGRATION_BRANCH_STRATEGY.md`  
+**Canonical handoff package:** `docs/design-specs/` (B2 mirror, read-only)  
 **Canonical migration branch:** `feat/athar-v2-pr1-tokens-theme` ← do NOT merge to `main` until migration complete  
 **main:** stable legacy baseline at `32e59c3` — do not touch  
-**Authoritative sequence:** `handoff_v2-2/CLAUDE_CODE_PROMPT.md` + `handoff_v2-2/FINAL_PACKAGE_MANIFEST.md`
+**Authoritative sequence:** `docs/design-specs/CLAUDE_CODE_PROMPT.md` + `docs/design-specs/FINAL_PACKAGE_MANIFEST.md`
 
 ---
 

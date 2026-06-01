@@ -2,7 +2,7 @@
 CANONICAL-FOR: Branch state, RULE 1/2 enforcement, Deferred QA bucket
 OWNER:         Claude Code
 PRECEDENCE:    4 (Tier 1 — loads after Tier-0 on any PR arc)
-LAST-UPDATED:  2026-06-01 · PR4b complete (65fc417) + drift-check fix
+LAST-UPDATED:  2026-06-02 · B4 — sign-off artifact paths repointed to docs/history/pr-reports/
 LOADS-AT:      Tier 1
 LEGACY-ALIASES: CURRENT_MIGRATION_STATE.md (root)
 CANONICAL-SINCE: 2026-06-01
@@ -33,8 +33,8 @@ CANONICAL-SINCE: 2026-06-01
 | **PR-THEME-3MODE** — ThemePreference enum + 3-mode picker | `66bc884` | `athar-v2-prtheme-3mode-complete` | ✅ | 2026-05-09 |
 | **PR2** — AdaptiveShell | `81af052` (impl) · `87ab36e` (governance) | `athar-v2-pr2-complete` | ✅ 6/6 CPs | 2026-05-09 |
 | **PR-FONT-FALLBACK** — Cairo fallback on 38 base styles | `3872860` | (part of PR-THEME arc) | ✅ | 2026-06-01 |
-| **PR3** — Prayer Card Refresh | `1cd4f80` | (in branch) | ✅ `PR3_SIGNOFF.md` | 2026-06-01 |
-| **PR-THEME FINAL** — Wire AtharLightTheme/AtharDarkTheme + 88 fallbacks + RTL drawer | `bfaf863` | `athar-v2-prtheme-complete-final` | ✅ `VERIFICATION_PR_THEME.md` | 2026-06-01 |
+| **PR3** — Prayer Card Refresh | `1cd4f80` | (in branch) | ✅ `docs/history/pr-reports/PR3_SIGNOFF.md` | 2026-06-01 |
+| **PR-THEME FINAL** — Wire AtharLightTheme/AtharDarkTheme + 88 fallbacks + RTL drawer | `bfaf863` | `athar-v2-prtheme-complete-final` | ✅ `docs/history/pr-reports/VERIFICATION_PR_THEME.md` | 2026-06-01 |
 | **PR4a** — Calendar Visual Refresh | `85ada1e` | (in branch) | ✅ code signed off · 2 device-QA gates deferred | 2026-06-01 |
 | **PR5** — Accessibility Settings | `6154565` | (in branch) | ✅ `flutter analyze` 0 issues · AR copy designer-approved | 2026-06-01 |
 | **PR6** — Stats Redesign | `2a6a46a` | (in branch) | ✅ `flutter analyze` 0 issues · AR visual QA deferred to final sweep | 2026-06-01 |
@@ -73,10 +73,10 @@ CANONICAL-SINCE: 2026-06-01
 | PR | Sign-off artifact |
 |----|------------------|
 | PR1 | Phase tracker + docs/status/ROADMAP.md updated |
-| PR-THEME full arc | `VERIFICATION_PR_THEME.md` · `PR_THEME_FINAL_REPORT.md` |
-| PR2 | `PR2_CHECKPOINTS.md` (6/6 CPs) · `PR2_PROGRESS_REPORT.md` |
-| PR3 | `PR3_SIGNOFF.md` |
-| PR4a | Code signed off (85ada1e) · `VERIFICATION_PR4A.md` · 2 device-QA gates deferred to physical-device pass |
+| PR-THEME full arc | `docs/history/pr-reports/VERIFICATION_PR_THEME.md` · `docs/history/pr-reports/PR_THEME_FINAL_REPORT.md` |
+| PR2 | `docs/history/pr-reports/PR2_CHECKPOINTS.md` (6/6 CPs) · `docs/history/pr-reports/PR2_PROGRESS_REPORT.md` |
+| PR3 | `docs/history/pr-reports/PR3_SIGNOFF.md` |
+| PR4a | Code signed off (85ada1e) · `docs/history/pr-reports/VERIFICATION_PR4A.md` · 2 device-QA gates deferred to physical-device pass |
 
 ---
 

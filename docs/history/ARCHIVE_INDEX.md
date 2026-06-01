@@ -1,7 +1,7 @@
 <!--
 CANONICAL-FOR: Archive history — provenance of all docs moved out of active tree
 OWNER:         Claude Code
-LAST-UPDATED:  2026-06-02 · B3 archive
+LAST-UPDATED:  2026-06-02 · B4 — 6 root verification files moved + refs repointed
 LOADS-AT:      Tier 3 (historical lookup only)
 -->
 
@@ -46,6 +46,12 @@ For active documentation, see `docs/ai/`, `docs/status/`, `docs/design-specs/`.
 | `QUESTIONS_PR3.md` | root | 2026-06-01 | PR3 complete |
 | `SCREENSHOTS_PR3.md` | docs/pr3-artifacts/ | 2026-06-01 | PR3 complete; historical screenshots |
 | `VERIFICATION_PR3.md` | docs/pr3-artifacts/ | 2026-06-01 | PR3 complete; superseded by PR3_SIGNOFF.md |
+| `PR3_SIGNOFF.md` | root | 2026-06-02 | B4 · PR3 sign-off artifact; MIGRATION_STATE ref repointed → docs/history/pr-reports/ |
+| `PR4A_FINAL_REPORT.md` | root | 2026-06-02 | B4 · PR4a final report; governance doc ref repointed |
+| `PR_THEME_FINAL_REPORT.md` | root | 2026-06-02 | B4 · PR-THEME arc sign-off artifact; MIGRATION_STATE ref repointed → docs/history/pr-reports/ |
+| `PR_THEME_3MODE_FINAL_REPORT.md` | root | 2026-06-02 | B4 · PR-THEME-3MODE final report; no direct live ref (arc closure) |
+| `VERIFICATION_PR_THEME.md` | root | 2026-06-02 | B4 · PR-THEME verification; MIGRATION_STATE + phase_tracker + current_project_status refs repointed |
+| `VERIFICATION_PR4A.md` | root | 2026-06-02 | B4 · PR4a verification; MIGRATION_STATE ref repointed |
 
 ---
 

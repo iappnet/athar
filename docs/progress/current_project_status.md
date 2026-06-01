@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Narrative progress log — completed PRs with evidence
+OWNER:         Claude Code
+PRECEDENCE:    6 (Tier 3 — NEVER auto-load; historical narrative)
+LAST-UPDATED:  2026-06-02 · B4 — mandatory header added; archived paths corrected
+LOADS-AT:      Tier 3 (never)
+-->
+
 # Athar — Current Project Status
 _Last updated: 2026-06-01 (PR-THEME FINAL complete — AtharLightTheme/AtharDarkTheme wired, 88 fontFamilyFallback, RTL drawer, 0 analyzer issues, 45/45 tests)_
 
@@ -92,7 +100,7 @@ _Last updated: 2026-06-01 (PR-THEME FINAL complete — AtharLightTheme/AtharDark
 - `app.dart` uses exhaustive Dart 3 `switch` expression
 - `build_runner` + `gen-l10n` run; `darkModeDesc` removed from ARBs
 - `flutter analyze`: 0 issues | `flutter test`: 29/29
-- Theme architecture: **STABLE** — see `ARCHITECTURE_STABILIZATION_REPORT.md`
+- Theme architecture: **STABLE** — see `docs/history/session-reports/ARCHITECTURE_STABILIZATION_REPORT.md` (archived)
 - Tag: `athar-v2-prtheme-3mode-complete`
 
 ### PR2 — AdaptiveShell — COMPLETE ✅
@@ -119,7 +127,7 @@ Analyzer: 0 issues · Tests: 29/29
 - 16/16 golden tests: AR + EN × 8 scenarios (upcoming, active, nafl-duha, expanded, loading, permission-denied, SE-375×667, progress-50%)
 - Shadow blurRadius 20/8 accepted (canonical, locked); shadow colors correct
 - `flutter analyze`: 0 · `flutter test`: 45/45
-- Verified: `CONSOLIDATED_REPORT_PR3.md` + `PR3_SIGNOFF.md`
+- Verified: `docs/history/pr-reports/CONSOLIDATED_REPORT_PR3.md` + `docs/history/pr-reports/PR3_SIGNOFF.md`
 
 ### PR-THEME FINAL — Complete ✅ (commit `bfaf863`, tag `athar-v2-prtheme-complete-final`)
 
@@ -130,22 +138,22 @@ Analyzer: 0 issues · Tests: 29/29
 - Deleted: `app_theme.dart` (legacy stub), `athar_theme.dart` (empty stub)
 - Cleaned: `themes.dart` barrel
 - `flutter analyze`: 0 · `flutter test`: 45/45 · PR3 goldens: 16/16 unchanged
-- Verification: `VERIFICATION_PR_THEME.md`
+- Verification: `docs/history/pr-reports/VERIFICATION_PR_THEME.md`
 
 ### PR4a — Calendar Visual Refresh ✅ Complete 2026-06-01
 
-Commit `85ada1e`. Tag `athar-v2-pr4a-complete`. RULE 1 fix, token migration, today state, RTL. 2 device-QA gates in Deferred QA Bucket (`CURRENT_MIGRATION_STATE.md`).
+Commit `85ada1e`. Tag `athar-v2-pr4a-complete`. RULE 1 fix, token migration, today state, RTL. 2 device-QA gates in Deferred QA Bucket (see `docs/status/MIGRATION_STATE.md`).
 
 ### Next PR
 
 > **Not canonical for this domain.**
-> Source of truth: `IMPLEMENTATION_MASTER_STATUS.md` (PR sequence + %).
+> Source of truth: `docs/status/ROADMAP.md` (PR sequence + %).
 > This section is a pointer only — do not restate PR status here.
 > Last reconciled: 2026-06-01
 >
 > **PR5 — Accessibility Settings:** COMPLETE (`6154565`, 2026-06-01)
 > **PR6 — Stats Redesign:** COMPLETE (`2a6a46a`, 2026-06-01)
-> **Next:** Post-PR6 QA sweep → PR4b (awaiting Hijri abbreviation table). See `ROADMAP_AFTER_PR4A.md`.
+> **Next:** PR8 or PR9 (both unblocked). See `docs/status/ROADMAP.md` + `docs/status/NEXT_STEPS.md`.
 
 ---
 

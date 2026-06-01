@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Legacy Phase 0–5 track + v2 PR narrative history
+OWNER:         Claude Code
+PRECEDENCE:    6 (Tier 3 — NEVER auto-load; historical narrative)
+LAST-UPDATED:  2026-06-02 · B4 — mandatory header added; archived paths corrected
+LOADS-AT:      Tier 3 (never)
+-->
+
 # Athar Phase Tracker
 
 _Last updated: 2026-05-09 (PR-THEME-3MODE complete — theme architecture stabilized)_
@@ -133,7 +141,7 @@ Remaining:
 
 _Authority: `handoff_v2-2/CLAUDE_CODE_PROMPT.md` + `handoff_v2-2/FINAL_PACKAGE_MANIFEST.md`_  
 _Branch: `feat/athar-v2-pr1-tokens-theme` (long-running migration branch — do NOT merge to `main` until complete)_  
-_Roadmap verified 2026-05-09 — see `MIGRATION_ROADMAP_VERIFICATION.md` for corrected canonical sequence_
+_Roadmap verified 2026-05-09 — see `docs/history/session-reports/MIGRATION_ROADMAP_VERIFICATION.md` (archived) for corrected canonical sequence_
 
 ### PR1 — Tokens & Theme
 
@@ -159,7 +167,7 @@ Full arc delivered across 4 commits:
 - `3872860` PR-FONT-FALLBACK — Cairo fallback on all 38 AtharTypography base styles
 - `bfaf863` Wire AtharLightTheme/AtharDarkTheme; 88 fontFamilyFallback; RTL DrawerTheme
 
-`flutter analyze`: 0 issues · `flutter test`: 45/45 · Verification: `VERIFICATION_PR_THEME.md`
+`flutter analyze`: 0 issues · `flutter test`: 45/45 · Verification: `docs/history/pr-reports/VERIFICATION_PR_THEME.md`
 
 ### PR-THEME-3MODE — ThemePreference enum (3-option picker)
 
@@ -171,7 +179,7 @@ Full arc delivered across 4 commits:
 - `app.dart` uses exhaustive Dart 3 `switch` expression
 - `flutter analyze`: 0 issues | `flutter test`: 29/29
 - Theme architecture: **STABLE**
-- Full details: `ARCHITECTURE_STABILIZATION_REPORT.md`
+- Full details: `docs/history/session-reports/ARCHITECTURE_STABILIZATION_REPORT.md` (archived)
 
 ---
 
@@ -207,7 +215,7 @@ Delivered as part of the PR-THEME arc.
 
 Forest gradient (`#0F3D2E → #1A5A45`), 44pt countdown (weight 300), calm active/post-prayer states.  
 16/16 golden tests pass (AR + EN × 8 scenarios). Shadow blurRadius 20/8 accepted (canonical).  
-`flutter analyze`: 0 issues · `flutter test`: 45/45 · Sign-off: `PR3_SIGNOFF.md`
+`flutter analyze`: 0 issues · `flutter test`: 45/45 · Sign-off: `docs/history/pr-reports/PR3_SIGNOFF.md`
 
 ---
 
@@ -215,11 +223,11 @@ Forest gradient (`#0F3D2E → #1A5A45`), 44pt countdown (weight 300), calm activ
 
 **PR4a ✅ Complete** (`athar-v2-pr4a-complete`, 2026-06-01) — calendar visual refresh, RULE 1 fix, token migration, RTL. 2 device-QA gates in Deferred QA Bucket.
 
-AdaptiveShell Layer 1 foundation: ✅ Complete — verified `ADAPTIVESHELL_FOUNDATION_AUDIT.md` 2026-06-01.  
+AdaptiveShell Layer 1 foundation: ✅ Complete — verified `docs/history/session-reports/ADAPTIVESHELL_FOUNDATION_AUDIT.md` (archived) 2026-06-01.  
 PR-IPAD-LAYER2: umbrella tracker only — each screen's tablet layout ships in its owning feature PR (see `IPAD_LAYER2_OWNERSHIP_MAP.md`).  
 PR-IPAD-LAYER3: standalone deferred sweep — not before all Layer 2 screens are stable (see `IPAD_LAYER3_DEFERRED_AFFORDANCES.md`).
 
-> **PR ordering and status live in `IMPLEMENTATION_MASTER_STATUS.md` (SINGLE SOURCE OF TRUTH). See `ROADMAP_AFTER_PR4A.md` for next-step guidance.**
+> **PR ordering and status live in `docs/status/ROADMAP.md` (SINGLE SOURCE OF TRUTH). See `docs/status/NEXT_STEPS.md` for next-step guidance.**
 
 ---
 

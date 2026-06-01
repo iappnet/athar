@@ -28,7 +28,7 @@ LOADS-AT:      Tier 3
 
 | Phase | Status | Commit |
 |-------|--------|--------|
-| B1 — Tombstone core files to clean names | ✅ Complete | (this commit) |
-| B2 — Design-spec mirror | 🔲 Pending approval |  |
-| B3 — Archive history | 🔲 Pending approval |  |
-| B4 — Verify | 🔲 Pending approval |  |
+| B1 — Tombstone core files to clean names | ✅ Complete | `8874378` |
+| B2 — Design-spec mirror (24 specs → docs/design-specs/; PRAYER_CARD v2.2 canonical) | ✅ Complete | `0f9b55f` |
+| B3 — Archive history (~82 files → docs/history/; 2 deleted) | ✅ Complete | `64d1b47` |
+| B4 — Verify + root cleanup (6 root files moved; 10-item checklist; all refs corrected) | ✅ Complete | (this commit) |

@@ -187,7 +187,7 @@ This converts "which copy is canonical?" from a recurring judgment call into a m
 | Rule | Example (good) | Example (avoid) |
 |---|---|---|
 | **Living docs use stable, intent names** — never a PR number or date | `ROADMAP.md`, `NEXT_STEPS.md` | `ROADMAP_AFTER_PR4A.md` |
-| **History snapshots are stamped** — PR tag and/or date | `pr-reports/PR4A_FINAL_REPORT.md`, `change-logs/2026-06-01_PR_THEME.md` | `FINAL_REPORT.md` (ambiguous) |
+| **History snapshots are stamped** — PR tag and/or date | `docs/history/pr-reports/PR4A_FINAL_REPORT.md`, `docs/history/change-logs/CHANGE_LOG_2026-06-01_PR_THEME_COMPLETE.md` | `FINAL_REPORT.md` (ambiguous) |
 | **One concept = one filename across the tree** | `KNOWN_PROBLEMS.md` (one) | two files both tracking bugs |
 | **Specs named by feature, not by PR** | `STATS_KPI_SPEC.md` | `PR6_SPEC.md` (PR numbers churn) |
 | **Audits named by feature + `_audit_` prefix** | `_audit_stats.md` | `stats_notes.md` |
