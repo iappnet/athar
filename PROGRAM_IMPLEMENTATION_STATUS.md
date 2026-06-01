@@ -42,6 +42,8 @@
 | **PR8** | Focus Oil-Fill Animation | Oil-fill screen per `FOCUS_OIL_SPEC.md`; procedural colours must be reviewed before token migration | 🔲 Not started | PR2 | Must read: `FOCUS_OIL_SPEC.md`; designer review for `oil_animation.dart` colours |
 | **PR9** | iOS Widget Visual Refresh | Visual-only update of all 3 iOS widgets to v2 design (infra and interactions already complete) | 🔲 Not started | PR2 | None |
 | **PR-ONBOARD-AB** | Onboarding A/B/C/D | Four-variant onboarding experiment; Variant A must not regress until experiment ships | 🔲 Not started | PR2 + designer approval | Must read: `ONBOARDING_AB_SPEC.md`; designer approval required |
+| **PR-IPAD-LAYER2** | Per-Screen Tablet Layouts | Add tablet branches to Dashboard (2/3-col), Tasks (master-detail), Habits (grid+pane), Settings (two-pane), Focus (720pt cap), Spaces (detail pane). Calendar covered by PR4a/PR4b; Stats by PR6; Onboarding by PR-ONBOARD-AB. | 🔲 Not started | PR2 ✅ (infrastructure done) | Each screen is independent; can be added within its feature PR or batched here |
+| **PR-IPAD-LAYER3** | iPad Affordances Sweep | Hover states (MouseRegion), keyboard shortcuts (`athar_shortcuts.dart`), CupertinoContextMenu, drag-and-drop (internal + external), Apple Pencil / Scribble | 🔲 Not started | PR-IPAD-LAYER2 | All Layer 2 layouts must exist first |
 | **PR-CLEANUP** | Hardcoded Colour Sweep | Migrate remaining ~35 `Color(0xFF...)` and ~118 `Colors.*` callsites to design tokens | 🔲 Not started | All others | Cannot start until all component PRs are merged |
 
 ---
@@ -334,8 +336,8 @@ PR1, PR-THEME (full arc), PR2, and PR3 are all complete. PR4a (Calendar Visual R
 | Metric | Value |
 |--------|-------|
 | **Total legacy phases** | 6 (Phases 0–5) |
-| **Total v2 design system PRs** | 14 |
-| **Total program milestones** | 20 |
+| **Total v2 design system PRs** | 16 (14 original + PR-IPAD-LAYER2 + PR-IPAD-LAYER3 added by PR2 scope audit) |
+| **Total program milestones** | 22 |
 | **Legacy phases complete** | 5 of 6 (Phase 5 device-gated) |
 | **v2 PRs complete** | 4 of 14 (PR1 + PR-THEME arc + PR2 + PR3) |
 | **v2 PRs ready to start** | 5 (PR4a, PR5, PR6, PR8, PR9) |

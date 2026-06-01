@@ -115,7 +115,11 @@ Ready alternatives (no blocking prerequisites):
 | PR8 | 🔲 Ready | Read `FOCUS_OIL_SPEC.md` |
 | PR9 | 🔲 Ready | None |
 | PR-ONBOARD-AB | 🔲 Blocked | PR2 ✅ (done) + designer approval + read `ONBOARDING_AB_SPEC.md` |
+| **PR-IPAD-LAYER2** | 🔲 Ready | PR2 ✅ infrastructure done; per-screen tablet layouts (Dashboard 2/3-col, Tasks master-detail, Habits grid+pane, Settings two-pane, Focus cap, Spaces detail). Can be added per-feature or batched. |
+| **PR-IPAD-LAYER3** | 🔲 Blocked | PR-IPAD-LAYER2; Hover + keyboard shortcuts + context menus + drag-and-drop + Pencil |
 | PR-CLEANUP | 🔲 Blocked | All other PRs complete |
+
+_Note: PR-IPAD-LAYER2 and PR-IPAD-LAYER3 were identified by the 2026-06-01 PR2 scope reconciliation audit. They correspond to IPAD_OPTIMIZATION.md Layer 2 and Layer 3 respectively, which were never part of PR2's defined scope (PR2 = Layer 1 only)._
 
 ---
 
