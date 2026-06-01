@@ -13,18 +13,18 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-01 (Stage B1 — tombstone core files to clean names)  
-**Commit:** `8874378` docs(restructure): B1 — tombstone core files to clean names  
-**Note:** B1 complete. 4 files tombstoned: IMPLEMENTATION_MASTER_STATUS.md → docs/status/ROADMAP.md; CURRENT_MIGRATION_STATE.md → docs/status/MIGRATION_STATE.md; ROADMAP_AFTER_PR4A.md → docs/status/NEXT_STEPS.md; docs/ai/FILE_INDEX.md merged into docs/ai/FEATURE_INDEX.md. CLAUDE.md, CONTEXT_TIERS.md, CHECKPOINT.md repointed. Awaiting approval for B2.
+**Timestamp:** 2026-06-02 (Stage B2 — single design-spec mirror)  
+**Commit:** `0f9b55f` docs(restructure): B2 — single design-spec mirror  
+**Note:** B2 complete. 24 specs in docs/design-specs/ (canonical mirror). PRAYER_CARD_SPEC reconciled — v2.2 from designer is canonical; two stale copies archived. WIDGET_INDEX.md: prayer pushPrayerData + WidgetKit.reloadTimelines documented. Awaiting approval for B3.
 
 ---
 
 ## CURRENT PR + PHASE
 
 **Active PR:** None — Stage B restructure in progress  
-**Last completed:** PR4b — Calendar Dual-Display (`65fc417`) ✅; B1 complete (`8874378`) ✅  
-**Phase:** Stage B documentation restructure. B1 done; awaiting approval for B2.  
-**Next:** B2 approval, then PR8 (Focus Oil-Fill) or PR9 (iOS Widget Refresh) — see docs/status/ROADMAP.md.
+**Last completed:** PR4b — Calendar Dual-Display (`65fc417`) ✅; B1 complete (`8874378`) ✅; B2 complete (`0f9b55f`) ✅  
+**Phase:** Stage B documentation restructure. B1 + B2 done; awaiting approval for B3.  
+**Next:** B3 approval (archive history), then PR8 (Focus Oil-Fill) or PR9 (iOS Widget Refresh) — see docs/status/ROADMAP.md.
 
 ---
 
@@ -87,8 +87,8 @@ LOADS-AT:      Tier 0
 
 ## NEXT ACTION
 
-**Stage B1 complete** (`8874378`). Core files tombstoned; canonical paths active.  
-**Awaiting approval for B2** — design-spec mirror. Do NOT begin B2 until user approves.  
+**Stage B2 complete** (`0f9b55f`). design-specs mirror finalized; PRAYER_CARD v2.2 canonical.  
+**Awaiting approval for B3** — archive history cleanup. Do NOT begin B3 until user approves.  
 **Deferred QA sweep** runs at end of roadmap, after the last feature PR. No feature PR is gated. Nothing ships to users/TestFlight until sweep passes. Bucket: 5 items (see docs/status/MIGRATION_STATE.md).
 
 ---
