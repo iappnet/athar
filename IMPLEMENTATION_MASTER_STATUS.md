@@ -125,7 +125,7 @@ LEGACY-ALIASES: (future canonical name: docs/status/ROADMAP.md — Stage B pendi
 
 ## Recommended Next PR
 
-**PR4b ✅ complete (`65fc417`).** Post-PR6 QA sweep still due before PR7.
+**PR4b ✅ complete (`65fc417`).** Deferred QA sweep runs at end of roadmap (after last feature PR).
 
 **Ready to start (unblocked by PR2 ✅, PR4b ✅, PR5+PR6 ✅):**
 

@@ -28,8 +28,7 @@ LOADS-AT:      Tier 1
 
 ## Active PR
 
-**None.** PR5 (`6154565`) and PR6 (`2a6a46a`) are both complete (2026-06-01).  
-Post-PR6 QA sweep is due before PR7. PR4b awaiting Hijri 3-letter abbreviation table.
+**None.** PR5 (`6154565`), PR6 (`2a6a46a`), and PR4b (`65fc417`) are all complete (2026-06-01).
 
 ---
 
@@ -39,10 +38,10 @@ Post-PR6 QA sweep is due before PR7. PR4b awaiting Hijri 3-letter abbreviation t
 |----|--------|------------------|
 | ~~PR5 — Accessibility Settings~~ | ✅ COMPLETE `6154565` | — |
 | ~~PR6 — Stats Redesign~~ | ✅ COMPLETE `2a6a46a` | — |
-| Post-PR6 QA sweep | 🔲 Due before PR7 | Physical device required |
-| PR4b — Calendar Dual-Display | 🔲 BLOCKED | Hijri abbreviation table from designer |
-| PR8 — Focus Oil-Fill | After QA sweep | Read `FOCUS_OIL_SPEC.md`; designer review |
-| PR9 — iOS Widget Visual Refresh | After QA sweep | None |
+| ~~PR4b — Calendar Dual-Display~~ | ✅ COMPLETE `65fc417` | — |
+| PR8 — Focus Oil-Fill | 🔲 Ready | Read `FOCUS_OIL_SPEC.md`; designer review |
+| PR9 — iOS Widget Visual Refresh | 🔲 Ready | None |
+| Deferred QA sweep | 🔲 End of roadmap | After last feature PR; gates TestFlight/release |
 
 ---
 
@@ -50,7 +49,7 @@ Post-PR6 QA sweep is due before PR7. PR4b awaiting Hijri 3-letter abbreviation t
 
 | PR | Blocker |
 |----|---------|
-| PR4b — Calendar Dual-Display | DESIGN-APPROVED ✅; gated behind PR5 → PR6 → post-PR6 QA sweep. No Dart yet. |
+| ~~PR4b — Calendar Dual-Display~~ | ✅ COMPLETE `65fc417` — unblocked. |
 | PR-ADHAN | Audio asset from designer (not received) |
 | PR7 — Athkar Feature | Designer review required |
 | PR-ONBOARD-AB | Designer approval + read `ONBOARDING_AB_SPEC.md` |
@@ -78,14 +77,13 @@ Design authority approved **Option (b): new `CalendarMonthCubit`** for month-lev
 | `DualMonthSwitcher` | DEFERRED. Keep chevron `_changeMonth(±1)` in PR4b. |
 | Numeral position | Authority: `CALENDAR_CELL_SPEC.md` (top-center / bottom-center). `CALENDAR_FOCUS_REDESIGN.md` "top-right/bottom-left" superseded. |
 
-**PR4b is BLOCKED — gated behind PR5 → PR6 → post-PR6 QA sweep.**
+~~**PR4b is BLOCKED — gated behind PR5 → PR6 → post-PR6 QA sweep.**~~ ✅ PR4b complete `65fc417`.
 
 ---
 
 ## Deferred QA Bucket
 
-**Rule:** First real QA sweep occurs **AFTER PR6, BEFORE PR7**.  
-**Hard ceiling:** If the bucket reaches **10 items before PR6 ships**, a forced intermediate sweep occurs immediately.
+**Rule:** Deferred QA sweep runs at the **END of the roadmap, after the last feature PR**. No feature PR is gated by it. Nothing ships to a real user or TestFlight until the sweep passes.
 
 | ID | Description | Origin PR | Candidate fix |
 |----|-------------|-----------|--------------|

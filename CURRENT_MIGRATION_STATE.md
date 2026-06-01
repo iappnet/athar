@@ -80,7 +80,7 @@ LOADS-AT:      Tier 1
 
 ## Active PR
 
-**None.** PR4b complete (`65fc417`). Post-PR6 QA sweep still due before PR7. See `IMPLEMENTATION_MASTER_STATUS.md` for full status.
+**None.** PR4b complete (`65fc417`). See `IMPLEMENTATION_MASTER_STATUS.md` for full status.
 
 ---
 
@@ -137,7 +137,7 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 ## Deferred QA Bucket
 
 **Governance rules:**
-- First real QA sweep: **AFTER PR6, BEFORE PR7.** Hard ceiling: if bucket reaches **10 items before PR6 ships**, a forced intermediate sweep occurs immediately.
+- QA sweep timing: **END of roadmap, after the last feature PR.** No feature PR is gated by this sweep. Nothing ships to a real user or TestFlight until the sweep passes.
 - All fixes in this bucket are **UNVERIFIED** — logical hypotheses, confirmed only on a physical device. Do NOT apply any fix until device validation.
 - To add an item: assign an ID (PR origin + sequential number), describe the pass condition, and write the candidate fix as a hypothesis.
 
