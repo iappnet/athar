@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-01 · QA sweep timing governance fix (82d9e53)
+LAST-UPDATED:  2026-06-02 · PR7 complete (0b8fe34)
 LOADS-AT:      Tier 0
 -->
 
@@ -14,7 +14,7 @@ LOADS-AT:      Tier 0
 ## LAST UPDATED
 
 **Timestamp:** 2026-06-02 (PR7 — COMPLETE ✅)  
-**Commit:** `TBD` feat(PR7): Athkar v1  
+**Commit:** `0b8fe34` feat(PR7): Athkar v1  
 **Note:** PR7 Athkar v1 complete. AthkarSetScreen (gated), DhikrReaderScreen (focus+list), Dashboard card, /athkar route, DhikrCubit in MultiBlocProvider, Settings reminders section, DhikrComplete chokepoint. 5 conformance fixes applied (gate, 56sp counter, FittedBox, RTL swipe, AtharColors tokens). AR visual QA → final sweep pending.
 
 ---
@@ -22,7 +22,7 @@ LOADS-AT:      Tier 0
 ## CURRENT PR + PHASE
 
 **Active PR:** PR8 — Focus / Oil next  
-**Last completed:** PR7 (`TBD`) ✅; PR4b (`65fc417`) ✅; B1–B4 ✅  
+**Last completed:** PR7 (`0b8fe34`) ✅; PR4b (`65fc417`) ✅; B1–B4 ✅  
 **Phase:** PR7 COMPLETE. AR screenshot review deferred to final sweep (per designer).  
 **Next:** PR8 — Focus mode / Oil spec, or final sweep screenshots first.
 

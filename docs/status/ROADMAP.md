@@ -55,13 +55,13 @@ CANONICAL-SINCE: 2026-06-01
 | 7 | **PR4b** | Calendar dual-display (`DualDate` VO + `CalendarCell` + `DualMonthSwitcher`) | ✅ **Complete 2026-06-01** | `65fc417` | — |
 | 8 | **PR5** | Settings: Accessibility section (Reduce Motion, Gyroscope, Eastern Numerals) | ✅ **Complete 2026-06-01** | `6154565` | — |
 | 9 | **PR6** | Stats redesign (`STATS_KPI_SPEC.md`) | ✅ **Complete 2026-06-01** | `2a6a46a` | — |
-| 10 | **PR7** | Athkar feature net-new (curated sets v1; designer review before screens) | 🔲 Not started | — | PR2 + designer |
+| 10 | **PR7** | Athkar feature net-new (curated sets v1; designer review before screens) | ✅ **Complete 2026-06-02** | `0b8fe34` | — |
 | 11 | **PR8** | Focus screen oil-fill (`FOCUS_OIL_SPEC.md`; procedural colour carve-out) | 🔲 Not started | — | PR2 |
 | 12 | **PR9** | iOS widgets visual refresh (infra complete; visuals only) | 🔲 Not started | — | PR2 |
 | 13 | **PR-ONBOARD-AB** | Four-variant onboarding A/B/C/D; Variant A must not regress | 🔲 Not started | — | PR2 + designer |
 | 14 | **PR-CLEANUP** | Hardcoded colour sweep (files untouched by other PRs) | 🔲 Not started | — | All others |
 
-**Total PRs:** 14 (+ PR-FONT-FALLBACK as 2b) · **Complete:** 9 (PR1, PR-THEME arc incl PR-FONT-FALLBACK, PR2, PR3, PR4a, PR4b, PR5, PR6) · **Ready:** 2 (PR8, PR9 — unblocked by PR2 ✅) · **Blocked:** 4 (PR7, PR-ONBOARD-AB need designer spec; PR-ADHAN needs audio asset; PR-CLEANUP needs all others first)
+**Total PRs:** 14 (+ PR-FONT-FALLBACK as 2b) · **Complete:** 10 (PR1, PR-THEME arc incl PR-FONT-FALLBACK, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7) · **Ready:** 2 (PR8, PR9 — unblocked) · **Blocked:** 3 (PR-ONBOARD-AB needs designer spec; PR-ADHAN needs audio asset; PR-CLEANUP needs all others first)
 
 ---
 
@@ -69,7 +69,7 @@ CANONICAL-SINCE: 2026-06-01
 
 | Dimension | Complete | Total | % |
 |-----------|---------|-------|---|
-| v2 Design System PRs | 8 logical (PR1, PR-THEME arc, PR2, PR3, PR4a, PR4b, PR5, PR6) | 14 | **~57%** |
+| v2 Design System PRs | 9 logical (PR1, PR-THEME arc, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7) | 14 | **~64%** |
 | Design system token migration | ✅ Foundation done; design system themes now live in app | Component + screen migration pending | ~20% |
 | Typography migration | Tokens + 88 theme fallbacks + 38 base styles — all correct | Component `.arabic`/`.english` callsites still use Cairo in some files | ~25% |
 | Dark-mode migration | Tokens ✅ + ThemeMode ✅ + AtharDarkTheme now wired ✅ | Component-level color migration pending (PR5+) | ~70% |
@@ -140,10 +140,11 @@ See `docs/status/NEXT_STEPS.md` for full next-step guidance.
 
 ## Highest-Risk Remaining Phase
 
-**PR7 — Athkar feature (net-new).**
+**PR8 — Focus Oil-Fill.**
 
-Net-new feature requiring curated sets v1, Athkar cubit, and screen design. Must not start without designer spec + `isAthkarEnabled` gate review. Risk of accidentally merging Athkar domain into habits feature.
+Procedural colours in `oil_animation.dart` / `fluid_engine.dart` require designer review before token migration — wrong migration could alter animation feel.
 
+~~**PR7 — complete** (`0b8fe34`). AthkarSetScreen, DhikrReaderScreen (focus+list), Dashboard card, DhikrComplete chokepoint, Settings reminders, 4 Athkar category tokens.~~  
 ~~**PR4b — complete** (`65fc417`). DualDate VO, CalendarMonthCubit, 5-source activity dots, Hijri boundary labels.~~
 
 ---

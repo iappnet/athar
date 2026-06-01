@@ -39,6 +39,7 @@ CANONICAL-SINCE: 2026-06-01
 | **PR5** — Accessibility Settings | `6154565` | (in branch) | ✅ `flutter analyze` 0 issues · AR copy designer-approved | 2026-06-01 |
 | **PR6** — Stats Redesign | `2a6a46a` | (in branch) | ✅ `flutter analyze` 0 issues · AR visual QA deferred to final sweep | 2026-06-01 |
 | **PR4b** — Calendar Dual-Display | `65fc417` | (in branch) | ✅ 12/12 spec items PASS · AR visual QA deferred to final sweep | 2026-06-01 |
+| **PR7** — Athkar v1 | `0b8fe34` | (in branch) | ✅ `flutter analyze` 0 new issues · 5 conformance fixes applied · AR visual QA deferred to final sweep | 2026-06-02 |
 
 ---
 
@@ -82,18 +83,17 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Active PR
 
-**None.** PR4b complete (`65fc417`). See `docs/status/ROADMAP.md` for full status.
+**None.** PR7 complete (`0b8fe34`). See `docs/status/ROADMAP.md` for full status.
 
 ---
 
 ## Current Working Tree State
 
 ```
-flutter analyze → 0 issues
-flutter test → 45/45 passed (16 golden + 28 stats + 1 config)
+flutter analyze → 2 pre-existing issues (project_details_page.dart, task_page.dart — unrelated to PR7)
 ```
 
-All changes committed and pushed. Last commit: `65fc417` feat(PR4b): dual Hijri/Gregorian calendar.
+All changes committed and pushed. Last commit: `0b8fe34` feat(PR7): Athkar v1.
 
 ---
 
