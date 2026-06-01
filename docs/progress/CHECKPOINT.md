@@ -5,18 +5,18 @@
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-01 (PR5 complete)  
-**Commit:** `6154565` feat(PR5): accessibility settings  
-**Tag:** `athar-v2-pr4a-complete` → `1beff60` ✅ pushed to remote
+**Timestamp:** 2026-06-01 (PR6 complete)  
+**Commit:** `2a6a46a` feat(PR6): stats redesign — KPI cards, period pills, token migration  
+**Note:** AR visual QA deferred to final sweep (post-PR6, pre-PR7)
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** PR5 — Accessibility Settings · PR4b — Calendar Dual-Display (design-approved, scheduled)  
-**Last completed:** PR5 — Accessibility Settings (committing now)  
-**Phase:** PR5 COMPLETE — ARB copy approved + applied, flutter analyze clean, committed + pushed.  
-**Exact step:** PR5 committed. Awaiting go-ahead to start PR6.
+**Active PR:** Awaiting PR4b Hijri abbreviation table (unblocks PR4b)  
+**Last completed:** PR6 — Stats Redesign (`2a6a46a`) ✅  
+**Phase:** Between PRs — post-PR6 QA sweep due before PR7 starts  
+**Exact step:** PR6 committed + pushed. AR visual QA deferred to final device sweep. Awaiting Hijri abbreviation table to start PR4b.
 
 ---
 
@@ -70,8 +70,8 @@
 
 ## NEXT ACTION
 
-**PR6:** Next in sequence — await go-ahead.  
-**PR4b:** Design-approved, scheduled. Gated behind PR5 → PR6 → QA sweep. Do NOT start Dart yet.
+**Post-PR6 QA sweep** must run before PR7. Deferred QA bucket: 5 items (see CURRENT_MIGRATION_STATE.md).  
+**PR4b:** Design-approved. Gated behind post-PR6 QA sweep. Awaiting Hijri 3-letter abbreviation table from designer — do NOT start Dart until table arrives and sweep is done.
 
 ---
 
