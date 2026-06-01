@@ -6,7 +6,7 @@
 ## LAST UPDATED
 
 **Timestamp:** 2026-06-01 (governance closure session)  
-**Commit:** `1beff60` (PR4a sign-off) + governance docs commit (see below — pending)  
+**Commit:** `ac0e4fc` (governance closure — all 9 gap items resolved)  
 **Tag:** `athar-v2-pr4a-complete` → `1beff60` ✅ pushed to remote
 
 ---
@@ -66,4 +66,4 @@ Before PR5: no additional reads required. Say "Start PR5" to begin.
 **Loose files:** None (PR3 artefacts moved to `docs/pr3-artifacts/` and committed)  
 **flutter analyze:** 0 issues (verified 2026-06-01)  
 **flutter test:** 45/45 passed (verified 2026-06-01)  
-**Last commit:** governance closure commit (after this session's work)
+**Last commit:** `ac0e4fc` governance closure
