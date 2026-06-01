@@ -303,45 +303,50 @@ const UserSettingsSchema = CollectionSchema(
       name: r'sampleDataShown',
       type: IsarType.bool,
     ),
-    r'sleepAthkarTime': PropertySchema(
+    r'showPrayerDotsOnCalendar': PropertySchema(
       id: 56,
+      name: r'showPrayerDotsOnCalendar',
+      type: IsarType.bool,
+    ),
+    r'sleepAthkarTime': PropertySchema(
+      id: 57,
       name: r'sleepAthkarTime',
       type: IsarType.string,
     ),
     r'sleepCategoryId': PropertySchema(
-      id: 57,
+      id: 58,
       name: r'sleepCategoryId',
       type: IsarType.long,
     ),
     r'sleepPeriods': PropertySchema(
-      id: 58,
+      id: 59,
       name: r'sleepPeriods',
       type: IsarType.objectList,
       target: r'TimeRange',
     ),
     r'taskReminderMinutesBefore': PropertySchema(
-      id: 59,
+      id: 60,
       name: r'taskReminderMinutesBefore',
       type: IsarType.long,
     ),
     r'themePreference': PropertySchema(
-      id: 60,
+      id: 61,
       name: r'themePreference',
       type: IsarType.string,
       enumMap: _UserSettingsthemePreferenceEnumValueMap,
     ),
     r'workCategoryId': PropertySchema(
-      id: 61,
+      id: 62,
       name: r'workCategoryId',
       type: IsarType.long,
     ),
     r'workDays': PropertySchema(
-      id: 62,
+      id: 63,
       name: r'workDays',
       type: IsarType.longList,
     ),
     r'workPeriods': PropertySchema(
-      id: 63,
+      id: 64,
       name: r'workPeriods',
       type: IsarType.objectList,
       target: r'TimeRange',
@@ -542,20 +547,21 @@ void _userSettingsSerialize(
   writer.writeBool(offsets[53], object.respectQuietPeriodsForTasks);
   writer.writeBool(offsets[54], object.sampleDataDismissed);
   writer.writeBool(offsets[55], object.sampleDataShown);
-  writer.writeString(offsets[56], object.sleepAthkarTime);
-  writer.writeLong(offsets[57], object.sleepCategoryId);
+  writer.writeBool(offsets[56], object.showPrayerDotsOnCalendar);
+  writer.writeString(offsets[57], object.sleepAthkarTime);
+  writer.writeLong(offsets[58], object.sleepCategoryId);
   writer.writeObjectList<TimeRange>(
-    offsets[58],
+    offsets[59],
     allOffsets,
     TimeRangeSchema.serialize,
     object.sleepPeriods,
   );
-  writer.writeLong(offsets[59], object.taskReminderMinutesBefore);
-  writer.writeString(offsets[60], object.themePreference.name);
-  writer.writeLong(offsets[61], object.workCategoryId);
-  writer.writeLongList(offsets[62], object.workDays);
+  writer.writeLong(offsets[60], object.taskReminderMinutesBefore);
+  writer.writeString(offsets[61], object.themePreference.name);
+  writer.writeLong(offsets[62], object.workCategoryId);
+  writer.writeLongList(offsets[63], object.workDays);
   writer.writeObjectList<TimeRange>(
-    offsets[63],
+    offsets[64],
     allOffsets,
     TimeRangeSchema.serialize,
     object.workPeriods,
@@ -643,20 +649,21 @@ UserSettings _userSettingsDeserialize(
     respectQuietPeriodsForTasks: reader.readBoolOrNull(offsets[53]) ?? true,
     sampleDataDismissed: reader.readBoolOrNull(offsets[54]) ?? false,
     sampleDataShown: reader.readBoolOrNull(offsets[55]) ?? false,
-    sleepAthkarTime: reader.readStringOrNull(offsets[56]) ?? '22:00',
+    showPrayerDotsOnCalendar: reader.readBoolOrNull(offsets[56]) ?? true,
+    sleepAthkarTime: reader.readStringOrNull(offsets[57]) ?? '22:00',
     sleepPeriods: reader.readObjectList<TimeRange>(
-      offsets[58],
+      offsets[59],
       TimeRangeSchema.deserialize,
       allOffsets,
       TimeRange(),
     ),
-    taskReminderMinutesBefore: reader.readLongOrNull(offsets[59]) ?? 30,
+    taskReminderMinutesBefore: reader.readLongOrNull(offsets[60]) ?? 30,
     themePreference: _UserSettingsthemePreferenceValueEnumMap[
-            reader.readStringOrNull(offsets[60])] ??
+            reader.readStringOrNull(offsets[61])] ??
         ThemePreference.system,
-    workDays: reader.readLongList(offsets[62]),
+    workDays: reader.readLongList(offsets[63]),
     workPeriods: reader.readObjectList<TimeRange>(
-      offsets[63],
+      offsets[64],
       TimeRangeSchema.deserialize,
       allOffsets,
       TimeRange(),
@@ -668,8 +675,8 @@ UserSettings _userSettingsDeserialize(
   object.lastSyncAt = reader.readDateTimeOrNull(offsets[39]);
   object.lastSyncError = reader.readStringOrNull(offsets[40]);
   object.quietCategoryId = reader.readLongOrNull(offsets[50]);
-  object.sleepCategoryId = reader.readLongOrNull(offsets[57]);
-  object.workCategoryId = reader.readLongOrNull(offsets[61]);
+  object.sleepCategoryId = reader.readLongOrNull(offsets[58]);
+  object.workCategoryId = reader.readLongOrNull(offsets[62]);
   return object;
 }
 
@@ -814,27 +821,29 @@ P _userSettingsDeserializeProp<P>(
     case 55:
       return (reader.readBoolOrNull(offset) ?? false) as P;
     case 56:
-      return (reader.readStringOrNull(offset) ?? '22:00') as P;
+      return (reader.readBoolOrNull(offset) ?? true) as P;
     case 57:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset) ?? '22:00') as P;
     case 58:
+      return (reader.readLongOrNull(offset)) as P;
+    case 59:
       return (reader.readObjectList<TimeRange>(
         offset,
         TimeRangeSchema.deserialize,
         allOffsets,
         TimeRange(),
       )) as P;
-    case 59:
-      return (reader.readLongOrNull(offset) ?? 30) as P;
     case 60:
+      return (reader.readLongOrNull(offset) ?? 30) as P;
+    case 61:
       return (_UserSettingsthemePreferenceValueEnumMap[
               reader.readStringOrNull(offset)] ??
           ThemePreference.system) as P;
-    case 61:
-      return (reader.readLongOrNull(offset)) as P;
     case 62:
-      return (reader.readLongList(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 63:
+      return (reader.readLongList(offset)) as P;
+    case 64:
       return (reader.readObjectList<TimeRange>(
         offset,
         TimeRangeSchema.deserialize,
@@ -3500,6 +3509,16 @@ extension UserSettingsQueryFilter
   }
 
   QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      showPrayerDotsOnCalendarEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'showPrayerDotsOnCalendar',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
       sleepAthkarTimeEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -5128,6 +5147,20 @@ extension UserSettingsQuerySortBy
   }
 
   QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByShowPrayerDotsOnCalendar() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'showPrayerDotsOnCalendar', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByShowPrayerDotsOnCalendarDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'showPrayerDotsOnCalendar', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
       sortBySleepAthkarTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'sleepAthkarTime', Sort.asc);
@@ -5944,6 +5977,20 @@ extension UserSettingsQuerySortThenBy
   }
 
   QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByShowPrayerDotsOnCalendar() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'showPrayerDotsOnCalendar', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByShowPrayerDotsOnCalendarDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'showPrayerDotsOnCalendar', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
       thenBySleepAthkarTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'sleepAthkarTime', Sort.asc);
@@ -6387,6 +6434,13 @@ extension UserSettingsQueryWhereDistinct
     });
   }
 
+  QueryBuilder<UserSettings, UserSettings, QDistinct>
+      distinctByShowPrayerDotsOnCalendar() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'showPrayerDotsOnCalendar');
+    });
+  }
+
   QueryBuilder<UserSettings, UserSettings, QDistinct> distinctBySleepAthkarTime(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -6814,6 +6868,13 @@ extension UserSettingsQueryProperty
   QueryBuilder<UserSettings, bool, QQueryOperations> sampleDataShownProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'sampleDataShown');
+    });
+  }
+
+  QueryBuilder<UserSettings, bool, QQueryOperations>
+      showPrayerDotsOnCalendarProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'showPrayerDotsOnCalendar');
     });
   }
 

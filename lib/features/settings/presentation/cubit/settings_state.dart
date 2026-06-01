@@ -42,5 +42,6 @@ class SettingsLoaded extends SettingsState {
     settings.reduceMotion,
     settings.disableGyroscope,
     settings.easternNumerals,
+    settings.showPrayerDotsOnCalendar,
   ];
 }

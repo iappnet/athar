@@ -927,6 +927,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get enablePrayerReminder => 'تفعيل تذكير الصلاة';
 
   @override
+  String get calendarPrayerDots => 'مواقيت الصلاة في التقويم';
+
+  @override
+  String get calendarPrayerDotsSub =>
+      'إظهار مواقيت الصلاة كنقطة على التقويم الشهري';
+
+  @override
   String get reminderBefore => 'التذكير قبل';
 
   @override

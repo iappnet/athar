@@ -131,6 +131,18 @@ class GeneralSettingsPage extends StatelessWidget {
                         ),
                       ],
                       _Divider(),
+                      // Sub: prayer dots on calendar
+                      _SwitchTile(
+                        icon: Icons.calendar_month_outlined,
+                        iconColor: const Color(0xFF1A6B3C),
+                        title: l10n.calendarPrayerDots,
+                        subtitle: l10n.calendarPrayerDotsSub,
+                        value: settings?.showPrayerDotsOnCalendar ?? true,
+                        onChanged: (v) => context
+                            .read<SettingsCubit>()
+                            .toggleShowPrayerDotsOnCalendar(v),
+                      ),
+                      _Divider(),
                       _NavTile(
                         icon: Icons.location_on_outlined,
                         iconColor: const Color(0xFF0288D1),

@@ -38,6 +38,7 @@ import 'features/auth/presentation/pages/login_page.dart';
 import 'package:athar/core/services/deep_link_service.dart';
 import 'package:athar/core/services/widget_data_service.dart';
 import 'package:athar/features/calendar/presentation/cubit/calendar_cubit.dart';
+import 'package:athar/features/calendar/presentation/cubit/calendar_month_cubit.dart';
 
 class AtharApp extends StatefulWidget {
   const AtharApp({super.key, required this.hasSeenOnboarding});
@@ -136,6 +137,9 @@ class _AtharAppState extends State<AtharApp> {
         // 5. الميزات الجديدة (الأصول والقوائم)
         BlocProvider(
           create: (_) => getIt<CalendarCubit>()..selectDate(DateTime.now()),
+        ),
+        BlocProvider(
+          create: (_) => getIt<CalendarMonthCubit>(),
         ),
         BlocProvider(create: (context) => getIt<AssetsCubit>()), // ✅ الأصول
         BlocProvider(

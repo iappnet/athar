@@ -257,6 +257,18 @@ class TaskRepositoryImpl implements TaskRepository {
         .findAll();
   }
 
+  @override
+  Future<List<TaskModel>> getTasksInDateRange(
+      DateTime start, DateTime end) async {
+    final s = DateTime(start.year, start.month, start.day);
+    final e = DateTime(end.year, end.month, end.day, 23, 59, 59);
+    return await _isar.taskModels
+        .filter()
+        .dateBetween(s, e)
+        .deletedAtIsNull()
+        .findAll();
+  }
+
   // ✅ 1. دالة إضافة/تعديل السبورة (Upsert)
   @override
   Future<void> upsertMyNote({

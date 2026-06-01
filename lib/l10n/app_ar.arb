@@ -312,6 +312,8 @@
   "prayerNotifications": "إشعارات الصلاة",
   "prayerReminder": "تذكير الصلاة",
   "enablePrayerReminder": "تفعيل تذكير الصلاة",
+  "calendarPrayerDots": "مواقيت الصلاة في التقويم",
+  "calendarPrayerDotsSub": "إظهار مواقيت الصلاة كنقطة على التقويم الشهري",
   "reminderBefore": "التذكير قبل",
   "minutesBefore": "{count} دقيقة قبل",
   "@minutesBefore": {"placeholders": {"count": {"type": "int"}}},

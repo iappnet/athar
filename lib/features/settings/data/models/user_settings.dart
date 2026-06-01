@@ -205,6 +205,14 @@ class UserSettings {
   bool easternNumerals = false;
 
   // ═══════════════════════════════════════════════════════════════════════════
+  // 📅 CALENDAR
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /// Show prayer dots on the month calendar grid.
+  /// Sub-toggle under isPrayerEnabled; hidden when prayer is disabled.
+  bool showPrayerDotsOnCalendar = true;
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // 🔄 SYNC
   // ═══════════════════════════════════════════════════════════════════════════
 
@@ -283,6 +291,9 @@ class UserSettings {
     this.reduceMotion = false,
     this.disableGyroscope = false,
     this.easternNumerals = false,
+
+    // 📅 Calendar
+    this.showPrayerDotsOnCalendar = true,
   });
 
   // ═══════════════════════════════════════════════════════════

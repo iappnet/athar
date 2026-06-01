@@ -928,6 +928,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enablePrayerReminder => 'Enable Prayer Reminder';
 
   @override
+  String get calendarPrayerDots => 'Prayer Times on Calendar';
+
+  @override
+  String get calendarPrayerDotsSub =>
+      'Show prayer times as a dot on the monthly grid';
+
+  @override
   String get reminderBefore => 'Reminder Before';
 
   @override

@@ -1892,6 +1892,18 @@ abstract class AppLocalizations {
   /// **'تفعيل تذكير الصلاة'**
   String get enablePrayerReminder;
 
+  /// No description provided for @calendarPrayerDots.
+  ///
+  /// In ar, this message translates to:
+  /// **'مواقيت الصلاة في التقويم'**
+  String get calendarPrayerDots;
+
+  /// No description provided for @calendarPrayerDotsSub.
+  ///
+  /// In ar, this message translates to:
+  /// **'إظهار مواقيت الصلاة كنقطة على التقويم الشهري'**
+  String get calendarPrayerDotsSub;
+
   /// No description provided for @reminderBefore.
   ///
   /// In ar, this message translates to:

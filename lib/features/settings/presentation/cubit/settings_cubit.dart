@@ -454,6 +454,12 @@ class SettingsCubit extends Cubit<SettingsState> {
     await _repository.updateSettings(s);
   }
 
+  Future<void> toggleShowPrayerDotsOnCalendar(bool value) async {
+    final s = await _repository.getSettings();
+    s.showPrayerDotsOnCalendar = value;
+    await _repository.updateSettings(s);
+  }
+
   // ═══════════════════════════════════════════════════════════════════
   // 🧹 التنظيف
   // ═══════════════════════════════════════════════════════════════════

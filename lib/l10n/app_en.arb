@@ -300,6 +300,8 @@
   "prayerNotifications": "Prayer Notifications",
   "prayerReminder": "Prayer Reminder",
   "enablePrayerReminder": "Enable Prayer Reminder",
+  "calendarPrayerDots": "Prayer Times on Calendar",
+  "calendarPrayerDotsSub": "Show prayer times as a dot on the monthly grid",
   "reminderBefore": "Reminder Before",
   "minutesBefore": "{count} minutes before",
   "atPrayerTime": "At Prayer Time",
