@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-01 · PR6 complete + Stage A complete + drift-check PASS
+LAST-UPDATED:  2026-06-01 · PR6 complete + Stage A complete + A5 VCS policy
 LOADS-AT:      Tier 0
 -->
 
@@ -13,8 +13,8 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-01 (Stage A complete + drift-check fix)  
-**Commit:** `ee39e43` docs(governance): A4 — Context Loading Directive added to CLAUDE.md  
+**Timestamp:** 2026-06-01 (Stage A complete + A5 VCS policy)  
+**Commit:** `510cb0a` chore(vcs): ignore machine-local Claude files only  
 **Note:** Stage A governance install complete (A1–A4). Drift-check 3 failures fixed: PR5+PR6 now marked complete in IMPLEMENTATION_MASTER_STATUS.md (~50%), CURRENT_MIGRATION_STATE.md updated, CHECKPOINT internal drift fixed. AR visual QA deferred to final sweep (post-PR6, pre-PR7).
 
 ---
@@ -83,6 +83,7 @@ LOADS-AT:      Tier 0
 - ✅ A3: Mandatory headers on all ~20 living files + governance dir + documentation-audit dir installed — commit `077af7e`
 - ✅ A4: Context Loading Directive added to CLAUDE.md — commit `ee39e43`
 - ✅ /drift-check gate: 3 failures found and fixed (PR5+PR6 rows, %, CHECKPOINT internal drift)
+- ✅ A5 (addendum): VCS policy — blanket `.claude/` ignore replaced with machine-local-only rules; 7 project-memory files now tracked — commit `510cb0a`
 
 ## NEXT ACTION
 
