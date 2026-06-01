@@ -99,7 +99,7 @@ LOADS-AT:      Tier 0
 |----|----------|--------|
 | B1 | Calibri App Store licence confirmation | App Store / TestFlight submission |
 | B4 | Adhan audio asset delivery | PR-ADHAN start |
-| PR4b-abbr | 3-letter Hijri month abbreviation table | PR4b rendering |
+| ~~PR4b-abbr~~ | ~~3-letter Hijri month abbreviation table~~ | ✅ Resolved — `HIJRI_MONTH_ABBREVIATIONS.md` used in PR4b |
 | PR5-copy | ~~Review ARB copy for 3 accessibility tiles~~ | ✅ Resolved 2026-06-01 |
 
 ---

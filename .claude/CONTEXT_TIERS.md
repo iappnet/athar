@@ -42,7 +42,7 @@ LOADS-AT:      Tier 0 (read by /drift-check)
 | PR | Load |
 |----|------|
 | Any screen PR | `docs/ai/FEATURE_INDEX.md`, `handoff_v2-2/REDESIGN_AUDIT.md` |
-| PR4b — Calendar | `handoff_v2-2/CALENDAR_CELL_SPEC.md`, `handoff_v2-2/CALENDAR_FOCUS_REDESIGN.md`, `DUAL_DATE_SPEC.md`, `design-context/_audit_calendar_dual.md` |
+| PR4b — Calendar | `CALENDAR_CELL_SPEC.md`, `CALENDAR_FOCUS_REDESIGN.md`, `DUAL_DATE_SPEC.md`, `design-context/_audit_calendar_dual.md` |
 | PR7 — Athkar | `handoff_v2-2/ATHKAR_SPEC.md` |
 | PR8 — Focus | `handoff_v2-2/FOCUS_OIL_SPEC.md` |
 | PR9 — iOS Widgets | `handoff_v2-2/IOS_WIDGETS_SPEC.md`, `docs/ai/WIDGET_INDEX.md` |

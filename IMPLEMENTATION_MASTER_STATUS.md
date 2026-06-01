@@ -85,7 +85,7 @@ LEGACY-ALIASES: (future canonical name: docs/status/ROADMAP.md — Stage B pendi
 |----|-------------|----------|--------|
 | B1 | **Calibri App Store licence** — designer must confirm before submission | Medium | App Store submission only (not dev/build) |
 | B2 | Dark secondary gradient variants not in CSS spec | Low | Dark mode secondary gradient in PR-THEME or later |
-| B3 | Calendar dual-display requires dedicated designer spec | Medium | PR4b |
+| ~~B3~~ | ~~Calendar dual-display requires dedicated designer spec~~ | **Closed** | PR4b shipped `65fc417` |
 | B4 | ~~`isAutoModeEnabled` settings UI unknown~~ | **Closed** | DRIFT-6: field is Smart Zones only; PR-THEME used `isDarkMode` + `ThemeMode.system` |
 | B5 | ~~Dark surface token conflict~~ | **Closed** | Resolved: `THEME_DARK_SPEC.md` adopted as canonical |
 
@@ -163,7 +163,7 @@ Net-new feature requiring curated sets v1, Athkar cubit, and screen design. Must
 | `handoff_v2-2/colors_and_type.css` | Canonical token target (light + dark) | ✅ Read |
 | `handoff_v2-2/INVESTIGATION_REPORT.md` | Full codebase investigation | ✅ Read (2026-05-09) — PR2 readiness closure |
 | `handoff_v2-2/REDESIGN_AUDIT.md` | Component audit | ✅ Read (2026-05-09) — PR2 readiness closure |
-| `handoff_v2-2/CALENDAR_FOCUS_REDESIGN.md` | Calendar dual-display spec | ❌ Not read — required before PR4a/PR4b |
+| `CALENDAR_FOCUS_REDESIGN.md` | Calendar dual-display spec (root copy) | ✅ Read — PR4b complete |
 | `handoff_v2-2/FOCUS_OIL_SPEC.md` | Focus oil-fill animation spec | ❌ Not read — required before PR8 |
 | `handoff_v2-2/IPAD_OPTIMIZATION.md` | iPad breakpoints | ✅ Read (2026-05-09) — PR2 readiness closure |
 | `handoff_v2-2/ONBOARDING_AB_SPEC.md` | Onboarding A/B variants | ❌ Not read — required before PR-ONBOARD-AB |
