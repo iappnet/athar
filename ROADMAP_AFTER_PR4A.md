@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Next-arc guidance; ready PRs + architecture options post-PR4a
+OWNER:         Claude Code
+PRECEDENCE:    4 (Tier 1 — loads after Tier-0 on any PR arc)
+LAST-UPDATED:  2026-06-01 · PR5 + PR6 complete + Stage A
+LOADS-AT:      Tier 1
+-->
+
 # Roadmap After PR4a — Athar v2 Design System
 
 **As of:** 2026-06-01  

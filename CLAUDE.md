@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Session behavior, non-negotiable rules, execution caps, design system implementation rules
+OWNER:         Product Owner (Claude Code drafts)
+PRECEDENCE:    1 (highest — overrides all other files)
+LAST-UPDATED:  2026-06-01 · Stage A governance install
+LOADS-AT:      Tier 0
+-->
+
 # CLAUDE.md
 
 **Athar (أثر)** — Islamic productivity Flutter app. iOS + Android. Arabic-first.

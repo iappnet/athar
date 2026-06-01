@@ -1,3 +1,12 @@
+<!--
+CANONICAL-FOR: PR sequence, completion %, blockers, accepted risks, token authority, handoff reference table
+OWNER:         Claude Code
+PRECEDENCE:    3 (Tier 0 — SSOT for PR order + %; CHECKPOINT level 2 wins on "current state")
+LAST-UPDATED:  2026-06-01 · PR6 complete + Stage A
+LOADS-AT:      Tier 0
+LEGACY-ALIASES: (future canonical name: docs/status/ROADMAP.md — Stage B pending)
+-->
+
 # Implementation Master Status — Athar v2 Design System
 
 > **CHECKPOINT:** `docs/progress/CHECKPOINT.md` — read this file FIRST on any resume, then verify against `git log`.

@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: DualDate value object spec, conversion rules, CalendarCubit contract (PR4b)
+OWNER:         Claude Code
+PRECEDENCE:    5 (Tier 2 — load only for PR4b work)
+LAST-UPDATED:  2026-06-01 · Stage A
+LOADS-AT:      Tier 2 (PR4b only)
+-->
+
 # DualDate — Domain & Integration Spec (PR4b)
 
 > **Track 2 / PR4b unblock.** This clears blocker **B3** (no written DualDate

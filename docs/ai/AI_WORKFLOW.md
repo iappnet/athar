@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Claude Code execution rules, entry funnel, search/read caps
+OWNER:         Claude Code
+PRECEDENCE:    4 (Tier 1 — loads after Tier-0 on any session)
+LAST-UPDATED:  2026-06-01 · Stage A
+LOADS-AT:      Tier 1
+-->
+
 # AI Workflow — Rules for Claude Code on Athar
 
 ## EXECUTION RULES (MANDATORY)

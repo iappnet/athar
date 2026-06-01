@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: PR4b calendar dual-display architecture feasibility audit + design sign-off
+OWNER:         Claude Code
+PRECEDENCE:    5 (Tier 2 — load for PR4b work)
+LAST-UPDATED:  2026-06-01 · Architecture option (b) approved; Stage A
+LOADS-AT:      Tier 2 (PR4b only)
+-->
+
 # PR4b Calendar Dual-Display — Architecture Feasibility Audit
 
 **Date:** 2026-06-01

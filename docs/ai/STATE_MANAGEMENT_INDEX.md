@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Cubit tree, BlocProvider scope, cubit instance disambiguation
+OWNER:         Claude Code
+PRECEDENCE:    5 (Tier 2 — load for any cubit change)
+LAST-UPDATED:  2026-06-01 · Stage A
+LOADS-AT:      Tier 2 (any cubit change)
+-->
+
 # Athar — State Management Index
 
 ## Global Cubits (app.dart MultiBlocProvider)

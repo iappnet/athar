@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Stats feature file map — cubit, state, page, widget, chart dependencies
+OWNER:         Claude Code
+PRECEDENCE:    5 (Tier 2 — load for PR6/Stats work)
+LAST-UPDATED:  2026-06-01 · Stage A
+LOADS-AT:      Tier 2 (Stats PR only)
+-->
+
 # Athar — Stats Engine Index
 
 ## Files

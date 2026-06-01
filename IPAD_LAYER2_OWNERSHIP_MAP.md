@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: iPad Layer 2 PR ownership — which screen belongs to which umbrella PR
+OWNER:         Claude Code
+PRECEDENCE:    5 (Tier 2 — load only for iPad layout PRs)
+LAST-UPDATED:  2026-06-01 · Stage A
+LOADS-AT:      Tier 2 (iPad layout PRs only)
+-->
+
 # iPad Layer 2 — Ownership Map
 
 **Date:** 2026-06-01  

@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Confirmed bugs, suspected issues, behavioral quirks, fragile areas
+OWNER:         Claude Code
+PRECEDENCE:    3 (Tier 0 — prevents re-breaking fragile code / re-fixing closed bugs)
+LAST-UPDATED:  2026-06-01 · B2 closed (PR-THEME fixed) + Stage A
+LOADS-AT:      Tier 0
+-->
+
 # Athar — Known Problems
 
 Confirmed bugs, suspected issues, and non-obvious behavioral quirks. Updated as issues are found and fixed.

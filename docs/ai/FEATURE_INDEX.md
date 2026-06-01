@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Feature file map, mandatory start files, decision blocks for all 16 features
+OWNER:         Claude Code
+PRECEDENCE:    5 (Tier 2 — load when touching any feature module)
+LAST-UPDATED:  2026-06-01 · Stage A
+LOADS-AT:      Tier 2 (any screen PR)
+-->
+
 # Athar — Feature Index
 
 Each entry lists key files, models, cubit, repository, and non-obvious dependencies.

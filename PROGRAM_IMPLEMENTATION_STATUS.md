@@ -1,4 +1,17 @@
+<!--
+CANONICAL-FOR: Risk analysis, architectural guidance, Legacy Phase Track overview (SUPPORTING — not SSOT for PR order/%)
+OWNER:         Claude Code
+PRECEDENCE:    4 (Tier 1 — defers to IMPLEMENTATION_MASTER_STATUS.md for PR order and %)
+LAST-UPDATED:  2026-06-01 · Stage A
+LOADS-AT:      Tier 1
+SSOT-POINTER:  PR ordering, completion %, and active PR live in IMPLEMENTATION_MASTER_STATUS.md ONLY
+-->
+
 # Program Implementation Status — Athar v2 Design System Migration
+
+> **SSOT pointer:** PR ordering, completion percentages, and active PR status live in
+> `IMPLEMENTATION_MASTER_STATUS.md` ONLY. This file contains risk analysis and architectural
+> guidance only. Do NOT update PR rows or % here — update the SSOT instead.
 
 **Last updated:** 2026-06-01  
 **SSOT pointer:** Roadmap, PR ordering, and completion % live in `IMPLEMENTATION_MASTER_STATUS.md` only. This file contains risk analysis and architectural guidance only.

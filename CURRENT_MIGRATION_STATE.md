@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Branch state, RULE 1/2 enforcement, Deferred QA bucket
+OWNER:         Claude Code
+PRECEDENCE:    4 (Tier 1 — loads after Tier-0 on any PR arc)
+LAST-UPDATED:  2026-06-01 · PR6 complete + Stage A
+LOADS-AT:      Tier 1
+-->
+
 # Current Migration State — Athar v2 Design System
 
 **Generated:** 2026-06-01  

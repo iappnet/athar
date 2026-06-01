@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: iOS native widget architecture, WidgetKeys, App Group, data push flow
+OWNER:         Claude Code
+PRECEDENCE:    5 (Tier 2 — load for PR9 / any widget change)
+LAST-UPDATED:  2026-06-01 · Stage A
+LOADS-AT:      Tier 2 (PR9 / any iOS widget change)
+-->
+
 # Athar — Widget Index (Native Home Widgets)
 
 ## Architecture Overview

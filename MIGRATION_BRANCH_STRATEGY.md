@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Branch isolation rules — when to merge to main, tag protocol, git workflow
+OWNER:         Claude Code
+PRECEDENCE:    5 (Tier 2 — load when branch strategy questions arise)
+LAST-UPDATED:  2026-06-01 · Stage A
+LOADS-AT:      Tier 2
+-->
+
 # Migration Branch Strategy — Athar v2 Design System
 
 **Date:** 2026-05-09  

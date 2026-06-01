@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Current session state — what is happening right now
+OWNER:         Claude Code
+PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
+LAST-UPDATED:  2026-06-01 · PR6 complete + Stage A
+LOADS-AT:      Tier 0
+-->
+
 # CHECKPOINT — Athar v2 Design System
 **Rule:** Update this file as the FINAL action of every session and immediately after each commit or tag. On any resume, read this file FIRST, then verify against `git log` before acting.
 
