@@ -77,6 +77,7 @@ class _DualCalendarWidgetState extends State<DualCalendarWidget> {
     });
   }
 
+  // PR4b tech debt: route through SettingsCubit rather than direct repo write.
   void _toggleCalendarMode() async {
     setState(() {
       _isGregorianPrimary = !_isGregorianPrimary;
@@ -115,7 +116,6 @@ class _DualCalendarWidgetState extends State<DualCalendarWidget> {
         ? "${hijriMonth.longMonthName} ${hijriMonth.hYear}"
         : DateFormat('MMMM yyyy', 'ar').format(_focusedMonth);
 
-    // Weekday abbreviations from l10n
     final weekDays = [
       l10n.weekdaySunAbbr,
       l10n.weekdayMonAbbr,
@@ -126,181 +126,224 @@ class _DualCalendarWidgetState extends State<DualCalendarWidget> {
       l10n.weekdaySatAbbr,
     ];
 
-    return Container(
-      padding: EdgeInsets.all(16.w),
-      decoration: BoxDecoration(
-        color: colorScheme.surface,
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(30.r)),
-        boxShadow: [
-          BoxShadow(
-            color: colorScheme.shadow.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          // 1. Calendar header
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.arrow_back_ios, size: 16),
-                onPressed: () => _changeMonth(-1),
-              ),
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
 
-              InkWell(
-                onTap: _toggleCalendarMode,
-                borderRadius: AtharRadii.card,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-                  child: Row(
-                    children: [
-                      Column(
+    // P0 — RULE 1: LayoutBuilder drives all width-based decisions (cell height,
+    // aspect ratio, future breakpoint branches). Never MediaQuery or isTablet.
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Cell height tiers: width < 360 → 54pt (iPhone SE overflow guard),
+        // 360–839 → 64pt (phone), ≥ 840 → 72pt (tablet).
+        final double targetCellHeight = constraints.maxWidth < 360
+            ? 54.0
+            : constraints.maxWidth < 840
+                ? 64.0
+                : 72.0;
+        final double cellWidth =
+            (constraints.maxWidth - AtharSpacing.lg * 2) / 7;
+        final double cellAspectRatio = cellWidth / targetCellHeight;
+
+        return Container(
+          // P2: tokenized padding (was EdgeInsets.all(16.w))
+          padding: const EdgeInsets.all(AtharSpacing.lg),
+          decoration: BoxDecoration(
+            color: colorScheme.surface,
+            // P3: flat bottom per spec — BorderRadius.vertical(bottom: 30.r) removed
+            // P3: shadow updated to token-aligned values
+            boxShadow: [
+              BoxShadow(
+                color: colorScheme.shadow.withValues(alpha: 0.06),
+                blurRadius: 8,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              // 1. Calendar header
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // P2+P6: RTL-safe chevrons placed in Directionality-respecting
+                  // Row. chevron_left = semantic "earlier month" — in an RTL Row
+                  // this renders visually on the right, which is correct for
+                  // Arabic calendar conventions. No Transform.flipX needed.
+                  IconButton(
+                    icon: const Icon(Icons.chevron_left),
+                    color: colorScheme.onSurfaceVariant,
+                    iconSize: 24,
+                    onPressed: () => _changeMonth(-1),
+                  ),
+
+                  InkWell(
+                    onTap: _toggleCalendarMode,
+                    borderRadius: AtharRadii.card,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AtharSpacing.sm,
+                        vertical: AtharSpacing.xxs,
+                      ),
+                      child: Row(
                         children: [
-                          // Main title
-                          Text(
-                            mainTitle,
+                          Column(
+                            children: [
+                              // P1: main title — token size (was 18.sp hardcoded)
+                              Text(
+                                mainTitle,
+                                style: TextStyle(
+                                  fontSize: AtharTypography.sizeLg.sp,
+                                  fontWeight: AtharTypography.bold,
+                                  color: colorScheme.onSurface,
+                                ),
+                              ),
+                              // P1: sub title — token size (was 12.sp hardcoded)
+                              Text(
+                                subTitle,
+                                style: TextStyle(
+                                  fontSize: AtharTypography.sizeXs.sp,
+                                  color: colorScheme.primary,
+                                  fontWeight: AtharTypography.semiBold,
+                                ),
+                              ),
+                            ],
+                          ),
+                          AtharGap.hSm,
+                          Icon(
+                            Icons.swap_vert_circle_outlined,
+                            color: colorScheme.primary.withValues(alpha: 0.5),
+                            size: 20.sp,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  // P6: semantic "later month" chevron
+                  IconButton(
+                    icon: const Icon(Icons.chevron_right),
+                    color: colorScheme.onSurfaceVariant,
+                    iconSize: 24,
+                    onPressed: () => _changeMonth(1),
+                  ),
+                ],
+              ),
+              AtharGap.xl,
+
+              // 2. Weekday headers
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: weekDays
+                    .map(
+                      (day) => SizedBox(
+                        width: 40.w,
+                        child: Center(
+                          child: Text(
+                            day,
                             style: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.bold,
-                              color: colorScheme.onSurface,
+                              color: colorScheme.outline,
+                              fontWeight: AtharTypography.bold,
+                              // P1: token size (was 14.sp hardcoded)
+                              fontSize: AtharTypography.sizeSm.sp,
                             ),
                           ),
-                          // Sub title
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+              // P2: tokenized gap (was SizedBox(height: 10.h))
+              AtharGap.md,
+
+              // 3. Day grid — P0: LayoutBuilder-computed aspect ratio prevents
+              // fixed-ratio overflow on all screen widths.
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: daysInMonth + firstWeekday,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 7,
+                  childAspectRatio: cellAspectRatio,
+                ),
+                itemBuilder: (context, index) {
+                  if (index < firstWeekday) return const SizedBox();
+
+                  final day = index - firstWeekday + 1;
+                  final date = DateTime(
+                    _focusedMonth.year,
+                    _focusedMonth.month,
+                    day,
+                  );
+                  final isSelected =
+                      DateUtils.isSameDay(date, widget.selectedDate);
+                  final isToday = DateUtils.isSameDay(date, DateTime.now());
+
+                  final hijriDate = _hijriService.toHijri(date);
+
+                  final String primaryText =
+                      _isGregorianPrimary ? "$day" : "${hijriDate.hDay}";
+
+                  final String secondaryText =
+                      _isGregorianPrimary ? "${hijriDate.hDay}" : "$day";
+
+                  // P1+Q3: today alpha — slightly raised in dark for legibility
+                  final double todayAlpha = isDark ? 0.13 : 0.08;
+
+                  return GestureDetector(
+                    onTap: () => widget.onDateSelected(date),
+                    child: Container(
+                      // P2: tokenized margin (was EdgeInsets.all(2.w))
+                      margin: const EdgeInsets.all(AtharSpacing.xxxs),
+                      decoration: BoxDecoration(
+                        color: isSelected
+                            ? colorScheme.primary
+                            : (isToday
+                                  ? colorScheme.primary
+                                        .withValues(alpha: todayAlpha)
+                                  : Colors.transparent),
+                        borderRadius: AtharRadii.card,
+                        // P1+Q2: border removed — spec: no border on today state
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // P1: primary numeral — token size + bold on today/selected
                           Text(
-                            subTitle,
+                            primaryText,
                             style: TextStyle(
-                              fontSize: 12.sp,
-                              color: colorScheme.primary,
-                              fontWeight: FontWeight.w600,
+                              fontSize: AtharTypography.sizeMd.sp,
+                              fontWeight: (isToday || isSelected)
+                                  ? AtharTypography.bold
+                                  : AtharTypography.regular,
+                              color: isSelected
+                                  ? colorScheme.onPrimary
+                                  : isToday
+                                      ? colorScheme.primary
+                                      : colorScheme.onSurface,
+                            ),
+                          ),
+
+                          // P1: secondary numeral — token size 10pt (captionS)
+                          // PR4b: replace with DualDate.activity
+                          Text(
+                            secondaryText,
+                            style: TextStyle(
+                              fontSize: AtharTypography.sizeXxs.sp,
+                              color: isSelected
+                                  ? colorScheme.onPrimary.withValues(alpha: 0.7)
+                                  : colorScheme.primary,
+                              fontWeight: AtharTypography.medium,
                             ),
                           ),
                         ],
                       ),
-                      AtharGap.hSm,
-                      Icon(
-                        Icons.swap_vert_circle_outlined,
-                        color: colorScheme.primary.withValues(alpha: 0.5),
-                        size: 20.sp,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              IconButton(
-                icon: const Icon(Icons.arrow_forward_ios, size: 16),
-                onPressed: () => _changeMonth(1),
+                    ),
+                  );
+                },
               ),
             ],
           ),
-          AtharGap.xl,
-
-          // 2. Weekday headers
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: weekDays
-                .map(
-                  (day) => SizedBox(
-                    width: 40.w,
-                    child: Center(
-                      child: Text(
-                        day,
-                        style: TextStyle(
-                          color: colorScheme.outline,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14.sp,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
-          SizedBox(height: 10.h),
-
-          // 3. Day grid
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: daysInMonth + firstWeekday,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 7,
-              childAspectRatio: 0.85,
-            ),
-            itemBuilder: (context, index) {
-              if (index < firstWeekday) return const SizedBox();
-
-              final day = index - firstWeekday + 1;
-              final date = DateTime(
-                _focusedMonth.year,
-                _focusedMonth.month,
-                day,
-              );
-              final isSelected = DateUtils.isSameDay(date, widget.selectedDate);
-              final isToday = DateUtils.isSameDay(date, DateTime.now());
-
-              final hijriDate = _hijriService.toHijri(date);
-
-              final String primaryText = _isGregorianPrimary
-                  ? "$day"
-                  : "${hijriDate.hDay}";
-
-              final String secondaryText = _isGregorianPrimary
-                  ? "${hijriDate.hDay}"
-                  : "$day";
-
-              return GestureDetector(
-                onTap: () => widget.onDateSelected(date),
-                child: Container(
-                  margin: EdgeInsets.all(2.w),
-                  decoration: BoxDecoration(
-                    color: isSelected
-                        ? colorScheme.primary
-                        : (isToday
-                              ? colorScheme.primary.withValues(alpha: 0.1)
-                              : Colors.transparent),
-                    borderRadius: AtharRadii.card,
-                    border: isToday && !isSelected
-                        ? Border.all(color: colorScheme.primary)
-                        : null,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Primary number
-                      Text(
-                        primaryText,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.bold,
-                          color: isSelected
-                              ? colorScheme.onPrimary
-                              : colorScheme.onSurface,
-                        ),
-                      ),
-
-                      // Secondary number
-                      Text(
-                        secondaryText,
-                        style: TextStyle(
-                          fontSize: 10.sp,
-                          color: isSelected
-                              ? colorScheme.onPrimary.withValues(alpha: 0.7)
-                              : colorScheme.primary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

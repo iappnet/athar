@@ -1,4 +1,5 @@
 import 'package:athar/core/design_system/tokens/athar_spacing.dart';
+import 'package:athar/core/design_system/tokens/athar_typography.dart';
 import 'package:athar/features/calendar/domain/entities/calendar_item.dart';
 import 'package:athar/features/calendar/presentation/cubit/calendar_cubit.dart';
 import 'package:athar/features/health/data/models/appointment_model.dart';
@@ -13,7 +14,6 @@ import 'package:athar/core/utils/navigation_utils.dart';
 import 'package:athar/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:athar/features/settings/presentation/cubit/settings_state.dart';
 import '../../../../core/design_system/molecules/tiles/task_tile.dart';
-import '../../../../core/utils/responsive_helper.dart';
 import '../widgets/dual_calendar_widget.dart';
 
 class CalendarPage extends StatefulWidget {
@@ -30,6 +30,7 @@ class _CalendarPageState extends State<CalendarPage> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context).languageCode;
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
@@ -43,141 +44,146 @@ class _CalendarPageState extends State<CalendarPage> {
         ),
         titleTextStyle: TextStyle(
           color: colorScheme.onSurface,
-          fontSize: 20.sp,
-          fontWeight: FontWeight.bold,
+          fontSize: AtharTypography.sizeXl.sp,
+          fontWeight: AtharTypography.bold,
         ),
       ),
       body: Align(
         alignment: Alignment.topCenter,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: context.isTablet
-                ? ResponsiveHelper.maxContentWidth
-                : double.infinity,
-          ),
-          child: Column(
-            children: [
-              // Calendar widget — pass isHijriMode to fix the reactive gap.
-              BlocSelector<SettingsCubit, SettingsState, bool?>(
-                selector: (state) =>
-                    state is SettingsLoaded ? state.settings.isHijriMode : null,
-                builder: (context, isHijriMode) => DualCalendarWidget(
-                  selectedDate: _selectedDate,
-                  isHijriMode: isHijriMode,
-                  onDateSelected: (date) {
-                    setState(() => _selectedDate = date);
-                    context.read<CalendarCubit>().selectDate(date);
-                  },
-                ),
-              ),
-
-              AtharGap.lg,
-
-              // List header
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: Row(
-                  children: [
-                    Text(
-                      l10n.calendarDayEvents,
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      DateFormat('EEEE, d MMMM', 'ar').format(_selectedDate),
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        color: colorScheme.outline,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              AtharGap.md,
-
-              // Items list.
-              //
-              // TASK REFRESH: fires only when transitioning TaskLoaded →
-              // TaskLoaded (Isar stream update after a confirmed mutation).
-              // The initial TaskLoading → TaskLoaded transition is excluded,
-              // so there is no redundant re-fetch on first navigation.
-              //
-              // APPOINTMENT REFRESH: handled inside CalendarCubit via
-              // AppointmentNotifier subscription — no BlocListener needed here.
-              Expanded(
-                child: BlocListener<TaskCubit, TaskState>(
-                  listenWhen: (prev, curr) =>
-                      prev is TaskLoaded && curr is TaskLoaded,
-                  listener: (context, _) =>
-                      context.read<CalendarCubit>().selectDate(_selectedDate),
-                  child: BlocBuilder<CalendarCubit, CalendarState>(
-                    builder: (context, state) {
-                      if (state is CalendarLoading) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-
-                      if (state is CalendarError) {
-                        return Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.error_outline_rounded,
-                                  color: colorScheme.error, size: 40),
-                              AtharGap.sm,
-                              Text(state.message,
-                                  style: TextStyle(color: colorScheme.error)),
-                              TextButton.icon(
-                                onPressed: () => context
-                                    .read<CalendarCubit>()
-                                    .selectDate(_selectedDate),
-                                icon: const Icon(Icons.refresh_rounded),
-                                label: Text(l10n.retry),
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-
-                      if (state is CalendarLoaded) {
-                        if (state.items.isEmpty) {
-                          return _buildEmptyState(colorScheme, l10n);
-                        }
-                        return ListView.separated(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 16.w,
-                            vertical: 8.h,
-                          ),
-                          itemCount: state.items.length,
-                          separatorBuilder: (context, index) => AtharGap.md,
-                          itemBuilder: (context, index) {
-                            final item = state.items[index];
-                            return switch (item) {
-                              CalendarTask(:final task) => TaskTile(
-                                  task: task,
-                                  onToggle: (_) => context
-                                      .read<TaskCubit>()
-                                      .toggleTaskCompletion(task),
-                                  onDelete: () => context
-                                      .read<TaskCubit>()
-                                      .deleteTask(task.id),
-                                ),
-                              CalendarAppointment(:final appointment) =>
-                                _AppointmentTile(appointment: appointment),
-                            };
-                          },
-                        );
-                      }
-
-                      return const SizedBox.shrink();
+        // P0 — RULE 1: window-width constraint, not device shortestSide
+        child: LayoutBuilder(
+          builder: (context, constraints) => ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: constraints.maxWidth >= 600 ? 900.0 : double.infinity,
+            ),
+            child: Column(
+              children: [
+                // Calendar widget — pass isHijriMode to fix the reactive gap.
+                BlocSelector<SettingsCubit, SettingsState, bool?>(
+                  selector: (state) =>
+                      state is SettingsLoaded ? state.settings.isHijriMode : null,
+                  builder: (context, isHijriMode) => DualCalendarWidget(
+                    selectedDate: _selectedDate,
+                    isHijriMode: isHijriMode,
+                    onDateSelected: (date) {
+                      setState(() => _selectedDate = date);
+                      context.read<CalendarCubit>().selectDate(date);
                     },
                   ),
                 ),
-              ),
-            ],
+
+                AtharGap.lg,
+
+                // List header
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: AtharSpacing.lg),
+                  child: Row(
+                    children: [
+                      Text(
+                        l10n.calendarDayEvents,
+                        style: TextStyle(
+                          fontSize: AtharTypography.sizeMd.sp,
+                          fontWeight: AtharTypography.bold,
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                      const Spacer(),
+                      // P2: locale-aware date format
+                      Text(
+                        DateFormat(
+                          locale == 'ar' ? 'EEEE، d MMMM' : 'EEE, d MMM',
+                          locale,
+                        ).format(_selectedDate),
+                        style: TextStyle(
+                          fontSize: AtharTypography.sizeXs.sp,
+                          color: colorScheme.outline,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                AtharGap.md,
+
+                // Items list.
+                //
+                // TASK REFRESH: fires only when transitioning TaskLoaded →
+                // TaskLoaded (Isar stream update after a confirmed mutation).
+                // The initial TaskLoading → TaskLoaded transition is excluded,
+                // so there is no redundant re-fetch on first navigation.
+                //
+                // APPOINTMENT REFRESH: handled inside CalendarCubit via
+                // AppointmentNotifier subscription — no BlocListener needed here.
+                Expanded(
+                  child: BlocListener<TaskCubit, TaskState>(
+                    listenWhen: (prev, curr) =>
+                        prev is TaskLoaded && curr is TaskLoaded,
+                    listener: (context, _) =>
+                        context.read<CalendarCubit>().selectDate(_selectedDate),
+                    child: BlocBuilder<CalendarCubit, CalendarState>(
+                      builder: (context, state) {
+                        if (state is CalendarLoading) {
+                          return const Center(child: CircularProgressIndicator());
+                        }
+
+                        if (state is CalendarError) {
+                          return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.error_outline_rounded,
+                                    color: colorScheme.error, size: 40),
+                                AtharGap.sm,
+                                Text(state.message,
+                                    style: TextStyle(color: colorScheme.error)),
+                                TextButton.icon(
+                                  onPressed: () => context
+                                      .read<CalendarCubit>()
+                                      .selectDate(_selectedDate),
+                                  icon: const Icon(Icons.refresh_rounded),
+                                  label: Text(l10n.retry),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+
+                        if (state is CalendarLoaded) {
+                          if (state.items.isEmpty) {
+                            return _buildEmptyState(colorScheme, l10n);
+                          }
+                          return ListView.separated(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16.w,
+                              vertical: 8.h,
+                            ),
+                            itemCount: state.items.length,
+                            separatorBuilder: (context, index) => AtharGap.md,
+                            itemBuilder: (context, index) {
+                              final item = state.items[index];
+                              return switch (item) {
+                                CalendarTask(:final task) => TaskTile(
+                                    task: task,
+                                    onToggle: (_) => context
+                                        .read<TaskCubit>()
+                                        .toggleTaskCompletion(task),
+                                    onDelete: () => context
+                                        .read<TaskCubit>()
+                                        .deleteTask(task.id),
+                                  ),
+                                CalendarAppointment(:final appointment) =>
+                                  _AppointmentTile(appointment: appointment),
+                              };
+                            },
+                          );
+                        }
+
+                        return const SizedBox.shrink();
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
