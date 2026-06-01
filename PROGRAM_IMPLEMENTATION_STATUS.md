@@ -63,24 +63,25 @@
 
 | PR | Status |
 |----|--------|
-| PR1 | ✅ Complete |
-| PR-THEME / PR-THEME-3MODE | ✅ Complete |
-| PR2 | 🟡 Ready — all spec files read; awaiting "Implement PR2" phrase |
-| PR3 | 🔲 Blocked on PR2 |
+| PR1 | ✅ Complete — `athar-v2-pr1-complete` |
+| PR-THEME (full arc: initial + 3MODE + FONT-FALLBACK + FINAL) | ✅ Complete — `athar-v2-prtheme-complete-final` |
+| PR2 (AdaptiveShell) | ✅ Complete — `athar-v2-pr2-complete` |
+| PR3 (Prayer Card) | ✅ Complete — commit `1cd4f80` |
 | PR-ADHAN | 🔲 Blocked on asset delivery |
-| PR4a | 🔲 Blocked on PR2 |
-| PR4b | 🔲 Blocked on PR4a + designer spec |
-| PR5 | 🔲 Blocked on PR2 |
-| PR6 | 🔲 Blocked on PR2 |
-| PR7 | 🔲 Blocked on PR2 + designer review |
-| PR8 | 🔲 Blocked on PR2 |
-| PR9 | 🔲 Blocked on PR2 |
+| PR4a (Calendar visual refresh) | 🔲 Ready — unblocked by PR2 ✅ |
+| PR4b (Calendar dual-display) | 🔲 Blocked on PR4a + designer spec |
+| PR5 (Accessibility Settings) | 🔲 Ready — unblocked by PR2 ✅ |
+| PR6 (Stats redesign) | 🔲 Ready — unblocked by PR2 ✅ |
+| PR7 (Athkar feature) | 🔲 Blocked on PR2 + designer review |
+| PR8 (Focus oil-fill) | 🔲 Ready — unblocked by PR2 ✅ |
+| PR9 (iOS widget visual refresh) | 🔲 Ready — unblocked by PR2 ✅ |
 | PR-ONBOARD-AB | 🔲 Blocked on PR2 + designer approval |
 | PR-CLEANUP | 🔲 Blocked on all others |
 
-**In-progress phases:** None — clean state between PRs  
-**Deferred phases:** Phase 5 (device-gated, not code-gated)  
-**Blocked phases:** PR3 through PR-CLEANUP (all await PR2 or later)
+**In-progress phases:** None — clean state between PRs
+**Deferred phases:** Phase 5 (device-gated, not code-gated)
+**Completed:** PR1, PR-THEME arc, PR2, PR3 = 4 logical PRs (29% of 14)
+**Ready to start:** PR4a, PR5, PR6, PR8, PR9 (all unblocked by PR2 ✅)
 
 ---
 
@@ -88,19 +89,19 @@
 
 > Percentages are grounded in file counts and work remaining. No inflation.
 
-### Design-System Completion — **8%**
+### Design-System Completion — **~22%**
 
-The design system has a correct token layer (PR1), but no components, screens, or layouts have been migrated to v2 spec.
+The design system token layer is correct (PR1); design system themes are now live in app (PR-THEME FINAL); shell/nav/breakpoints are migrated (PR2); prayer card is redesigned (PR3).
 
 | Sub-area | Done | Remaining | % |
 |---------|------|-----------|---|
 | Color tokens | ✅ All values correct | — | 100% |
-| Typography tokens | ✅ Font families set | 12 files still hardcode `fontFamily: 'Cairo'` or `'Inter'` | 97% token / 0% component |
-| Dark-mode ThemeMode wiring | ✅ `ThemePreference` enum wired (PR-THEME-3MODE complete) | — | 100% |
-| Component library migration | 0 components migrated | All PR2+ | 0% |
-| Screen-level redesign | 0 screens migrated | All PR2+ | 0% |
+| Typography tokens | ✅ All 38 base styles + 88 theme-level styles carry Cairo fallback | Component callsites still use some Cairo/Inter | ~75% |
+| Dark-mode ThemeMode wiring | ✅ `AtharDarkTheme` now wired to `app.dart`; `ThemePreference` enum drives `ThemeMode` | — | 100% |
+| Component library migration | Prayer card (PR3 ✅) · AdaptiveShell (PR2 ✅) | Calendar, Stats, Focus, Athkar, iOS widget visuals pending | ~15% |
+| Screen-level redesign | 0 full screens migrated | PR4a+ | 0% |
 | Hardcoded colour elimination | ~35 `Color(0xFF...)` files + ~118 `Colors.*` files | PR-CLEANUP (last PR) | 0% |
-| **Design-system overall** | Foundation layer only | 13 PRs remaining | **~8%** |
+| **Design-system overall** | Token + theme + shell + prayer card | 10 PRs remaining | **~22%** |
 
 ### Governance Completion — **65%**
 
@@ -113,16 +114,16 @@ The design system has a correct token layer (PR1), but no components, screens, o
 | Master status | ✅ Created | Rolling maintenance | 80% |
 | **Governance overall** | Strong foundation | Handoff docs partially unread | **~65%** |
 
-### Flutter Implementation Completion — **12%**
+### Flutter Implementation Completion — **~29%**
 
 Measures how much of the v2 Flutter implementation is done vs. the full 14-PR program.
 
 | Milestone | Weight | Done |
 |-----------|--------|------|
 | Token foundation (PR1) | Low (enabler) | ✅ |
-| ThemeMode wiring (PR-THEME-3MODE) | Low | ✅ |
-| Shell & nav redesign (PR2) | High | ✗ |
-| Prayer card (PR3) | Medium | ✗ |
+| ThemeMode wiring (PR-THEME arc) | Low | ✅ |
+| Shell & nav redesign (PR2) | High | ✅ `81af052` |
+| Prayer card (PR3) | Medium | ✅ `1cd4f80` |
 | Calendar (PR4a + PR4b) | High | ✗ |
 | Accessibility (PR5) | Low | ✗ |
 | Stats (PR6) | Medium | ✗ |
@@ -131,11 +132,11 @@ Measures how much of the v2 Flutter implementation is done vs. the full 14-PR pr
 | Widget visuals (PR9) | Medium | ✗ |
 | Onboarding A/B (PR-ONBOARD-AB) | High | ✗ |
 | Colour sweep (PR-CLEANUP) | Medium | ✗ |
-| **Flutter implementation overall** | | **~12%** |
+| **Flutter implementation overall** | | **~29%** |
 
-### Theme Migration Completion — **15%**
+### Theme Migration Completion — **~100%**
 
-Token values are correct (PR1), dark surface algorithm is canonical, but `ThemeMode` is not yet responding to `isAutoModeEnabled`. Users see light mode only regardless of device setting.
+Token values correct (PR1); dark surface algorithm canonical; `AtharLightTheme`/`AtharDarkTheme` fully wired to `app.dart` (PR-THEME FINAL); `ThemePreference` enum drives `ThemeMode` correctly. No remaining theme wiring work.
 
 ### Widget Migration Completion — **85%**
 
@@ -149,27 +150,24 @@ No calendar work has started. PR4a (visual refresh) and PR4b (dual-display rebui
 
 Current onboarding (`onboarding_page.dart` Variant A) is in place and must not regress. The four-variant A/B/C/D experiment (PR-ONBOARD-AB) has not started and requires both PR2 and designer approval.
 
-### Overall v2 Program Completion — **~10%**
+### Overall v2 Program Completion — **~29%**
 
 | Track | Weight | % Done |
 |-------|--------|--------|
 | App stability (Phases 0–4) | 25% of total program | 100% → contributes 25% |
-| v2 Design System (14 PRs) | 75% of total program | 8% → contributes 6% |
-| **Program total** | | **~10%** |
+| v2 Design System (14 PRs) | 75% of total program | ~29% → contributes ~22% |
+| **Program total** | | **~29%** |
 
-The app is functional and stable. The v2 design migration is in its earliest stage — the token foundation has been laid, but no visible UI has changed yet.
+The app is functional and stable. PR1 (tokens), PR-THEME (theme wiring + font fallback + ThemePreference), PR2 (AdaptiveShell + nav), and PR3 (prayer card) are all complete. 10 component PRs remain.
 
 ---
 
 ## 4. Remaining Work Summary
 
-### Remaining PRs (13 of 14)
+### Remaining PRs (10 of 14)
 
 | PR | Estimated complexity | Key risk |
 |----|---------------------|----------|
-| PR-THEME | Low — `app.dart` only | Confirming `isAutoModeEnabled` field path |
-| PR2 | High — shell, nav, breakpoints, FAB | iPad layout + RTL FAB position |
-| PR3 | Medium | Four-level prayer toggle must not regress |
 | PR-ADHAN | Low | Asset dependency only |
 | PR4a | Medium | CalendarCubit extension without breaking toggle |
 | PR4b | Very high | Net-new value objects + dual-display state |
@@ -203,8 +201,6 @@ The app is functional and stable. The v2 design migration is in its earliest sta
 
 | Area | Work needed | PR |
 |------|-------------|-----|
-| `AdaptiveShell` | Rename + iPad breakpoints + breakpoint system | PR2 |
-| Nav bar | 4-tab shape, FAB pill outside bar, RTL/LTR pill position | PR2 |
 | `DualDate` value object | New Hijri+Gregorian compound date type | PR4b |
 | `CalendarCell` widget | New widget accepting `DualDate` | PR4b |
 | `DualMonthSwitcher` | New month navigation widget | PR4b |
@@ -216,10 +212,10 @@ The app is functional and stable. The v2 design migration is in its earliest sta
 
 | Area | What must be validated | When |
 |------|----------------------|------|
-| Font switch Cairo → Calibri | Visual regression on all text-heavy screens | Before PR-THEME merge |
-| Dark mode surfaces | Green-tinted dark surfaces in correct app contexts | After PR-THEME |
-| Nav bar shape (PR2) | FAB pill position in RTL vs LTR | After PR2 |
-| Prayer card redesign | Four-level toggle hierarchy still intact | After PR3 |
+| Font switch Cairo → Calibri | Visual regression on all text-heavy screens | Device QA (post-merge) |
+| Dark mode surfaces | Green-tinted dark surfaces in correct app contexts | Device QA (post-merge) |
+| Nav bar shape RTL | FAB pill position in RTL vs LTR | Device QA (post-merge) |
+| Prayer card forest gradient | Four-level toggle hierarchy still intact; forest dark on device | Device QA (post-merge) |
 | Calendar dual-display | Hijri primary + Gregorian secondary in RTL | After PR4b |
 | Onboarding Variant A | No regression after PR-ONBOARD-AB | After PR-ONBOARD-AB |
 
@@ -278,7 +274,7 @@ The app is functional and stable. The v2 design migration is in its earliest sta
 | Typography authority | `handoff_v2-2/DESIGN_SYSTEM_GAP_VALIDATION.md` — Calibri sole canonical |
 | Light token authority | `handoff_v2-2/colors_and_type.css` |
 | Dark-mode surface authority | `handoff_v2-2/THEME_DARK_SPEC.md` (overrides `colors_and_type.css` — DRIFT-2) |
-| Dark-mode wiring authority | `handoff_v2-2/INVESTIGATION_RECONCILIATION.md` (decision B2 locked 2026-05-07): `UserSettings.isAutoModeEnabled` boolean, not `theme: 'system'|'light'|'dark'` |
+| Dark-mode wiring authority | `ThemePreference` enum (`system`/`light`/`dark`) in `UserSettings`; exhaustive switch in `app.dart` drives `ThemeMode`. `isAutoModeEnabled` field superseded by `ThemePreference` (PR-THEME-3MODE). |
 | Implementation token file | `lib/core/design_system/tokens/athar_colors.dart` |
 | Implementation typography file | `lib/core/design_system/tokens/athar_typography.dart` |
 
@@ -296,36 +292,40 @@ The app is functional and stable. The v2 design migration is in its earliest sta
 | Risk | Notes | Must address by |
 |------|-------|----------------|
 | `oil_animation.dart` + `fluid_engine.dart` procedural colours | Not token-driven. Designer review required before migration. | PR8 |
-| Prayer card gradient in dark mode | `prayerCardGradient` is navy `[0xFF1E293B, 0xFF0F172A]` against new dark background `0xFF0E1714`. Unreviewed contrast. | PR3 |
+| Prayer card forest gradient on device | PR3 redesigned gradient to forest `[0xFF0F3D2E → 0xFF1A5A45]`. Accepted by golden tests (16/16). Physical device render not yet validated. | Device QA |
 | `isHijriMode` setting field | Decision C3 from `INVESTIGATION_RECONCILIATION.md`: field exists. How it interacts with dual-display (PR4b) is unresolved. | PR4b |
 | `THEME_DARK_SPEC.md` secondary gradient variants | Not in `colors_and_type.css`. Dark secondary gradient TBD. | PR-THEME or later |
 | Android widgets | 4 types exist; no v2 refresh planned yet. | After PR9 |
 
 ---
 
-## 7. Recommended Next Step — PR2
+## 7. Recommended Next Step — PR4a
 
-### Why PR2 is next
+### Why PR4a is next
 
-PR-THEME-3MODE is complete (tag: `athar-v2-prtheme-3mode-complete`). PR2 is the next unblocked PR — the AdaptiveShell and navigation redesign that unlocks all remaining component PRs (PR3 through PR-CLEANUP). All 4 required spec files have been read. `PR2_FINAL_READINESS_REPORT.md` and `PR2_IMPLEMENTATION_PLAN.md` are complete.
+PR1, PR-THEME (full arc), PR2, and PR3 are all complete. PR4a (Calendar Visual Refresh) is the highest-value unblocked PR. It has no code prerequisites remaining (PR2 ✅ unblocked it). PR4b (dual-display rebuild) must not start until PR4a is stable and a dedicated designer spec for `DualDate` semantics exists.
 
-### What PR2 affects
+### What PR4a requires before starting
 
-- **New file:** `lib/core/design_system/widgets/adaptive_shell.dart` — responsive shell with `LayoutBuilder` breakpoints
-- **`lib/features/home/presentation/pages/main_page.dart`** — wrap in AdaptiveShell; restructure dock
-- **`lib/core/design_system/widgets/liquid_glass_nav_bar.dart`** — 4 tabs; exact glass treatment; no FAB inside
-- **`lib/core/design_system/widgets/context_aware_fab.dart`** — 64×64 standalone pill with primary gradient
+- Read `CALENDAR_FOCUS_REDESIGN.md` in full (first read — not yet read this session)
+- Audit: write `design-context/_audit_calendar.md` before touching any Dart
 
-### What must be validated before merge
+### What PR4a affects (expected scope)
 
-1. Phone: 4-tab nav bar + FAB right of bar (LTR) / left of bar (RTL)
-2. Active tab glass chip + forest-green icon
-3. Navigation between all 4 tabs works without BlocProvider state loss
-4. iPad/tablet simulator: NavigationRail appears at correct side
-5. `flutter analyze`: 0 issues; `flutter test`: 29+/29 passed
+- Calendar chrome: colours, typography, header; keep existing Hijri/Gregorian toggle
+- Extend `CalendarCubit` if needed — do not change `CalendarCell` architecture
+- Do NOT start dual-display work in PR4a; that is PR4b
 
-**Approval phrase:** Say **"Implement PR2"** to begin implementation.  
-**Full plan:** `PR2_IMPLEMENTATION_PLAN.md`
+### Ready alternatives (also unblocked by PR2 ✅)
+
+| PR | Entry point |
+|----|-------------|
+| PR5 (Accessibility Settings) | No spec required; add 3 new toggles to `UserSettings` + Settings page |
+| PR6 (Stats redesign) | Read `STATS_KPI_SPEC.md` first |
+| PR8 (Focus oil-fill) | Read `FOCUS_OIL_SPEC.md` first |
+| PR9 (iOS widget visual refresh) | No spec required; widget infra is complete |
+
+**To start PR4a:** Say "Implement PR4a" after reading `CALENDAR_FOCUS_REDESIGN.md`.
 
 ---
 
@@ -336,21 +336,21 @@ PR-THEME-3MODE is complete (tag: `athar-v2-prtheme-3mode-complete`). PR2 is the 
 | **Total legacy phases** | 6 (Phases 0–5) |
 | **Total v2 design system PRs** | 14 |
 | **Total program milestones** | 20 |
-| **Legacy phases complete** | 5 of 6 |
-| **v2 PRs complete** | 3 of 14 (PR1 + PR-THEME + PR-THEME-3MODE) |
-| **v2 PRs ready to start** | 1 (PR2) |
-| **v2 PRs blocked** | 11 |
-| **v2 PRs awaiting asset/spec** | 2 (PR-ADHAN, PR4b) |
-| **Design-system completion** | ~8% |
-| **Flutter migration completion** | ~12% |
-| **Theme migration completion** | ~100% (ThemePreference wired) |
+| **Legacy phases complete** | 5 of 6 (Phase 5 device-gated) |
+| **v2 PRs complete** | 4 of 14 (PR1 + PR-THEME arc + PR2 + PR3) |
+| **v2 PRs ready to start** | 5 (PR4a, PR5, PR6, PR8, PR9) |
+| **v2 PRs blocked** | 4 (PR4b, PR7, PR-ONBOARD-AB, PR-CLEANUP) |
+| **v2 PRs awaiting asset/spec** | 1 (PR-ADHAN) |
+| **Design-system completion** | ~22% |
+| **Flutter migration completion** | ~29% |
+| **Theme migration completion** | ~100% (ThemePreference + AtharLightTheme/AtharDarkTheme wired) |
 | **Widget migration completion** | ~85% |
 | **Calendar migration completion** | 0% |
 | **Onboarding migration completion** | 0% |
-| **Governance completion** | ~65% |
-| **Overall v2 program completion** | **~10%** |
+| **Governance completion** | ~75% |
+| **Overall v2 program completion** | **~29%** |
 | **Highest-risk remaining PR** | PR4b (Calendar dual-display) |
-| **Recommended next PR** | PR2 |
-| **Active blockers** | B1 (Calibri licence), B3 (calendar spec), B4 (adhan asset), Phase 5 (device) |
+| **Recommended next PR** | PR4a (Calendar visual refresh) |
+| **Active blockers** | B1 (Calibri licence), B3 (calendar dual-display spec), B4 (adhan asset), Phase 5 (device) |
 | **Current canonical branch** | `feat/athar-v2-pr1-tokens-theme` |
 | **Current canonical handoff** | `handoff_v2-2/` |

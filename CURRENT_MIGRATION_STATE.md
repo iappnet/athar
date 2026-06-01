@@ -1,0 +1,130 @@
+# Current Migration State — Athar v2 Design System
+
+**Generated:** 2026-06-01  
+**Branch:** `feat/athar-v2-pr1-tokens-theme`  
+**Trigger:** Roadmap reconciliation audit (ROADMAP_RECONCILIATION_REPORT.md)
+
+---
+
+## Canonical Branch
+
+`feat/athar-v2-pr1-tokens-theme` — long-running migration branch.  
+**Do NOT merge to `main` until all design-system PRs are complete.**  
+`main` baseline: `32e59c3` — no touches until migration merge gate.
+
+---
+
+## Completed PRs
+
+| PR | Commit | Tag | Signed Off | Date |
+|----|--------|-----|-----------|------|
+| **PR1** — Tokens & Theme | `61d741a` | `athar-v2-pr1-complete` | ✅ | 2026-05-09 |
+| **PR-THEME initial** — ThemeMode.system wiring | `14c13d6` | `athar-v2-prtheme-complete` | ✅ | 2026-05-09 |
+| **PR-THEME-3MODE** — ThemePreference enum + 3-mode picker | `66bc884` | `athar-v2-prtheme-3mode-complete` | ✅ | 2026-05-09 |
+| **PR2** — AdaptiveShell | `81af052` (impl) · `87ab36e` (governance) | `athar-v2-pr2-complete` | ✅ 6/6 CPs | 2026-05-09 |
+| **PR-FONT-FALLBACK** — Cairo fallback on 38 base styles | `3872860` | (part of PR-THEME arc) | ✅ | 2026-06-01 |
+| **PR3** — Prayer Card Refresh | `1cd4f80` | (in branch) | ✅ `PR3_SIGNOFF.md` | 2026-06-01 |
+| **PR-THEME FINAL** — Wire AtharLightTheme/AtharDarkTheme + 88 fallbacks + RTL drawer | `bfaf863` | `athar-v2-prtheme-complete-final` | ✅ `VERIFICATION_PR_THEME.md` | 2026-06-01 |
+
+---
+
+## Verified PRs (implementation confirmed in working tree)
+
+| PR | Evidence |
+|----|---------|
+| PR1 | `athar_colors.dart` (22 palette corrections), `athar_typography.dart` (Calibri + numericMono), `pubspec.yaml`, font assets |
+| PR-THEME arc | `app.dart` wired to `AtharLightTheme.theme` / `AtharDarkTheme.theme`; `ThemePreference` switch confirmed; `app_theme.dart` deleted |
+| PR2 | `adaptive_shell.dart` exists (79 lines); `main_page.dart` imports + uses `AdaptiveShell`; `liquid_glass_nav_bar.dart` has 22px pill + forest gradient |
+| PR3 | `next_prayer_card.dart` forest gradient `[0xFF0F3D2E, 0xFF1A5A45]`; 16/16 golden tests pass |
+| PR-FONT-FALLBACK | `athar_typography.dart`: `fontFallback` const + 38 base styles carry Cairo fallback |
+| PR-THEME FINAL | Both theme files: 44× `fontFamilyFallback: AtharTypography.fontFallback`; `BorderRadiusDirectional` DrawerTheme; `app_theme.dart` + `athar_theme.dart` deleted |
+
+---
+
+## Tagged PRs (git tags → commit hashes)
+
+| Tag | Commit | PR | Notes |
+|-----|--------|----|-------|
+| `athar-v2-pr1-complete` | `72f902d` | PR1 | Governance tag (after token + font implementation) |
+| `athar-v2-prtheme-complete` | `14c13d6` | PR-THEME initial | ThemeMode.system wiring |
+| `athar-v2-prtheme-3mode-complete` | `66bc884` | PR-THEME-3MODE | ThemePreference enum |
+| `athar-v2-pr2-complete` | `87ab36e` | PR2 | Governance tag (after all 6 CPs verified) |
+| `athar-v2-prtheme-complete-final` | `bfaf863` | PR-THEME FINAL | Full arc complete |
+
+---
+
+## Signed-Off PRs
+
+| PR | Sign-off artifact |
+|----|------------------|
+| PR1 | Phase tracker + IMPLEMENTATION_MASTER_STATUS.md updated |
+| PR-THEME full arc | `VERIFICATION_PR_THEME.md` · `PR_THEME_FINAL_REPORT.md` |
+| PR2 | `PR2_CHECKPOINTS.md` (6/6 CPs) · `PR2_PROGRESS_REPORT.md` |
+| PR3 | `PR3_SIGNOFF.md` |
+
+---
+
+## Active PR
+
+**None.** Clean state between PRs as of 2026-06-01.
+
+---
+
+## Current Working Tree State
+
+```
+flutter analyze → 0 issues
+flutter test → 45/45 passed (16 golden + 28 stats + 1 config)
+```
+
+Uncommitted governance edits (this audit session):
+- `docs/progress/phase_tracker.md` — stale PR2 "Not started" section removed; PR-FONT-FALLBACK, PR3, PR-THEME FINAL added
+- `PROGRAM_IMPLEMENTATION_STATUS.md` — all stale sections updated to reflect PR2 + PR3 + PR-THEME FINAL complete
+- `ROADMAP_RECONCILIATION_REPORT.md` — new file (audit evidence)
+- `CURRENT_MIGRATION_STATE.md` — this file
+
+---
+
+## Next Recommended PR
+
+**PR4a — Calendar Visual Refresh**
+
+Prerequisites before implementation begins:
+1. Read `CALENDAR_FOCUS_REDESIGN.md` in full (not yet read)
+2. Write audit doc: `design-context/_audit_calendar.md`
+3. Wait for audit sign-off before touching any Dart
+
+Ready alternatives (no blocking prerequisites):
+- PR5 — Accessibility Settings
+- PR6 — Stats redesign (read `STATS_KPI_SPEC.md` first)
+- PR8 — Focus oil-fill (read `FOCUS_OIL_SPEC.md` first)
+- PR9 — iOS widget visual refresh
+
+---
+
+## PRs Not Started
+
+| PR | Status | First prerequisite |
+|----|--------|-------------------|
+| PR-ADHAN | 🔲 Blocked | Audio asset from designer (not received) |
+| PR4a | 🔲 Ready | Read `CALENDAR_FOCUS_REDESIGN.md` |
+| PR4b | 🔲 Blocked | PR4a ✅ + dedicated designer spec for `DualDate` |
+| PR5 | 🔲 Ready | None |
+| PR6 | 🔲 Ready | Read `STATS_KPI_SPEC.md` |
+| PR7 | 🔲 Blocked | PR2 ✅ (done) + designer review |
+| PR8 | 🔲 Ready | Read `FOCUS_OIL_SPEC.md` |
+| PR9 | 🔲 Ready | None |
+| PR-ONBOARD-AB | 🔲 Blocked | PR2 ✅ (done) + designer approval + read `ONBOARDING_AB_SPEC.md` |
+| PR-CLEANUP | 🔲 Blocked | All other PRs complete |
+
+---
+
+## Open Items / Deferred Gates
+
+| ID | Item | Gate type |
+|----|------|-----------|
+| B1 | Calibri App Store licence | Submission gate (not build gate) |
+| B3 | Calendar dual-display (`DualDate`) designer spec | PR4b start gate |
+| B4 | Adhan audio asset | PR-ADHAN build gate |
+| Phase 5 | Physical device validation (all 3 iOS widgets) | Release gate |
+| Device QA | Forest-dark surfaces, Cairo fallback, RTL drawer, countdown tick | Release gate |

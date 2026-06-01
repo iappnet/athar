@@ -161,13 +161,6 @@ Full arc delivered across 4 commits:
 
 `flutter analyze`: 0 issues · `flutter test`: 45/45 · Verification: `VERIFICATION_PR_THEME.md`
 
-### PR2 — AdaptiveShell
-
-**Status: 🔲 Not started — blocked on PR-THEME**
-
-Scope: Rename `adaptive_scaffold.dart` → `adaptive_shell.dart`; iPad breakpoints; 4-tab nav bar; FAB pill outside bar.  
-Prerequisite reads: `IPAD_OPTIMIZATION.md`, `REDESIGN_AUDIT.md`, `preview/comp-nav.html`.
-
 ### PR-THEME-3MODE — ThemePreference enum (3-option picker)
 
 **Status: ✅ Complete — `athar-v2-prtheme-3mode-complete`**
