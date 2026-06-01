@@ -422,3 +422,57 @@ Files:
 STOP. First selected path executes immediately.
 
 **Do NOT search**: iOS widget Swift files for Android issues — the platforms share key names only, not code. Do NOT expect AppIntent or pending-action patterns in Android.
+
+---
+
+## Entry Points
+
+| File | Purpose | Risk |
+|------|---------|------|
+| `lib/main.dart` | Firebase/Supabase/RevenueCat init, DI, runApp, notification auto-renewal handler | Startup ordering is critical; background init order matters |
+| `lib/app.dart` | AtharApp widget, global MultiBlocProvider (18+ cubits), MaterialApp routes, `onResume` handler | BlocProvider list must stay in sync with all cubits used globally |
+| `lib/core/di/injection.config.dart` | Generated DI wiring — never edit | Regenerate after any @injectable annotation change |
+
+---
+
+## Core Services (high-change-frequency)
+
+| File | Main Class | Used By | Risk |
+|------|-----------|---------|------|
+| `lib/core/services/widget_data_service.dart` | `WidgetDataService` | PrayerCubit, TaskCubit, HabitCubit, app.dart onResume | WidgetKeys constants are canonical — never rename |
+| `lib/core/services/sync_service.dart` | `SyncService` | SyncCubit | Touches all feature repositories; ordering matters |
+| `lib/core/services/local_notification_service.dart` | `LocalNotificationService` | All schedulers, main.dart | Cold-start payload consumption; global channel setup |
+| `lib/core/services/prayer_timer_service.dart` | `PrayerTimerService` | PrayerCubit | Runs a periodic timer; must be cancelled on dispose |
+| `lib/core/services/deep_link_service.dart` | `DeepLinkService` | app.dart, notification tap handlers | Holds global navigator key; null context = no active route |
+| `lib/core/presentation/cubit/locale_cubit.dart` | `LocaleCubit` | MaterialApp, SettingsPage | Stores `'ar'`/`'en'` in FlutterSecureStorage; null = system locale |
+
+---
+
+## Design System Files
+
+| File | Notes |
+|------|-------|
+| `lib/core/design_system/tokens/tokens.dart` | Barrel export — import this, not individual token files |
+| `lib/core/design_system/tokens/athar_colors.dart` | Brand color palette |
+| `lib/core/design_system/tokens/athar_spacing.dart` | `AtharSpacing.xs/sm/md/lg/xl` — use instead of raw numbers |
+| `lib/core/design_system/tokens/athar_typography.dart` | Text styles; Cairo fallback on all 38 base styles |
+
+---
+
+## Generated Files (Never Edit)
+
+| Pattern | Tool | Regenerate with |
+|---------|------|----------------|
+| `lib/core/di/injection.config.dart` | injectable_generator | `build_runner build` |
+| `lib/**/*.g.dart` | isar_generator | `build_runner build` |
+| `lib/l10n/generated/app_localizations*.dart` | flutter gen-l10n | `flutter gen-l10n` |
+| `lib/features/settings/data/models/user_settings.g.dart` | isar_generator | `build_runner build` |
+
+---
+
+## Dead / Stub Files (Do Not Use)
+
+| File | Status |
+|------|--------|
+| `lib/core/config/routes.dart` | GoRouter stub — not wired; all routing in `app.dart` |
+| `lib/core/error/failures.dart` | Stub — actual Failure types defined inline per feature |

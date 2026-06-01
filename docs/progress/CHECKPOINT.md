@@ -24,7 +24,7 @@ LOADS-AT:      Tier 0
 **Active PR:** None — PR4b complete  
 **Last completed:** PR4b — Calendar Dual-Display (`65fc417`) ✅  
 **Phase:** Post-PR4b. Deferred QA sweep at end of roadmap (after last feature PR).  
-**Next:** PR8 (Focus Oil-Fill) or PR9 (iOS Widget Refresh) — see IMPLEMENTATION_MASTER_STATUS.md.
+**Next:** PR8 (Focus Oil-Fill) or PR9 (iOS Widget Refresh) — see docs/status/ROADMAP.md.
 
 ---
 
@@ -87,7 +87,7 @@ LOADS-AT:      Tier 0
 
 ## NEXT ACTION
 
-**Deferred QA sweep** runs at end of roadmap, after the last feature PR. No feature PR is gated. Nothing ships to users/TestFlight until sweep passes. Bucket: 5 items (see CURRENT_MIGRATION_STATE.md).  
+**Deferred QA sweep** runs at end of roadmap, after the last feature PR. No feature PR is gated. Nothing ships to users/TestFlight until sweep passes. Bucket: 5 items (see docs/status/MIGRATION_STATE.md).  
 **AR visual QA:** Calendar dual-display (primaryHijri on/off, dark mode, 5-dot cell, boundary labels) deferred to final device sweep.  
 **Stage B:** Do NOT begin until product owner explicitly authorises file moves/renames.
 

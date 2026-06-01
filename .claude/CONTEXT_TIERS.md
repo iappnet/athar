@@ -18,7 +18,7 @@ LOADS-AT:      Tier 0 (read by /drift-check)
 1. `CLAUDE.md`
 2. `docs/progress/CHECKPOINT.md`
 3. `docs/ai/KNOWN_PROBLEMS.md`
-4. `IMPLEMENTATION_MASTER_STATUS.md`
+4. `docs/status/ROADMAP.md`
 
 **Loading rule:** After reading CHECKPOINT.md, stop trusting any "next PR" claim in lower-tier files — CHECKPOINT wins on current state.
 
@@ -28,8 +28,8 @@ LOADS-AT:      Tier 0 (read by /drift-check)
 
 | File | Load when |
 |------|-----------|
-| `CURRENT_MIGRATION_STATE.md` | Any PR — branch state, RULE 1/2, Deferred QA |
-| `ROADMAP_AFTER_PR4A.md` | Any PR — next-arc guidance |
+| `docs/status/MIGRATION_STATE.md` | Any PR — branch state, RULE 1/2, Deferred QA |
+| `docs/status/NEXT_STEPS.md` | Any PR — next-arc guidance |
 | `design-context/_audit_<feature>.md` | The audit for the current PR |
 | `handoff_v2-2/INVESTIGATION_RECONCILIATION.md` | Any design PR — 5 locked decisions |
 | `handoff_v2-2/PACKAGE_A_DECISIONS.md` | PRs touching Calibri / isHijriMode / AdaptiveShell / Stats |

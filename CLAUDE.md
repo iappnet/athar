@@ -127,7 +127,7 @@ Design size: 375×812 (`ScreenUtilInit`). Font: **Calibri** (canonical brand fon
 - Dark surfaces/text: `handoff_v2-2/THEME_DARK_SPEC.md` (overrides CSS)
 - Implementation: `lib/core/design_system/tokens/athar_colors.dart` + `athar_typography.dart`
 
-**v2 implementation status:** See `IMPLEMENTATION_MASTER_STATUS.md` for full PR sequence (14 PRs, PR1 complete).
+**v2 implementation status:** See `docs/status/ROADMAP.md` for full PR sequence (14 PRs, PR1 complete).
 
 ---
 
@@ -327,7 +327,7 @@ Read files in this order at the start of every session. Stop at the first tier t
 1. `CLAUDE.md` ← this file
 2. `docs/progress/CHECKPOINT.md` — current PR + last commit SHA
 3. `docs/ai/KNOWN_PROBLEMS.md` — open bugs + fragile areas
-4. `IMPLEMENTATION_MASTER_STATUS.md` — PR sequence + % (SSOT)
+4. `docs/status/ROADMAP.md` — PR sequence + % (SSOT)
 
 **After reading CHECKPOINT.md:** trust it over all lower-tier "current state" claims.
 
@@ -335,8 +335,8 @@ Read files in this order at the start of every session. Stop at the first tier t
 
 | File | Load when |
 |------|-----------|
-| `CURRENT_MIGRATION_STATE.md` | Any PR — branch state, RULE 1/2, Deferred QA |
-| `ROADMAP_AFTER_PR4A.md` | Any PR — next-arc guidance |
+| `docs/status/MIGRATION_STATE.md` | Any PR — branch state, RULE 1/2, Deferred QA |
+| `docs/status/NEXT_STEPS.md` | Any PR — next-arc guidance |
 | `design-context/_audit_<feature>.md` | The audit for the current PR |
 | `docs/ai/AI_WORKFLOW.md` | Execution rules refresher |
 | `handoff_v2-2/INVESTIGATION_RECONCILIATION.md` | Any design PR — 5 locked decisions |
