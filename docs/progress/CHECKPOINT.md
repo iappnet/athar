@@ -14,7 +14,7 @@ LOADS-AT:      Tier 0
 ## LAST UPDATED
 
 **Timestamp:** 2026-06-02 (Stage B4 — verify + root cleanup → STAGE B COMPLETE)  
-**Commit:** pending  
+**Commit:** `68b80e8` docs(restructure): B4 — verify + root cleanup  
 **Note:** B4 complete. All 6 root verification files moved to docs/history/pr-reports/. 10-item verify checklist: all PASS. Stale refs corrected in ROADMAP, MIGRATION_STATE, phase_tracker, current_project_status. Mandatory headers added to 2 files. MIGRATION_REPORT Stage B progress filled. Root = CLAUDE.md + README.md only. Stage B restructure COMPLETE.
 
 ---
@@ -22,7 +22,7 @@ LOADS-AT:      Tier 0
 ## CURRENT PR + PHASE
 
 **Active PR:** None — Stage B complete; ready for first feature PR  
-**Last completed:** PR4b (`65fc417`) ✅; B1 (`8874378`) ✅; B2 (`0f9b55f`) ✅; B3 (`64d1b47`) ✅; B4 (pending commit) ✅  
+**Last completed:** PR4b (`65fc417`) ✅; B1 (`8874378`) ✅; B2 (`0f9b55f`) ✅; B3 (`64d1b47`) ✅; B4 (`68b80e8`) ✅  
 **Phase:** STAGE B RESTRUCTURE COMPLETE. Ready for PR8 (Focus Oil-Fill) or PR9 (iOS Widget Refresh).  
 **Next:** PR8 or PR9 — see docs/status/ROADMAP.md + docs/status/NEXT_STEPS.md.
 
