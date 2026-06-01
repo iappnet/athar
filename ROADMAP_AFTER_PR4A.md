@@ -20,7 +20,8 @@
 
 ## Active PR
 
-**PR5 — Accessibility Settings.** Dart complete, flutter analyze clean. Awaiting settings screenshot review before commit.
+**None.** PR5 (`6154565`) and PR6 (`2a6a46a`) are both complete (2026-06-01).  
+Post-PR6 QA sweep is due before PR7. PR4b awaiting Hijri 3-letter abbreviation table.
 
 ---
 
@@ -28,10 +29,12 @@
 
 | PR | Status | Entry requirement |
 |----|--------|------------------|
-| PR5 — Accessibility Settings | 🔄 IMPLEMENTING — awaiting review | Sign-off received ✅ |
-| PR6 — Stats Redesign | Next after PR5 | Read `STATS_KPI_SPEC.md` first |
-| PR8 — Focus Oil-Fill | After PR6 | Read `FOCUS_OIL_SPEC.md`; designer review |
-| PR9 — iOS Widget Visual Refresh | After PR6 | None |
+| ~~PR5 — Accessibility Settings~~ | ✅ COMPLETE `6154565` | — |
+| ~~PR6 — Stats Redesign~~ | ✅ COMPLETE `2a6a46a` | — |
+| Post-PR6 QA sweep | 🔲 Due before PR7 | Physical device required |
+| PR4b — Calendar Dual-Display | 🔲 BLOCKED | Hijri abbreviation table from designer |
+| PR8 — Focus Oil-Fill | After QA sweep | Read `FOCUS_OIL_SPEC.md`; designer review |
+| PR9 — iOS Widget Visual Refresh | After QA sweep | None |
 
 ---
 

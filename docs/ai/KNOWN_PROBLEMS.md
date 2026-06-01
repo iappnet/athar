@@ -18,12 +18,6 @@ _All P1/P2/P3 have been fixed. Pending physical device verification._
 - **Action required:** Designer must confirm Calibri licence before any external TestFlight or App Store submission.
 - **Files:** `assets/fonts/calibri-light.ttf`, `assets/fonts/calibri-regular.ttf`, `assets/fonts/calibri-bold.ttf`, `pubspec.yaml`, `lib/core/design_system/tokens/athar_typography.dart`
 
-### B2: `isAutoModeEnabled` → `ThemeMode` not yet wired
-Dark palette tokens are correct (PR1 complete) but `ThemeMode` in `app.dart` does not yet respond to `UserSettings.isAutoModeEnabled`. The app always uses light mode regardless of the device theme setting.
-- **Impact:** Dark mode visuals invisible until PR-THEME ships.
-- **Target PR:** PR-THEME
-- **Target file:** `lib/app.dart:162–172`
-
 ---
 
 ## OPEN — NavBar Add Workflow
@@ -39,6 +33,9 @@ Dark palette tokens are correct (PR1 complete) but `ThemeMode` in `app.dart` doe
 ---
 
 ## RESOLVED — Previously Fixed Issues
+
+### FIXED: B2 — `isAutoModeEnabled` → `ThemeMode` not wired
+Fixed in **PR-THEME** (commit `bfaf863`, tag `athar-v2-prtheme-complete-final`). `UserSettings.isAutoModeEnabled` was superseded by the `ThemePreference` enum (`system` / `light` / `dark`). `app.dart` now uses a 3-way switch driving `AtharLightTheme.theme` / `AtharDarkTheme.theme` / `ThemeMode.system`. The field `isAutoModeEnabled` is no longer the mechanism — do NOT attempt to wire it.
 
 ### FIXED: P1 — Widget locale not updated on language change
 `LocaleCubit.setLocale()` now calls `WidgetDataService.pushLocaleOnly(localeCode)` after writing to secure storage. `pushLocaleOnly` writes `athar_app_locale` to UserDefaults and triggers all three widget extensions to re-render.

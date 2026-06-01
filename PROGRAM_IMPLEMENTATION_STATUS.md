@@ -43,10 +43,10 @@
 | PR | Estimated complexity | Key risk |
 |----|---------------------|----------|
 | PR-ADHAN | Low | Asset dependency only |
-| PR4a | Medium | CalendarCubit extension without breaking toggle |
+| ~~PR4a~~ | ~~Medium~~ | ~~CalendarCubit extension~~ — **COMPLETE** (`athar-v2-pr4a-complete`) |
 | PR4b | Very high | Net-new value objects + dual-display state |
-| PR5 | Low | New settings section, no existing regressions |
-| PR6 | Medium | Stats engine already has tests; visual only |
+| ~~PR5~~ | ~~Low~~ | ~~New settings section~~ — **COMPLETE** (`6154565`) |
+| ~~PR6~~ | ~~Medium~~ | ~~Stats redesign~~ — **COMPLETE** (`2a6a46a`) |
 | PR7 | High | Net-new feature, Athkar domain isolation |
 | PR8 | Medium | Procedural colours need designer review first |
 | PR9 | Low-Medium | Widget visual only, infra stable |

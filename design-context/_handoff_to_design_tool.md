@@ -1,5 +1,12 @@
 # Handoff to Claude Design — Athar UIKit Update Request
 
+> ⚠️ **STALE — Phase 0 output (2026-05-06). Do not read as current state.**
+> This file describes the app BEFORE v2 work began. Specific known-stale claims:
+> - "Stats cubit is essentially a stub" — FALSE. Stats is fully implemented (PR6 complete, `2a6a46a`).
+> - "Cairo + Inter fonts" — FALSE. Calibri added in PR1; Cairo is fallback only.
+> - "88 files with hardcoded colors" — migration ongoing since PR1.
+> Archive candidate (Stage B). For current handoff context, read `docs/governance/ATHAR_FINAL_KNOWLEDGE_ARCHITECTURE.md`.
+
 _Phase 6 output. Generated: 2026-05-06._
 _This document is the key handoff for Claude Design (or designer) to update the UIKit and design system based on audit findings._
 

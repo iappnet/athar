@@ -136,10 +136,16 @@ Analyzer: 0 issues · Tests: 29/29
 
 Commit `85ada1e`. Tag `athar-v2-pr4a-complete`. RULE 1 fix, token migration, today state, RTL. 2 device-QA gates in Deferred QA Bucket (`CURRENT_MIGRATION_STATE.md`).
 
-### Next PR — PR5 / PR6 / PR8 / PR9
+### Next PR
 
-All unblocked by PR2 ✅. Pending designer confirmation.  
-See `ROADMAP_AFTER_PR4A.md` for options and `IMPLEMENTATION_MASTER_STATUS.md` for authoritative PR ordering + %.
+> **Not canonical for this domain.**
+> Source of truth: `IMPLEMENTATION_MASTER_STATUS.md` (PR sequence + %).
+> This section is a pointer only — do not restate PR status here.
+> Last reconciled: 2026-06-01
+>
+> **PR5 — Accessibility Settings:** COMPLETE (`6154565`, 2026-06-01)
+> **PR6 — Stats Redesign:** COMPLETE (`2a6a46a`, 2026-06-01)
+> **Next:** Post-PR6 QA sweep → PR4b (awaiting Hijri abbreviation table). See `ROADMAP_AFTER_PR4A.md`.
 
 ---
 

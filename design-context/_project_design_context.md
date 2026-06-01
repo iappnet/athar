@@ -1,5 +1,11 @@
 # Project Design Context — Athar (أثر)
 
+> ⚠️ **STALE — Phase 0 output (2026-05-06). Do not read as current state.**
+> This file describes the app BEFORE v2 work began. Specific known-stale claims:
+> - "`lib/features/stats/` | Stub" — FALSE. Stats fully implemented (PR6 complete, `2a6a46a`).
+> - "Cairo + Inter fonts" / "Calibri NOT in project" — FALSE. Calibri added in PR1.
+> Archive candidate (Stage B). For current project context, read `CLAUDE.md`.
+
 _Phase 0 output. Generated: 2026-05-06. Do not implement — audit only._
 
 ---
