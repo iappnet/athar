@@ -5,8 +5,8 @@
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-01 (PR5 commit)  
-**Commit:** see NEXT ACTION below — committing now  
+**Timestamp:** 2026-06-01 (PR5 complete)  
+**Commit:** `6154565` feat(PR5): accessibility settings  
 **Tag:** `athar-v2-pr4a-complete` → `1beff60` ✅ pushed to remote
 
 ---
@@ -90,4 +90,4 @@
 
 **Status:** Clean — PR5 committed + pushed  
 **flutter analyze:** 0 issues ✅ (verified 2026-06-01, PR5 complete)  
-**Last commit:** PR5 feat commit — see `git log` for hash
+**Last commit:** `6154565` feat(PR5): accessibility settings
