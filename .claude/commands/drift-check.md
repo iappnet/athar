@@ -9,9 +9,9 @@
 Read these 5 things in order:
 
 1. **`docs/progress/CHECKPOINT.md`** — note: current PR + last commit SHA
-2. **`IMPLEMENTATION_MASTER_STATUS.md`** — note: which PRs are marked ✅ Complete
+2. **`docs/status/ROADMAP.md`** — note: which PRs are marked ✅ Complete
 3. **`docs/ai/KNOWN_PROBLEMS.md`** — note: every item in the OPEN sections
-4. **`CURRENT_MIGRATION_STATE.md`** — note: "Active PR" and "Last commit"
+4. **`docs/status/MIGRATION_STATE.md`** — note: "Active PR" and "Last commit"
 5. **`.claude/CONTEXT_TIERS.md`** — confirm Tier 0 list matches this command's expectation
 
 ---
@@ -20,11 +20,11 @@ Read these 5 things in order:
 
 | Check | Pass condition |
 |-------|---------------|
-| **Active PR agrees** | CHECKPOINT "Active PR" == IMPLEMENTATION_MASTER_STATUS active row |
+| **Active PR agrees** | CHECKPOINT "Active PR" == docs/status/ROADMAP.md active row |
 | **No ghost open bugs** | Every KNOWN_PROBLEMS "OPEN" item is genuinely open (not fixed by a shipped PR) |
-| **% consistent** | IMPLEMENTATION_MASTER_STATUS % is derivable from the ✅ rows in its own PR table |
+| **% consistent** | docs/status/ROADMAP.md % is derivable from the ✅ rows in its own PR table |
 | **No Tier-0 dead paths** | No Tier-0 file references a path that no longer exists or is now archived |
-| **CHECKPOINT is freshest** | CHECKPOINT last-updated date >= IMPLEMENTATION_MASTER_STATUS last-updated date |
+| **CHECKPOINT is freshest** | CHECKPOINT last-updated date >= docs/status/ROADMAP.md last-updated date |
 
 ---
 
@@ -46,9 +46,9 @@ Read these 5 things in order:
 
 Tier-0 files read:
   1. CHECKPOINT.md — current PR: <x>, last commit: <sha>
-  2. IMPLEMENTATION_MASTER_STATUS.md — complete PRs: <list>
+  2. docs/status/ROADMAP.md — complete PRs: <list>
   3. KNOWN_PROBLEMS.md — open items: <list or "none besides B1/P4">
-  4. CURRENT_MIGRATION_STATE.md — active PR: <x>, last commit: <sha>
+  4. docs/status/MIGRATION_STATE.md — active PR: <x>, last commit: <sha>
   5. .claude/CONTEXT_TIERS.md — Tier 0 list: matches / MISMATCH
 
 Checks:

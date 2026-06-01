@@ -6,7 +6,7 @@ Update the AI knowledge layer after significant code changes.
 
 1. Run `codebase_update` via SocratiCode to re-index changed files
 2. Review `docs/ai/KNOWN_PROBLEMS.md` — mark resolved bugs as RESOLVED, add any new issues found
-3. If new features were added, update `docs/ai/FEATURE_INDEX.md` and `docs/ai/FILE_INDEX.md`
+3. If new features were added, update `docs/ai/FEATURE_INDEX.md` (FILE_INDEX.md merged here in B1)
 4. If data flows changed, update `docs/ai/DATA_FLOW_INDEX.md`
 5. If new cubits were added or cubit responsibilities changed, update `docs/ai/STATE_MANAGEMENT_INDEX.md`
 6. If widget keys or payload schema changed, update `docs/ai/WIDGET_INDEX.md`
