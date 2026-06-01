@@ -1,89 +1,74 @@
 # PR-THEME Final Report
 
-**Completed:** 2026-05-09  
-**Branch:** `feat/athar-v2-pr1-tokens-theme`  
-**Tag (planned):** `athar-v2-prtheme-complete`  
-**Status:** ✅ Implementation complete — all checks green
+**Date:** 2026-06-01
+**Branch:** `feat/athar-v2-pr1-tokens-theme`
+**Commit:** `bfaf863`
+**Tag:** `athar-v2-prtheme-complete-final`
+**Status:** COMPLETE — all phases delivered, approved, committed
 
 ---
 
-## What Was Changed
+## Full PR-THEME Arc
 
-### 1. `lib/app.dart` — ThemeMode wiring
+PR-THEME is a logical PR arc delivered across four commits on the migration branch:
 
-**Line 172:**
-```diff
-- themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
-+ themeMode: isDark ? ThemeMode.dark : ThemeMode.system,
+| Commit | Phase | Scope | Tag |
+|--------|-------|-------|-----|
+| `14c13d6` | PR-THEME initial | Wire `ThemeMode.system` for auto dark mode in `app.dart` | `athar-v2-prtheme-complete` |
+| `66bc884` | PR-THEME-3MODE | `ThemePreference` enum (system/light/dark) + migration + 3-option picker | `athar-v2-prtheme-3mode-complete` |
+| `3872860` | PR-FONT-FALLBACK | Cairo fallback on all 38 `AtharTypography` base styles + extensions | — |
+| `bfaf863` | PR-THEME FINAL | Wire `AtharLightTheme`/`AtharDarkTheme` + 88 `fontFamilyFallback` edits + RTL drawer | `athar-v2-prtheme-complete-final` |
+
+---
+
+## PR-THEME FINAL — Scope (commit `bfaf863`)
+
+### STEP 1 — Font fallback gaps (88 edits across 2 files)
+
+Every `TextStyle.copyWith` call that sets `fontFamily: AtharTypography.fontFamilyAr`
+in both theme files now carries `fontFamilyFallback: AtharTypography.fontFallback`.
+
+- `athar_light_theme.dart` — 44 edits
+- `athar_dark_theme.dart` — 44 edits
+- **Exception (both files, line 80):** `ThemeData.fontFamily` is a `String` field,
+  not a `TextStyle`. It cannot carry `fontFamilyFallback`. Left as-is with an inline
+  comment. This is the sole documented exception.
+
+### STEP 2 — app.dart wiring
+
+| Before | After |
+|--------|-------|
+| `import 'core/design_system/themes/app_theme.dart'` | `import 'core/design_system/themes/athar_light_theme.dart'` + dark |
+| `theme: AppTheme.lightTheme` | `theme: AtharLightTheme.theme` |
+| `darkTheme: AppTheme.darkTheme` | `darkTheme: AtharDarkTheme.theme` |
+
+**Untouched:** `themeMode` switch, `themePreference`, `LocaleCubit`, routes — zero behavioral change.
+
+### STEP 3 — DrawerTheme RTL fix
+
+Both theme files:
+```dart
+// BEFORE (LTR-hardcoded):
+borderRadius: BorderRadius.only(
+  topLeft: Radius.circular(0), bottomLeft: Radius.circular(0),
+  topRight: Radius.circular(16), bottomRight: Radius.circular(16),
+)
+
+// AFTER (RTL-aware):
+borderRadius: BorderRadiusDirectional.only(
+  topStart: Radius.circular(0), bottomStart: Radius.circular(0),
+  topEnd: Radius.circular(16), bottomEnd: Radius.circular(16),
+)
 ```
 
-**Effect:**
-- `isDarkMode = false` (default) → `ThemeMode.system` → follows device OS appearance
-- `isDarkMode = true` → `ThemeMode.dark` → forced dark (unchanged)
-- `ThemeMode.light` is no longer used; `ThemeMode.system` replaces it
+### STEP 4 — Cleanup
 
----
-
-### 2. `lib/features/settings/presentation/pages/general_settings_page.dart` — subtitle
-
-**Lines 78–85:**
-```diff
-  _SwitchTile(
-    icon: Icons.dark_mode_outlined,
-    iconColor: const Color(0xFF5C35C9),
-    title: l10n.darkMode,
-+   subtitle: l10n.darkModeDesc,
-    value: settings?.isDarkMode ?? false,
-    onChanged: (v) =>
-        context.read<SettingsCubit>().toggleDarkMode(v),
-  ),
-```
-
-**Effect:** Dark Mode switch now shows a subtitle explaining "When off, app follows device appearance."
-
----
-
-### 3. `lib/l10n/app_en.arb` — new key
-
-```diff
-  "darkMode": "Dark Mode",
-+ "darkModeDesc": "When off, Athar follows your device appearance.",
-  "systemMode": "System Default",
-```
-
----
-
-### 4. `lib/l10n/app_ar.arb` — new key
-
-```diff
-  "darkMode": "الوضع الداكن",
-+ "darkModeDesc": "عند إيقافه، يتبع أثر مظهر الجهاز.",
-  "systemMode": "حسب النظام",
-```
-
----
-
-### 5. Generated: `lib/l10n/generated/` — updated by `flutter gen-l10n`
-
-- `app_localizations_en.dart:496` — `String get darkModeDesc => 'When off, Athar follows your device appearance.';`
-- `app_localizations_ar.dart:495` — `String get darkModeDesc => 'عند إيقافه، يتبع أثر مظهر الجهاز.';`
-
----
-
-## What Was NOT Changed
-
-| Item | Confirmed untouched |
-|------|-------------------|
-| `UserSettings.isAutoModeEnabled` | ✅ Not touched — Smart Zones field; unrelated to theme |
-| Isar model (`user_settings.dart`) | ✅ Not touched — no `build_runner` needed |
-| `SettingsCubit` (except `toggleDarkMode`) | ✅ Not touched |
-| Onboarding | ✅ Not touched |
-| Calendar | ✅ Not touched |
-| iOS widgets / Swift | ✅ Not touched |
-| Prayer hierarchy | ✅ Not touched |
-| Navigation / routing | ✅ Not touched |
-| `build_runner` | ✅ Not run |
-| `adaptive_scaffold.dart` | ✅ Not touched (deferred to PR2) |
+| Action | File |
+|--------|------|
+| DELETED | `lib/core/design_system/themes/athar_theme.dart` (1-line empty stub) |
+| DELETED | `lib/core/design_system/themes/app_theme.dart` (legacy, 0 live imports) |
+| CLEANED | `lib/core/design_system/themes/themes.dart` — removed `export 'athar_theme.dart'` |
+| DEFERRED | `lib/core/design_system/themes/app_colors.dart` — all lib/ usages commented-out; deferred to PR-CLEANUP |
 
 ---
 
@@ -91,58 +76,49 @@
 
 | Check | Result |
 |-------|--------|
-| `flutter analyze` | ✅ **0 issues** |
-| `flutter test` | ✅ **29/29 passed** |
-| `flutter gen-l10n` | ✅ Generated — `darkModeDesc` present in both locale files |
-| `isAutoModeEnabled` untouched | ✅ Confirmed |
-| No scope creep | ✅ Confirmed |
+| `flutter analyze --no-fatal-infos` | ✅ 0 issues |
+| `flutter test` | ✅ 45/45 passed (16 golden + 28 stats + 1 config) |
+| PR3 golden PNGs (16/16) | ✅ Untouched — no regen forced |
+| `AppTheme` references in lib/ | ✅ NONE |
+| `BorderRadius.only` in DrawerTheme | ✅ NONE |
+| themeMode/themePreference in app.dart | ✅ Intact and unchanged |
 
 ---
 
-## Behavioral Change Summary
+## Open Items (Non-Blocking)
 
-| Scenario | Before PR-THEME | After PR-THEME |
-|----------|----------------|----------------|
-| Device: light, `isDarkMode=false` | App: light | App: light (system) ✅ |
-| Device: dark, `isDarkMode=false` | App: light (wrong) | App: dark (follows OS) ✅ |
-| Device: dark, `isDarkMode=true` | App: dark | App: dark ✅ same |
-| OS appearance change mid-session | No effect | App responds live ✅ |
-
----
-
-## DRIFT-6 Resolution
-
-The handoff document decision B2 incorrectly named `isAutoModeEnabled` as the theme field. That field is the Smart Zones auto-scheduling toggle. PR-THEME correctly uses `isDarkMode` only, changing the false-branch from `ThemeMode.light` to `ThemeMode.system`. No new UserSettings field was needed.
+| Item | Owner | When |
+|------|-------|------|
+| Physical device QA — forest-dark surfaces | QA | Post-merge (pre-release gate) |
+| Physical device QA — dark-mode visual validation | QA | Post-merge (pre-release gate) |
+| Physical device QA — RTL drawer direction | QA | Post-merge (pre-release gate) |
+| Physical device QA — Arabic rendering (Cairo fallback) | QA | Post-merge (pre-release gate) |
+| Physical device QA — countdown tick, active prayer window | QA | Post-merge (pre-release gate) |
+| `app_colors.dart` dead-code cleanup | PR-CLEANUP | After all component PRs |
+| Calibri App Store licence (bug B1) | Legal/design | Before submission |
 
 ---
 
-## Rollback
+## Why This PR Was Needed
 
-One-line rollback if needed:
-```dart
-// lib/app.dart:172
-themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+`AtharLightTheme` and `AtharDarkTheme` were fully built since PR1 but `app.dart` continued
+serving the legacy `AppTheme` stub (3 text styles, `fontFamily: 'Cairo'`, no tokens).
+
+Additionally, every `copyWith(fontFamily: 'Calibri')` call severs Flutter's inherited
+Cairo glyph chain. Without `fontFamilyFallback: ['Cairo', ...]` on every such TextStyle,
+Arabic text would render tofu boxes wherever a component theme overrides the font.
+This PR fixes both issues atomically.
+
+---
+
+## Files Changed
+
 ```
-Remove `darkModeDesc` from both ARB files and re-run `flutter gen-l10n`.
-
----
-
-## Screenshot Checklist (manual — required before PR2)
-
-- [ ] Light mode: no visual change on all key screens
-- [ ] Dark mode activates when OS is set to dark
-- [ ] Settings Dark Mode switch subtitle renders correctly in AR and EN
-- [ ] Prayer card navy gradient readable on dark background
-- [ ] Arabic RTL screens in dark mode (spot check)
-
----
-
-## Next Step
-
-**PR2 — AdaptiveShell** is now unblocked.
-
-Before starting PR2, read:
-- `handoff_v2-2/IPAD_OPTIMIZATION.md`
-- `handoff_v2-2/REDESIGN_AUDIT.md`
-- `handoff_v2-2/INVESTIGATION_REPORT.md`
-- `preview/comp-nav.html` (bottom-nav shape + FAB pill)
+lib/app.dart                                           — theme import + wiring swap
+lib/core/design_system/themes/athar_light_theme.dart  — 44 fontFamilyFallback + RTL drawer
+lib/core/design_system/themes/athar_dark_theme.dart   — 44 fontFamilyFallback + RTL drawer
+lib/core/design_system/themes/themes.dart             — remove athar_theme.dart export
+VERIFICATION_PR_THEME.md                              — evidence document (6-step proof)
+[DELETED] lib/core/design_system/themes/app_theme.dart
+[DELETED] lib/core/design_system/themes/athar_theme.dart
+```

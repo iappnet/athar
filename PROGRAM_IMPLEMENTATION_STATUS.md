@@ -1,6 +1,7 @@
 # Program Implementation Status — Athar v2 Design System Migration
 
-**Last updated:** 2026-05-09  
+**Last updated:** 2026-06-01
+
 **Program:** Athar v2 Design System — Full Flutter Migration  
 **Canonical handoff:** `handoff_v2-2/`  
 **Canonical migration branch:** `feat/athar-v2-pr1-tokens-theme` ← long-running; do NOT merge to `main` until migration complete  
@@ -29,9 +30,9 @@
 | PR | Name | Purpose | Status | Depends on | Blockers |
 |----|------|---------|--------|------------|---------|
 | **PR1** | Tokens & Theme | Green brand palette (light + dark); Calibri font; `numericMono` TextStyle; dark surface tokens per `THEME_DARK_SPEC.md` | ✅ **Complete** `61d741a` | — | — |
-| **PR-THEME** | Auto Dark Mode Wiring | Superseded by PR-THEME-3MODE. `ThemePreference` enum (system/light/dark) with migration + 3-option picker. `flutter analyze`: 0 · `flutter test`: 29/29. Tag: `athar-v2-prtheme-3mode-complete`. | ✅ Complete | PR1 ✅ | — |
-| **PR2** | AdaptiveShell | Rename `adaptive_scaffold` → `adaptive_shell`; iPad breakpoints; 4-tab nav bar shape; FAB pill outside bar (RTL/LTR) | 🟡 Ready to implement | PR-THEME ✅ | All 4 spec files read; see `PR2_FINAL_READINESS_REPORT.md` + `PR2_IMPLEMENTATION_PLAN.md` |
-| **PR3** | Prayer Card Refresh | Visual redesign per `PRAYER_CARD_SPEC.md`; four-level toggle must not regress | 🔲 Not started | PR2 | `PRAYER_CARD_SPEC.md` must be read |
+| **PR-THEME** | Design System Theme Wiring (full arc) | `ThemePreference` enum + 3-mode picker; PR-FONT-FALLBACK (38 base styles + 88 theme fallbacks); wire `AtharLightTheme`/`AtharDarkTheme`; RTL drawer. `flutter analyze`: 0 · `flutter test`: 45/45. Tag: `athar-v2-prtheme-complete-final`. | ✅ **Complete 2026-06-01** | PR1 ✅ | — |
+| **PR2** | AdaptiveShell | Rename `adaptive_scaffold` → `adaptive_shell`; iPad breakpoints; 4-tab nav bar shape; FAB pill outside bar (RTL/LTR) | ✅ Complete | PR-THEME ✅ | — |
+| **PR3** | Prayer Card Refresh | Forest gradient, 44px countdown, calm states, golden test suite 16/16. Tag: in branch. | ✅ **Complete 2026-06-01** | PR2 ✅ | — |
 | **PR-ADHAN** | Audio Asset Bundle | Bundle `adhan.mp3` / `.caf`; build gate for existing player | 🔲 Not started | Asset from designer | Asset not yet received |
 | **PR4a** | Calendar Visual Refresh | Update calendar chrome, colours, typography; keep existing Hijri/Gregorian toggle; extend `CalendarCubit` | 🔲 Not started | PR2 | Must read: `CALENDAR_FOCUS_REDESIGN.md` |
 | **PR4b** | Calendar Dual-Display Rebuild | Net-new: `DualDate` value object + `CalendarCell` + `DualMonthSwitcher`; simultaneous Hijri + Gregorian numerals | 🔲 Not started | PR4a + designer spec | Dedicated designer spec not yet written |

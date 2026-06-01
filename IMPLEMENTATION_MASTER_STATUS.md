@@ -1,7 +1,8 @@
 # Implementation Master Status — Athar v2 Design System
 
-**Last updated:** 2026-05-09  
-**Updated by:** Roadmap verification + migration branch strategy  
+**Last updated:** 2026-06-01
+**Updated by:** PR-THEME FINAL complete — AtharLightTheme/AtharDarkTheme wired, 88 fontFamilyFallback, RTL drawer
+
 **Program-level view:** `PROGRAM_IMPLEMENTATION_STATUS.md`  
 **Branch strategy:** `MIGRATION_BRANCH_STRATEGY.md`  
 **Roadmap verification:** `MIGRATION_ROADMAP_VERIFICATION.md`  
@@ -33,10 +34,10 @@
 | # | PR | Name | Status | Tag | Blocker |
 |---|----|----- |--------|-----|---------|
 | 1 | **PR1** | Tokens & Theme — green palette, Calibri, dark surfaces | ✅ Complete | `athar-v2-pr1-complete` | — |
-| 2 | **PR-THEME** | `app.dart:172` `ThemeMode.light` → `ThemeMode.system`; `darkModeDesc` subtitle added | ✅ Complete | `athar-v2-prtheme-complete` | — |
-| 2b | **PR-THEME-3MODE** | `ThemePreference` enum + migration + 3-option picker; supersedes 2-state toggle; architecture stabilized | ✅ Complete | `athar-v2-prtheme-3mode-complete` | — |
+| 2 | **PR-THEME** | `ThemeMode.system` wiring + `ThemePreference` enum + 3-mode picker + PR-FONT-FALLBACK + wire `AtharLightTheme`/`AtharDarkTheme` + 88 fontFamilyFallback + RTL drawer | ✅ **Complete 2026-06-01** | `athar-v2-prtheme-complete-final` | — |
+| 2b | **PR-FONT-FALLBACK** | Cairo fallback on all 38 `AtharTypography` base styles + 3 extensions | ✅ Complete | — (part of PR-THEME arc) | — |
 | 3 | **PR2** | AdaptiveShell rename + iPad breakpoints + 4-tab nav + FAB pill | ✅ Complete | `athar-v2-pr2-complete` | — |
-| 4 | **PR3** | Prayer card refresh (`PRAYER_CARD_SPEC.md`) | 🔲 Not started | — | PR2 |
+| 4 | **PR3** | Prayer card refresh — forest gradient, 44px countdown, calm states, 16/16 goldens | ✅ **Complete 2026-06-01** | — | — |
 | 5 | **PR-ADHAN** | Bundle `adhan.mp3` + `adhan.caf`; build gate if absent | 🔲 Not started | — | Asset from designer |
 | 6 | **PR4a** | Calendar visual refresh + `CalendarCubit` 4-source fan-in | 🔲 Not started | — | PR2 |
 | 7 | **PR4b** | Calendar dual-display (`DualDate` VO + `CalendarCell` + `DualMonthSwitcher`) | 🔲 Not started | — | PR4a + spec |
@@ -48,7 +49,7 @@
 | 13 | **PR-ONBOARD-AB** | Four-variant onboarding A/B/C/D; Variant A must not regress | 🔲 Not started | — | PR2 + designer |
 | 14 | **PR-CLEANUP** | Hardcoded colour sweep (files untouched by other PRs) | 🔲 Not started | — | All others |
 
-**Total PRs:** 14 (+ PR-THEME-3MODE as 2b) · **Complete:** 4 · **Ready:** 0 · **Blocked:** 10
+**Total PRs:** 14 (+ PR-FONT-FALLBACK as 2b) · **Complete:** 5 (PR1, PR-THEME arc, PR2, PR3) · **Ready:** 6 (PR4a, PR5, PR6, PR7, PR8, PR9 — all unblocked by PR2 ✅) · **Blocked:** 4 (PR4b, PR-ONBOARD-AB need designer spec; PR-ADHAN needs audio asset; PR-CLEANUP needs all others first)
 
 ---
 
@@ -56,12 +57,12 @@
 
 | Dimension | Complete | Total | % |
 |-----------|---------|-------|---|
-| v2 Design System PRs | 1 | 14 | **7%** |
-| Design system token migration | ✅ Foundation layer done | Component + screen migration pending | ~5% |
-| Typography migration | Tokens updated | Component-level `.arabic`/`.english` callsites still use Cairo/Inter in some files | ~10% |
-| Dark-mode migration | Tokens correct + `ThemeMode.system` wired (PR-THEME ✅) | Component-level migration pending (PR2+) | ~50% |
-| Component library | 0 components migrated | PR2+ | 0% |
-| iOS widget visual refresh | 0 | PR9 | 0% |
+| v2 Design System PRs | 4 logical (PR1, PR-THEME arc, PR2, PR3) | 14 | **~29%** |
+| Design system token migration | ✅ Foundation done; design system themes now live in app | Component + screen migration pending | ~15% |
+| Typography migration | Tokens + 88 theme fallbacks + 38 base styles — all correct | Component `.arabic`/`.english` callsites still use Cairo in some files | ~25% |
+| Dark-mode migration | Tokens ✅ + ThemeMode ✅ + AtharDarkTheme now wired ✅ | Component-level color migration pending (PR4a+) | ~70% |
+| Component library | Prayer card (PR3 ✅) | AdaptiveShell (PR2 ✅) + calendar, stats, focus, Athkar pending | ~15% |
+| iOS widget visual refresh | 0 visual refresh | PR9 | 0% |
 
 ---
 
@@ -111,18 +112,21 @@
 
 ## Recommended Next PR
 
-**PR-THEME** — `isAutoModeEnabled` dark mode wiring.
+**PR4a** — Calendar visual refresh.
 
 **Why next:**
-- No blockers
-- Small scope: `app.dart` lines 162–172 only
-- Unblocks PR2 (AdaptiveShell) which unblocks everything else
-- Dark tokens are now correct (PR1 complete) — wiring them is the logical next step
+- PR2 ✅ unblocks all PR4+ work
+- PR3 ✅ — prayer card done
+- PR-THEME arc ✅ — design system themes fully live
+- Calendar is high-visibility (shows on home screen); visual refresh follows naturally
 
-**Before starting PR-THEME:**
-- Read `IMPLEMENTATION_EXECUTION_PLAN.md` § PR-THEME
-- Confirm `UserSettings.isAutoModeEnabled` field path in the settings repository
-- Verify B4: which settings UI control drives `isAutoModeEnabled`
+**Before starting PR4a:**
+- Read `CALENDAR_FOCUS_REDESIGN.md` (not yet read — mandatory)
+- Confirm `CalendarCubit` state shape and 4-source fan-in requirements
+- Preserve existing Hijri/Gregorian toggle (PR4b dual-display is a separate PR)
+
+**Alternatively:** PR5 (Accessibility Settings), PR6 (Stats), PR8 (Focus Oil), PR9 (iOS Widget Refresh)
+are all unblocked by PR2 ✅ and can be taken in any order.
 
 ---
 

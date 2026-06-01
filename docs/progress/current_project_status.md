@@ -1,5 +1,5 @@
 # Athar — Current Project Status
-_Last updated: 2026-05-09 (PR-THEME-3MODE complete — ThemePreference enum, 3-option picker, architecture stabilized, 0 analyzer issues, 29/29 tests)_
+_Last updated: 2026-06-01 (PR-THEME FINAL complete — AtharLightTheme/AtharDarkTheme wired, 88 fontFamilyFallback, RTL drawer, 0 analyzer issues, 45/45 tests)_
 
 ## Completed Work
 
@@ -107,11 +107,37 @@ Files created/modified:
 Governance: `PR2_PROGRESS_REPORT.md` · `PR2_CHECKPOINTS.md`  
 Analyzer: 0 issues · Tests: 29/29
 
-### Next PR — PR3 (Prayer Card Refresh)
+### PR-FONT-FALLBACK — Complete ✅ (commit `3872860`)
 
-Prerequisite read: `handoff_v2-2/PRAYER_CARD_SPEC.md`
+- Cairo fallback on all 38 `AtharTypography` `const TextStyle` definitions
+- Cairo fallback on `.arabic`, `.english`, `.mono` extension methods
+- `fontFallback = ['Cairo', 'Roboto', 'Arial', 'sans-serif']` canonical constant added
 
-See `IMPLEMENTATION_MASTER_STATUS.md` for PR sequence, `PROGRAM_IMPLEMENTATION_STATUS.md` for full program view, `MIGRATION_BRANCH_STRATEGY.md` for branch governance, and `MIGRATION_ROADMAP_VERIFICATION.md` for verified canonical roadmap (8 discrepancies corrected from proposed roadmap).
+### PR3 — Prayer Card Refresh — Complete ✅ (commit `1cd4f80`)
+
+- Forest gradient (`#0F3D2E → #1A5A45`), 44pt countdown (light weight), calm active state
+- 16/16 golden tests: AR + EN × 8 scenarios (upcoming, active, nafl-duha, expanded, loading, permission-denied, SE-375×667, progress-50%)
+- Shadow blurRadius 20/8 accepted (canonical, locked); shadow colors correct
+- `flutter analyze`: 0 · `flutter test`: 45/45
+- Verified: `CONSOLIDATED_REPORT_PR3.md` + `PR3_SIGNOFF.md`
+
+### PR-THEME FINAL — Complete ✅ (commit `bfaf863`, tag `athar-v2-prtheme-complete-final`)
+
+- Wire `app.dart` to `AtharLightTheme.theme` / `AtharDarkTheme.theme` (replaces legacy `AppTheme` stub)
+- 44 × `fontFamilyFallback: AtharTypography.fontFallback` in `athar_light_theme.dart`
+- 44 × `fontFamilyFallback: AtharTypography.fontFallback` in `athar_dark_theme.dart`
+- `DrawerTheme.shape`: `BorderRadius.only` → `BorderRadiusDirectional.only` (RTL fix) in both files
+- Deleted: `app_theme.dart` (legacy stub), `athar_theme.dart` (empty stub)
+- Cleaned: `themes.dart` barrel
+- `flutter analyze`: 0 · `flutter test`: 45/45 · PR3 goldens: 16/16 unchanged
+- Verification: `VERIFICATION_PR_THEME.md`
+
+### Next PR — PR4a (Calendar Visual Refresh) or PR5/PR6/PR8/PR9
+
+All unblocked by PR2 ✅. Recommended first: PR4a.
+Prerequisite read for PR4a: `CALENDAR_FOCUS_REDESIGN.md`
+
+See `IMPLEMENTATION_MASTER_STATUS.md` for PR sequence, `PROGRAM_IMPLEMENTATION_STATUS.md` for full program view, `MIGRATION_BRANCH_STRATEGY.md` for branch governance, and `MIGRATION_ROADMAP_VERIFICATION.md` for verified canonical roadmap.
 
 ---
 

@@ -149,12 +149,17 @@ Completed items:
 Remaining:
 - B1: Calibri App Store licence confirmation (submission gate only — does not block development)
 
-### PR-THEME — Auto Dark Mode Wiring
+### PR-THEME — Design System Theme Wiring (full arc)
 
-**Status: 🟡 Ready — no blockers**
+**Status: ✅ Complete 2026-06-01 — tag `athar-v2-prtheme-complete-final`**
 
-Scope: Wire `isAutoModeEnabled` from `UserSettings` into `ThemeMode` at `app.dart:162–172`.  
-Prerequisite reads before starting: `IMPLEMENTATION_EXECUTION_PLAN.md` § PR-THEME.
+Full arc delivered across 4 commits:
+- `14c13d6` ThemeMode.system wiring (`athar-v2-prtheme-complete`)
+- `66bc884` ThemePreference enum + 3-mode picker (`athar-v2-prtheme-3mode-complete`)
+- `3872860` PR-FONT-FALLBACK — Cairo fallback on all 38 AtharTypography base styles
+- `bfaf863` Wire AtharLightTheme/AtharDarkTheme; 88 fontFamilyFallback; RTL DrawerTheme
+
+`flutter analyze`: 0 issues · `flutter test`: 45/45 · Verification: `VERIFICATION_PR_THEME.md`
 
 ### PR2 — AdaptiveShell
 
@@ -194,11 +199,42 @@ Governance: `PR2_PROGRESS_REPORT.md` · `PR2_CHECKPOINTS.md`
 
 ---
 
-### PR3 through PR-CLEANUP
+### PR-FONT-FALLBACK
 
-**Status: 🔲 Not started — blocked on PR2**
+**Status: ✅ Complete — commit `3872860`**
 
-See `IMPLEMENTATION_MASTER_STATUS.md` for PR sequence and `PROGRAM_IMPLEMENTATION_STATUS.md` for full program-level roadmap (14 PRs, completion %, risk rankings).
+Cairo fallback on all 38 `AtharTypography` `const TextStyle` definitions + 3 extension methods.
+Delivered as part of the PR-THEME arc.
+
+---
+
+### PR3 — Prayer Card Refresh
+
+**Status: ✅ Complete 2026-06-01 — commit `1cd4f80`**
+
+Forest gradient (`#0F3D2E → #1A5A45`), 44pt countdown (weight 300), calm active/post-prayer states.  
+16/16 golden tests pass (AR + EN × 8 scenarios). Shadow blurRadius 20/8 accepted (canonical).  
+`flutter analyze`: 0 issues · `flutter test`: 45/45 · Sign-off: `PR3_SIGNOFF.md`
+
+---
+
+### PR4a through PR-CLEANUP
+
+**Status: 🔲 Not started — PR2 ✅ unblocks PR4a, PR5, PR6, PR8, PR9**
+
+| PR | First prerequisite |
+|----|-------------------|
+| PR4a — Calendar visual refresh | Read `CALENDAR_FOCUS_REDESIGN.md` |
+| PR4b — Calendar dual-display | PR4a + designer spec |
+| PR5 — Accessibility Settings | None |
+| PR6 — Stats redesign | Read `STATS_KPI_SPEC.md` |
+| PR7 — Athkar feature | PR2 + designer review |
+| PR8 — Focus oil-fill | Read `FOCUS_OIL_SPEC.md` |
+| PR9 — iOS widget visual refresh | None |
+| PR-ONBOARD-AB | PR2 + designer approval |
+| PR-CLEANUP | All others complete |
+
+See `IMPLEMENTATION_MASTER_STATUS.md` + `PROGRAM_IMPLEMENTATION_STATUS.md` for full roadmap.
 
 ---
 
