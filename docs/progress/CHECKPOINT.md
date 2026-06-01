@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-01 · PR4b complete (65fc417)
+LAST-UPDATED:  2026-06-01 · drift-check PASS (aa8be7b)
 LOADS-AT:      Tier 0
 -->
 
@@ -13,9 +13,9 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-01 (PR4b complete)  
-**Commit:** `65fc417` feat(PR4b): dual Hijri/Gregorian calendar — DualDate + CalendarMonthCubit, 5-source activity dots (gated prayer), Hijri boundary labels  
-**Note:** PR4b shipped. 12/12 spec-conformance items PASS. ARB copy designer-approved + byte-verified. AR visual QA deferred to final sweep (post-PR6, pre-PR7). drift-check 3 failures fixed: IMS PR4b row ✅, % updated to ~57%, dead `dual_calendar_widget.dart` path replaced, B3 blocker closed.
+**Timestamp:** 2026-06-01 (drift-check PASS)  
+**Commit:** `aa8be7b` docs: drift-check — fix 2 dead paths (CALENDAR_CELL_SPEC/FOCUS_REDESIGN root not handoff_v2-2), close B3/PR4b-abbr  
+**Note:** PR4b complete (`65fc417`). drift-check PASS — all 5 checks green. Fixed: 2 dead paths in CONTEXT_TIERS.md + IMS, B3 closed, PR4b-abbr resolved, % ~57%, dual_calendar_widget.dart dead path cleared. AR visual QA deferred to final device sweep.
 
 ---
 
@@ -106,6 +106,6 @@ LOADS-AT:      Tier 0
 
 ## WORKING TREE STATE
 
-**Status:** Clean — PR4b committed + pushed  
+**Status:** Clean — PR4b committed + pushed; drift-check PASS  
 **flutter analyze:** 0 issues in PR4b-touched files ✅ (2 pre-existing warnings in space/task features, unrelated)  
-**Last commit:** `65fc417` feat(PR4b): dual Hijri/Gregorian calendar
+**Last commit:** `aa8be7b` docs: drift-check — fix 2 dead paths, close B3/PR4b-abbr
