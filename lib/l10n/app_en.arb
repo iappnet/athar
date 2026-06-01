@@ -1642,6 +1642,32 @@
 "mergeBoth": "Merge (Recommended)",
 "navigationSettings": "Navigation",
 "hideNavOnScroll": "Hide navigation on scroll",
-"hideNavOnScrollDesc": "Automatically hide bottom bar when scrolling down"
+"hideNavOnScrollDesc": "Automatically hide bottom bar when scrolling down",
+
+  "athkarSetScreenTitle": "Daily Athkar",
+  "athkarDhikrCount": "{count} dhikr",
+  "@athkarDhikrCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "athkarApproxMins": "~{min} min",
+  "@athkarApproxMins": {
+    "placeholders": {
+      "min": { "type": "int" }
+    }
+  },
+  "athkarCompletionTitle": "Set Complete",
+  "athkarCompletionCountAndTime": "{count} dhikr · {min} min",
+  "@athkarCompletionCountAndTime": {
+    "placeholders": {
+      "count": { "type": "int" },
+      "min": { "type": "int" }
+    }
+  },
+  "athkarRemindersTitle": "Athkar Reminders",
+  "athkarMorningTime": "Morning Athkar Time",
+  "athkarEveningTime": "Evening Athkar Time",
+  "athkarSleepTime": "Sleep Athkar Time"
 
 }

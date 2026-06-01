@@ -22,6 +22,12 @@ class AppColors {
   static const Color info = Color(0xFF74B9FF);
 
   static const Color surface = Color(0xFFFFFFFF); // أبيض نقي للكروت
+
+  // Athkar category palette — designer-approved, constant across themes
+  static const Color athkarMorning = Color(0xFFFF8F00);
+  static const Color athkarEvening = Color(0xFF3949AB);
+  static const Color athkarPrayer  = Color(0xFF2E7D32);
+  static const Color athkarSleep   = Color(0xFF6A1B9A);
 }
 // // app_colors.dart
 // import 'package:flutter/material.dart';

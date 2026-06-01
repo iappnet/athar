@@ -39,6 +39,8 @@ import 'package:athar/core/services/deep_link_service.dart';
 import 'package:athar/core/services/widget_data_service.dart';
 import 'package:athar/features/calendar/presentation/cubit/calendar_cubit.dart';
 import 'package:athar/features/calendar/presentation/cubit/calendar_month_cubit.dart';
+import 'package:athar/features/dhikr/presentation/cubit/dhikr_cubit.dart';
+import 'package:athar/features/dhikr/presentation/pages/athkar_set_screen.dart';
 
 class AtharApp extends StatefulWidget {
   const AtharApp({super.key, required this.hasSeenOnboarding});
@@ -123,6 +125,7 @@ class _AtharAppState extends State<AtharApp> {
         // 2. الميزات الرئيسية (إسلاميات، عادات)
         BlocProvider(create: (_) => getIt<PrayerCubit>()..loadPrayerTimes()..startAutoRefresh()),
         BlocProvider(create: (_) => getIt<HabitCubit>()..loadHabits()),
+        BlocProvider(create: (_) => getIt<DhikrCubit>()),
         BlocProvider(create: (_) => getIt<CategoryCubit>()),
 
         // 3. إدارة المساحات والمشاريع
@@ -206,6 +209,7 @@ class _AtharAppState extends State<AtharApp> {
               '/home': (context) => const MainPage(),
               '/login': (context) => const LoginPage(),
               '/complete_profile': (context) => const CompleteProfilePage(),
+              '/athkar': (context) => const AthkarSetScreen(),
             },
             builder: (context, widget) {
               return Stack(

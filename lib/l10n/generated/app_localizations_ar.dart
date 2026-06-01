@@ -4630,4 +4630,37 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get hideNavOnScrollDesc =>
       'إخفاء الشريط السفلي تلقائياً عند التمرير للأسفل';
+
+  @override
+  String get athkarSetScreenTitle => 'الأذكار اليومية';
+
+  @override
+  String athkarDhikrCount(int count) {
+    return '$count ذكر';
+  }
+
+  @override
+  String athkarApproxMins(int min) {
+    return '~$min دقيقة';
+  }
+
+  @override
+  String get athkarCompletionTitle => 'أتممت الورد';
+
+  @override
+  String athkarCompletionCountAndTime(int count, int min) {
+    return '$count ذكر · $min دقيقة';
+  }
+
+  @override
+  String get athkarRemindersTitle => 'تذكيرات الأذكار';
+
+  @override
+  String get athkarMorningTime => 'وقت أذكار الصباح';
+
+  @override
+  String get athkarEveningTime => 'وقت أذكار المساء';
+
+  @override
+  String get athkarSleepTime => 'وقت أذكار النوم';
 }

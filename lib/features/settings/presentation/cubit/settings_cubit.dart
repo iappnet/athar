@@ -275,6 +275,44 @@ class SettingsCubit extends Cubit<SettingsState> {
     }
   }
 
+  Future<void> updateAthkarTime(String field, String time) async {
+    try {
+      final currentSettings = await _repository.getSettings();
+      if (field == 'morning') {
+        currentSettings.morningAthkarTime = time;
+      } else if (field == 'evening') {
+        currentSettings.eveningAthkarTime = time;
+      } else if (field == 'sleep') {
+        currentSettings.sleepAthkarTime = time;
+      }
+      await _repository.updateSettings(currentSettings);
+      if (currentSettings.isAthkarRemindersEnabled) {
+        final habitScheduler = getIt<HabitNotificationScheduler>();
+        await habitScheduler.scheduleAllAthkar();
+      }
+      loadSettings();
+    } catch (e) {
+      if (kDebugMode) print('❌ Error updating athkar time: $e');
+    }
+  }
+
+  Future<void> toggleAthkarRemindersEnabled(bool enabled) async {
+    try {
+      final currentSettings = await _repository.getSettings();
+      currentSettings.isAthkarRemindersEnabled = enabled;
+      final habitScheduler = getIt<HabitNotificationScheduler>();
+      if (enabled && currentSettings.isAthkarEnabled) {
+        await habitScheduler.scheduleAllAthkar();
+      } else {
+        await habitScheduler.cancelAllAthkar();
+      }
+      await _repository.updateSettings(currentSettings);
+      loadSettings();
+    } catch (e) {
+      if (kDebugMode) print('❌ Error toggling athkar reminders: $e');
+    }
+  }
+
   // ═══════════════════════════════════════════════════════════════════
   // ⏰ الفترات الزمنية
   // ═══════════════════════════════════════════════════════════════════

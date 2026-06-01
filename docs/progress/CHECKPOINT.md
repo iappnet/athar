@@ -13,18 +13,18 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-02 (Stage B4 — verify + root cleanup → STAGE B COMPLETE)  
-**Commit:** `68b80e8` docs(restructure): B4 — verify + root cleanup  
-**Note:** B4 complete. All 6 root verification files moved to docs/history/pr-reports/. 10-item verify checklist: all PASS. Stale refs corrected in ROADMAP, MIGRATION_STATE, phase_tracker, current_project_status. Mandatory headers added to 2 files. MIGRATION_REPORT Stage B progress filled. Root = CLAUDE.md + README.md only. Stage B restructure COMPLETE.
+**Timestamp:** 2026-06-02 (PR7 — COMPLETE ✅)  
+**Commit:** `TBD` feat(PR7): Athkar v1  
+**Note:** PR7 Athkar v1 complete. AthkarSetScreen (gated), DhikrReaderScreen (focus+list), Dashboard card, /athkar route, DhikrCubit in MultiBlocProvider, Settings reminders section, DhikrComplete chokepoint. 5 conformance fixes applied (gate, 56sp counter, FittedBox, RTL swipe, AtharColors tokens). AR visual QA → final sweep pending.
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** None — Stage B complete; ready for first feature PR  
-**Last completed:** PR4b (`65fc417`) ✅; B1 (`8874378`) ✅; B2 (`0f9b55f`) ✅; B3 (`64d1b47`) ✅; B4 (`68b80e8`) ✅  
-**Phase:** STAGE B RESTRUCTURE COMPLETE. Ready for PR8 (Focus Oil-Fill) or PR9 (iOS Widget Refresh).  
-**Next:** PR8 or PR9 — see docs/status/ROADMAP.md + docs/status/NEXT_STEPS.md.
+**Active PR:** PR8 — Focus / Oil next  
+**Last completed:** PR7 (`TBD`) ✅; PR4b (`65fc417`) ✅; B1–B4 ✅  
+**Phase:** PR7 COMPLETE. AR screenshot review deferred to final sweep (per designer).  
+**Next:** PR8 — Focus mode / Oil spec, or final sweep screenshots first.
 
 ---
 
@@ -87,9 +87,10 @@ LOADS-AT:      Tier 0
 
 ## NEXT ACTION
 
-**STAGE B COMPLETE.** B1 → B2 → B3 → B4 all done. Root = CLAUDE.md + README.md only.  
-**Ready for first feature PR.** Recommended next: PR9 (lowest risk) or PR8 (Focus Oil-Fill — read FOCUS_OIL_SPEC.md first).  
-**Deferred QA sweep** runs at end of roadmap, after the last feature PR. No feature PR is gated. Nothing ships to users/TestFlight until sweep passes. Bucket: 5 items (see docs/status/MIGRATION_STATE.md).
+**PR7 audit complete.** `design-context/_audit_athkar.md` written — no Dart modified.  
+**BLOCKED:** Awaiting designer sign-off on audit (7 open questions, 4 conflict resolutions).  
+**On sign-off:** implement PR7 — wire `DhikrCubit`, create `AthkarSetScreen` + `DhikrReaderScreen`, Dashboard card, route `/athkar`, `isAthkarEnabled` gate.  
+**Deferred QA sweep** runs at end of roadmap. Bucket: 5 items (see docs/status/MIGRATION_STATE.md).
 
 ---
 

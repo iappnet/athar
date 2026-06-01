@@ -22,6 +22,7 @@ import '../../../../core/di/injection.dart';
 import '../../../../core/time_engine/athar_time_calculator.dart';
 import '../../../../core/time_engine/athar_time_periods.dart';
 import 'package:athar/core/design_system/molecules/cards/smart_prayer_wrapper.dart';
+import 'package:athar/core/design_system/molecules/cards/athkar_dashboard_card.dart';
 import 'package:athar/features/home/presentation/pages/smart_habits_strip.dart';
 import '../../../habits/presentation/cubit/habit_cubit.dart';
 import '../../../task/presentation/cubit/task_cubit.dart';
@@ -286,6 +287,8 @@ class DashboardPage extends StatelessWidget {
                             delegate: SliverChildListDelegate([
                               AtharGap.md,
                               const StatisticsCard(),
+                              AtharGap.lg,
+                              const AthkarDashboardCard(),
                               AtharGap.xxl,
                               const SmartHabitsStrip(),
                               AtharGap.xxl,

@@ -1725,6 +1725,32 @@
   "newTask": "مهمة جديدة",
   "navigationSettings": "التنقل",
   "hideNavOnScroll": "إخفاء شريط التنقل عند التمرير",
-  "hideNavOnScrollDesc": "إخفاء الشريط السفلي تلقائياً عند التمرير للأسفل"
+  "hideNavOnScrollDesc": "إخفاء الشريط السفلي تلقائياً عند التمرير للأسفل",
+
+  "athkarSetScreenTitle": "الأذكار اليومية",
+  "athkarDhikrCount": "{count} ذكر",
+  "@athkarDhikrCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "athkarApproxMins": "~{min} دقيقة",
+  "@athkarApproxMins": {
+    "placeholders": {
+      "min": { "type": "int" }
+    }
+  },
+  "athkarCompletionTitle": "أتممت الورد",
+  "athkarCompletionCountAndTime": "{count} ذكر · {min} دقيقة",
+  "@athkarCompletionCountAndTime": {
+    "placeholders": {
+      "count": { "type": "int" },
+      "min": { "type": "int" }
+    }
+  },
+  "athkarRemindersTitle": "تذكيرات الأذكار",
+  "athkarMorningTime": "وقت أذكار الصباح",
+  "athkarEveningTime": "وقت أذكار المساء",
+  "athkarSleepTime": "وقت أذكار النوم"
 
 }

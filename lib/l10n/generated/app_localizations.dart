@@ -8857,6 +8857,60 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'إخفاء الشريط السفلي تلقائياً عند التمرير للأسفل'**
   String get hideNavOnScrollDesc;
+
+  /// No description provided for @athkarSetScreenTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأذكار اليومية'**
+  String get athkarSetScreenTitle;
+
+  /// No description provided for @athkarDhikrCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} ذكر'**
+  String athkarDhikrCount(int count);
+
+  /// No description provided for @athkarApproxMins.
+  ///
+  /// In ar, this message translates to:
+  /// **'~{min} دقيقة'**
+  String athkarApproxMins(int min);
+
+  /// No description provided for @athkarCompletionTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أتممت الورد'**
+  String get athkarCompletionTitle;
+
+  /// No description provided for @athkarCompletionCountAndTime.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} ذكر · {min} دقيقة'**
+  String athkarCompletionCountAndTime(int count, int min);
+
+  /// No description provided for @athkarRemindersTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تذكيرات الأذكار'**
+  String get athkarRemindersTitle;
+
+  /// No description provided for @athkarMorningTime.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقت أذكار الصباح'**
+  String get athkarMorningTime;
+
+  /// No description provided for @athkarEveningTime.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقت أذكار المساء'**
+  String get athkarEveningTime;
+
+  /// No description provided for @athkarSleepTime.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقت أذكار النوم'**
+  String get athkarSleepTime;
 }
 
 class _AppLocalizationsDelegate

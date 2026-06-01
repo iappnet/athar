@@ -163,6 +163,50 @@ class GeneralSettingsPage extends StatelessWidget {
                       onChanged: (v) =>
                           context.read<SettingsCubit>().toggleAthkarEnabled(v),
                     ),
+                    if (settings?.isAthkarEnabled ?? true) ...[
+                      _Divider(),
+                      _SwitchTile(
+                        icon: Icons.notifications_outlined,
+                        iconColor: const Color(0xFF00897B),
+                        title: l10n.athkarRemindersTitle,
+                        value: settings?.isAthkarRemindersEnabled ?? true,
+                        onChanged: (v) => context
+                            .read<SettingsCubit>()
+                            .toggleAthkarRemindersEnabled(v),
+                      ),
+                      if (settings?.isAthkarRemindersEnabled ?? true) ...[
+                        _Divider(),
+                        _AthkarTimeTile(
+                          icon: Icons.wb_sunny_outlined,
+                          iconColor: const Color(0xFFFF8F00),
+                          title: l10n.athkarMorningTime,
+                          time: settings?.morningAthkarTime ?? '06:00',
+                          onPick: (t) => context
+                              .read<SettingsCubit>()
+                              .updateAthkarTime('morning', t),
+                        ),
+                        _Divider(),
+                        _AthkarTimeTile(
+                          icon: Icons.nights_stay_outlined,
+                          iconColor: const Color(0xFF3949AB),
+                          title: l10n.athkarEveningTime,
+                          time: settings?.eveningAthkarTime ?? '17:00',
+                          onPick: (t) => context
+                              .read<SettingsCubit>()
+                              .updateAthkarTime('evening', t),
+                        ),
+                        _Divider(),
+                        _AthkarTimeTile(
+                          icon: Icons.bedtime_outlined,
+                          iconColor: const Color(0xFF6A1B9A),
+                          title: l10n.athkarSleepTime,
+                          time: settings?.sleepAthkarTime ?? '22:00',
+                          onPick: (t) => context
+                              .read<SettingsCubit>()
+                              .updateAthkarTime('sleep', t),
+                        ),
+                      ],
+                    ],
                   ]),
                   AtharGap.lg,
 
@@ -1163,6 +1207,69 @@ class _ThemeOption extends StatelessWidget {
           fontSize: 15,
           fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
           color: isSelected ? const Color(0xFF1A6B3C) : null,
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Athkar Time Tile ──────────────────────────────────────────────────────────
+
+class _AthkarTimeTile extends StatelessWidget {
+  final IconData icon;
+  final Color iconColor;
+  final String title;
+  final String time;
+  final ValueChanged<String> onPick;
+
+  const _AthkarTimeTile({
+    required this.icon,
+    required this.iconColor,
+    required this.title,
+    required this.time,
+    required this.onPick,
+  });
+
+  TimeOfDay _parseTime() {
+    final parts = time.split(':');
+    return TimeOfDay(
+      hour: int.tryParse(parts[0]) ?? 6,
+      minute: int.tryParse(parts.length > 1 ? parts[1] : '0') ?? 0,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return ListTile(
+      onTap: () async {
+        final picked = await showTimePicker(
+          context: context,
+          initialTime: _parseTime(),
+        );
+        if (picked != null && context.mounted) {
+          final hh = picked.hour.toString().padLeft(2, '0');
+          final mm = picked.minute.toString().padLeft(2, '0');
+          onPick('$hh:$mm');
+        }
+      },
+      contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.h),
+      leading: _IconBox(icon: icon, color: iconColor),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontFamily: 'Cairo',
+          fontSize: 15,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      trailing: Text(
+        time,
+        style: TextStyle(
+          fontFamily: 'Cairo',
+          fontSize: 13,
+          color: colorScheme.outline,
+          fontFeatures: [const FontFeature.tabularFigures()],
         ),
       ),
     );

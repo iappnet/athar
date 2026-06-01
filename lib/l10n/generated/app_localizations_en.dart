@@ -4648,4 +4648,37 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get hideNavOnScrollDesc =>
       'Automatically hide bottom bar when scrolling down';
+
+  @override
+  String get athkarSetScreenTitle => 'Daily Athkar';
+
+  @override
+  String athkarDhikrCount(int count) {
+    return '$count dhikr';
+  }
+
+  @override
+  String athkarApproxMins(int min) {
+    return '~$min min';
+  }
+
+  @override
+  String get athkarCompletionTitle => 'Set Complete';
+
+  @override
+  String athkarCompletionCountAndTime(int count, int min) {
+    return '$count dhikr · $min min';
+  }
+
+  @override
+  String get athkarRemindersTitle => 'Athkar Reminders';
+
+  @override
+  String get athkarMorningTime => 'Morning Athkar Time';
+
+  @override
+  String get athkarEveningTime => 'Evening Athkar Time';
+
+  @override
+  String get athkarSleepTime => 'Sleep Athkar Time';
 }
