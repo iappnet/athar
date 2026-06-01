@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-01 · drift-check PASS (aa8be7b)
+LAST-UPDATED:  2026-06-01 · QA sweep timing governance fix (82d9e53)
 LOADS-AT:      Tier 0
 -->
 
@@ -13,9 +13,9 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-01 (drift-check PASS)  
-**Commit:** `aa8be7b` docs: drift-check — fix 2 dead paths (CALENDAR_CELL_SPEC/FOCUS_REDESIGN root not handoff_v2-2), close B3/PR4b-abbr  
-**Note:** PR4b complete (`65fc417`). drift-check PASS — all 5 checks green. Fixed: 2 dead paths in CONTEXT_TIERS.md + IMS, B3 closed, PR4b-abbr resolved, % ~57%, dual_calendar_widget.dart dead path cleared. AR visual QA deferred to final device sweep.
+**Timestamp:** 2026-06-01 (QA sweep governance fix)  
+**Commit:** `82d9e53` docs(governance): defer QA sweep to end of roadmap  
+**Note:** Product-owner decision: deferred QA sweep now runs after the last feature PR, not before PR7. No feature PR gated. TestFlight/release gates on sweep passing. Updated CURRENT_MIGRATION_STATE.md, IMPLEMENTATION_MASTER_STATUS.md, ROADMAP_AFTER_PR4A.md, CHECKPOINT.md.
 
 ---
 
