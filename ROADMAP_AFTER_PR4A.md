@@ -20,24 +20,18 @@
 
 ## Active PR
 
-**None.** Clean state between PRs as of `1beff60`.
+**PR5 — Accessibility Settings.** Dart complete, flutter analyze clean. Awaiting settings screenshot review before commit.
 
 ---
 
 ## Next Recommended PR
 
-**PENDING designer confirmation — not started.**
-
-All of the following are unblocked by PR2 ✅ and can be taken in any order:
-
-| PR | Entry requirement | Risk |
-|----|------------------|------|
-| PR5 — Accessibility Settings | None | Low |
-| PR6 — Stats Redesign | Read `STATS_KPI_SPEC.md` first | Medium |
-| PR8 — Focus Oil-Fill | Read `FOCUS_OIL_SPEC.md` first; designer review for procedural colours | Medium |
-| PR9 — iOS Widget Visual Refresh | None | Low-Medium |
-
-**Recommended first:** PR5 (lowest risk, no spec read required) or PR9 (no spec, widget infra stable). To confirm, check `IMPLEMENTATION_MASTER_STATUS.md` "Recommended Next PR" section for current guidance.
+| PR | Status | Entry requirement |
+|----|--------|------------------|
+| PR5 — Accessibility Settings | 🔄 IMPLEMENTING — awaiting review | Sign-off received ✅ |
+| PR6 — Stats Redesign | Next after PR5 | Read `STATS_KPI_SPEC.md` first |
+| PR8 — Focus Oil-Fill | After PR6 | Read `FOCUS_OIL_SPEC.md`; designer review |
+| PR9 — iOS Widget Visual Refresh | After PR6 | None |
 
 ---
 
@@ -45,7 +39,7 @@ All of the following are unblocked by PR2 ✅ and can be taken in any order:
 
 | PR | Blocker |
 |----|---------|
-| PR4b — Calendar Dual-Display | PR4a ✅ + dedicated `DualDate` designer spec (not yet written). Architecture feasibility question must be answered first — see below. |
+| PR4b — Calendar Dual-Display | DESIGN-APPROVED ✅; gated behind PR5 → PR6 → post-PR6 QA sweep. No Dart yet. |
 | PR-ADHAN | Audio asset from designer (not received) |
 | PR7 — Athkar Feature | Designer review required |
 | PR-ONBOARD-AB | Designer approval + read `ONBOARDING_AB_SPEC.md` |
@@ -53,44 +47,27 @@ All of the following are unblocked by PR2 ✅ and can be taken in any order:
 
 ---
 
-## PR4b — Architecture Feasibility + Responsibility Audit (MANDATORY BEFORE ANY PR4b WORK)
+## PR4b — Architecture LOCKED (2026-06-01)
 
-Before any PR4b visual or implementation work begins, the PR4b audit MUST answer this question:
+Design authority approved **Option (b): new `CalendarMonthCubit`** for month-level aggregation.
 
-> **"Should the existing `CalendarCubit` carry `DualDate` + month-level `activityByDate` + simultaneous Hijri/Gregorian display — or does that overload its single responsibility?"**
+### Locked decisions
 
-### Three options to evaluate
+| Decision | Value |
+|----------|-------|
+| Architecture | Option (b) — `CalendarMonthCubit` owns month aggregation + `DualDate` cache (`Map<DateTime, DualDate>`, midnight-normalized) |
+| Day-selection | `CalendarCubit` unchanged — keeps day selection |
+| `activityByDate` | Built from scratch in `CalendarMonthCubit`; PR4a did NOT build a month-level map (acknowledged added scope) |
+| Dot sources | **5**: tasks, habits, appointments, medicines, prayer (per-prayer timed, each of 5 daily prayers is its own time-spot) |
+| Prayer dot gating | Renders only when `isPrayerEnabled && showPrayerDotsOnCalendar`; `showPrayerDotsOnCalendar` = new `UserSettings bool`, default `true`, nested in Settings→Prayer only when `isPrayerEnabled==true`; added in PR4b's `build_runner` pass |
+| `isHijriMode` | Reused in place — "Hijri is primary numeral in dual display." No new field. No migration concern (pre-launch). |
+| Date pickers | KEEP current show-one behavior. Do NOT migrate in PR4b. |
+| Hijri boundary cell | 3-letter abbreviation table — **propose table for designer approval before using** |
+| Other-month cells | Render as disabled dual-numeral cells (text3, both dimmed). NOT empty `SizedBox`. |
+| `DualMonthSwitcher` | DEFERRED. Keep chevron `_changeMonth(±1)` in PR4b. |
+| Numeral position | Authority: `CALENDAR_CELL_SPEC.md` (top-center / bottom-center). `CALENDAR_FOCUS_REDESIGN.md` "top-right/bottom-left" superseded. |
 
-The audit must evaluate all three and **RECOMMEND one with written justification**. No Dart code until the designer approves the chosen option.
-
-**(a) Extend `CalendarCubit`**  
-Add `DualDate`, `activityByDate`, and dual-display state to the existing cubit.  
-_Pros:_ Simplest — no new cubits, least churn.  
-_Cons:_ God-cubit risk — CalendarCubit already owns day selection, month navigation, Hijri/Gregorian toggle, and now activityByDate. Violates SRP if state grows further.  
-_When to choose:_ If the dual-display state is a thin display concern only (no async fetch, no business logic beyond conversion).
-
-**(b) New `CalendarMonthCubit` for month-level aggregation**  
-Keep `CalendarCubit` for day-selection and navigation. New `CalendarMonthCubit` owns `activityByDate` fan-in (from `TaskCubit` stream + `HabitCubit` stream + prayer times + stats).  
-_Pros:_ Clean SRP separation — display state vs. aggregation state. `CalendarCubit` stays lean.  
-_Cons:_ Higher cost — new cubit, new state class, new injection config entry. Two cubits for what currently is one.  
-_When to choose:_ If `activityByDate` involves merging ≥2 async streams with non-trivial fan-in logic.
-
-**(c) Data/use-case aggregation layer that cubit consumes**  
-Introduce a `CalendarAggregationUseCase` (or repository method) that handles multi-source fan-in. `CalendarCubit` calls the use case and gets a ready-made model.  
-_Pros:_ Cleanest against existing Clean Architecture — business logic stays in domain layer, cubit stays thin.  
-_Cons:_ Most architectural change — new use case, possibly new repository method, new domain model. Highest upfront cost.  
-_When to choose:_ If fan-in logic is complex enough to warrant domain-layer testing independently of UI state.
-
-### Audit deliverable
-
-A document at `design-context/_audit_pr4b_architecture.md` must contain:
-1. Current `CalendarCubit` state shape (all fields)
-2. Enumeration of all state sources that `activityByDate` must aggregate
-3. Analysis of each option against the above criteria
-4. **Recommendation** with one-sentence justification
-5. Designer sign-off confirmation (name + date)
-
-**No Dart changes until designer approves the chosen option.**
+**PR4b is BLOCKED — gated behind PR5 → PR6 → post-PR6 QA sweep.**
 
 ---
 
@@ -118,6 +95,7 @@ All fixes in this bucket are **UNVERIFIED** — logical hypotheses that must be 
 | ID | Description | Severity | Blocks |
 |----|-------------|----------|--------|
 | B1 | Calibri App Store licence — designer must confirm | Medium | App Store submission |
-| B3 | `DualDate` / dual-display designer spec | Medium | PR4b |
 | B4 | Adhan audio asset (not received) | Low | PR-ADHAN |
+| PR4b-abbr | 3-letter Hijri month abbreviation table — propose + get approval | Medium | PR4b cell rendering |
+| PR5-copy | Designer review of 3 accessibility ARB strings | Low | PR5 commit |
 | Phase 5 | Physical device validation — all 3 iOS widgets | Release gate | Release |

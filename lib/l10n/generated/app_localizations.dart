@@ -4586,6 +4586,48 @@ abstract class AppLocalizations {
   /// **'فشل التحقق من البصمة'**
   String get biometricVerificationFailed;
 
+  /// No description provided for @accessibilitySection.
+  ///
+  /// In ar, this message translates to:
+  /// **'إمكانية الوصول'**
+  String get accessibilitySection;
+
+  /// No description provided for @reduceMotion.
+  ///
+  /// In ar, this message translates to:
+  /// **'تقليل الحركة'**
+  String get reduceMotion;
+
+  /// No description provided for @reduceMotionDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'تقليل الرسوم المتحركة في التطبيق'**
+  String get reduceMotionDesc;
+
+  /// No description provided for @disableGyroscope.
+  ///
+  /// In ar, this message translates to:
+  /// **'إيقاف المؤثرات الحركية'**
+  String get disableGyroscope;
+
+  /// No description provided for @disableGyroscopeDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'إيقاف تفاعل الخلفيات مع حركة الجهاز'**
+  String get disableGyroscopeDesc;
+
+  /// No description provided for @easternNumerals.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأرقام العربية'**
+  String get easternNumerals;
+
+  /// No description provided for @easternNumeralsDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'إظهار الأرقام بصيغة ٠١٢٣ بدلاً من 0123'**
+  String get easternNumeralsDesc;
+
   /// No description provided for @loginOrCreateAccount.
   ///
   /// In ar, this message translates to:

@@ -39,5 +39,8 @@ class SettingsLoaded extends SettingsState {
     settings.isMedicationNotificationsEnabled,
     settings.lastSyncAt,
     settings.lastSyncError,
+    settings.reduceMotion,
+    settings.disableGyroscope,
+    settings.easternNumerals,
   ];
 }

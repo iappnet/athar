@@ -2356,6 +2356,27 @@ class AppLocalizationsAr extends AppLocalizations {
   String get biometricVerificationFailed => 'فشل التحقق من البصمة';
 
   @override
+  String get accessibilitySection => 'إمكانية الوصول';
+
+  @override
+  String get reduceMotion => 'تقليل الحركة';
+
+  @override
+  String get reduceMotionDesc => 'تقليل الرسوم المتحركة في التطبيق';
+
+  @override
+  String get disableGyroscope => 'إيقاف المؤثرات الحركية';
+
+  @override
+  String get disableGyroscopeDesc => 'إيقاف تفاعل الخلفيات مع حركة الجهاز';
+
+  @override
+  String get easternNumerals => 'الأرقام العربية';
+
+  @override
+  String get easternNumeralsDesc => 'إظهار الأرقام بصيغة ٠١٢٣ بدلاً من 0123';
+
+  @override
   String get loginOrCreateAccount => 'تسجيل الدخول / إنشاء حساب';
 
   @override

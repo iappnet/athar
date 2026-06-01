@@ -197,6 +197,14 @@ class UserSettings {
   bool hideNavOnScroll = false;
 
   // ═══════════════════════════════════════════════════════════════════════════
+  // ♿ ACCESSIBILITY
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  bool reduceMotion = false;
+  bool disableGyroscope = false;
+  bool easternNumerals = false;
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // 🔄 SYNC
   // ═══════════════════════════════════════════════════════════════════════════
 
@@ -270,6 +278,11 @@ class UserSettings {
     this.projectReminderHoursBefore = 24,
     this.projectDailyReminders = false,
     this.projectWeeklySummary = false,
+
+    // ♿ Accessibility
+    this.reduceMotion = false,
+    this.disableGyroscope = false,
+    this.easternNumerals = false,
   });
 
   // ═══════════════════════════════════════════════════════════

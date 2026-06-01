@@ -207,6 +207,41 @@ class GeneralSettingsPage extends StatelessWidget {
                   ]),
                   AtharGap.lg,
 
+                  // ── Accessibility ────────────────────────────────────────
+                  _SectionHeader(l10n.accessibilitySection),
+                  _SettingsCard(children: [
+                    _SwitchTile(
+                      icon: Icons.motion_photos_off_rounded,
+                      iconColor: const Color(0xFF5C35C9),
+                      title: l10n.reduceMotion,
+                      subtitle: l10n.reduceMotionDesc,
+                      value: settings?.reduceMotion ?? false,
+                      onChanged: (v) =>
+                          context.read<SettingsCubit>().toggleReduceMotion(v),
+                    ),
+                    _Divider(),
+                    _SwitchTile(
+                      icon: Icons.screen_rotation_rounded,
+                      iconColor: const Color(0xFF00897B),
+                      title: l10n.disableGyroscope,
+                      subtitle: l10n.disableGyroscopeDesc,
+                      value: settings?.disableGyroscope ?? false,
+                      onChanged: (v) =>
+                          context.read<SettingsCubit>().toggleDisableGyroscope(v),
+                    ),
+                    _Divider(),
+                    _SwitchTile(
+                      icon: Icons.tag_rounded,
+                      iconColor: const Color(0xFF0288D1),
+                      title: l10n.easternNumerals,
+                      subtitle: l10n.easternNumeralsDesc,
+                      value: settings?.easternNumerals ?? false,
+                      onChanged: (v) =>
+                          context.read<SettingsCubit>().toggleEasternNumerals(v),
+                    ),
+                  ]),
+                  AtharGap.lg,
+
                   // ── Sync & Account ──────────────────────────────────────
                   if (authState is AuthAuthenticated) ...[
                     _SectionHeader(l10n.syncAndData),

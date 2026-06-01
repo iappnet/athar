@@ -5,22 +5,22 @@
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-01 (governance closure session)  
-**Commit:** `ac0e4fc` (governance closure — all 9 gap items resolved)  
+**Timestamp:** 2026-06-01 (PR5 commit)  
+**Commit:** see NEXT ACTION below — committing now  
 **Tag:** `athar-v2-pr4a-complete` → `1beff60` ✅ pushed to remote
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** None — clean state between PRs.  
-**Last completed:** PR4a — Calendar Visual Refresh (`85ada1e`)  
-**Phase:** Governance closure pass — completing interrupted governance session.  
-**Exact step:** All governance items complete (see DONE below). Ready to start next feature PR on designer confirmation.
+**Active PR:** PR5 — Accessibility Settings · PR4b — Calendar Dual-Display (design-approved, scheduled)  
+**Last completed:** PR5 — Accessibility Settings (committing now)  
+**Phase:** PR5 COMPLETE — ARB copy approved + applied, flutter analyze clean, committed + pushed.  
+**Exact step:** PR5 committed. Awaiting go-ahead to start PR6.
 
 ---
 
-## DONE THIS SESSION
+## DONE THIS SESSION (cumulative)
 
 - ✅ Produced `SESSION_RECOVERY_REPORT.md` — full evidence-based gap list (9 items)
 - ✅ Pushed tag `athar-v2-pr4a-complete` to remote (was local-only)
@@ -40,12 +40,38 @@
 
 ---
 
+## DONE — AUDIT SESSION
+
+- ✅ `design-context/_audit_accessibility.md` — PR5 audit complete (11 files read, no Dart touched)
+- ✅ `design-context/_audit_calendar_dual.md` — PR4b architecture feasibility audit complete (9 files read, no Dart touched)
+
+## DONE — PR5 IMPLEMENTATION
+
+- ✅ Designer sign-off received — all 10 open questions resolved
+- ✅ `design-context/_audit_accessibility.md` — sign-off note written
+- ✅ `lib/features/settings/data/models/user_settings.dart` — 3 fields added: `reduceMotion`, `disableGyroscope`, `easternNumerals` (all default `false`); constructor params added
+- ✅ `build_runner` — Isar schema regenerated (`user_settings.g.dart` updated, 326 outputs, 0 errors)
+- ✅ `lib/features/settings/presentation/cubit/settings_cubit.dart` — 3 toggle methods added
+- ✅ `lib/features/settings/presentation/cubit/settings_state.dart` — 3 fields added to `SettingsLoaded.props`
+- ✅ `lib/features/settings/presentation/pages/general_settings_page.dart` — "Accessibility" section inserted after Security, before Sync & Account; 3 `_SwitchTile` widgets with `_Divider` separators
+- ✅ `lib/l10n/app_ar.arb` — 6 ARB keys added (section header + 3 titles + 3 subtitles)
+- ✅ `lib/l10n/app_en.arb` — 6 ARB keys added
+- ✅ `flutter gen-l10n` — generated localization files
+- ✅ `flutter analyze` — 0 issues
+- ✅ ARB copy approved (2026-06-01): 5 EN + 4 AR strings updated to designer-approved wording; `flutter gen-l10n` + `flutter analyze` clean
+
+## PR4b ARCHITECTURE LOCKED
+
+- ✅ Design authority approved Option (b): new `CalendarMonthCubit` owns month aggregation + `DualDate` cache
+- ✅ 5 dot sources locked (task, habit, appointment, medicine, prayer — per-prayer timed dots)
+- ✅ `showPrayerDotsOnCalendar` UserSettings field to be added in PR4b's build_runner pass
+- ✅ `isHijriMode` reused in place — no new field
+- ✅ PR4b BLOCKED until after PR5 → PR6 → post-PR6 QA sweep
+
 ## NEXT ACTION
 
-**Single next concrete step:** Choose and start next feature PR.  
-Candidates (all unblocked): PR5 (Accessibility Settings), PR6 (Stats), PR8 (Focus), PR9 (iOS widget visuals).  
-Recommended lowest-risk entry: **PR5** (no spec read required; 3 new toggles in `UserSettings`).  
-Before PR5: no additional reads required. Say "Start PR5" to begin.
+**PR6:** Next in sequence — await go-ahead.  
+**PR4b:** Design-approved, scheduled. Gated behind PR5 → PR6 → QA sweep. Do NOT start Dart yet.
 
 ---
 
@@ -54,16 +80,14 @@ Before PR5: no additional reads required. Say "Start PR5" to begin.
 | ID | Decision | Blocks |
 |----|----------|--------|
 | B1 | Calibri App Store licence confirmation | App Store / TestFlight submission |
-| B3 | `DualDate` / dual-display spec for PR4b | PR4b start |
 | B4 | Adhan audio asset delivery | PR-ADHAN start |
-| PR4b-arch | Architecture option (a/b/c) for CalendarCubit responsibility | PR4b Dart work |
+| PR4b-abbr | 3-letter Hijri month abbreviation table | PR4b rendering |
+| PR5-copy | ~~Review ARB copy for 3 accessibility tiles~~ | ✅ Resolved 2026-06-01 |
 
 ---
 
 ## WORKING TREE STATE
 
-**Status:** Clean (all governance docs committed)  
-**Loose files:** None (PR3 artefacts moved to `docs/pr3-artifacts/` and committed)  
-**flutter analyze:** 0 issues (verified 2026-06-01)  
-**flutter test:** 45/45 passed (verified 2026-06-01)  
-**Last commit:** `ac0e4fc` governance closure
+**Status:** Clean — PR5 committed + pushed  
+**flutter analyze:** 0 issues ✅ (verified 2026-06-01, PR5 complete)  
+**Last commit:** PR5 feat commit — see `git log` for hash

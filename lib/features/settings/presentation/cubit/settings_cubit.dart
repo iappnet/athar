@@ -433,6 +433,28 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   // ═══════════════════════════════════════════════════════════════════
+  // ♿ إمكانية الوصول
+  // ═══════════════════════════════════════════════════════════════════
+
+  Future<void> toggleReduceMotion(bool value) async {
+    final s = await _repository.getSettings();
+    s.reduceMotion = value;
+    await _repository.updateSettings(s);
+  }
+
+  Future<void> toggleDisableGyroscope(bool value) async {
+    final s = await _repository.getSettings();
+    s.disableGyroscope = value;
+    await _repository.updateSettings(s);
+  }
+
+  Future<void> toggleEasternNumerals(bool value) async {
+    final s = await _repository.getSettings();
+    s.easternNumerals = value;
+    await _repository.updateSettings(s);
+  }
+
+  // ═══════════════════════════════════════════════════════════════════
   // 🧹 التنظيف
   // ═══════════════════════════════════════════════════════════════════
 

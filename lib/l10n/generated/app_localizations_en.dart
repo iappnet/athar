@@ -2363,6 +2363,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biometricVerificationFailed => 'Biometric verification failed';
 
   @override
+  String get accessibilitySection => 'Accessibility';
+
+  @override
+  String get reduceMotion => 'Reduce Motion';
+
+  @override
+  String get reduceMotionDesc => 'Minimize animations across the app';
+
+  @override
+  String get disableGyroscope => 'Disable Motion Effects';
+
+  @override
+  String get disableGyroscopeDesc =>
+      'Stop tilt-reactive backgrounds from responding to device movement';
+
+  @override
+  String get easternNumerals => 'Arabic Numerals';
+
+  @override
+  String get easternNumeralsDesc => 'Show numbers as ٠١٢٣ instead of 0123';
+
+  @override
   String get loginOrCreateAccount => 'Login / Create Account';
 
   @override
