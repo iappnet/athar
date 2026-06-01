@@ -4278,6 +4278,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statsCardSubtitle => 'View your performance and focus summary';
 
   @override
+  String get statsPeriodToday => 'Today';
+
+  @override
+  String get statsPeriodLast7Days => 'Last 7 Days';
+
+  @override
+  String get statsPeriodLast30Days => 'Last 30 Days';
+
+  @override
+  String get statsKpiTasksDone => 'Tasks Done';
+
+  @override
+  String get statsKpiHabitStreak => 'Streak';
+
+  @override
+  String get statsKpiUnitDays => 'days';
+
+  @override
+  String get statsKpiHabitRate => 'Habit Rate';
+
+  @override
+  String get statsKpiFocusMin => 'Focus';
+
+  @override
+  String get statsKpiUnitMin => 'min';
+
+  @override
+  String get statsEmptyPeriod => 'No activity in this period';
+
+  @override
+  String get statsEmptyPeriodSub =>
+      'Complete tasks, habits or focus sessions to see your stats';
+
+  @override
   String get reminderToggleLabel => 'Enable Reminder';
 
   @override

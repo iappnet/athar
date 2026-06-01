@@ -4262,6 +4262,40 @@ class AppLocalizationsAr extends AppLocalizations {
   String get statsCardSubtitle => 'شاهد ملخص أدائك وتركيزك';
 
   @override
+  String get statsPeriodToday => 'اليوم';
+
+  @override
+  String get statsPeriodLast7Days => 'آخر ٧ أيام';
+
+  @override
+  String get statsPeriodLast30Days => 'آخر ٣٠ يومًا';
+
+  @override
+  String get statsKpiTasksDone => 'المهام المنجزة';
+
+  @override
+  String get statsKpiHabitStreak => 'السلسلة';
+
+  @override
+  String get statsKpiUnitDays => 'يوم';
+
+  @override
+  String get statsKpiHabitRate => 'معدل العادات';
+
+  @override
+  String get statsKpiFocusMin => 'التركيز';
+
+  @override
+  String get statsKpiUnitMin => 'د';
+
+  @override
+  String get statsEmptyPeriod => 'لا نشاط في هذه الفترة';
+
+  @override
+  String get statsEmptyPeriodSub =>
+      'أكمل مهامًا أو عادات أو جلسات تركيز لرؤية إحصائياتك';
+
+  @override
   String get reminderToggleLabel => 'تفعيل التذكير';
 
   @override

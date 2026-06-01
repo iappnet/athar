@@ -8144,6 +8144,72 @@ abstract class AppLocalizations {
   /// **'شاهد ملخص أدائك وتركيزك'**
   String get statsCardSubtitle;
 
+  /// No description provided for @statsPeriodToday.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم'**
+  String get statsPeriodToday;
+
+  /// No description provided for @statsPeriodLast7Days.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر ٧ أيام'**
+  String get statsPeriodLast7Days;
+
+  /// No description provided for @statsPeriodLast30Days.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر ٣٠ يومًا'**
+  String get statsPeriodLast30Days;
+
+  /// No description provided for @statsKpiTasksDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'المهام المنجزة'**
+  String get statsKpiTasksDone;
+
+  /// No description provided for @statsKpiHabitStreak.
+  ///
+  /// In ar, this message translates to:
+  /// **'السلسلة'**
+  String get statsKpiHabitStreak;
+
+  /// No description provided for @statsKpiUnitDays.
+  ///
+  /// In ar, this message translates to:
+  /// **'يوم'**
+  String get statsKpiUnitDays;
+
+  /// No description provided for @statsKpiHabitRate.
+  ///
+  /// In ar, this message translates to:
+  /// **'معدل العادات'**
+  String get statsKpiHabitRate;
+
+  /// No description provided for @statsKpiFocusMin.
+  ///
+  /// In ar, this message translates to:
+  /// **'التركيز'**
+  String get statsKpiFocusMin;
+
+  /// No description provided for @statsKpiUnitMin.
+  ///
+  /// In ar, this message translates to:
+  /// **'د'**
+  String get statsKpiUnitMin;
+
+  /// No description provided for @statsEmptyPeriod.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا نشاط في هذه الفترة'**
+  String get statsEmptyPeriod;
+
+  /// No description provided for @statsEmptyPeriodSub.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكمل مهامًا أو عادات أو جلسات تركيز لرؤية إحصائياتك'**
+  String get statsEmptyPeriodSub;
+
   /// No description provided for @reminderToggleLabel.
   ///
   /// In ar, this message translates to:
