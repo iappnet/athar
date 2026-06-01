@@ -1,6 +1,7 @@
 # Program Implementation Status — Athar v2 Design System Migration
 
-**Last updated:** 2026-06-01
+**Last updated:** 2026-06-01  
+**SSOT pointer:** Roadmap, PR ordering, and completion % live in `IMPLEMENTATION_MASTER_STATUS.md` only. This file contains risk analysis and architectural guidance only.
 
 **Program:** Athar v2 Design System — Full Flutter Migration  
 **Canonical handoff:** `handoff_v2-2/`  
@@ -14,154 +15,24 @@
 
 ## 1. Full Implementation Roadmap
 
-### Track A — App Stability & iOS Widgets (Legacy Phases 0–5)
-
-| Phase | Name | Purpose | Status | Depends on |
-|-------|------|---------|--------|------------|
-| Phase 0 | Project Stabilization | iOS 17 target, entitlements, stale scaffold cleanup, locale defaults | ✅ Complete | — |
-| Phase 1 | Core Workflow Fixes | HealthError crash, TaskError handling, HabitError handling, prayer widget v5 payload, language switching | ✅ Complete | Phase 0 |
-| Phase 2 | Task Interactive Widget | `AtharTaskWidget.swift` → `AppIntentConfiguration`; `ToggleTaskIntent`; pending-action queue | ✅ Complete | Phase 1 |
-| Phase 3 | Habit Interactive Widget | `AtharHabitWidget.swift` → `AppIntentConfiguration`; `CompleteHabitIntent` + `IncrementHabitIntent`; count-based progress | ✅ Complete | Phase 2 |
-| Phase 4 | Hardening + Edge Cases | Safe UUID fallback; parity dedup; prayer window state; colour normalisation across 3 widgets | ✅ Complete | Phase 3 |
-| Phase 5 | Device Validation | Physical device: interactive widget taps, locale switching, cold-start action replay, TestFlight checklist | 🔲 Pending | Physical device |
-
-### Track B — v2 Design System PRs
-
-| PR | Name | Purpose | Status | Depends on | Blockers |
-|----|------|---------|--------|------------|---------|
-| **PR1** | Tokens & Theme | Green brand palette (light + dark); Calibri font; `numericMono` TextStyle; dark surface tokens per `THEME_DARK_SPEC.md` | ✅ **Complete** `61d741a` | — | — |
-| **PR-THEME** | Design System Theme Wiring (full arc) | `ThemePreference` enum + 3-mode picker; PR-FONT-FALLBACK (38 base styles + 88 theme fallbacks); wire `AtharLightTheme`/`AtharDarkTheme`; RTL drawer. `flutter analyze`: 0 · `flutter test`: 45/45. Tag: `athar-v2-prtheme-complete-final`. | ✅ **Complete 2026-06-01** | PR1 ✅ | — |
-| **PR2** | AdaptiveShell | Rename `adaptive_scaffold` → `adaptive_shell`; iPad breakpoints; 4-tab nav bar shape; FAB pill outside bar (RTL/LTR) | ✅ Complete | PR-THEME ✅ | — |
-| **PR3** | Prayer Card Refresh | Forest gradient, 44px countdown, calm states, golden test suite 16/16. Tag: in branch. | ✅ **Complete 2026-06-01** | PR2 ✅ | — |
-| **PR-ADHAN** | Audio Asset Bundle | Bundle `adhan.mp3` / `.caf`; build gate for existing player | 🔲 Not started | Asset from designer | Asset not yet received |
-| **PR4a** | Calendar Visual Refresh | Token migration, RULE 1 fix, today state, RTL chevrons, locale date, flat bottom, LayoutBuilder cell aspect ratio. `flutter analyze`: 0 · `flutter test`: 45/45. | ⚠️ **Code-complete `85ada1e`** — 2 device-QA gates deferred (iPhone SE overflow · today dark alpha). Pre-approved fail actions in `CURRENT_MIGRATION_STATE.md`. | PR2 ✅ | — |
-| **PR4b** | Calendar Dual-Display Rebuild | Net-new: `DualDate` value object + `CalendarCell` + `DualMonthSwitcher`; simultaneous Hijri + Gregorian numerals | 🔲 Not started | PR4a + designer spec | Dedicated designer spec not yet written |
-| **PR5** | Accessibility Settings | New section: Reduce Motion, Disable Gyroscope, Eastern Numerals toggles | 🔲 Not started | PR2 | None |
-| **PR6** | Stats Redesign | New KPI layout per `STATS_KPI_SPEC.md`; adopt `numericMono` | 🔲 Not started | PR2 | `STATS_KPI_SPEC.md` must be read |
-| **PR7** | Athkar Feature (Net-New) | New curated Athkar sets v1; `isAthkarEnabled` gate; must not merge into habits domain | 🔲 Not started | PR2 + designer review | Designer review required; `REDESIGN_AUDIT.md` unread |
-| **PR8** | Focus Oil-Fill Animation | Oil-fill screen per `FOCUS_OIL_SPEC.md`; procedural colours must be reviewed before token migration | 🔲 Not started | PR2 | Must read: `FOCUS_OIL_SPEC.md`; designer review for `oil_animation.dart` colours |
-| **PR9** | iOS Widget Visual Refresh | Visual-only update of all 3 iOS widgets to v2 design (infra and interactions already complete) | 🔲 Not started | PR2 | None |
-| **PR-ONBOARD-AB** | Onboarding A/B/C/D | Four-variant onboarding experiment; Variant A must not regress until experiment ships | 🔲 Not started | PR2 + designer approval | Must read: `ONBOARDING_AB_SPEC.md`; designer approval required |
-| **PR-IPAD-LAYER2** | Per-Screen Tablet Layouts | Add tablet branches to Dashboard (2/3-col), Tasks (master-detail), Habits (grid+pane), Settings (two-pane), Focus (720pt cap), Spaces (detail pane). Calendar covered by PR4a/PR4b; Stats by PR6; Onboarding by PR-ONBOARD-AB. | 🔲 Not started | PR2 ✅ (infrastructure done) | Each screen is independent; can be added within its feature PR or batched here |
-| **PR-IPAD-LAYER3** | iPad Affordances Sweep | Hover states (MouseRegion), keyboard shortcuts (`athar_shortcuts.dart`), CupertinoContextMenu, drag-and-drop (internal + external), Apple Pencil / Scribble | 🔲 Not started | PR-IPAD-LAYER2 | All Layer 2 layouts must exist first |
-| **PR-CLEANUP** | Hardcoded Colour Sweep | Migrate remaining ~35 `Color(0xFF...)` and ~118 `Colors.*` callsites to design tokens | 🔲 Not started | All others | Cannot start until all component PRs are merged |
+> **Roadmap and PR ordering live in `IMPLEMENTATION_MASTER_STATUS.md` (SINGLE SOURCE OF TRUTH). Do not restate PR statuses or ordering here.**
 
 ---
 
 ## 2. Current Implementation Progress
 
-### Track A — Stability & Widgets
+> **PR status lives in `IMPLEMENTATION_MASTER_STATUS.md` (SINGLE SOURCE OF TRUTH). Do not restate PR statuses here.**
 
-| Phase | Status | Notes |
-|-------|--------|-------|
-| Phase 0 | ✅ Complete | Stable iOS target, clean entitlements |
-| Phase 1 | ✅ Complete | All crashes fixed, language switching working |
-| Phase 2 | ✅ Complete | Task widget fully interactive |
-| Phase 3 | ✅ Complete | Habit widget fully interactive |
-| Phase 4 | ✅ Complete | All edge cases hardened |
-| **Phase 5** | 🔲 **Pending** | Requires physical device — no simulator support for `AppIntent` |
-
-### Track B — v2 Design System PRs
-
-| PR | Status |
-|----|--------|
-| PR1 | ✅ Complete — `athar-v2-pr1-complete` |
-| PR-THEME (full arc: initial + 3MODE + FONT-FALLBACK + FINAL) | ✅ Complete — `athar-v2-prtheme-complete-final` |
-| PR2 (AdaptiveShell) | ✅ Complete — `athar-v2-pr2-complete` |
-| PR3 (Prayer Card) | ✅ Complete — commit `1cd4f80` |
-| PR-ADHAN | 🔲 Blocked on asset delivery |
-| PR4a (Calendar visual refresh) | ⚠️ Code-complete `85ada1e` — 2 device-QA gates deferred |
-| PR4b (Calendar dual-display) | 🔲 Blocked on PR4a + designer spec |
-| PR5 (Accessibility Settings) | 🔲 Ready — unblocked by PR2 ✅ |
-| PR6 (Stats redesign) | 🔲 Ready — unblocked by PR2 ✅ |
-| PR7 (Athkar feature) | 🔲 Blocked on PR2 + designer review |
-| PR8 (Focus oil-fill) | 🔲 Ready — unblocked by PR2 ✅ |
-| PR9 (iOS widget visual refresh) | 🔲 Ready — unblocked by PR2 ✅ |
-| PR-ONBOARD-AB | 🔲 Blocked on PR2 + designer approval |
-| PR-CLEANUP | 🔲 Blocked on all others |
-
-**In-progress phases:** None — clean state between PRs
-**Deferred phases:** Phase 5 (device-gated, not code-gated)
-**Completed (code):** PR1, PR-THEME arc, PR2, PR3, PR4a = 5 logical PRs
-**Code-complete, device-QA pending:** PR4a (2 gates — iPhone SE overflow · today dark alpha)
+**In-progress phases:** None — clean state between PRs  
+**Deferred phases:** Phase 5 (device-gated, not code-gated)  
+**Last completed PR:** PR4a (`athar-v2-pr4a-complete`) · 2 device-QA gates in Deferred QA Bucket  
 **Ready to start:** PR5, PR6, PR8, PR9 (all unblocked by PR2 ✅)
 
 ---
 
 ## 3. Completion Percentages
 
-> Percentages are grounded in file counts and work remaining. No inflation.
-
-### Design-System Completion — **~22%**
-
-The design system token layer is correct (PR1); design system themes are now live in app (PR-THEME FINAL); shell/nav/breakpoints are migrated (PR2); prayer card is redesigned (PR3).
-
-| Sub-area | Done | Remaining | % |
-|---------|------|-----------|---|
-| Color tokens | ✅ All values correct | — | 100% |
-| Typography tokens | ✅ All 38 base styles + 88 theme-level styles carry Cairo fallback | Component callsites still use some Cairo/Inter | ~75% |
-| Dark-mode ThemeMode wiring | ✅ `AtharDarkTheme` now wired to `app.dart`; `ThemePreference` enum drives `ThemeMode` | — | 100% |
-| Component library migration | Prayer card (PR3 ✅) · AdaptiveShell (PR2 ✅) | Calendar, Stats, Focus, Athkar, iOS widget visuals pending | ~15% |
-| Screen-level redesign | 0 full screens migrated | PR4a+ | 0% |
-| Hardcoded colour elimination | ~35 `Color(0xFF...)` files + ~118 `Colors.*` files | PR-CLEANUP (last PR) | 0% |
-| **Design-system overall** | Token + theme + shell + prayer card | 10 PRs remaining | **~22%** |
-
-### Governance Completion — **65%**
-
-| Sub-area | Done | Remaining | % |
-|---------|------|-----------|---|
-| Handoff docs read (critical) | 11 of 14 docs read (IPAD_OPTIMIZATION, INVESTIGATION_REPORT, REDESIGN_AUDIT now read) | 3 unread (CALENDAR, FOCUS_OIL, ONBOARDING_AB) | 79% |
-| AI workflow docs | ✅ Complete for current phase | Update needed after each PR | 85% |
-| Progress tracking | ✅ Up to date | Rolling maintenance | 80% |
-| Security review | ✅ PR1 complete | Required again for PR-THEME, PR2 | 10% |
-| Master status | ✅ Created | Rolling maintenance | 80% |
-| **Governance overall** | Strong foundation | Handoff docs partially unread | **~65%** |
-
-### Flutter Implementation Completion — **~29%**
-
-Measures how much of the v2 Flutter implementation is done vs. the full 14-PR program.
-
-| Milestone | Weight | Done |
-|-----------|--------|------|
-| Token foundation (PR1) | Low (enabler) | ✅ |
-| ThemeMode wiring (PR-THEME arc) | Low | ✅ |
-| Shell & nav redesign (PR2) | High | ✅ `81af052` |
-| Prayer card (PR3) | Medium | ✅ `1cd4f80` |
-| Calendar (PR4a + PR4b) | High | ✗ |
-| Accessibility (PR5) | Low | ✗ |
-| Stats (PR6) | Medium | ✗ |
-| Athkar net-new (PR7) | High | ✗ |
-| Focus animation (PR8) | Medium | ✗ |
-| Widget visuals (PR9) | Medium | ✗ |
-| Onboarding A/B (PR-ONBOARD-AB) | High | ✗ |
-| Colour sweep (PR-CLEANUP) | Medium | ✗ |
-| **Flutter implementation overall** | | **~29%** |
-
-### Theme Migration Completion — **~100%**
-
-Token values correct (PR1); dark surface algorithm canonical; `AtharLightTheme`/`AtharDarkTheme` fully wired to `app.dart` (PR-THEME FINAL); `ThemePreference` enum drives `ThemeMode` correctly. No remaining theme wiring work.
-
-### Widget Migration Completion — **85%**
-
-iOS interactive widget infrastructure is fully complete (Phases 2–4). What remains is visual-only refresh of all three widgets to v2 design (PR9). Functionality is stable.
-
-### Calendar Migration Completion — **0%**
-
-No calendar work has started. PR4a (visual refresh) and PR4b (dual-display rebuild) are both blocked on PR2. PR4b additionally requires a dedicated designer spec that does not yet exist.
-
-### Onboarding Migration Completion — **0%**
-
-Current onboarding (`onboarding_page.dart` Variant A) is in place and must not regress. The four-variant A/B/C/D experiment (PR-ONBOARD-AB) has not started and requires both PR2 and designer approval.
-
-### Overall v2 Program Completion — **~29%**
-
-| Track | Weight | % Done |
-|-------|--------|--------|
-| App stability (Phases 0–4) | 25% of total program | 100% → contributes 25% |
-| v2 Design System (14 PRs) | 75% of total program | ~29% → contributes ~22% |
-| **Program total** | | **~29%** |
-
-The app is functional and stable. PR1 (tokens), PR-THEME (theme wiring + font fallback + ThemePreference), PR2 (AdaptiveShell + nav), and PR3 (prayer card) are all complete. 10 component PRs remain.
+> **Completion % lives in `IMPLEMENTATION_MASTER_STATUS.md` (SINGLE SOURCE OF TRUTH). Do not restate % figures here.**
 
 ---
 
@@ -311,58 +182,21 @@ The app is functional and stable. PR1 (tokens), PR-THEME (theme wiring + font fa
 
 ---
 
-## 7. Recommended Next Step — PR4a
+## 7. Recommended Next Step
 
-### Why PR4a is next
+**PR4a ✅ complete** (`athar-v2-pr4a-complete`). See `ROADMAP_AFTER_PR4A.md` for full next-step guidance and `IMPLEMENTATION_MASTER_STATUS.md` for current PR ordering.
 
-PR1, PR-THEME (full arc), PR2, and PR3 are all complete. PR4a (Calendar Visual Refresh) is the highest-value unblocked PR. It has no code prerequisites remaining (PR2 ✅ unblocked it). PR4b (dual-display rebuild) must not start until PR4a is stable and a dedicated designer spec for `DualDate` semantics exists.
-
-### What PR4a requires before starting
-
-- Read `CALENDAR_FOCUS_REDESIGN.md` in full (first read — not yet read this session)
-- Audit: write `design-context/_audit_calendar.md` before touching any Dart
-
-### What PR4a affects (expected scope)
-
-- Calendar chrome: colours, typography, header; keep existing Hijri/Gregorian toggle
-- Extend `CalendarCubit` if needed — do not change `CalendarCell` architecture
-- Do NOT start dual-display work in PR4a; that is PR4b
-
-### Ready alternatives (also unblocked by PR2 ✅)
-
-| PR | Entry point |
-|----|-------------|
-| PR5 (Accessibility Settings) | No spec required; add 3 new toggles to `UserSettings` + Settings page |
-| PR6 (Stats redesign) | Read `STATS_KPI_SPEC.md` first |
-| PR8 (Focus oil-fill) | Read `FOCUS_OIL_SPEC.md` first |
-| PR9 (iOS widget visual refresh) | No spec required; widget infra is complete |
-
-**To start PR4a:** Say "Implement PR4a" after reading `CALENDAR_FOCUS_REDESIGN.md`.
+Ready to start (unblocked by PR2 ✅): **PR5, PR6, PR8, PR9.** Recommended lowest-risk: PR5 (no spec read required).
 
 ---
 
 ## Summary Table
 
+> **All % figures and PR ordering live in `IMPLEMENTATION_MASTER_STATUS.md` (SINGLE SOURCE OF TRUTH).**
+
 | Metric | Value |
 |--------|-------|
-| **Total legacy phases** | 6 (Phases 0–5) |
-| **Total v2 design system PRs** | 16 (14 original + PR-IPAD-LAYER2 + PR-IPAD-LAYER3 added by PR2 scope audit) |
-| **Total program milestones** | 22 |
-| **Legacy phases complete** | 5 of 6 (Phase 5 device-gated) |
-| **v2 PRs complete** | 4 of 14 (PR1 + PR-THEME arc + PR2 + PR3) |
-| **v2 PRs ready to start** | 5 (PR4a, PR5, PR6, PR8, PR9) |
-| **v2 PRs blocked** | 4 (PR4b, PR7, PR-ONBOARD-AB, PR-CLEANUP) |
-| **v2 PRs awaiting asset/spec** | 1 (PR-ADHAN) |
-| **Design-system completion** | ~22% |
-| **Flutter migration completion** | ~29% |
-| **Theme migration completion** | ~100% (ThemePreference + AtharLightTheme/AtharDarkTheme wired) |
-| **Widget migration completion** | ~85% |
-| **Calendar migration completion** | 0% |
-| **Onboarding migration completion** | 0% |
-| **Governance completion** | ~75% |
-| **Overall v2 program completion** | **~29%** |
+| **Canonical branch** | `feat/athar-v2-pr1-tokens-theme` |
+| **Canonical handoff** | `handoff_v2-2/` |
 | **Highest-risk remaining PR** | PR4b (Calendar dual-display) |
-| **Recommended next PR** | PR4a (Calendar visual refresh) |
 | **Active blockers** | B1 (Calibri licence), B3 (calendar dual-display spec), B4 (adhan asset), Phase 5 (device) |
-| **Current canonical branch** | `feat/athar-v2-pr1-tokens-theme` |
-| **Current canonical handoff** | `handoff_v2-2/` |

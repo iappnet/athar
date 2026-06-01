@@ -213,27 +213,13 @@ Forest gradient (`#0F3D2E → #1A5A45`), 44pt countdown (weight 300), calm activ
 
 ### PR4a through PR-CLEANUP
 
-**Status: 🔲 Not started — PR2 ✅ unblocks PR4a, PR5, PR6, PR8, PR9**
+**PR4a ✅ Complete** (`athar-v2-pr4a-complete`, 2026-06-01) — calendar visual refresh, RULE 1 fix, token migration, RTL. 2 device-QA gates in Deferred QA Bucket.
 
 AdaptiveShell Layer 1 foundation: ✅ Complete — verified `ADAPTIVESHELL_FOUNDATION_AUDIT.md` 2026-06-01.  
 PR-IPAD-LAYER2: umbrella tracker only — each screen's tablet layout ships in its owning feature PR (see `IPAD_LAYER2_OWNERSHIP_MAP.md`).  
 PR-IPAD-LAYER3: standalone deferred sweep — not before all Layer 2 screens are stable (see `IPAD_LAYER3_DEFERRED_AFFORDANCES.md`).
 
-| PR | First prerequisite | Layer 2 ownership |
-|----|-------------------|--------------------|
-| PR4a — Calendar visual refresh | ⚠️ **Code-complete `85ada1e`** — signed off 2026-06-01; 2 device-QA gates deferred (G1: iPhone SE overflow, G2: today dark alpha). Pre-approved fail actions in `CURRENT_MIGRATION_STATE.md`. | Calendar tablet layout → PR4b |
-| PR4b — Calendar dual-display | PR4a + `DualDate` designer spec | Calendar tablet layout → here |
-| PR5 — Accessibility Settings | None | Settings two-pane → here |
-| PR6 — Stats redesign | Read `STATS_KPI_SPEC.md` | Stats 2/3-col grid → here |
-| PR7 — Athkar feature | PR2 ✅ + designer review | Athkar tablet → here |
-| PR8 — Focus oil-fill | Read `FOCUS_OIL_SPEC.md` | Focus 720pt cap → here |
-| PR9 — iOS widget visual refresh | None | N/A (native) |
-| PR-DASHBOARD-TABLET | Phone dashboard stable | Dashboard 2/3-col → here |
-| PR-ONBOARD-AB | PR2 ✅ + designer approval | Onboarding iPad layout → here |
-| PR-IPAD-LAYER3 | All Layer 2 screens stable | Hover, shortcuts, menus, DnD, Pencil |
-| PR-CLEANUP | All others complete | — |
-
-See `IMPLEMENTATION_MASTER_STATUS.md` + `PROGRAM_IMPLEMENTATION_STATUS.md` for full roadmap.
+> **PR ordering and status live in `IMPLEMENTATION_MASTER_STATUS.md` (SINGLE SOURCE OF TRUTH). See `ROADMAP_AFTER_PR4A.md` for next-step guidance.**
 
 ---
 

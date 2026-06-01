@@ -51,6 +51,7 @@
 | `athar-v2-prtheme-3mode-complete` | `66bc884` | PR-THEME-3MODE | ThemePreference enum |
 | `athar-v2-pr2-complete` | `87ab36e` | PR2 | Governance tag (after all 6 CPs verified) |
 | `athar-v2-prtheme-complete-final` | `bfaf863` | PR-THEME FINAL | Full arc complete |
+| `athar-v2-pr4a-complete` | `1beff60` | PR4a | Governance tag (sign-off commit) · pushed to remote ✅ |
 
 ---
 
@@ -68,7 +69,7 @@
 
 ## Active PR
 
-**None.** PR4a code-complete as of 2026-06-01 (commit `85ada1e`). 2 device-QA gates deferred — see "PR4a Deferred QA Gates" below.
+**None.** PR4a complete (`athar-v2-pr4a-complete`, commits `85ada1e` + `1beff60`). 2 device-QA gates in Deferred QA Bucket below.
 
 ---
 
@@ -79,43 +80,13 @@ flutter analyze → 0 issues
 flutter test → 45/45 passed (16 golden + 28 stats + 1 config)
 ```
 
-All changes committed and pushed. Last commit: `85ada1e` (PR4a implementation).
+All changes committed and pushed. Last commit: governance closure (after `1beff60` sign-off).
 
 ---
 
 ## Next Recommended PR
 
-**PR4a ✅ code-complete** (commit `85ada1e`, 2026-06-01). 2 device-QA gates deferred to physical-device pass.
-
-**Ready to start (awaiting readiness request):** PR5, PR6, PR8, or PR9.
-
-| PR | Entry requirement |
-|----|-------------------|
-| PR5 — Accessibility Settings | No spec read required — add `reduceMotion`, `disableGyroscope`, `useEasternNumerals` to `UserSettings` + Settings page |
-| PR6 — Stats redesign | Read `STATS_KPI_SPEC.md` first |
-| PR8 — Focus oil-fill | Read `FOCUS_OIL_SPEC.md` first; designer review for procedural colours |
-| PR9 — iOS widget visual refresh | No spec required; widget infra complete |
-
----
-
-## PRs Not Started
-
-| PR | Status | First prerequisite |
-|----|--------|-------------------|
-| PR-ADHAN | 🔲 Blocked | Audio asset from designer (not received) |
-| PR4a | ⚠️ Code-complete `85ada1e` — 2 device-QA gates deferred | See "PR4a Deferred QA Gates" below |
-| PR4b | 🔲 Blocked | PR4a ✅ + dedicated designer spec for `DualDate` |
-| PR5 | 🔲 Ready | None |
-| PR6 | 🔲 Ready | Read `STATS_KPI_SPEC.md` |
-| PR7 | 🔲 Blocked | PR2 ✅ (done) + designer review |
-| PR8 | 🔲 Ready | Read `FOCUS_OIL_SPEC.md` |
-| PR9 | 🔲 Ready | None |
-| PR-ONBOARD-AB | 🔲 Blocked | PR2 ✅ (done) + designer approval + read `ONBOARDING_AB_SPEC.md` |
-| **PR-IPAD-LAYER2** | 🔲 Ready | PR2 ✅ infrastructure done; per-screen tablet layouts (Dashboard 2/3-col, Tasks master-detail, Habits grid+pane, Settings two-pane, Focus cap, Spaces detail). Can be added per-feature or batched. |
-| **PR-IPAD-LAYER3** | 🔲 Blocked | PR-IPAD-LAYER2; Hover + keyboard shortcuts + context menus + drag-and-drop + Pencil |
-| PR-CLEANUP | 🔲 Blocked | All other PRs complete |
-
-_Note: PR-IPAD-LAYER2 and PR-IPAD-LAYER3 were identified by the 2026-06-01 PR2 scope reconciliation audit. They correspond to IPAD_OPTIMIZATION.md Layer 2 and Layer 3 respectively, which were never part of PR2's defined scope (PR2 = Layer 1 only)._
+> **PR ordering and status live in `IMPLEMENTATION_MASTER_STATUS.md` (SINGLE SOURCE OF TRUTH).** See `ROADMAP_AFTER_PR4A.md` for current next-step guidance.
 
 ---
 
@@ -152,17 +123,32 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 
 ---
 
-## PR4a Deferred QA Gates
+## Deferred QA Bucket
 
-Both gates deferred to the physical-device QA pass (same bucket as PR3 runtime checks). Pre-approved fail actions are documented — QA applies the fix without re-auditing.
+**Governance rules:**
+- First real QA sweep: **AFTER PR6, BEFORE PR7.** Hard ceiling: if bucket reaches **10 items before PR6 ships**, a forced intermediate sweep occurs immediately.
+- All fixes in this bucket are **UNVERIFIED** — logical hypotheses, confirmed only on a physical device. Do NOT apply any fix until device validation.
+- To add an item: assign an ID (PR origin + sequential number), describe the pass condition, and write the candidate fix as a hypothesis.
 
-### GATE 1 — iPhone SE (375×667) calendar overflow
+**Current count: 5 of 10.**
+
+| ID | Description | Origin | Status |
+|----|-------------|--------|--------|
+| PR3-R1 | Forest gradient prayer card — dark mode physical device render | PR3 | Unverified |
+| PR3-R2 | 44pt countdown legibility on iPhone SE (375×667) | PR3 | Unverified |
+| PR4a-G1 | iPhone SE calendar overflow (6-row month) | PR4a | Unverified — see below |
+| PR4a-G2 | Today-state dark alpha legibility | PR4a | Unverified — see below |
+| DEVICE-1 | Forest-dark surfaces, Cairo fallback, RTL drawer, countdown tick (general device pass) | PR-THEME/PR2 | Unverified |
+
+---
+
+### PR4a-G1 — iPhone SE (375×667) calendar overflow
 
 **Pass condition:** 6-row month fits with no vertical overflow AND "Day events" header is visible without scrolling.
 
 **Why it may fail:** The 64pt cell-height tier triggers at `width >= 360`. iPhone SE is 375dp, which hits the 64pt tier. A 6-row month at 64pt/cell = 384pt of grid, which may push the header below the fold on a 667pt screen.
 
-**Pre-approved fail action (one-line change, no re-audit required):**
+**Deferred QA Candidate Fix (UNVERIFIED — logical hypothesis, must be confirmed on device before applying):**
 ```dart
 // In dual_calendar_widget.dart — widen the compact tier threshold:
 // Change:  constraints.maxWidth < 360 ? 54.0
@@ -171,11 +157,11 @@ Both gates deferred to the physical-device QA pass (same bucket as PR3 runtime c
 // Alternative: gate on height < 700 using MediaQuery if width alone is insufficient.
 ```
 
-### GATE 2 — Today-state dark mode legibility
+### PR4a-G2 — Today-state dark mode legibility
 
 **Pass condition:** Today background (`colorScheme.primary @ 0.13` in dark) is visually distinct from the surface on the dark forest theme.
 
-**Pre-approved fail action (one-line change, no re-audit required):**
+**Deferred QA Candidate Fix (UNVERIFIED — logical hypothesis, must be confirmed on device before applying):**
 ```dart
 // In dual_calendar_widget.dart — raise dark alpha:
 // Change:  final double todayAlpha = isDark ? 0.13 : 0.08;
@@ -184,7 +170,7 @@ Both gates deferred to the physical-device QA pass (same bucket as PR3 runtime c
 
 ---
 
-## Open Items / Deferred Gates
+## Open Items / Hard Blockers
 
 | ID | Item | Gate type |
 |----|------|-----------|
@@ -192,6 +178,5 @@ Both gates deferred to the physical-device QA pass (same bucket as PR3 runtime c
 | B3 | Calendar dual-display (`DualDate`) designer spec | PR4b start gate |
 | B4 | Adhan audio asset | PR-ADHAN build gate |
 | Phase 5 | Physical device validation (all 3 iOS widgets) | Release gate |
-| Device QA | Forest-dark surfaces, Cairo fallback, RTL drawer, countdown tick | Release gate |
-| PR4a-G1 | iPhone SE calendar overflow check | Device QA gate (pre-approved fix: widen compact tier to `width<390`) |
-| PR4a-G2 | Today-state dark mode legibility | Device QA gate (pre-approved fix: raise dark alpha to 0.15) |
+
+_Device QA items (PR3-R1, PR3-R2, PR4a-G1, PR4a-G2, DEVICE-1) are tracked in the Deferred QA Bucket above._

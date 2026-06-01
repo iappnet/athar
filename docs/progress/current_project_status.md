@@ -132,12 +132,14 @@ Analyzer: 0 issues · Tests: 29/29
 - `flutter analyze`: 0 · `flutter test`: 45/45 · PR3 goldens: 16/16 unchanged
 - Verification: `VERIFICATION_PR_THEME.md`
 
-### Next PR — PR4a (Calendar Visual Refresh) or PR5/PR6/PR8/PR9
+### PR4a — Calendar Visual Refresh ✅ Complete 2026-06-01
 
-All unblocked by PR2 ✅. Recommended first: PR4a.
-Prerequisite read for PR4a: `CALENDAR_FOCUS_REDESIGN.md`
+Commit `85ada1e`. Tag `athar-v2-pr4a-complete`. RULE 1 fix, token migration, today state, RTL. 2 device-QA gates in Deferred QA Bucket (`CURRENT_MIGRATION_STATE.md`).
 
-See `IMPLEMENTATION_MASTER_STATUS.md` for PR sequence, `PROGRAM_IMPLEMENTATION_STATUS.md` for full program view, `MIGRATION_BRANCH_STRATEGY.md` for branch governance, and `MIGRATION_ROADMAP_VERIFICATION.md` for verified canonical roadmap.
+### Next PR — PR5 / PR6 / PR8 / PR9
+
+All unblocked by PR2 ✅. Pending designer confirmation.  
+See `ROADMAP_AFTER_PR4A.md` for options and `IMPLEMENTATION_MASTER_STATUS.md` for authoritative PR ordering + %.
 
 ---
 
