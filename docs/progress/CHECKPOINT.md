@@ -13,18 +13,18 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-01 (QA sweep governance fix)  
-**Commit:** `82d9e53` docs(governance): defer QA sweep to end of roadmap  
-**Note:** Product-owner decision: deferred QA sweep now runs after the last feature PR, not before PR7. No feature PR gated. TestFlight/release gates on sweep passing. Updated CURRENT_MIGRATION_STATE.md, IMPLEMENTATION_MASTER_STATUS.md, ROADMAP_AFTER_PR4A.md, CHECKPOINT.md.
+**Timestamp:** 2026-06-01 (Stage B1 — tombstone core files to clean names)  
+**Commit:** `8874378` docs(restructure): B1 — tombstone core files to clean names  
+**Note:** B1 complete. 4 files tombstoned: IMPLEMENTATION_MASTER_STATUS.md → docs/status/ROADMAP.md; CURRENT_MIGRATION_STATE.md → docs/status/MIGRATION_STATE.md; ROADMAP_AFTER_PR4A.md → docs/status/NEXT_STEPS.md; docs/ai/FILE_INDEX.md merged into docs/ai/FEATURE_INDEX.md. CLAUDE.md, CONTEXT_TIERS.md, CHECKPOINT.md repointed. Awaiting approval for B2.
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** None — PR4b complete  
-**Last completed:** PR4b — Calendar Dual-Display (`65fc417`) ✅  
-**Phase:** Post-PR4b. Deferred QA sweep at end of roadmap (after last feature PR).  
-**Next:** PR8 (Focus Oil-Fill) or PR9 (iOS Widget Refresh) — see docs/status/ROADMAP.md.
+**Active PR:** None — Stage B restructure in progress  
+**Last completed:** PR4b — Calendar Dual-Display (`65fc417`) ✅; B1 complete (`8874378`) ✅  
+**Phase:** Stage B documentation restructure. B1 done; awaiting approval for B2.  
+**Next:** B2 approval, then PR8 (Focus Oil-Fill) or PR9 (iOS Widget Refresh) — see docs/status/ROADMAP.md.
 
 ---
 
@@ -87,9 +87,9 @@ LOADS-AT:      Tier 0
 
 ## NEXT ACTION
 
-**Deferred QA sweep** runs at end of roadmap, after the last feature PR. No feature PR is gated. Nothing ships to users/TestFlight until sweep passes. Bucket: 5 items (see docs/status/MIGRATION_STATE.md).  
-**AR visual QA:** Calendar dual-display (primaryHijri on/off, dark mode, 5-dot cell, boundary labels) deferred to final device sweep.  
-**Stage B:** Do NOT begin until product owner explicitly authorises file moves/renames.
+**Stage B1 complete** (`8874378`). Core files tombstoned; canonical paths active.  
+**Awaiting approval for B2** — design-spec mirror. Do NOT begin B2 until user approves.  
+**Deferred QA sweep** runs at end of roadmap, after the last feature PR. No feature PR is gated. Nothing ships to users/TestFlight until sweep passes. Bucket: 5 items (see docs/status/MIGRATION_STATE.md).
 
 ---
 
@@ -106,6 +106,6 @@ LOADS-AT:      Tier 0
 
 ## WORKING TREE STATE
 
-**Status:** Clean — PR4b committed + pushed; drift-check PASS  
-**flutter analyze:** 0 issues in PR4b-touched files ✅ (2 pre-existing warnings in space/task features, unrelated)  
-**Last commit:** `aa8be7b` docs: drift-check — fix 2 dead paths, close B3/PR4b-abbr
+**Status:** Clean — B1 committed; docs only (no Dart changes)  
+**flutter analyze:** 0 issues (no Dart touched in B1)  
+**Last commit:** `8874378` docs(restructure): B1 — tombstone core files to clean names
