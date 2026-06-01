@@ -14,7 +14,7 @@ LOADS-AT:      Tier 0
 ## LAST UPDATED
 
 **Timestamp:** 2026-06-02 (Stage B3 — archive history)  
-**Commit:** pending  
+**Commit:** `64d1b47` docs(restructure): B3 — archive history  
 **Note:** B3 in progress. ~82 files archived across 5 buckets (pr-reports, change-logs, widget-phase, session-reports, phase0-audits). 2 deleted. 4 active docs relocated to docs/status/ and docs/ai/. Root contains only CLAUDE.md + README.md + 6 deliberately-kept verification files.
 
 ---
@@ -22,7 +22,7 @@ LOADS-AT:      Tier 0
 ## CURRENT PR + PHASE
 
 **Active PR:** None — Stage B restructure in progress  
-**Last completed:** PR4b — Calendar Dual-Display (`65fc417`) ✅; B1 (`8874378`) ✅; B2 (`0f9b55f`) ✅; B3 (pending commit) ✅  
+**Last completed:** PR4b — Calendar Dual-Display (`65fc417`) ✅; B1 (`8874378`) ✅; B2 (`0f9b55f`) ✅; B3 (`64d1b47`) ✅  
 **Phase:** Stage B documentation restructure. B1 + B2 + B3 done; awaiting approval for B4.  
 **Next:** B4 approval (final verify), then PR8 (Focus Oil-Fill) or PR9 (iOS Widget Refresh) — see docs/status/ROADMAP.md.
 
