@@ -2,7 +2,7 @@
 CANONICAL-FOR: PR sequence, completion %, blockers, accepted risks, token authority, handoff reference table
 OWNER:         Claude Code
 PRECEDENCE:    3 (Tier 0 — SSOT for PR order + %; CHECKPOINT level 2 wins on "current state")
-LAST-UPDATED:  2026-06-02 · B4 — stale refs to archived files corrected; handoff_v2-2/ → docs/design-specs/
+LAST-UPDATED:  2026-06-02 · governance — all handoff_v2-2/ refs repointed to docs/design-specs/; colors_and_type.css added to mirror
 LOADS-AT:      Tier 0
 LEGACY-ALIASES: IMPLEMENTATION_MASTER_STATUS.md (root)
 CANONICAL-SINCE: 2026-06-01
@@ -153,20 +153,20 @@ Procedural colours in `oil_animation.dart` / `fluid_engine.dart` require designe
 
 | Document | Purpose | Status |
 |----------|---------|--------|
-| `handoff_v2-2/CLAUDE_CODE_PROMPT.md` | Full implementation rules; PR sequence authority | ✅ Read |
-| `handoff_v2-2/FINAL_PACKAGE_MANIFEST.md` | Canonical PR sequence + changelog | ✅ Read |
-| `handoff_v2-2/INVESTIGATION_RECONCILIATION.md` | 5 locked decisions (C1–C5) | ✅ Read |
-| `handoff_v2-2/DESIGN_SYSTEM_GAP_VALIDATION.md` | Typography authority lockdown | ✅ Read |
-| `handoff_v2-2/PACKAGE_A_DECISIONS.md` | Calibri, isHijriMode, AdaptiveShell, Stats | ✅ Read |
-| `handoff_v2-2/PACKAGE_C_DECISIONS.md` | Dark mode, 4-tab, calendar, Athkar, bottom-nav | ✅ Read |
-| `handoff_v2-2/THEME_DARK_SPEC.md` | Per-surface dark treatments | ✅ Read |
-| `handoff_v2-2/colors_and_type.css` | Canonical token target (light + dark) | ✅ Read |
-| `handoff_v2-2/INVESTIGATION_REPORT.md` | Full codebase investigation | ✅ Read (2026-05-09) — PR2 readiness closure |
-| `handoff_v2-2/REDESIGN_AUDIT.md` | Component audit | ✅ Read (2026-05-09) — PR2 readiness closure |
+| `docs/design-specs/CLAUDE_CODE_PROMPT.md` | Full implementation rules; PR sequence authority | ✅ Read |
+| `docs/design-specs/FINAL_PACKAGE_MANIFEST.md` | Canonical PR sequence + changelog | ✅ Read |
+| `docs/design-specs/INVESTIGATION_RECONCILIATION.md` | 5 locked decisions (C1–C5) | ✅ Read |
+| `docs/design-specs/DESIGN_SYSTEM_GAP_VALIDATION.md` | Typography authority lockdown | ✅ Read |
+| `docs/design-specs/PACKAGE_A_DECISIONS.md` | Calibri, isHijriMode, AdaptiveShell, Stats | ✅ Read |
+| `docs/design-specs/PACKAGE_C_DECISIONS.md` | Dark mode, 4-tab, calendar, Athkar, bottom-nav | ✅ Read |
+| `docs/design-specs/THEME_DARK_SPEC.md` | Per-surface dark treatments | ✅ Read |
+| `docs/design-specs/colors_and_type.css` | Canonical token target (light + dark) | ✅ Read |
+| `docs/design-specs/INVESTIGATION_REPORT.md` | Full codebase investigation | ✅ Read (2026-05-09) — PR2 readiness closure |
+| `docs/design-specs/REDESIGN_AUDIT.md` | Component audit | ✅ Read (2026-05-09) — PR2 readiness closure |
 | `CALENDAR_FOCUS_REDESIGN.md` | Calendar dual-display spec (root copy) | ✅ Read — PR4b complete |
-| `handoff_v2-2/FOCUS_OIL_SPEC.md` | Focus oil-fill animation spec | ❌ Not read — required before PR8 |
-| `handoff_v2-2/IPAD_OPTIMIZATION.md` | iPad breakpoints | ✅ Read (2026-05-09) — PR2 readiness closure |
-| `handoff_v2-2/ONBOARDING_AB_SPEC.md` | Onboarding A/B variants | ❌ Not read — required before PR-ONBOARD-AB |
+| `docs/design-specs/FOCUS_OIL_SPEC.md` | Focus oil-fill animation spec | ❌ Not read — required before PR8 |
+| `docs/design-specs/IPAD_OPTIMIZATION.md` | iPad breakpoints | ✅ Read (2026-05-09) — PR2 readiness closure |
+| `docs/design-specs/ONBOARDING_AB_SPEC.md` | Onboarding A/B variants | ❌ Not read — required before PR-ONBOARD-AB |
 
 ---
 
@@ -174,11 +174,11 @@ Procedural colours in `oil_animation.dart` / `fluid_engine.dart` require designe
 
 | Token group | Canonical source |
 |-------------|----------------|
-| Light primary/secondary | `handoff_v2-2/colors_and_type.css` |
-| Light surfaces/text | `handoff_v2-2/colors_and_type.css` |
-| Dark primary/secondary | `handoff_v2-2/colors_and_type.css` |
-| Dark surfaces/text | `handoff_v2-2/THEME_DARK_SPEC.md` (overrides CSS — DRIFT-2 decision) |
-| Typography (font families) | `handoff_v2-2/DESIGN_SYSTEM_GAP_VALIDATION.md` (Calibri sole canonical) |
+| Light primary/secondary | `docs/design-specs/colors_and_type.css` |
+| Light surfaces/text | `docs/design-specs/colors_and_type.css` |
+| Dark primary/secondary | `docs/design-specs/colors_and_type.css` |
+| Dark surfaces/text | `docs/design-specs/THEME_DARK_SPEC.md` (overrides CSS — DRIFT-2 decision) |
+| Typography (font families) | `docs/design-specs/DESIGN_SYSTEM_GAP_VALIDATION.md` (Calibri sole canonical) |
 | Prayer card gradient | `athar_colors.dart` static const — must not change |
 
 ---

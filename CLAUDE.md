@@ -123,8 +123,8 @@ Design size: 375×812 (`ScreenUtilInit`). Font: **Calibri** (canonical brand fon
 - Dark mode `ThemeMode` wiring: **NOT YET** — target PR-THEME
 
 **Token authority:**
-- Light tokens: `handoff_v2-2/colors_and_type.css`
-- Dark surfaces/text: `handoff_v2-2/THEME_DARK_SPEC.md` (overrides CSS)
+- Light tokens: `docs/design-specs/colors_and_type.css`
+- Dark surfaces/text: `docs/design-specs/THEME_DARK_SPEC.md` (overrides CSS)
 - Implementation: `lib/core/design_system/tokens/athar_colors.dart` + `athar_typography.dart`
 
 **v2 implementation status:** See `docs/status/ROADMAP.md` for full PR sequence (14 PRs, PR1 complete).
@@ -339,27 +339,27 @@ Read files in this order at the start of every session. Stop at the first tier t
 | `docs/status/NEXT_STEPS.md` | Any PR — next-arc guidance |
 | `design-context/_audit_<feature>.md` | The audit for the current PR |
 | `docs/ai/AI_WORKFLOW.md` | Execution rules refresher |
-| `handoff_v2-2/INVESTIGATION_RECONCILIATION.md` | Any design PR — 5 locked decisions |
-| `handoff_v2-2/PACKAGE_A_DECISIONS.md` | PRs touching Calibri / isHijriMode / AdaptiveShell / Stats |
-| `handoff_v2-2/PACKAGE_C_DECISIONS.md` | PRs touching dark mode / 4-tab / calendar / Athkar / bottom-nav |
+| `docs/design-specs/INVESTIGATION_RECONCILIATION.md` | Any design PR — 5 locked decisions |
+| `docs/design-specs/PACKAGE_A_DECISIONS.md` | PRs touching Calibri / isHijriMode / AdaptiveShell / Stats |
+| `docs/design-specs/PACKAGE_C_DECISIONS.md` | PRs touching dark mode / 4-tab / calendar / Athkar / bottom-nav |
 
 ### Tier 2 — Feature-specific (current PR only)
 
 | PR | Load |
 |----|------|
-| Any screen PR | `docs/ai/FEATURE_INDEX.md`, `handoff_v2-2/REDESIGN_AUDIT.md` |
-| PR4b — Calendar | `handoff_v2-2/CALENDAR_CELL_SPEC.md`, `handoff_v2-2/CALENDAR_FOCUS_REDESIGN.md`, `DUAL_DATE_SPEC.md`, `design-context/_audit_calendar_dual.md` |
-| PR7 — Athkar | `handoff_v2-2/ATHKAR_SPEC.md` |
-| PR8 — Focus | `handoff_v2-2/FOCUS_OIL_SPEC.md` |
-| PR9 — iOS Widgets | `handoff_v2-2/IOS_WIDGETS_SPEC.md`, `docs/ai/WIDGET_INDEX.md` |
-| PR-ONBOARD-AB | `handoff_v2-2/ONBOARDING_AB_SPEC.md` |
+| Any screen PR | `docs/ai/FEATURE_INDEX.md`, `docs/design-specs/REDESIGN_AUDIT.md` |
+| PR4b — Calendar | `docs/design-specs/CALENDAR_CELL_SPEC.md`, `docs/design-specs/CALENDAR_FOCUS_REDESIGN.md`, `DUAL_DATE_SPEC.md`, `design-context/_audit_calendar_dual.md` |
+| PR7 — Athkar | `docs/design-specs/ATHKAR_SPEC.md` |
+| PR8 — Focus | `docs/design-specs/FOCUS_OIL_SPEC.md` |
+| PR9 — iOS Widgets | `docs/design-specs/IOS_WIDGETS_SPEC.md`, `docs/ai/WIDGET_INDEX.md` |
+| PR-ONBOARD-AB | `docs/design-specs/ONBOARDING_AB_SPEC.md` |
 | Any cubit change | `docs/ai/STATE_MANAGEMENT_INDEX.md` |
-| Any dark-mode work | `handoff_v2-2/THEME_DARK_SPEC.md` |
-| Any iPad layout | `handoff_v2-2/IPAD_OPTIMIZATION.md`, `IPAD_LAYER2_OWNERSHIP_MAP.md` |
-| Any typography | `handoff_v2-2/DESIGN_SYSTEM_GAP_VALIDATION.md` |
+| Any dark-mode work | `docs/design-specs/THEME_DARK_SPEC.md` |
+| Any iPad layout | `docs/design-specs/IPAD_OPTIMIZATION.md`, `IPAD_LAYER2_OWNERSHIP_MAP.md` |
+| Any typography | `docs/design-specs/DESIGN_SYSTEM_GAP_VALIDATION.md` |
 | Any data-flow | `docs/ai/DATA_FLOW_INDEX.md` |
 | Any Supabase | `docs/ai/SUPABASE_INDEX.md` |
-| Component additions | `handoff_v2-2/COMPONENT_SPECS.md` |
+| Component additions | `docs/design-specs/COMPONENT_SPECS.md` |
 
 ### Tier 3 — NEVER auto-load
 

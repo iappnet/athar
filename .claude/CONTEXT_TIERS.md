@@ -31,9 +31,9 @@ LOADS-AT:      Tier 0 (read by /drift-check)
 | `docs/status/MIGRATION_STATE.md` | Any PR — branch state, RULE 1/2, Deferred QA |
 | `docs/status/NEXT_STEPS.md` | Any PR — next-arc guidance |
 | `design-context/_audit_<feature>.md` | The audit for the current PR |
-| `handoff_v2-2/INVESTIGATION_RECONCILIATION.md` | Any design PR — 5 locked decisions |
-| `handoff_v2-2/PACKAGE_A_DECISIONS.md` | PRs touching Calibri / isHijriMode / AdaptiveShell / Stats |
-| `handoff_v2-2/PACKAGE_C_DECISIONS.md` | PRs touching dark mode / 4-tab / calendar / Athkar / bottom-nav |
+| `docs/design-specs/INVESTIGATION_RECONCILIATION.md` | Any design PR — 5 locked decisions |
+| `docs/design-specs/PACKAGE_A_DECISIONS.md` | PRs touching Calibri / isHijriMode / AdaptiveShell / Stats |
+| `docs/design-specs/PACKAGE_C_DECISIONS.md` | PRs touching dark mode / 4-tab / calendar / Athkar / bottom-nav |
 
 ---
 
@@ -41,19 +41,19 @@ LOADS-AT:      Tier 0 (read by /drift-check)
 
 | PR | Load |
 |----|------|
-| Any screen PR | `docs/ai/FEATURE_INDEX.md`, `handoff_v2-2/REDESIGN_AUDIT.md` |
+| Any screen PR | `docs/ai/FEATURE_INDEX.md`, `docs/design-specs/REDESIGN_AUDIT.md` |
 | PR4b — Calendar | `CALENDAR_CELL_SPEC.md`, `CALENDAR_FOCUS_REDESIGN.md`, `DUAL_DATE_SPEC.md`, `design-context/_audit_calendar_dual.md` |
-| PR7 — Athkar | `handoff_v2-2/ATHKAR_SPEC.md` |
-| PR8 — Focus | `handoff_v2-2/FOCUS_OIL_SPEC.md` |
-| PR9 — iOS Widgets | `handoff_v2-2/IOS_WIDGETS_SPEC.md`, `docs/ai/WIDGET_INDEX.md` |
-| PR-ONBOARD-AB | `handoff_v2-2/ONBOARDING_AB_SPEC.md` |
+| PR7 — Athkar | `docs/design-specs/ATHKAR_SPEC.md` |
+| PR8 — Focus | `docs/design-specs/FOCUS_OIL_SPEC.md` |
+| PR9 — iOS Widgets | `docs/design-specs/IOS_WIDGETS_SPEC.md`, `docs/ai/WIDGET_INDEX.md` |
+| PR-ONBOARD-AB | `docs/design-specs/ONBOARDING_AB_SPEC.md` |
 | Any cubit change | `docs/ai/STATE_MANAGEMENT_INDEX.md` |
-| Any dark-mode work | `handoff_v2-2/THEME_DARK_SPEC.md` |
-| Any iPad layout | `handoff_v2-2/IPAD_OPTIMIZATION.md`, `IPAD_LAYER2_OWNERSHIP_MAP.md` |
-| Any typography | `handoff_v2-2/DESIGN_SYSTEM_GAP_VALIDATION.md` |
+| Any dark-mode work | `docs/design-specs/THEME_DARK_SPEC.md` |
+| Any iPad layout | `docs/design-specs/IPAD_OPTIMIZATION.md`, `IPAD_LAYER2_OWNERSHIP_MAP.md` |
+| Any typography | `docs/design-specs/DESIGN_SYSTEM_GAP_VALIDATION.md` |
 | Any data-flow | `docs/ai/DATA_FLOW_INDEX.md` |
 | Any Supabase | `docs/ai/SUPABASE_INDEX.md` |
-| Component additions | `handoff_v2-2/COMPONENT_SPECS.md` |
+| Component additions | `docs/design-specs/COMPONENT_SPECS.md` |
 
 ---
 
@@ -68,4 +68,4 @@ LOADS-AT:      Tier 0 (read by /drift-check)
 1. Never read all of `docs/progress/` on resume — only `CHECKPOINT.md`.
 2. Never load one feature's Tier-2 files while building another feature.
 3. Never trust a lower-tier "current state" over `CHECKPOINT.md`.
-4. Never read design specs from root copies — use `handoff_v2-2/` (Stage A current path).
+4. Never read design specs from root copies — use `docs/design-specs/` (repo-canonical mirror, Stage B2). External SOURCE lives in the Athar Design System workspace; do not reference it by path in repo files.
