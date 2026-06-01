@@ -13,18 +13,18 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-02 (Stage B2 — single design-spec mirror)  
-**Commit:** `0f9b55f` docs(restructure): B2 — single design-spec mirror  
-**Note:** B2 complete. 24 specs in docs/design-specs/ (canonical mirror). PRAYER_CARD_SPEC reconciled — v2.2 from designer is canonical; two stale copies archived. WIDGET_INDEX.md: prayer pushPrayerData + WidgetKit.reloadTimelines documented. Awaiting approval for B3.
+**Timestamp:** 2026-06-02 (Stage B3 — archive history)  
+**Commit:** pending  
+**Note:** B3 in progress. ~82 files archived across 5 buckets (pr-reports, change-logs, widget-phase, session-reports, phase0-audits). 2 deleted. 4 active docs relocated to docs/status/ and docs/ai/. Root contains only CLAUDE.md + README.md + 6 deliberately-kept verification files.
 
 ---
 
 ## CURRENT PR + PHASE
 
 **Active PR:** None — Stage B restructure in progress  
-**Last completed:** PR4b — Calendar Dual-Display (`65fc417`) ✅; B1 complete (`8874378`) ✅; B2 complete (`0f9b55f`) ✅  
-**Phase:** Stage B documentation restructure. B1 + B2 done; awaiting approval for B3.  
-**Next:** B3 approval (archive history), then PR8 (Focus Oil-Fill) or PR9 (iOS Widget Refresh) — see docs/status/ROADMAP.md.
+**Last completed:** PR4b — Calendar Dual-Display (`65fc417`) ✅; B1 (`8874378`) ✅; B2 (`0f9b55f`) ✅; B3 (pending commit) ✅  
+**Phase:** Stage B documentation restructure. B1 + B2 + B3 done; awaiting approval for B4.  
+**Next:** B4 approval (final verify), then PR8 (Focus Oil-Fill) or PR9 (iOS Widget Refresh) — see docs/status/ROADMAP.md.
 
 ---
 
@@ -87,8 +87,8 @@ LOADS-AT:      Tier 0
 
 ## NEXT ACTION
 
-**Stage B2 complete** (`0f9b55f`). design-specs mirror finalized; PRAYER_CARD v2.2 canonical.  
-**Awaiting approval for B3** — archive history cleanup. Do NOT begin B3 until user approves.  
+**Stage B3 complete** (commit pending). ~82 files archived; root clean.  
+**Awaiting approval for B4** — final verify pass. Do NOT begin B4 until user approves.  
 **Deferred QA sweep** runs at end of roadmap, after the last feature PR. No feature PR is gated. Nothing ships to users/TestFlight until sweep passes. Bucket: 5 items (see docs/status/MIGRATION_STATE.md).
 
 ---
