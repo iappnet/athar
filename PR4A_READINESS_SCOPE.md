@@ -233,6 +233,40 @@ The `DualCalendarWidget` uses `shrinkWrap: true` on its `GridView` — this coll
 
 ---
 
+## RULE 1 Application in PR4a
+
+**RULE 1 (locked 2026-06-01):** All layout branching must use `LayoutBuilder(constraints.maxWidth)` or `ShellBreakpoint.fromWidth()`. Never `ResponsiveHelper.isTablet()` for layout decisions.
+
+**Known violation in this file's scope:**
+
+`calendar_page.dart:53–56`:
+```dart
+// CURRENT — RULE 1 VIOLATION
+ConstrainedBox(constraints: BoxConstraints(
+  maxWidth: context.isTablet ? ResponsiveHelper.maxContentWidth : double.infinity,
+))
+
+// FIX (P0 — must be first change in PR4a)
+LayoutBuilder(builder: (context, constraints) {
+  final maxWidth = ShellBreakpoint.fromWidth(constraints.maxWidth).isTablet
+      ? 900.0 : double.infinity;
+  return ConstrainedBox(constraints: BoxConstraints(maxWidth: maxWidth), child: ...);
+})
+```
+
+**Cell aspect ratio — `dual_calendar_widget.dart:226–233`:** Current `childAspectRatio: 0.85` is hardcoded. RULE 1 fix (also P0):
+```dart
+LayoutBuilder(builder: (context, constraints) {
+  final cellWidth = (constraints.maxWidth - 32) / 7;
+  final bp = ShellBreakpoint.fromWidth(constraints.maxWidth);
+  final targetHeight = bp.isPhone ? 64.0 : 72.0;
+  return GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 7, childAspectRatio: cellWidth / targetHeight));
+})
+```
+
+---
+
 ## Risks
 
 ### Highest Visual Risk

@@ -221,7 +221,7 @@ PR-IPAD-LAYER3: standalone deferred sweep — not before all Layer 2 screens are
 
 | PR | First prerequisite | Layer 2 ownership |
 |----|-------------------|--------------------|
-| PR4a — Calendar visual refresh | `PR4A_READINESS_SCOPE.md` — READY | Calendar tablet layout → PR4b |
+| PR4a — Calendar visual refresh | **AUDIT IN PROGRESS** — `design-context/_audit_calendar.md` written; implementation NOT started; waiting for sign-off | Calendar tablet layout → PR4b |
 | PR4b — Calendar dual-display | PR4a + `DualDate` designer spec | Calendar tablet layout → here |
 | PR5 — Accessibility Settings | None | Settings two-pane → here |
 | PR6 — Stats redesign | Read `STATS_KPI_SPEC.md` | Stats 2/3-col grid → here |

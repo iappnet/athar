@@ -280,6 +280,15 @@ The app is functional and stable. PR1 (tokens), PR-THEME (theme wiring + font fa
 | Implementation token file | `lib/core/design_system/tokens/athar_colors.dart` |
 | Implementation typography file | `lib/core/design_system/tokens/athar_typography.dart` |
 
+### Locked Governance Rules
+
+| Rule | Locked | Scope |
+|------|--------|-------|
+| **RULE 1 — Window-based layout only.** All screen-level layout branching uses `LayoutBuilder(constraints.maxWidth)` or `ShellBreakpoint.fromWidth()`. **Never `ResponsiveHelper.isTablet()`** for layout decisions. Reason: AdaptiveShell is window-based; `ResponsiveHelper` is device-based (`shortestSide`); they disagree in Split View / Stage Manager. | 2026-06-01 | All PRs from PR4a onward |
+| **RULE 2 — Layer 2 umbrella tracker only.** `PR-IPAD-LAYER2` is a tracking label, not a mega-PR. Each screen ships its tablet layout in its owning feature PR. `PR-DASHBOARD-TABLET` is a placeholder that MUST be re-evaluated to fold into a future Dashboard redesign PR. No new standalone screen tablet PRs (Tasks/Habits/Spaces) without documented justification. | 2026-06-01 | PR-IPAD-LAYER2 tracking |
+
+---
+
 ### Current Accepted Risks
 
 | Risk | Accepted | Reason | Expires when |

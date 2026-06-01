@@ -21,6 +21,16 @@ Each screen's tablet layout ships inside that screen's feature PR.
 
 ---
 
+## RULE 2 — Standalone Tablet PRs (locked 2026-06-01)
+
+**PR-DASHBOARD-TABLET** is a placeholder standalone PR. It exists because Dashboard has no natural owning feature PR yet. **This PR MUST be re-evaluated for folding into a future Dashboard redesign PR once that owner exists.** It must not ship as a perpetually isolated tablet-only PR.
+
+**All other screen tablet layouts** (Tasks, Habits, Spaces) fold into their owning feature PRs. Do NOT create screen-specific standalone tablet PRs for these screens without documented justification approved in the roadmap.
+
+**Why:** Standalone tablet PRs create double-touch risk — the feature PR later must be merged cleanly with the tablet PR's changes, and divergence between phone and tablet implementations accumulates. Umbrella ownership prevents this.
+
+---
+
 ## Screen Ownership
 
 ### Dashboard

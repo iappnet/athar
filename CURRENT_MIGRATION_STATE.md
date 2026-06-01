@@ -130,6 +130,39 @@ _Note: PR-IPAD-LAYER2 and PR-IPAD-LAYER3 were identified by the 2026-06-01 PR2 s
 
 ---
 
+## Locked Governance Rules
+
+### RULE 1 — Window-Based Layout Only (locked 2026-06-01)
+
+Every screen-level layout decision uses `LayoutBuilder(constraints.maxWidth)` or `ShellBreakpoint.fromWidth()`.  
+**NEVER use `ResponsiveHelper.isTablet()` for layout branching.**
+
+**Why:** `AdaptiveShell` is window-based (LayoutBuilder); `ResponsiveHelper.isTablet()` is device-based (`MediaQuery.shortestSide >= 600`). In iPad Split View or Stage Manager narrow windows, a 600dp phone-width window can live on a tablet device — the two predicates disagree, producing a wrong layout. Window-width is the only reliable signal.
+
+**How to apply:** Before writing any `if (isTablet)` layout branch, replace with:
+```dart
+LayoutBuilder(builder: (context, constraints) {
+  final bp = ShellBreakpoint.fromWidth(constraints.maxWidth);
+  return bp.isTablet ? _buildTabletLayout() : _buildPhoneLayout();
+})
+```
+Known violation identified: `calendar_page.dart:53–56` uses `context.isTablet` — fix scheduled for PR4a.
+
+---
+
+### RULE 2 — Layer 2 Umbrella Tracker (locked 2026-06-01)
+
+`PR-IPAD-LAYER2` is a tracking label only — NOT a standalone mega-PR.  
+Each screen's tablet layout ships inside that screen's owning feature PR.
+
+**Specific rule for PR-DASHBOARD-TABLET:** This placeholder is acceptable because Dashboard has no natural owner PR yet. **It MUST be re-evaluated for folding into a future Dashboard redesign PR once that owner exists.** Do NOT allow it to ship as a perpetually standalone PR.
+
+**Standalone tablet PRs for Tasks/Habits/Spaces:** Do NOT create them without documented justification. Those screens fold their Layer 2 work into their owning feature PRs.
+
+See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
+
+---
+
 ## Open Items / Deferred Gates
 
 | ID | Item | Gate type |
