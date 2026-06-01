@@ -17,7 +17,8 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'core/design_system/themes/app_theme.dart';
+import 'core/design_system/themes/athar_light_theme.dart';
+import 'core/design_system/themes/athar_dark_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'features/home/presentation/pages/onboarding_page.dart';
 import 'features/home/presentation/pages/splash_page.dart';
@@ -168,8 +169,8 @@ class _AtharAppState extends State<AtharApp> {
             navigatorKey: DeepLinkService.navigatorKey,
             debugShowCheckedModeBanner: false,
             title: 'Athar | أثر',
-            theme: AppTheme.lightTheme,
-            darkTheme: AppTheme.darkTheme,
+            theme: AtharLightTheme.theme,
+            darkTheme: AtharDarkTheme.theme,
             themeMode: switch (themePreference) {
               ThemePreference.light  => ThemeMode.light,
               ThemePreference.dark   => ThemeMode.dark,

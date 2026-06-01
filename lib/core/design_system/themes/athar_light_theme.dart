@@ -77,7 +77,7 @@ class AtharLightTheme {
       // ─────────────────────────────────────────────────────────────
       // TYPOGRAPHY
       // ─────────────────────────────────────────────────────────────
-      fontFamily: AtharTypography.fontFamilyAr,
+      fontFamily: AtharTypography.fontFamilyAr, // String slot — fontFamilyFallback not applicable here
       textTheme: _buildTextTheme(colors),
 
       // ─────────────────────────────────────────────────────────────
@@ -96,6 +96,7 @@ class AtharLightTheme {
         titleTextStyle: AtharTypography.appBarTitle.copyWith(
           color: colors.textPrimary,
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
         systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(
           statusBarColor: Colors.transparent,
@@ -122,10 +123,12 @@ class AtharLightTheme {
         selectedLabelStyle: AtharTypography.labelSmall.copyWith(
           color: colors.primary,
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
         unselectedLabelStyle: AtharTypography.labelSmall.copyWith(
           color: colors.textTertiary,
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
         showSelectedLabels: true,
         showUnselectedLabels: true,
@@ -150,11 +153,13 @@ class AtharLightTheme {
             return AtharTypography.labelSmall.copyWith(
               color: colors.primary,
               fontFamily: AtharTypography.fontFamilyAr,
+              fontFamilyFallback: AtharTypography.fontFallback,
             );
           }
           return AtharTypography.labelSmall.copyWith(
             color: colors.textTertiary,
             fontFamily: AtharTypography.fontFamilyAr,
+            fontFamilyFallback: AtharTypography.fontFallback,
           );
         }),
       ),
@@ -190,6 +195,7 @@ class AtharLightTheme {
           shape: RoundedRectangleBorder(borderRadius: AtharRadii.button),
           textStyle: AtharTypography.button.copyWith(
             fontFamily: AtharTypography.fontFamilyAr,
+            fontFamilyFallback: AtharTypography.fontFallback,
           ),
         ),
       ),
@@ -208,6 +214,7 @@ class AtharLightTheme {
           shape: RoundedRectangleBorder(borderRadius: AtharRadii.button),
           textStyle: AtharTypography.button.copyWith(
             fontFamily: AtharTypography.fontFamilyAr,
+            fontFamilyFallback: AtharTypography.fontFallback,
           ),
         ),
       ),
@@ -225,6 +232,7 @@ class AtharLightTheme {
           shape: RoundedRectangleBorder(borderRadius: AtharRadii.button),
           textStyle: AtharTypography.button.copyWith(
             fontFamily: AtharTypography.fontFamilyAr,
+            fontFamilyFallback: AtharTypography.fontFallback,
           ),
         ),
       ),
@@ -241,6 +249,7 @@ class AtharLightTheme {
           shape: RoundedRectangleBorder(borderRadius: AtharRadii.button),
           textStyle: AtharTypography.button.copyWith(
             fontFamily: AtharTypography.fontFamilyAr,
+            fontFamilyFallback: AtharTypography.fontFallback,
           ),
         ),
       ),
@@ -307,22 +316,27 @@ class AtharLightTheme {
         labelStyle: AtharTypography.bodyMedium.copyWith(
           color: colors.textSecondary,
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
         floatingLabelStyle: AtharTypography.labelMedium.copyWith(
           color: colors.primary,
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
         hintStyle: AtharTypography.bodyMedium.copyWith(
           color: colors.textTertiary,
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
         errorStyle: AtharTypography.caption.copyWith(
           color: colors.error,
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
         helperStyle: AtharTypography.caption.copyWith(
           color: colors.textTertiary,
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
         prefixIconColor: colors.textSecondary,
         suffixIconColor: colors.textSecondary,
@@ -391,6 +405,7 @@ class AtharLightTheme {
         valueIndicatorTextStyle: AtharTypography.labelSmall.copyWith(
           color: colors.onPrimary,
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
       ),
 
@@ -413,10 +428,12 @@ class AtharLightTheme {
         labelStyle: AtharTypography.chip.copyWith(
           color: colors.textPrimary,
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
         secondaryLabelStyle: AtharTypography.chip.copyWith(
           color: colors.primary,
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
         padding: AtharSpacing.chip,
         shape: RoundedRectangleBorder(
@@ -438,10 +455,12 @@ class AtharLightTheme {
         titleTextStyle: AtharTypography.dialogTitle.copyWith(
           color: colors.textPrimary,
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
         contentTextStyle: AtharTypography.bodyMedium.copyWith(
           color: colors.textSecondary,
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
       ),
 
@@ -471,6 +490,7 @@ class AtharLightTheme {
         contentTextStyle: AtharTypography.bodyMedium.copyWith(
           color: Colors.white,
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
         shape: RoundedRectangleBorder(borderRadius: AtharRadii.snackbar),
         behavior: SnackBarBehavior.floating,
@@ -485,9 +505,11 @@ class AtharLightTheme {
         unselectedLabelColor: colors.textTertiary,
         labelStyle: AtharTypography.tab.copyWith(
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
         unselectedLabelStyle: AtharTypography.tab.copyWith(
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
           fontWeight: FontWeight.w400,
         ),
         indicator: UnderlineTabIndicator(
@@ -507,11 +529,11 @@ class AtharLightTheme {
         surfaceTintColor: Colors.transparent,
         shadowColor: colors.shadow,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(0),
-            bottomLeft: Radius.circular(0),
-            topRight: Radius.circular(16),
-            bottomRight: Radius.circular(16),
+          borderRadius: BorderRadiusDirectional.only(
+            topStart: Radius.circular(0),
+            bottomStart: Radius.circular(0),
+            topEnd: Radius.circular(16),
+            bottomEnd: Radius.circular(16),
           ),
         ),
       ),
@@ -527,10 +549,12 @@ class AtharLightTheme {
         textColor: colors.textPrimary,
         titleTextStyle: AtharTypography.listItemTitle.copyWith(
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
         subtitleTextStyle: AtharTypography.listItemSubtitle.copyWith(
           color: colors.textSecondary,
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
         shape: RoundedRectangleBorder(borderRadius: AtharRadii.radiusSm),
       ),
@@ -555,6 +579,7 @@ class AtharLightTheme {
         textStyle: AtharTypography.caption.copyWith(
           color: Colors.white,
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
         padding: AtharSpacing.tooltip,
         waitDuration: AtharAnimations.tooltipDelay,
@@ -572,6 +597,7 @@ class AtharLightTheme {
         textStyle: AtharTypography.bodyMedium.copyWith(
           color: colors.textPrimary,
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
       ),
 
@@ -582,6 +608,7 @@ class AtharLightTheme {
         textStyle: AtharTypography.bodyMedium.copyWith(
           color: colors.textPrimary,
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
@@ -603,6 +630,7 @@ class AtharLightTheme {
         headerForegroundColor: colors.onPrimary,
         dayStyle: AtharTypography.bodyMedium.copyWith(
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
         todayBorder: BorderSide(color: colors.primary),
         shape: RoundedRectangleBorder(borderRadius: AtharRadii.dialog),
@@ -630,6 +658,7 @@ class AtharLightTheme {
         textColor: colors.onError,
         textStyle: AtharTypography.badge.copyWith(
           fontFamily: AtharTypography.fontFamilyAr,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ),
       ),
 
@@ -668,66 +697,81 @@ class AtharLightTheme {
       displayLarge: AtharTypography.displayLarge.copyWith(
         color: colors.textPrimary,
         fontFamily: AtharTypography.fontFamilyAr,
+        fontFamilyFallback: AtharTypography.fontFallback,
       ),
       displayMedium: AtharTypography.displayMedium.copyWith(
         color: colors.textPrimary,
         fontFamily: AtharTypography.fontFamilyAr,
+        fontFamilyFallback: AtharTypography.fontFallback,
       ),
       displaySmall: AtharTypography.displaySmall.copyWith(
         color: colors.textPrimary,
         fontFamily: AtharTypography.fontFamilyAr,
+        fontFamilyFallback: AtharTypography.fontFallback,
       ),
       // Headline
       headlineLarge: AtharTypography.headlineLarge.copyWith(
         color: colors.textPrimary,
         fontFamily: AtharTypography.fontFamilyAr,
+        fontFamilyFallback: AtharTypography.fontFallback,
       ),
       headlineMedium: AtharTypography.headlineMedium.copyWith(
         color: colors.textPrimary,
         fontFamily: AtharTypography.fontFamilyAr,
+        fontFamilyFallback: AtharTypography.fontFallback,
       ),
       headlineSmall: AtharTypography.headlineSmall.copyWith(
         color: colors.textPrimary,
         fontFamily: AtharTypography.fontFamilyAr,
+        fontFamilyFallback: AtharTypography.fontFallback,
       ),
       // Title
       titleLarge: AtharTypography.titleLarge.copyWith(
         color: colors.textPrimary,
         fontFamily: AtharTypography.fontFamilyAr,
+        fontFamilyFallback: AtharTypography.fontFallback,
       ),
       titleMedium: AtharTypography.titleMedium.copyWith(
         color: colors.textPrimary,
         fontFamily: AtharTypography.fontFamilyAr,
+        fontFamilyFallback: AtharTypography.fontFallback,
       ),
       titleSmall: AtharTypography.titleSmall.copyWith(
         color: colors.textPrimary,
         fontFamily: AtharTypography.fontFamilyAr,
+        fontFamilyFallback: AtharTypography.fontFallback,
       ),
       // Body
       bodyLarge: AtharTypography.bodyLarge.copyWith(
         color: colors.textPrimary,
         fontFamily: AtharTypography.fontFamilyAr,
+        fontFamilyFallback: AtharTypography.fontFallback,
       ),
       bodyMedium: AtharTypography.bodyMedium.copyWith(
         color: colors.textPrimary,
         fontFamily: AtharTypography.fontFamilyAr,
+        fontFamilyFallback: AtharTypography.fontFallback,
       ),
       bodySmall: AtharTypography.bodySmall.copyWith(
         color: colors.textSecondary,
         fontFamily: AtharTypography.fontFamilyAr,
+        fontFamilyFallback: AtharTypography.fontFallback,
       ),
       // Label
       labelLarge: AtharTypography.labelLarge.copyWith(
         color: colors.textPrimary,
         fontFamily: AtharTypography.fontFamilyAr,
+        fontFamilyFallback: AtharTypography.fontFallback,
       ),
       labelMedium: AtharTypography.labelMedium.copyWith(
         color: colors.textSecondary,
         fontFamily: AtharTypography.fontFamilyAr,
+        fontFamilyFallback: AtharTypography.fontFallback,
       ),
       labelSmall: AtharTypography.labelSmall.copyWith(
         color: colors.textTertiary,
         fontFamily: AtharTypography.fontFamilyAr,
+        fontFamilyFallback: AtharTypography.fontFallback,
       ),
     );
   }
