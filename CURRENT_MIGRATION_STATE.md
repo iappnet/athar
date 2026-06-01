@@ -89,15 +89,22 @@ Uncommitted governance edits (this audit session):
 
 **PR4a — Calendar Visual Refresh**
 
+AdaptiveShell readiness verified: `ADAPTIVESHELL_FOUNDATION_AUDIT.md` (2026-06-01).  
+PR4a scope verified: `PR4A_READINESS_SCOPE.md` (2026-06-01).  
+Layer 2 ownership mapped: `IPAD_LAYER2_OWNERSHIP_MAP.md` (2026-06-01).  
+Layer 3 deferred: `IPAD_LAYER3_DEFERRED_AFFORDANCES.md` (2026-06-01).
+
+**PR4a is cleared to start.** Scope = token migration + visual polish of existing architecture. No DualDate/CalendarCell/DualMonthSwitcher in PR4a.
+
 Prerequisites before implementation begins:
-1. Read `CALENDAR_FOCUS_REDESIGN.md` in full (not yet read)
-2. Write audit doc: `design-context/_audit_calendar.md`
+1. `PR4A_READINESS_SCOPE.md` reviewed ✅ (this session)
+2. Write pre-implementation audit: `design-context/_audit_calendar.md`
 3. Wait for audit sign-off before touching any Dart
 
-Ready alternatives (no blocking prerequisites):
-- PR5 — Accessibility Settings
-- PR6 — Stats redesign (read `STATS_KPI_SPEC.md` first)
-- PR8 — Focus oil-fill (read `FOCUS_OIL_SPEC.md` first)
+Ready alternatives:
+- PR5 — Accessibility Settings + Settings two-pane tablet layout
+- PR6 — Stats redesign + Stats 2/3-col tablet layout (read `STATS_KPI_SPEC.md` first)
+- PR8 — Focus oil-fill + 720pt cap (read `FOCUS_OIL_SPEC.md` first)
 - PR9 — iOS widget visual refresh
 
 ---
