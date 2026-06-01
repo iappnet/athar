@@ -2,7 +2,7 @@
 CANONICAL-FOR: iOS native widget architecture, WidgetKeys, App Group, data push flow
 OWNER:         Claude Code
 PRECEDENCE:    5 (Tier 2 — load for PR9 / any widget change)
-LAST-UPDATED:  2026-06-01 · Stage A
+LAST-UPDATED:  2026-06-02 · B2 — prayer pushPrayerData + WidgetKit.reloadTimelines added
 LOADS-AT:      Tier 2 (PR9 / any iOS widget change)
 -->
 
@@ -118,6 +118,19 @@ Flutter consumption: `WidgetDataService.consumePendingTaskActions()` / `consumeP
 ---
 
 ## Flutter Side: Data Push
+
+`WidgetDataService.pushPrayerData(...)`:
+- Writes all 16 UserDefaults keys (v1–v6 in one `Future.wait`):
+  `nextPrayerNameAr`, `nextPrayerNameEn`, `nextPrayerTime` (ISO-8601), `cityName`,
+  `nextPrayerType` (PrayerType.name), `nextPrayerTimestamp` (epoch ms Double),
+  `appLocale`, `lastUpdatedAt`, `widgetDataVersion` (Int = 6),
+  `remainingSeconds` (Int — `time.difference(now).inSeconds`; 0 if past),
+  `currentDateAr`, `currentDateEn`,
+  `prevPrayerTimestamp` (epoch ms Double; 0.0 if null),
+  `isDuhaTime` / `isQiyamTime` (Int 0/1 — nafl window flags),
+  `prevPrayerNameAr`, `prevPrayerNameEn`
+- Triggers: `HomeWidget.updateWidget(iOSName: 'AtharPrayerWidget', qualifiedAndroidName: '...PrayerWidgetReceiver')` → iOS: `WidgetCenter.shared.reloadTimelines(ofKind: "AtharPrayerWidget")`
+- Also called from `pushLocaleOnly()` path: `_updatePrayerWidget()` + task + habit widgets all reload together
 
 `WidgetDataService.pushTaskData(allTasks)`:
 - Filters: `_sameDay(t.date, today)`, `t.deletedAt == null`, `!t.isSampleData`
