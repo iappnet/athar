@@ -41,7 +41,7 @@ CANONICAL-SINCE: 2026-06-01
 | **PR4b** — Calendar Dual-Display | `65fc417` | (in branch) | ✅ 12/12 spec items PASS · AR visual QA deferred to final sweep | 2026-06-01 |
 | **PR7** — Athkar v1 | `0b8fe34` | (in branch) | ✅ `flutter analyze` 0 new issues · 5 conformance fixes applied · AR visual QA deferred to final sweep | 2026-06-02 |
 | **PR8** — Focus Oil-Fill | `2b10844` | (in branch) | ✅ `flutter analyze` 0 errors · 4 conformance deviations fixed · device QA deferred | 2026-06-02 |
-| **PR9** — iOS Widget Visual Refresh | (pending SHA) | (in branch) | ✅ `flutter analyze` 0 errors · Prayer+Habit+Task v2 · P9-A/B/C fixes · device QA deferred | 2026-06-02 |
+| **PR9** — iOS Widget Visual Refresh | `4718207` | (in branch) | ✅ `flutter analyze` 0 errors · Prayer+Habit+Task v2 · P9-A/B/C fixes · device QA deferred | 2026-06-02 |
 
 ---
 

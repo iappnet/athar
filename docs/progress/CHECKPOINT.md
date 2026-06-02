@@ -13,8 +13,8 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-02 (PR9 committed — P9-A/B/C fixes applied)  
-**Commit:** (PR9 — SHA pending push)  
+**Timestamp:** 2026-06-02 (PR9 committed + pushed)  
+**Commit:** `4718207` feat(PR9): iOS widget v2 refresh  
 **Note:** PR9 complete. P9-A sunrise/sunset push implemented. P9-B isPrayerEnabled wired at call site. P9-C: widget stays 40 min; mismatch vs dynamic in-app window logged in Swift comment (designer alignment deferred). `flutter analyze` 0 errors, 2 pre-existing warnings.
 
 ---
@@ -119,6 +119,6 @@ LOADS-AT:      Tier 0
 
 ## WORKING TREE STATE
 
-**Status:** PR9 committed + pushed  
+**Status:** Clean — PR9 committed + pushed  
 **flutter analyze:** 2 pre-existing warnings (task_page.dart, project_details_page.dart) — 0 errors  
-**Last commit:** PR9 (SHA in MIGRATION_STATE.md completed PRs table)
+**Last commit:** `4718207` feat(PR9): iOS widget v2 refresh
