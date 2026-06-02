@@ -40,6 +40,7 @@ CANONICAL-SINCE: 2026-06-01
 | **PR6** — Stats Redesign | `2a6a46a` | (in branch) | ✅ `flutter analyze` 0 issues · AR visual QA deferred to final sweep | 2026-06-01 |
 | **PR4b** — Calendar Dual-Display | `65fc417` | (in branch) | ✅ 12/12 spec items PASS · AR visual QA deferred to final sweep | 2026-06-01 |
 | **PR7** — Athkar v1 | `0b8fe34` | (in branch) | ✅ `flutter analyze` 0 new issues · 5 conformance fixes applied · AR visual QA deferred to final sweep | 2026-06-02 |
+| **PR8** — Focus Oil-Fill | `2b10844` | (in branch) | ✅ `flutter analyze` 0 errors · 4 conformance deviations fixed · device QA deferred | 2026-06-02 |
 
 ---
 
@@ -83,17 +84,17 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Active PR
 
-**None.** PR7 complete (`0b8fe34`). See `docs/status/ROADMAP.md` for full status.
+**None.** PR8 complete (`2b10844`). See `docs/status/ROADMAP.md` for full status.
 
 ---
 
 ## Current Working Tree State
 
 ```
-flutter analyze → 2 pre-existing issues (project_details_page.dart, task_page.dart — unrelated to PR7)
+flutter analyze → 2 pre-existing issues (project_details_page.dart, task_page.dart — unrelated to PR8)
 ```
 
-All changes committed and pushed. Last commit: `0b8fe34` feat(PR7): Athkar v1.
+All changes committed and pushed. Last commit: `2b10844` feat(PR8): Focus oil-fill.
 
 ---
 
@@ -152,7 +153,7 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 | PR4a-G1 | iPhone SE calendar overflow (6-row month) | PR4a | Unverified — see below |
 | PR4a-G2 | Today-state dark alpha legibility | PR4a | Unverified — see below |
 | DEVICE-1 | Forest-dark surfaces, Cairo fallback, RTL drawer, countdown tick (general device pass) | PR-THEME/PR2 | Unverified |
-| PR8-perf | Oil sim sustained frame rate on iPhone 12 — if <55fps under intense/high-fill, escalate to flutter_shaders SDF | PR8 | Unverified |
+| PR8-perf | PR8 final-sweep (physical device): 5 visual states + gyro slosh + sudden-flip splash + 60fps iPhone 12 tripwire — highest priority | PR8 | Unverified |
 
 ---
 

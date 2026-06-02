@@ -56,12 +56,12 @@ CANONICAL-SINCE: 2026-06-01
 | 8 | **PR5** | Settings: Accessibility section (Reduce Motion, Gyroscope, Eastern Numerals) | ✅ **Complete 2026-06-01** | `6154565` | — |
 | 9 | **PR6** | Stats redesign (`STATS_KPI_SPEC.md`) | ✅ **Complete 2026-06-01** | `2a6a46a` | — |
 | 10 | **PR7** | Athkar feature net-new (curated sets v1; designer review before screens) | ✅ **Complete 2026-06-02** | `0b8fe34` | — |
-| 11 | **PR8** | Focus screen oil-fill (`FOCUS_OIL_SPEC.md`; procedural colour carve-out) | 🔲 Not started | — | PR2 |
+| 11 | **PR8** | Focus screen oil-fill (`FOCUS_OIL_SPEC.md`; procedural colour carve-out) | ✅ **Complete 2026-06-02** | `2b10844` | — |
 | 12 | **PR9** | iOS widgets visual refresh (infra complete; visuals only) | 🔲 Not started | — | PR2 |
 | 13 | **PR-ONBOARD-AB** | Four-variant onboarding A/B/C/D; Variant A must not regress | 🔲 Not started | — | PR2 + designer |
 | 14 | **PR-CLEANUP** | Hardcoded colour sweep (files untouched by other PRs) | 🔲 Not started | — | All others |
 
-**Total PRs:** 14 (+ PR-FONT-FALLBACK as 2b) · **Complete:** 10 (PR1, PR-THEME arc incl PR-FONT-FALLBACK, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7) · **Ready:** 2 (PR8, PR9 — unblocked) · **Blocked:** 3 (PR-ONBOARD-AB needs designer spec; PR-ADHAN needs audio asset; PR-CLEANUP needs all others first)
+**Total PRs:** 14 (+ PR-FONT-FALLBACK as 2b) · **Complete:** 11 (PR1, PR-THEME arc incl PR-FONT-FALLBACK, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8) · **Ready:** 1 (PR9 — unblocked) · **Blocked:** 3 (PR-ONBOARD-AB needs designer spec; PR-ADHAN needs audio asset; PR-CLEANUP needs all others first)
 
 ---
 
@@ -69,7 +69,7 @@ CANONICAL-SINCE: 2026-06-01
 
 | Dimension | Complete | Total | % |
 |-----------|---------|-------|---|
-| v2 Design System PRs | 9 logical (PR1, PR-THEME arc, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7) | 14 | **~64%** |
+| v2 Design System PRs | 10 logical (PR1, PR-THEME arc, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8) | 14 | **~71%** |
 | Design system token migration | ✅ Foundation done; design system themes now live in app | Component + screen migration pending | ~20% |
 | Typography migration | Tokens + 88 theme fallbacks + 38 base styles — all correct | Component `.arabic`/`.english` callsites still use Cairo in some files | ~25% |
 | Dark-mode migration | Tokens ✅ + ThemeMode ✅ + AtharDarkTheme now wired ✅ | Component-level color migration pending (PR5+) | ~70% |
@@ -105,7 +105,7 @@ CANONICAL-SINCE: 2026-06-01
 | Risk | Notes | When to address |
 |------|-------|----------------|
 | Prayer card gradient in dark mode | `prayerCardGradient` is `[0xFF1E293B, 0xFF0F172A]` — navy, not green. Intentional, but hasn't been reviewed against the new dark background (`0xFF0E1714`). | PR3 (prayer card refresh) |
-| `oil_animation.dart` / `fluid_engine.dart` procedural colours | Not yet migrated to tokens. Designer review required before migration. | PR8 |
+| ~~`oil_animation.dart` / `fluid_engine.dart` procedural colours~~ | **Closed** — both files deleted in PR8 (`2b10844`); replaced by procedural `oil_simulator.dart` with §7 file-private consts | ~~PR8~~ |
 | Athkar widget rows are read-only | No `Button(intent:...)` in Athkar rows — by design. Verify this is still the correct decision when PR7 ships. | PR7 |
 | Android widgets | 4 widget types exist; no v2 visual refresh planned yet. | After PR9 |
 
@@ -117,33 +117,33 @@ CANONICAL-SINCE: 2026-06-01
 |----|------|--------------|
 | ~~**PR4b**~~ | ~~High~~ | ✅ **Complete** (`65fc417`) — `DualDate` VO, `CalendarMonthCubit`, 5-source activity dots, Hijri boundary labels shipped. |
 | **PR7** | High | Athkar is a net-new feature. Wrong scoping could accidentally merge Athkar into the habits domain. Must gate on designer spec + `isAthkarEnabled` flag. |
-| **PR8** | Medium | `oil_animation.dart` + `fluid_engine.dart` use procedural colours. Migrating to tokens without designer review could change the animation feel. |
+| ~~**PR8**~~ | ~~Medium~~ | ✅ **Complete** (`2b10844`) — `oil_animation.dart` + `fluid_engine.dart` deleted; replaced by `oil_simulator.dart` + `oil_background.dart` with §7 file-private consts. Designer-review gate cleared. |
 | **PR-ONBOARD-AB** | Medium | Four-variant A/B/C/D onboarding requires strict non-regression on Variant A until the experiment ships. |
 
 ---
 
 ## Recommended Next PR
 
-**PR4b ✅ complete (`65fc417`).** Deferred QA sweep runs at end of roadmap (after last feature PR).
+**PR8 ✅ complete (`2b10844`).** Deferred QA sweep runs at end of roadmap (after last feature PR).
 
-**Ready to start (unblocked by PR2 ✅, PR4b ✅, PR5+PR6 ✅):**
+**Ready to start (unblocked by PR2 ✅, PR4b ✅, PR5+PR6 ✅, PR8 ✅):**
 
 | PR | Entry requirement | Risk |
 |----|-----------------|------|
-| **PR8** — Focus Oil-Fill | Read `FOCUS_OIL_SPEC.md` first; designer review for procedural colours | Medium |
-| **PR9** — iOS Widget Visual Refresh | None | Low-Medium |
+| **PR9** — iOS Widget Visual Refresh | Read `docs/design-specs/IOS_WIDGETS_SPEC.md` + `docs/ai/WIDGET_INDEX.md`; audit in `design-context/_audit_widgets.md` before any Swift/Dart | Low-Medium |
 
-**Lowest-risk next:** PR9 (widget infra stable, no designer spec needed).  
+**Next:** PR9 (widget infra stable; audit before any Dart).  
 See `docs/status/NEXT_STEPS.md` for full next-step guidance.
 
 ---
 
 ## Highest-Risk Remaining Phase
 
-**PR8 — Focus Oil-Fill.**
+**PR9 — iOS Widget Visual Refresh.**
 
-Procedural colours in `oil_animation.dart` / `fluid_engine.dart` require designer review before token migration — wrong migration could alter animation feel.
+Widget visual refresh requires audit before any Swift/Dart. Any Swift change requires physical device validation.
 
+~~**PR8 — complete** (`2b10844`). Focus oil-fill: procedural fluid sim, 4-band intensity tiers, gyro slosh, impact bubbles. `oil_animation.dart` + `fluid_engine.dart` deleted.~~  
 ~~**PR7 — complete** (`0b8fe34`). AthkarSetScreen, DhikrReaderScreen (focus+list), Dashboard card, DhikrComplete chokepoint, Settings reminders, 4 Athkar category tokens.~~  
 ~~**PR4b — complete** (`65fc417`). DualDate VO, CalendarMonthCubit, 5-source activity dots, Hijri boundary labels.~~
 
@@ -164,7 +164,7 @@ Procedural colours in `oil_animation.dart` / `fluid_engine.dart` require designe
 | `docs/design-specs/INVESTIGATION_REPORT.md` | Full codebase investigation | ✅ Read (2026-05-09) — PR2 readiness closure |
 | `docs/design-specs/REDESIGN_AUDIT.md` | Component audit | ✅ Read (2026-05-09) — PR2 readiness closure |
 | `CALENDAR_FOCUS_REDESIGN.md` | Calendar dual-display spec (root copy) | ✅ Read — PR4b complete |
-| `docs/design-specs/FOCUS_OIL_SPEC.md` | Focus oil-fill animation spec | ❌ Not read — required before PR8 |
+| `docs/design-specs/FOCUS_OIL_SPEC.md` | Focus oil-fill animation spec | ✅ Read — PR8 complete (`2b10844`) |
 | `docs/design-specs/IPAD_OPTIMIZATION.md` | iPad breakpoints | ✅ Read (2026-05-09) — PR2 readiness closure |
 | `docs/design-specs/ONBOARDING_AB_SPEC.md` | Onboarding A/B variants | ❌ Not read — required before PR-ONBOARD-AB |
 
