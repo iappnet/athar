@@ -15,7 +15,7 @@ CANONICAL-SINCE: 2026-06-01
 > **SINGLE SOURCE OF TRUTH** — roadmap + % live here ONLY. Other docs must not restate these numbers.
 
 **Last updated:** 2026-06-02
-**Updated by:** PR-ONBOARD-AB-UI complete (729c23d) + drift-check fixes
+**Updated by:** PR-DS-ATOMS complete (028f99f) — DS atoms/molecules context.colors + Calibri + RTL
 
 **Branch strategy:** `docs/status/MIGRATION_BRANCH_STRATEGY.md`  
 **Canonical handoff package:** `docs/design-specs/` (B2 mirror, read-only)  
@@ -73,7 +73,7 @@ CANONICAL-SINCE: 2026-06-01
 
 | # | PR | Name | Status | Blocker |
 | --- | ---- | ----- | -------- | --------- |
-| 15 | **PR-DS-ATOMS** | App bar + legacy design-system atoms — cross-cutting | 🔲 Not started | — |
+| 15 | **PR-DS-ATOMS** | App bar + legacy design-system atoms — cross-cutting | ✅ **Complete 2026-06-02** · `028f99f` | — |
 | 16 | **PR-TASK-REFRESH** | Task feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
 | 17 | **PR-HABITS-REFRESH** | Habits feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
 | 18 | **PR-HEALTH-REFRESH** | Health feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
@@ -144,16 +144,28 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Recommended Next PR
 
-**PR-ONBOARD-AB ✅ complete.** INFRA `1f868f9` · UI `729c23d`. Deferred QA sweep (ONBOARD-sweep) runs at end of roadmap.
+**PR-DS-ATOMS ✅ complete.** `028f99f` — context.colors + Calibri + RTL on all 9 DS atoms/molecules. Canonical migration pattern established for remaining 7 UI refresh PRs.
 
-**Remaining:**
+**Remaining (feature track):**
 
 | PR | Status | Blocker |
 |----|--------|---------|
 | **PR-ADHAN** | Not started | Audio asset delivery from designer (B4 open) |
 | **PR-CLEANUP** | Not started | Must run after all other PRs complete |
 
-**Next:** B4 audio asset delivery from designer. See `docs/status/NEXT_STEPS.md` for next-arc guidance.
+**Remaining (UI coverage refresh):**
+
+| PR | Status | Blocker |
+|----|--------|---------|
+| **PR-TASK-REFRESH** | Not started | — (PR-DS-ATOMS ✅ done) |
+| **PR-HABITS-REFRESH** | Not started | — |
+| **PR-HEALTH-REFRESH** | Not started | — |
+| **PR-SPACE-REFRESH** | Not started | — |
+| **PR-SETTINGS-REFRESH** | Not started | — |
+| **PR-PRAYER-DETAILS** | Not started | — |
+| **PR-SPLASH-ONBOARD-A** | Not started | — |
+
+**Next:** PR-TASK-REFRESH (PR-DS-ATOMS unblocked all 7). See `docs/status/NEXT_STEPS.md` for next-arc guidance.
 
 ---
 

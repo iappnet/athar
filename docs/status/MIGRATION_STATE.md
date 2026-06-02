@@ -87,7 +87,7 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Active PR
 
-**PR-ONBOARD-AB** — ✅ Complete (2026-06-02). INFRA `1f868f9` · UI `729c23d`. Both halves shipped. Deferred QA bucket items: OPS-1 (SQL deploy) + ONBOARD-sweep (device pass). Next: PR-ADHAN (blocked on B4 audio asset) or PR-DS-ATOMS (UI coverage refresh arc).
+**PR-DS-ATOMS** — ✅ Complete (2026-06-02). `028f99f` — context.colors + Calibri + RTL on all 9 DS atoms/molecules; canonical migration pattern. Next: PR-TASK-REFRESH (first of 7 UI coverage refresh PRs now unblocked).
 
 ---
 
@@ -95,7 +95,7 @@ CANONICAL-SINCE: 2026-06-01
 
 ```
 flutter analyze → 2 pre-existing issues (project_details_page.dart, task_page.dart — pre-existing)
-PR-ONBOARD-AB complete. Last commit: f439c29 (governance drift-check fixes). See CHECKPOINT.md for full state.
+PR-DS-ATOMS complete. Last commit: 028f99f. See CHECKPOINT.md for full state.
 ```
 
 ---

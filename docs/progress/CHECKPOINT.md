@@ -13,19 +13,35 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-02 (DS Quick Wins + governance · `2f617cb`)
-**Commit:** `2f617cb` refactor(ds): athkar semantic consts in AtharColors + Calibri on athar_app_bar
-**Prior:** `9a2a851` docs(governance): record UI-coverage finding + 8 refresh PRs + dark-mode ship gate (REL-1)
-**Note:** PR-ONBOARD-AB complete. Governance: REL-1 blocker + 8 UI refresh PRs recorded. DS Quick Wins shipped. /drift-check PASS.
+**Timestamp:** 2026-06-02 (PR-DS-ATOMS · `028f99f`)
+**Commit:** `028f99f` refactor(PR-DS-ATOMS): migrate DS atoms/molecules to context.colors + Calibri + RTL
+**Prior:** `2f617cb` refactor(ds): athkar semantic consts in AtharColors + Calibri on athar_app_bar
+**Note:** PR-DS-ATOMS complete. 9 files migrated. Canonical pattern established. /drift-check PASS.
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** PR-ONBOARD-AB-UI ✅ COMPLETE  
-**Last committed:** PR-ONBOARD-AB-UI · `729c23d`  
-**Phase:** Complete. /drift-check PASS. Governance fixes pushed (`f439c29`).  
-**Next:** PR-ADHAN (blocked on B4 audio asset) or next arc per ROADMAP.
+**Active PR:** PR-DS-ATOMS ✅ COMPLETE  
+**Last committed:** PR-DS-ATOMS · `028f99f`  
+**Phase:** Complete. /drift-check PASS. Pushed to remote.  
+**Next:** PR-TASK-REFRESH (PR-DS-ATOMS unblocked all 7 UI coverage refresh PRs).
+
+---
+
+## DONE — PR-DS-ATOMS IMPLEMENTATION
+
+- ✅ `lib/core/design_system/atoms/buttons/app_button.dart` — 3 semantic hex consts removed; danger/success/warning → colorScheme.error/colors.success/warning; Calibri on button + FAB label; 706-line commented block deleted; rename TODO added
+- ✅ `lib/core/design_system/molecules/bars/filter_bar.dart` — RTL: EdgeInsets.only(left)→EdgeInsetsDirectional.only(start); Calibri on labelStyle; commented block deleted
+- ✅ `lib/core/design_system/molecules/board/kanban_board.dart` — Colors.blueAccent→colors.info; Color(0xFF00B894)→colors.success; Calibri on 3 TextStyles; commented block deleted
+- ✅ `lib/core/design_system/molecules/headers/page_header_delegate.dart` — Calibri on dateStr (Amiri on quote preserved intentionally); commented block deleted
+- ✅ `lib/core/design_system/molecules/pickers/athar_date_picker.dart` — Calibri on 4 TextStyles; commented block deleted
+- ✅ `lib/core/design_system/molecules/pickers/reminder_picker_widget.dart` — Calibri on 3 TextStyles; commented block deleted
+- ✅ `lib/core/design_system/molecules/strips/calendar_strip.dart` — Calibri on 2 TextStyles; commented block deleted
+- ✅ `lib/core/design_system/molecules/tiles/minimal_habit_tile.dart` — Colors.blueAccent→colors.info; Color(0xFF00B894)×2→colors.success; Colors.orange×3→colors.warning; 4 RTL fixes (EdgeInsetsDirectional + AlignmentDirectional); Calibri on 2 TextStyles; commented block deleted
+- ✅ `lib/core/design_system/molecules/tiles/unified_timeline_tile.dart` — Colors.orange(medicine)→colors.warning; AlignmentDirectional.centerStart; EdgeInsetsDirectional.only(start); Border(right)→BorderDirectional(end); Calibri on 2 TextStyles; commented block deleted
+- ✅ `flutter analyze` — 0 errors (2 pre-existing warnings)
+- ✅ COMMITTED `028f99f` + pushed
 
 ---
 
@@ -161,8 +177,8 @@ LOADS-AT:      Tier 0
 
 ## NEXT ACTION
 
-**PR-ONBOARD-AB-INFRA complete.** Next options:
-- **PR-ONBOARD-AB-UI** — variant pages + ARB; needs OQ1 ruling (module toggle backing fields) before step 02 can be built
+**PR-DS-ATOMS complete.** All 7 UI coverage refresh PRs are now unblocked. Next:
+- **PR-TASK-REFRESH** — Task feature UI DS refresh (follow app_button canonical recipe)
 - **PR-ADHAN** — blocked on B4 (audio asset from designer)
 
 **OPS-1 reminder:** `supabase/migrations/20260602_onboarding_events.sql` must be applied to live Supabase project before A/B test goes live. Until then, analytics inserts no-op silently.
