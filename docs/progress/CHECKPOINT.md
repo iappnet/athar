@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-02 · PR9 complete + pushed · 4718207
+LAST-UPDATED:  2026-06-02 · P9-C fix + spec corrected · 0247c2a
 LOADS-AT:      Tier 0
 -->
 
@@ -13,9 +13,9 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-02 (PR9 committed + pushed)  
-**Commit:** `4718207` feat(PR9): iOS widget v2 refresh  
-**Note:** PR9 complete. P9-A sunrise/sunset push implemented. P9-B isPrayerEnabled wired at call site. P9-C: widget stays 40 min; mismatch vs dynamic in-app window logged in Swift comment (designer alignment deferred). `flutter analyze` 0 errors, 2 pre-existing warnings.
+**Timestamp:** 2026-06-02 (P9-C resolved — dynamic window, spec corrected)  
+**Commit:** `0247c2a` fix(PR9): widget post-prayer window matches in-app dynamic formula  
+**Note:** P9-C fully resolved. Widget now uses `round(0.3 × minutesBetween) clamp(15,45)` + Fajr=40/Maghrib=20 overrides — exact parity with `prayer_timer_service.dart`. PRAYER_CARD_SPEC §4/§10/§11/§12 + IOS_WIDGETS_SPEC §1e corrected from flat 40 min to dynamic formula. `flutter analyze` 0 errors, 2 pre-existing warnings.
 
 ---
 
@@ -61,7 +61,7 @@ LOADS-AT:      Tier 0
 - ✅ `ios/AtharHabitWidget/AtharHabitWidget.swift` — forest v2 palette, Calibri, ProgressRingView (AtharColors.success), 7-day history grid, medium/large/small all refreshed
 - ✅ `ios/AtharTaskWidget/AtharTaskWidget.swift` — forest v2 gradient + Calibri tokens (OQ8 token-only scope)
 - ✅ `lib/features/prayer/presentation/cubit/prayer_cubit.dart` — P9-B isPrayerEnabled wired; P9-A sunrise/sunset extracted + pushed
-- ✅ P9-C: widget 40-min window vs. dynamic in-app window documented in Swift comment; deferred to designer
+- ✅ P9-C: RESOLVED — widget adopts dynamic formula (`round(0.3×interval) clamp(15,45)`, Fajr=40/Maghrib=20 overrides); spec corrected in PRAYER_CARD_SPEC + IOS_WIDGETS_SPEC (`0247c2a`)
 - ✅ `flutter analyze` 0 errors (2 pre-existing)
 - ✅ PR9 committed + pushed; deferred QA bucket updated (7/10)
 
@@ -121,4 +121,4 @@ LOADS-AT:      Tier 0
 
 **Status:** Clean — PR9 committed + pushed  
 **flutter analyze:** 2 pre-existing warnings (task_page.dart, project_details_page.dart) — 0 errors  
-**Last commit:** `4718207` feat(PR9): iOS widget v2 refresh
+**Last commit:** `0247c2a` fix(PR9): widget post-prayer window matches in-app dynamic formula
