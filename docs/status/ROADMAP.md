@@ -14,8 +14,8 @@ CANONICAL-SINCE: 2026-06-01
 >
 > **SINGLE SOURCE OF TRUTH** — roadmap + % live here ONLY. Other docs must not restate these numbers.
 
-**Last updated:** 2026-06-01
-**Updated by:** PR4b complete (65fc417) + drift-check fix
+**Last updated:** 2026-06-02
+**Updated by:** PR9 complete (4718207) + drift-check fixes
 
 **Branch strategy:** `docs/status/MIGRATION_BRANCH_STRATEGY.md`  
 **Canonical handoff package:** `docs/design-specs/` (B2 mirror, read-only)  
@@ -61,7 +61,7 @@ CANONICAL-SINCE: 2026-06-01
 | 13 | **PR-ONBOARD-AB** | Four-variant onboarding A/B/C/D; Variant A must not regress | 🔲 Not started | — | PR2 + designer |
 | 14 | **PR-CLEANUP** | Hardcoded colour sweep (files untouched by other PRs) | 🔲 Not started | — | All others |
 
-**Total PRs:** 14 (+ PR-FONT-FALLBACK as 2b) · **Complete:** 12 (PR1, PR-THEME arc incl PR-FONT-FALLBACK, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8, PR9) · **Blocked:** 3 (PR-ONBOARD-AB needs designer spec; PR-ADHAN needs audio asset; PR-CLEANUP needs all others first)
+**Total PRs:** 14 (+ PR-FONT-FALLBACK as 2b) · **Complete:** 11 logical (PR1, PR-THEME arc incl PR-FONT-FALLBACK, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8, PR9) · **Blocked:** 3 (PR-ONBOARD-AB needs designer spec; PR-ADHAN needs audio asset; PR-CLEANUP needs all others first)
 
 ---
 
@@ -124,25 +124,25 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Recommended Next PR
 
-**PR8 ✅ complete (`2b10844`).** Deferred QA sweep runs at end of roadmap (after last feature PR).
+**PR9 ✅ complete (`4718207`).** Deferred QA sweep runs at end of roadmap (after last feature PR).
 
-**Ready to start (unblocked by PR2 ✅, PR4b ✅, PR5+PR6 ✅, PR8 ✅):**
+**All remaining PRs are blocked:**
 
-| PR | Entry requirement | Risk |
-|----|-----------------|------|
-| **PR9** — iOS Widget Visual Refresh | Read `docs/design-specs/IOS_WIDGETS_SPEC.md` + `docs/ai/WIDGET_INDEX.md`; audit in `design-context/_audit_widgets.md` before any Swift/Dart | Low-Medium |
+| PR | Blocker |
+|----|---------|
+| **PR-ONBOARD-AB** | Designer spec required — read `docs/design-specs/ONBOARDING_AB_SPEC.md` before starting |
+| **PR-ADHAN** | Audio asset delivery from designer (B4 open) |
+| **PR-CLEANUP** | Must run after all other PRs complete |
 
-**Next:** PR9 (widget infra stable; audit before any Dart).  
-See `docs/status/NEXT_STEPS.md` for full next-step guidance.
+**Next:** Awaiting designer input. See `docs/status/NEXT_STEPS.md` for next-arc guidance.
 
 ---
 
 ## Highest-Risk Remaining Phase
 
-**PR9 — iOS Widget Visual Refresh.**
+**PR-ONBOARD-AB — Four-variant onboarding A/B/C/D.** Variant A must not regress. Requires full designer spec review before any code. Blocked until designer delivers spec.
 
-Widget visual refresh requires audit before any Swift/Dart. Any Swift change requires physical device validation.
-
+~~**PR9 — complete** (`4718207`). Prayer+Habit+Task widget v2 refresh: forest palette, Calibri, prayer systemLarge, ring+7-day habit history, isPrayerEnabled gate, sunrise/sunset strip.~~  
 ~~**PR8 — complete** (`2b10844`). Focus oil-fill: procedural fluid sim, 4-band intensity tiers, gyro slosh, impact bubbles. `oil_animation.dart` + `fluid_engine.dart` deleted.~~  
 ~~**PR7 — complete** (`0b8fe34`). AthkarSetScreen, DhikrReaderScreen (focus+list), Dashboard card, DhikrComplete chokepoint, Settings reminders, 4 Athkar category tokens.~~  
 ~~**PR4b — complete** (`65fc417`). DualDate VO, CalendarMonthCubit, 5-source activity dots, Hijri boundary labels.~~
