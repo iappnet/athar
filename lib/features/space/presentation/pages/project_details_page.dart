@@ -137,6 +137,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
     return ReorderableListView.builder(
       padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 80.h),
       itemCount: tasks.length,
+      // ignore: deprecated_member_use
       onReorder: (oldIndex, newIndex) {
         setState(() => _sortMode = TaskSortMode.manual);
         context.read<TaskCubit>().reorderTasks(oldIndex, newIndex);

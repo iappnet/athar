@@ -53,6 +53,8 @@ class BulkActionsBar extends StatelessWidget {
               style: TextStyle(
                 color: colorScheme.onPrimary,
                 fontWeight: FontWeight.bold,
+                fontFamily: 'Calibri',
+                fontFamilyFallback: AtharTypography.fontFallback,
               ),
             ),
             const Spacer(),

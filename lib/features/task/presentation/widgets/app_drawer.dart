@@ -182,6 +182,8 @@ class AppDrawer extends StatelessWidget {
                 fontWeight: FontWeight.w500,
                 height: 1.4,
                 letterSpacing: 0.5,
+                fontFamily: 'Calibri',
+                fontFamilyFallback: AtharTypography.fontFallback,
               ).copyWith(color: colorScheme.outline),
               textAlign: TextAlign.center,
             ),
@@ -214,6 +216,8 @@ class AppDrawer extends StatelessWidget {
           fontSize: 14,
           fontWeight: FontWeight.w600,
           height: 1.4,
+          fontFamily: 'Calibri',
+          fontFamilyFallback: AtharTypography.fontFallback,
         ).copyWith(fontWeight: FontWeight.bold),
       ),
       subtitle: subtitle != null
@@ -223,6 +227,8 @@ class AppDrawer extends StatelessWidget {
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
                 height: 1.6,
+                fontFamily: 'Calibri',
+                fontFamilyFallback: AtharTypography.fontFallback,
               ).copyWith(color: colorScheme.onSurfaceVariant),
             )
           : null,

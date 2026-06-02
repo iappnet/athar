@@ -21,6 +21,7 @@ class AttachmentsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final colors = context.colors;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,12 +32,12 @@ class AttachmentsWidget extends StatelessWidget {
           children: [
             Text(
               l10n.attachments,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
             ),
             PopupMenuButton<String>(
               icon: Icon(
                 Icons.add_circle_outline,
-                color: Colors.blue,
+                color: colors.info,
                 size: 24.sp,
               ),
               onSelected: (value) {
@@ -101,6 +102,7 @@ class AttachmentsWidget extends StatelessWidget {
   }
 
   Widget _buildFileCard(BuildContext context, AttachmentModel file) {
+    final colorScheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context);
     final bool isImage = file.fileType == 'image';
     final bool isExpired =
@@ -149,9 +151,9 @@ class AttachmentsWidget extends StatelessWidget {
       child: Container(
         width: 100.w,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: colorScheme.surface,
           borderRadius: AtharRadii.radiusMd,
-          border: Border.all(color: Colors.grey.shade200),
+          border: Border.all(color: colorScheme.outlineVariant),
         ),
         child: Stack(
           children: [
@@ -168,7 +170,7 @@ class AttachmentsWidget extends StatelessWidget {
                         : Icon(
                             isImage ? Icons.image : Icons.picture_as_pdf,
                             size: 40.sp,
-                            color: Colors.grey.shade400,
+                            color: colorScheme.onSurfaceVariant,
                           ),
                   ),
                 ),
@@ -178,23 +180,23 @@ class AttachmentsWidget extends StatelessWidget {
                     file.fileName,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 10.sp),
+                    style: TextStyle(fontSize: 10.sp, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
                   ),
                 ),
               ],
             ),
 
             // زر الحذف
-            Positioned(
+            PositionedDirectional(
               top: 4,
-              left: 4,
+              start: 4,
               child: GestureDetector(
                 onTap: () =>
                     context.read<TaskCubit>().deleteAttachment(file.uuid),
                 child: CircleAvatar(
                   radius: 10.r,
-                  backgroundColor: Colors.white.withValues(alpha: 0.8),
-                  child: Icon(Icons.close, size: 14.sp, color: Colors.red),
+                  backgroundColor: colorScheme.surface.withValues(alpha: 0.8),
+                  child: Icon(Icons.close, size: 14.sp, color: colorScheme.error),
                 ),
               ),
             ),
@@ -210,7 +212,7 @@ class AttachmentsWidget extends StatelessWidget {
                   child: Center(
                     child: Icon(
                       Icons.timer_off,
-                      color: Colors.red,
+                      color: colorScheme.error,
                       size: 30.sp,
                     ),
                   ),
@@ -223,22 +225,23 @@ class AttachmentsWidget extends StatelessWidget {
   }
 
   Widget _buildEmptyState(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context);
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.grey.shade50,
+        color: colorScheme.surfaceContainerLowest,
         borderRadius: AtharRadii.radiusMd,
         border: Border.all(
-          color: Colors.grey.shade200,
+          color: colorScheme.outlineVariant,
           style: BorderStyle.solid,
         ),
       ),
       child: Center(
         child: Text(
           l10n.noAttachments,
-          style: TextStyle(fontSize: 12.sp, color: Colors.grey),
+          style: TextStyle(fontSize: 12.sp, color: colorScheme.onSurfaceVariant, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
         ),
       ),
     );
