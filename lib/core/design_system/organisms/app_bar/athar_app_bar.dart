@@ -7,6 +7,7 @@ import 'dart:ui';
 
 import 'package:athar/core/design_system/tokens/athar_radii.dart';
 import 'package:athar/core/design_system/tokens/athar_spacing.dart';
+import 'package:athar/core/design_system/tokens/athar_typography.dart';
 import 'package:athar/core/utils/navigation_utils.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -122,6 +123,8 @@ class AtharAppBar extends StatelessWidget implements PreferredSizeWidget {
                         style: TextStyle(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'Calibri',
+                          fontFamilyFallback: AtharTypography.fontFallback,
                           color: colorScheme.onSurface,
                         ),
                         maxLines: 1,
@@ -145,6 +148,8 @@ class AtharAppBar extends StatelessWidget implements PreferredSizeWidget {
                   subtitle!,
                   style: TextStyle(
                     fontSize: 10.sp,
+                    fontFamily: 'Calibri',
+                    fontFamilyFallback: AtharTypography.fontFallback,
                     color: colorScheme.onSurfaceVariant,
                   ),
                   maxLines: 1,

@@ -61,8 +61,8 @@ class AthkarDashboardCard extends StatelessWidget {
             ? Icons.wb_sunny_rounded
             : Icons.nights_stay_rounded;
         final setColor = timing == DhikrTiming.morning
-            ? AppColors.athkarMorning
-            : AppColors.athkarEvening;
+            ? AtharColors.athkarMorning
+            : AtharColors.athkarEvening;
 
         return GestureDetector(
           onTap: () => Navigator.of(context).pushNamed('/athkar'),

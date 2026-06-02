@@ -121,6 +121,13 @@ class AtharColors extends ThemeExtension<AtharColors> {
   /// لون التمييز في بطاقة الصلاة (تيل) — نافل، تقدم
   static const Color prayerCardAccent = Color(0xFF7FE3DA);
 
+  // ATHKAR CATEGORY PALETTE — ألوان فئات الأذكار
+  // ثابتة دائماً (designer-approved, intentionally theme-invariant)
+  static const Color athkarMorning = Color(0xFFFF8F00);
+  static const Color athkarEvening = Color(0xFF3949AB);
+  static const Color athkarPrayer  = Color(0xFF2E7D32);
+  static const Color athkarSleep   = Color(0xFF6A1B9A);
+
   // ═══════════════════════════════════════════════════════════════════
   // CONSTRUCTOR
   // ═══════════════════════════════════════════════════════════════════

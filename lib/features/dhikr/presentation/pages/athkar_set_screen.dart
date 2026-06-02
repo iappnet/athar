@@ -68,13 +68,13 @@ class AthkarSetScreen extends StatelessWidget {
 
     final sets = [
       _SetData(DhikrCategory.morning, DhikrTiming.morning,
-          Icons.wb_sunny_rounded, AppColors.athkarMorning),
+          Icons.wb_sunny_rounded, AtharColors.athkarMorning),
       _SetData(DhikrCategory.evening, DhikrTiming.evening,
-          Icons.nights_stay_rounded, AppColors.athkarEvening),
+          Icons.nights_stay_rounded, AtharColors.athkarEvening),
       _SetData(DhikrCategory.prayer, DhikrTiming.prayer,
-          Icons.mosque_rounded, AppColors.athkarPrayer),
+          Icons.mosque_rounded, AtharColors.athkarPrayer),
       _SetData(DhikrCategory.sleep, DhikrTiming.sleep,
-          Icons.bedtime_rounded, AppColors.athkarSleep),
+          Icons.bedtime_rounded, AtharColors.athkarSleep),
     ];
 
     return Scaffold(
