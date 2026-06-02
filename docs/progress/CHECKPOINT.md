@@ -13,9 +13,9 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-02 (PR8 audit — BLOCKED awaiting designer sign-off)  
-**Commit:** `61dcd3b` docs(governance): fix 2 remaining active handoff_v2-2 nav refs  
-**Note:** PR8 audit written to `design-context/_audit_focus.md`. No Dart modified. 14 spec gaps identified (G1–G14); 7 open questions (OQ1–OQ7). Key findings: sensors_plus already present, flutter_shaders not needed yet, CustomPainter+RepaintBoundary recommended, fluid_engine.dart is dead code (delete), PR5 flags confirmed and readable. Awaiting designer sign-off before any Dart work.
+**Timestamp:** 2026-06-02 (PR8 audit v2 — BLOCKED awaiting designer sign-off)  
+**Commit:** `31a3918` docs(PR8): focus oil-fill audit — 14 gaps, 7 open questions, no Dart  
+**Note:** PR8 audit revised in `design-context/_audit_focus.md`. 15 gaps (G1–G15 incl. new focusIntensity field); 7 open questions (OQ1–OQ7). focusIntensity additive plan documented (isAthkar pattern: UserSettings enum + build_runner + SettingsCubit + Settings UI SegmentedButton). sensors_plus present, flutter_shaders deferred. No Dart modified.
 
 ---
 
