@@ -15,7 +15,7 @@ CANONICAL-SINCE: 2026-06-01
 > **SINGLE SOURCE OF TRUTH** — roadmap + % live here ONLY. Other docs must not restate these numbers.
 
 **Last updated:** 2026-06-02
-**Updated by:** PR-ONBOARD-AB-INFRA complete (1f868f9) + drift-check fixes
+**Updated by:** PR-ONBOARD-AB-UI complete (729c23d) + drift-check fixes
 
 **Branch strategy:** `docs/status/MIGRATION_BRANCH_STRATEGY.md`  
 **Canonical handoff package:** `docs/design-specs/` (B2 mirror, read-only)  
@@ -58,10 +58,10 @@ CANONICAL-SINCE: 2026-06-01
 | 10 | **PR7** | Athkar feature net-new (curated sets v1; designer review before screens) | ✅ **Complete 2026-06-02** | `0b8fe34` | — |
 | 11 | **PR8** | Focus screen oil-fill (`FOCUS_OIL_SPEC.md`; procedural colour carve-out) | ✅ **Complete 2026-06-02** | `2b10844` | — |
 | 12 | **PR9** | iOS widgets visual refresh (infra complete; visuals only) | ✅ **Complete 2026-06-02** | — | — |
-| 13 | **PR-ONBOARD-AB** | Four-variant onboarding A/B/C/D; Variant A must not regress | 🔄 INFRA done (`1f868f9`) · UI half pending (OQ1) | — | UI: OQ1 ruling needed |
+| 13 | **PR-ONBOARD-AB** | Four-variant onboarding A/B/C/D; Variant A must not regress | ✅ **Complete 2026-06-02** · INFRA `1f868f9` · UI `729c23d` | — | — |
 | 14 | **PR-CLEANUP** | Hardcoded colour sweep (files untouched by other PRs) | 🔲 Not started | — | All others |
 
-**Total PRs:** 14 (+ PR-FONT-FALLBACK as 2b) · **Complete:** 11 logical (PR1, PR-THEME arc incl PR-FONT-FALLBACK, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8, PR9) · **Blocked:** 3 (PR-ONBOARD-AB needs designer spec; PR-ADHAN needs audio asset; PR-CLEANUP needs all others first)
+**Total PRs:** 14 (+ PR-FONT-FALLBACK as 2b) · **Complete:** 12 logical (PR1, PR-THEME arc incl PR-FONT-FALLBACK, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8, PR9, PR-ONBOARD-AB) · **Blocked:** 2 (PR-ADHAN needs audio asset; PR-CLEANUP needs all others first)
 
 ---
 
@@ -69,7 +69,7 @@ CANONICAL-SINCE: 2026-06-01
 
 | Dimension | Complete | Total | % |
 |-----------|---------|-------|---|
-| v2 Design System PRs | 11 logical (PR1, PR-THEME arc, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8, PR9) | 14 | **~79%** |
+| v2 Design System PRs | 12 logical (PR1, PR-THEME arc, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8, PR9, PR-ONBOARD-AB) | 14 | **~86%** |
 | Design system token migration | ✅ Foundation done; design system themes now live in app | Component + screen migration pending | ~20% |
 | Typography migration | Tokens + 88 theme fallbacks + 38 base styles — all correct | Component `.arabic`/`.english` callsites still use Cairo in some files | ~25% |
 | Dark-mode migration | Tokens ✅ + ThemeMode ✅ + AtharDarkTheme now wired ✅ | Component-level color migration pending (PR5+) | ~70% |
@@ -124,23 +124,24 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Recommended Next PR
 
-**PR-ONBOARD-AB-INFRA ✅ complete (`1f868f9`).** Deferred QA sweep runs at end of roadmap (after last feature PR).
+**PR-ONBOARD-AB ✅ complete.** INFRA `1f868f9` · UI `729c23d`. Deferred QA sweep (ONBOARD-sweep) runs at end of roadmap.
 
 **Remaining:**
 
 | PR | Status | Blocker |
 |----|--------|---------|
-| **PR-ONBOARD-AB-UI** | Not started | OQ1 ruling — module toggle backing fields (Tasks/Habits/Health/Assets) |
 | **PR-ADHAN** | Not started | Audio asset delivery from designer (B4 open) |
 | **PR-CLEANUP** | Not started | Must run after all other PRs complete |
 
-**Next:** OQ1 ruling or B4 asset delivery. See `docs/status/NEXT_STEPS.md` for next-arc guidance.
+**Next:** B4 audio asset delivery from designer. See `docs/status/NEXT_STEPS.md` for next-arc guidance.
 
 ---
 
 ## Highest-Risk Remaining Phase
 
-**PR-ONBOARD-AB — Four-variant onboarding A/B/C/D.** Variant A must not regress. Requires full designer spec review before any code. Blocked until designer delivers spec.
+~~**PR-ONBOARD-AB — complete** (`729c23d`). Variants B/C/D pages + ARB + analytics wiring. Variant A untouched. ONBOARD-sweep device QA in deferred bucket.~~
+
+**Next highest-risk:** PR-CLEANUP — hardcoded colour sweep across 88 files. Must run last.
 
 ~~**PR9 — complete** (`4718207`). Prayer+Habit+Task widget v2 refresh: forest palette, Calibri, prayer systemLarge, ring+7-day habit history, isPrayerEnabled gate, sunrise/sunset strip.~~  
 ~~**PR8 — complete** (`2b10844`). Focus oil-fill: procedural fluid sim, 4-band intensity tiers, gyro slosh, impact bubbles. `oil_animation.dart` + `fluid_engine.dart` deleted.~~  

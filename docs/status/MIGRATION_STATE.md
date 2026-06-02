@@ -43,6 +43,7 @@ CANONICAL-SINCE: 2026-06-01
 | **PR8** — Focus Oil-Fill | `2b10844` | (in branch) | ✅ `flutter analyze` 0 errors · 4 conformance deviations fixed · device QA deferred | 2026-06-02 |
 | **PR9** — iOS Widget Visual Refresh | `4718207` | (in branch) | ✅ `flutter analyze` 0 errors · Prayer+Habit+Task v2 · P9-A/B/C fixes · device QA deferred | 2026-06-02 |
 | **PR-ONBOARD-AB-INFRA** — A/B variant infra | `1f868f9` | (in branch) | ✅ `flutter analyze` 0 errors · device_id seed · OnboardingVariantService · 4-branch routing · analytics service · Supabase migration · dev reset tile · OPS-1 deploy step deferred | 2026-06-02 |
+| **PR-ONBOARD-AB-UI** — Variants B/C/D pages + ARB + analytics wiring | `729c23d` | (in branch) | ✅ `flutter analyze` 0 errors · 3 new pages · 37 ARB keys · AR byte-verified · gen-l10n run · deferred device sweep in bucket | 2026-06-02 |
 
 ---
 
