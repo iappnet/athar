@@ -32,7 +32,7 @@ class AttachmentsWidget extends StatelessWidget {
           children: [
             Text(
               l10n.attachments,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
             ),
             PopupMenuButton<String>(
               icon: Icon(
@@ -180,7 +180,7 @@ class AttachmentsWidget extends StatelessWidget {
                     file.fileName,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 10.sp, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+                    style: TextStyle(fontSize: 10.sp, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
                   ),
                 ),
               ],
@@ -241,7 +241,7 @@ class AttachmentsWidget extends StatelessWidget {
       child: Center(
         child: Text(
           l10n.noAttachments,
-          style: TextStyle(fontSize: 12.sp, color: colorScheme.onSurfaceVariant, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+          style: TextStyle(fontSize: 12.sp, color: colorScheme.onSurfaceVariant, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
         ),
       ),
     );

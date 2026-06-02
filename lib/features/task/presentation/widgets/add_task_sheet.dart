@@ -260,7 +260,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
                 fontSize: 14.sp,
                 fontWeight: FontWeight.bold,
                 color: colorScheme.onSurfaceVariant,
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: AtharTypography.fontFallback,
               ),
             ),
@@ -387,7 +387,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
             Expanded(
               child: Text(
                 dateStr,
-                style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+                style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
               ),
             ),
             Icon(Icons.arrow_drop_down, color: colorScheme.outline),
@@ -415,7 +415,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
               children: [
                 Text(
                   _getTimeTypeLabel(),
-                  style: TextStyle(fontSize: 11.sp, color: colorScheme.outline, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+                  style: TextStyle(fontSize: 11.sp, color: colorScheme.outline, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
                 ),
                 Text(
                   _getTimeDisplayString(),
@@ -423,7 +423,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
                     fontSize: 14.sp,
                     fontWeight: FontWeight.bold,
                     color: colorScheme.primary,
-                    fontFamily: 'Calibri',
+                    fontFamily: AtharTypography.fontFamily,
                     fontFamilyFallback: AtharTypography.fontFallback,
                   ),
                 ),
@@ -466,7 +466,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
             AtharGap.hMd,
             Text(
               'اختر وقت المهمة',
-              style: TextStyle(fontSize: 14.sp, color: colorScheme.outline, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+              style: TextStyle(fontSize: 14.sp, color: colorScheme.outline, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
             ),
           ],
         ),
@@ -609,7 +609,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
             AtharGap.lg,
             Text(
               'اختر وقت المهمة',
-              style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+              style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
             ),
             AtharGap.lg,
             TimeSlotPicker(
@@ -653,7 +653,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
           fontWeight: _selectedAssigneeId != null
               ? FontWeight.bold
               : FontWeight.normal,
-          fontFamily: 'Calibri',
+          fontFamily: AtharTypography.fontFamily,
           fontFamilyFallback: AtharTypography.fontFallback,
         ),
       ),
@@ -703,7 +703,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
                 color: _prayerConflict.color,
                 fontWeight: FontWeight.bold,
                 fontSize: 12.sp,
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: AtharTypography.fontFallback,
               ),
             ),

@@ -51,7 +51,7 @@ class DateTimePicker extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 10.sp,
                   color: colorScheme.onSurfaceVariant,
-                  fontFamily: 'Calibri',
+                  fontFamily: AtharTypography.fontFamily,
                   fontFamilyFallback: AtharTypography.fontFallback,
                 ),
               ),
@@ -86,7 +86,7 @@ class DateTimePicker extends StatelessWidget {
           children: [
             Icon(icon, size: 16.sp, color: colorScheme.onSurfaceVariant),
             AtharGap.hXs,
-            Text(label, style: TextStyle(fontSize: 12.sp, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback)),
+            Text(label, style: TextStyle(fontSize: 12.sp, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback)),
           ],
         ),
       ),

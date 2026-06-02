@@ -38,7 +38,7 @@ class TemplateSelector extends StatelessWidget {
         leading: Icon(Icons.stars, color: colors.warning),
         title: Text(
           l10n.readyTemplates,
-          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
         ),
         subtitle: templates.isEmpty
             ? Text(l10n.noTemplatesSaved)
@@ -57,7 +57,7 @@ class TemplateSelector extends StatelessWidget {
                   AtharGap.sm,
                   Text(
                     l10n.noTemplatesYet,
-                    style: TextStyle(color: colorScheme.onSurfaceVariant, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+                    style: TextStyle(color: colorScheme.onSurfaceVariant, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
                   ),
                   AtharGap.md,
                   if (onSaveAsTemplate != null)
@@ -134,7 +134,7 @@ class TemplateSelector extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 10.sp,
                         color: colorScheme.onSurfaceVariant,
-                        fontFamily: 'Calibri',
+                        fontFamily: AtharTypography.fontFamily,
                         fontFamilyFallback: AtharTypography.fontFallback,
                       ),
                     ),
@@ -144,7 +144,7 @@ class TemplateSelector extends StatelessWidget {
               AtharGap.sm,
               Text(
                 template.name,
-                style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.bold, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+                style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.bold, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -175,7 +175,7 @@ class TemplateSelector extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 10.sp,
                       color: colorScheme.outline,
-                      fontFamily: 'Calibri',
+                      fontFamily: AtharTypography.fontFamily,
                       fontFamilyFallback: AtharTypography.fontFallback,
                     ),
                   ),
@@ -219,7 +219,7 @@ class TemplateSelector extends StatelessWidget {
               AtharGap.sm,
               Text(
                 l10n.createNewTemplate,
-                style: TextStyle(fontSize: 12.sp, color: colorScheme.primary, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+                style: TextStyle(fontSize: 12.sp, color: colorScheme.primary, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -315,7 +315,7 @@ class TemplateSelector extends StatelessWidget {
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         color: colorScheme.onSurfaceVariant,
-                        fontFamily: 'Calibri',
+                        fontFamily: AtharTypography.fontFamily,
                         fontFamilyFallback: AtharTypography.fontFallback,
                       ),
                     ),
@@ -365,7 +365,7 @@ class TemplateSelector extends StatelessWidget {
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         color: colorScheme.onSurfaceVariant,
-                        fontFamily: 'Calibri',
+                        fontFamily: AtharTypography.fontFamily,
                         fontFamilyFallback: AtharTypography.fontFallback,
                       ),
                     ),
@@ -416,7 +416,7 @@ class TemplateSelector extends StatelessWidget {
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         color: colorScheme.onSurfaceVariant,
-                        fontFamily: 'Calibri',
+                        fontFamily: AtharTypography.fontFamily,
                         fontFamilyFallback: AtharTypography.fontFallback,
                       ),
                     ),

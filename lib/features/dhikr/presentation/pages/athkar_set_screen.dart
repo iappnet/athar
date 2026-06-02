@@ -179,7 +179,7 @@ class _SetCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.bold,
-                      fontFamily: 'Calibri',
+                      fontFamily: AtharTypography.fontFamily,
                       fontFamilyFallback: AtharTypography.fontFallback,
                       color: colorScheme.onSurface,
                     ),

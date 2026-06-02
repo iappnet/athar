@@ -331,7 +331,7 @@ class _UnifiedTasksViewState extends State<UnifiedTasksView> {
               AtharGap.hSm,
               Text(
                 title,
-                style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+                style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
               ),
               const Spacer(),
               Text(
@@ -340,7 +340,7 @@ class _UnifiedTasksViewState extends State<UnifiedTasksView> {
                   fontSize: 12.sp,
                   fontWeight: FontWeight.bold,
                   color: colorScheme.outline,
-                  fontFamily: 'Calibri',
+                  fontFamily: AtharTypography.fontFamily,
                   fontFamilyFallback: AtharTypography.fontFallback,
                 ),
               ),
@@ -506,7 +506,7 @@ class _UnifiedTasksViewState extends State<UnifiedTasksView> {
                     color: info.color,
                     fontWeight: FontWeight.bold,
                     fontSize: 12.sp,
-                    fontFamily: 'Calibri',
+                    fontFamily: AtharTypography.fontFamily,
                     fontFamilyFallback: AtharTypography.fontFallback,
                   ),
                 ),
@@ -584,7 +584,7 @@ class _UnifiedTasksViewState extends State<UnifiedTasksView> {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: TextStyle(color: colorScheme.onSurfaceVariant, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+              style: TextStyle(color: colorScheme.onSurfaceVariant, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
             ),
             AtharGap.lg,
             AtharButton(

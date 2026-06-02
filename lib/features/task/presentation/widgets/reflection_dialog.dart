@@ -57,7 +57,7 @@ class _ReflectionDialogState extends State<ReflectionDialog> {
 
             Text(
               l10n.wellDone,
-              style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+              style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
             ),
             AtharGap.sm,
             Text(
@@ -66,7 +66,7 @@ class _ReflectionDialogState extends State<ReflectionDialog> {
               style: TextStyle(
                 color: colorScheme.onSurfaceVariant,
                 fontSize: 14.sp,
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: AtharTypography.fontFallback,
               ),
             ),
@@ -81,7 +81,7 @@ class _ReflectionDialogState extends State<ReflectionDialog> {
                 hintStyle: TextStyle(
                   fontSize: 12.sp,
                   color: colorScheme.outline,
-                  fontFamily: 'Calibri',
+                  fontFamily: AtharTypography.fontFamily,
                   fontFamilyFallback: AtharTypography.fontFallback,
                 ),
                 fillColor: colorScheme.surfaceContainerLowest,
@@ -103,7 +103,7 @@ class _ReflectionDialogState extends State<ReflectionDialog> {
                     onPressed: () => Navigator.pop(context),
                     child: Text(
                       l10n.skip,
-                      style: TextStyle(color: colorScheme.onSurfaceVariant, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+                      style: TextStyle(color: colorScheme.onSurfaceVariant, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
                     ),
                   ),
                 ),
@@ -128,7 +128,7 @@ class _ReflectionDialogState extends State<ReflectionDialog> {
                       style: TextStyle(
                         color: colorScheme.onPrimary,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'Calibri',
+                        fontFamily: AtharTypography.fontFamily,
                         fontFamilyFallback: AtharTypography.fontFallback,
                       ),
                     ),

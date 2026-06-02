@@ -77,12 +77,12 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
         leading: Icon(Icons.repeat, color: colorScheme.primary),
         title: Text(
           l10n.recurrence,
-          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
         ),
         subtitle: _isEnabled
             ? Text(
                 _getPatternDescription(),
-                style: TextStyle(fontSize: 11.sp, color: colorScheme.primary, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+                style: TextStyle(fontSize: 11.sp, color: colorScheme.primary, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
               )
             : null,
         children: [
@@ -146,7 +146,7 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
             fontSize: 12.sp,
             fontWeight: FontWeight.bold,
             color: colorScheme.onSurfaceVariant,
-            fontFamily: 'Calibri',
+            fontFamily: AtharTypography.fontFamily,
             fontFamilyFallback: AtharTypography.fontFallback,
           ),
         ),
@@ -196,7 +196,7 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
       selectedColor: colorScheme.primary,
       labelStyle: TextStyle(
         color: isSelected ? colorScheme.onPrimary : colorScheme.onSurface,
-        fontFamily: 'Calibri',
+        fontFamily: AtharTypography.fontFamily,
         fontFamilyFallback: AtharTypography.fontFallback,
       ),
       onSelected: (val) {
@@ -225,7 +225,7 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
 
     return Row(
       children: [
-        Text(l10n.everyInterval, style: TextStyle(fontSize: 14.sp, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback)),
+        Text(l10n.everyInterval, style: TextStyle(fontSize: 14.sp, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback)),
         AtharGap.hMd,
         SizedBox(
           width: 75.w,
@@ -245,7 +245,7 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
           ),
         ),
         AtharGap.hMd,
-        Text(unit, style: TextStyle(fontSize: 14.sp, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback)),
+        Text(unit, style: TextStyle(fontSize: 14.sp, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback)),
       ],
     );
   }
@@ -272,7 +272,7 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
             fontSize: 12.sp,
             fontWeight: FontWeight.bold,
             color: colorScheme.onSurfaceVariant,
-            fontFamily: 'Calibri',
+            fontFamily: AtharTypography.fontFamily,
             fontFamilyFallback: AtharTypography.fontFallback,
           ),
         ),
@@ -328,7 +328,7 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
             fontSize: 12.sp,
             fontWeight: FontWeight.bold,
             color: colorScheme.onSurfaceVariant,
-            fontFamily: 'Calibri',
+            fontFamily: AtharTypography.fontFamily,
             fontFamilyFallback: AtharTypography.fontFallback,
           ),
         ),

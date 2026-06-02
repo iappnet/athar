@@ -193,7 +193,7 @@ class _DhikrFocusCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 22.sp,
                     fontWeight: FontWeight.bold,
-                    fontFamily: 'Calibri',
+                    fontFamily: AtharTypography.fontFamily,
                     fontFamilyFallback: AtharTypography.fontFallback,
                     height: 1.7,
                     color: colorScheme.onSurface,
@@ -378,7 +378,7 @@ class _ListReader extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w500,
-                            fontFamily: 'Calibri',
+                            fontFamily: AtharTypography.fontFamily,
                             fontFamilyFallback: AtharTypography.fontFallback,
                             height: 1.6,
                             color: isDone

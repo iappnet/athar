@@ -1,3 +1,4 @@
+import 'package:athar/core/design_system/tokens/athar_typography.dart';
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/core/services/location_service.dart';
 import 'package:athar/core/services/notification_service.dart';
@@ -259,7 +260,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
                     nextLabel,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                      fontFamily: 'Calibri',
+                      fontFamily: AtharTypography.fontFamily,
                       fontFamilyFallback: ['Cairo'],
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
@@ -276,7 +277,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
                 child: Text(
                   skipLabel,
                   style: const TextStyle(
-                    fontFamily: 'Calibri',
+                    fontFamily: AtharTypography.fontFamily,
                     fontFamilyFallback: ['Cairo'],
                     fontSize: 14,
                   ),
@@ -318,7 +319,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
               l10n.onboardingExpandedWelcomeTitle,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: ['Cairo'],
                 fontSize: 30,
                 fontWeight: FontWeight.w700,
@@ -334,7 +335,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
               l10n.onboardingExpandedWelcomeSubtitle,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: const ['Cairo'],
                 fontSize: 16,
                 color: Colors.white.withValues(alpha: 0.75),
@@ -363,7 +364,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
             Text(
               l10n.onboardingExpandedModulesTitle,
               style: const TextStyle(
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: ['Cairo'],
                 fontSize: 22,
                 fontWeight: FontWeight.w700,
@@ -374,7 +375,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
             Text(
               l10n.onboardingExpandedModulesSubtitle,
               style: TextStyle(
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: const ['Cairo'],
                 fontSize: 14,
                 color: Colors.white.withValues(alpha: 0.65),
@@ -433,7 +434,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
             Text(
               l10n.onboardingExpandedLocationTitle,
               style: const TextStyle(
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: ['Cairo'],
                 fontSize: 22,
                 fontWeight: FontWeight.w700,
@@ -444,7 +445,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
             Text(
               l10n.onboardingExpandedLocationSubtitle,
               style: TextStyle(
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: const ['Cairo'],
                 fontSize: 14,
                 color: Colors.white.withValues(alpha: 0.65),
@@ -491,7 +492,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
             Text(
               l10n.onboardingExpandedNotificationsTitle,
               style: const TextStyle(
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: ['Cairo'],
                 fontSize: 22,
                 fontWeight: FontWeight.w700,
@@ -502,7 +503,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
             Text(
               l10n.onboardingExpandedNotificationsSubtitle,
               style: TextStyle(
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: const ['Cairo'],
                 fontSize: 14,
                 color: Colors.white.withValues(alpha: 0.65),
@@ -539,7 +540,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
             Text(
               l10n.onboardingExpandedSpaceTitle,
               style: const TextStyle(
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: ['Cairo'],
                 fontSize: 22,
                 fontWeight: FontWeight.w700,
@@ -550,7 +551,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
             Text(
               l10n.onboardingExpandedSpaceSubtitle,
               style: TextStyle(
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: const ['Cairo'],
                 fontSize: 14,
                 color: Colors.white.withValues(alpha: 0.65),
@@ -572,7 +573,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
                     child: Text(
                       l10n.onboardingExpandedSpaceJustForMe,
                       style: const TextStyle(
-                        fontFamily: 'Calibri',
+                        fontFamily: AtharTypography.fontFamily,
                         fontFamilyFallback: ['Cairo'],
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -591,7 +592,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
                 child: Text(
                   l10n.onboardingExpandedSpaceJoinCode,
                   style: TextStyle(
-                    fontFamily: 'Calibri',
+                    fontFamily: AtharTypography.fontFamily,
                     fontFamilyFallback: const ['Cairo'],
                     fontSize: 14,
                     color: Colors.white.withValues(alpha: 0.7),
@@ -614,7 +615,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
                         child: TextField(
                           controller: _joinCodeController,
                           style: const TextStyle(
-                            fontFamily: 'Calibri',
+                            fontFamily: AtharTypography.fontFamily,
                             fontFamilyFallback: ['Cairo'],
                             color: Colors.white,
                           ),
@@ -659,7 +660,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
                               : Text(
                                   l10n.onboardingExpandedSpaceJoin,
                                   style: const TextStyle(
-                                    fontFamily: 'Calibri',
+                                    fontFamily: AtharTypography.fontFamily,
                                     fontFamilyFallback: ['Cairo'],
                                     fontSize: 14,
                                     fontWeight: FontWeight.w700,
@@ -712,7 +713,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
                 l10n.onboardingExpandedFinishTitle,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  fontFamily: 'Calibri',
+                  fontFamily: AtharTypography.fontFamily,
                   fontFamilyFallback: ['Cairo'],
                   fontSize: 30,
                   fontWeight: FontWeight.w700,
@@ -728,7 +729,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
                 l10n.onboardingExpandedFinishSubtitle,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily: 'Calibri',
+                  fontFamily: AtharTypography.fontFamily,
                   fontFamilyFallback: const ['Cairo'],
                   fontSize: 16,
                   color: Colors.white.withValues(alpha: 0.75),
@@ -765,7 +766,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
                     l10n.onboardingExpandedFinishCta,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                      fontFamily: 'Calibri',
+                      fontFamily: AtharTypography.fontFamily,
                       fontFamilyFallback: ['Cairo'],
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
@@ -839,7 +840,7 @@ class _ModuleToggleRow extends StatelessWidget {
           child: Text(
             label,
             style: const TextStyle(
-              fontFamily: 'Calibri',
+              fontFamily: AtharTypography.fontFamily,
               fontFamilyFallback: ['Cairo'],
               fontSize: 16,
               fontWeight: FontWeight.w500,
@@ -883,7 +884,7 @@ class _AlwaysIncludedChip extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              fontFamily: 'Calibri',
+              fontFamily: AtharTypography.fontFamily,
               fontFamilyFallback: const ['Cairo'],
               fontSize: 13,
               color: _kCream.withValues(alpha: 0.7),
@@ -938,7 +939,7 @@ class _DOutlineButton extends StatelessWidget {
                   Text(
                     label,
                     style: const TextStyle(
-                      fontFamily: 'Calibri',
+                      fontFamily: AtharTypography.fontFamily,
                       fontFamilyFallback: ['Cairo'],
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
@@ -1002,7 +1003,7 @@ class _RecapChip extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              fontFamily: 'Calibri',
+              fontFamily: AtharTypography.fontFamily,
               fontFamilyFallback: const ['Cairo'],
               fontSize: 13,
               color: _kCream.withValues(alpha: 0.85),

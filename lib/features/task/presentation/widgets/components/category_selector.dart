@@ -38,7 +38,7 @@ class CategorySelector extends StatelessWidget {
           style: TextStyle(
             color: colorScheme.onSurfaceVariant,
             fontSize: 12.sp,
-            fontFamily: 'Calibri',
+            fontFamily: AtharTypography.fontFamily,
             fontFamilyFallback: AtharTypography.fontFallback,
           ),
         ),
@@ -86,7 +86,7 @@ class CategorySelector extends StatelessWidget {
                                 : colorScheme.onSurface,
                             fontWeight: FontWeight.bold,
                             fontSize: 12.sp,
-                            fontFamily: 'Calibri',
+                            fontFamily: AtharTypography.fontFamily,
                             fontFamilyFallback: AtharTypography.fontFallback,
                           ),
                           side: BorderSide.none,

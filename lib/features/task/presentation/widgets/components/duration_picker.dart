@@ -26,7 +26,7 @@ class DurationPicker extends StatelessWidget {
           style: TextStyle(
             color: colorScheme.onSurfaceVariant,
             fontSize: 12.sp,
-            fontFamily: 'Calibri',
+            fontFamily: AtharTypography.fontFamily,
             fontFamilyFallback: AtharTypography.fontFallback,
           ),
         ),

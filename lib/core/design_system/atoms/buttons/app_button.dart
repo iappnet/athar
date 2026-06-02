@@ -475,7 +475,7 @@ class _AtharButtonState extends State<AtharButton>
               color: foreground,
               fontSize: _fontSize,
               fontWeight: FontWeight.w600,
-              fontFamily: 'Calibri',
+              fontFamily: AtharTypography.fontFamily,
               fontFamilyFallback: AtharTypography.fontFallback,
             ),
             maxLines: 1,
@@ -611,7 +611,7 @@ class AtharFAB extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 14.sp,
-            fontFamily: 'Calibri',
+            fontFamily: AtharTypography.fontFamily,
             fontFamilyFallback: AtharTypography.fontFallback,
           ),
         ),

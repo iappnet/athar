@@ -1,3 +1,4 @@
+import 'package:athar/core/design_system/tokens/athar_typography.dart';
 import 'package:athar/core/services/onboarding_analytics_service.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -126,7 +127,7 @@ class _CWelcomeSlide extends StatelessWidget {
                   child: Text(
                     l10n.skip,
                     style: const TextStyle(
-                      fontFamily: 'Calibri',
+                      fontFamily: AtharTypography.fontFamily,
                       fontFamilyFallback: ['Cairo'],
                       fontSize: 14,
                     ),
@@ -161,7 +162,7 @@ class _CWelcomeSlide extends StatelessWidget {
                 l10n.onboardingShortWelcomeTitle,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  fontFamily: 'Calibri',
+                  fontFamily: AtharTypography.fontFamily,
                   fontFamilyFallback: ['Cairo'],
                   fontSize: 30,
                   fontWeight: FontWeight.w700,
@@ -177,7 +178,7 @@ class _CWelcomeSlide extends StatelessWidget {
                 l10n.onboardingShortWelcomeSubtitle,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily: 'Calibri',
+                  fontFamily: AtharTypography.fontFamily,
                   fontFamilyFallback: const ['Cairo'],
                   fontSize: 16,
                   color: Colors.white.withValues(alpha: 0.8),
@@ -221,7 +222,7 @@ class _CWelcomeSlide extends StatelessWidget {
                     l10n.next,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                      fontFamily: 'Calibri',
+                      fontFamily: AtharTypography.fontFamily,
                       fontFamilyFallback: ['Cairo'],
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
@@ -262,7 +263,7 @@ class _CFeaturePill extends StatelessWidget {
           Text(
             label,
             style: const TextStyle(
-              fontFamily: 'Calibri',
+              fontFamily: AtharTypography.fontFamily,
               fontFamilyFallback: ['Cairo'],
               fontSize: 12,
               fontWeight: FontWeight.w500,
@@ -307,7 +308,7 @@ class _CStartSlide extends StatelessWidget {
                 l10n.onboardingShortStartTitle,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  fontFamily: 'Calibri',
+                  fontFamily: AtharTypography.fontFamily,
                   fontFamilyFallback: ['Cairo'],
                   fontSize: 32,
                   fontWeight: FontWeight.w700,
@@ -323,7 +324,7 @@ class _CStartSlide extends StatelessWidget {
                 l10n.onboardingShortStartSubtitle,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily: 'Calibri',
+                  fontFamily: AtharTypography.fontFamily,
                   fontFamilyFallback: const ['Cairo'],
                   fontSize: 17,
                   color: Colors.white.withValues(alpha: 0.8),
@@ -347,7 +348,7 @@ class _CStartSlide extends StatelessWidget {
                     l10n.onboardingShortStartCta,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                      fontFamily: 'Calibri',
+                      fontFamily: AtharTypography.fontFamily,
                       fontFamilyFallback: ['Cairo'],
                       fontSize: 16,
                       fontWeight: FontWeight.w700,

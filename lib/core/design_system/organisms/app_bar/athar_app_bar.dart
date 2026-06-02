@@ -123,7 +123,7 @@ class AtharAppBar extends StatelessWidget implements PreferredSizeWidget {
                         style: TextStyle(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.bold,
-                          fontFamily: 'Calibri',
+                          fontFamily: AtharTypography.fontFamily,
                           fontFamilyFallback: AtharTypography.fontFallback,
                           color: colorScheme.onSurface,
                         ),
@@ -148,7 +148,7 @@ class AtharAppBar extends StatelessWidget implements PreferredSizeWidget {
                   subtitle!,
                   style: TextStyle(
                     fontSize: 10.sp,
-                    fontFamily: 'Calibri',
+                    fontFamily: AtharTypography.fontFamily,
                     fontFamilyFallback: AtharTypography.fontFallback,
                     color: colorScheme.onSurfaceVariant,
                   ),

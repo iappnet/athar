@@ -145,7 +145,7 @@ class MinimalHabitTile extends StatelessWidget {
                           color: isCompleted
                               ? colorScheme.outline
                               : colorScheme.onSurface,
-                          fontFamily: 'Calibri',
+                          fontFamily: AtharTypography.fontFamily,
                           fontFamilyFallback: AtharTypography.fontFallback,
                         ),
                       ),
@@ -206,7 +206,7 @@ class MinimalHabitTile extends StatelessWidget {
                 fontSize: 12.sp,
                 color: colors.warning,
                 fontWeight: FontWeight.bold,
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: AtharTypography.fontFallback,
               ),
             ),

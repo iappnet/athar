@@ -122,7 +122,7 @@ class _ItemRow extends StatelessWidget {
             fontSize: 12.sp,
             color: isBold ? color : colorScheme.onSurface,
             fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-            fontFamily: 'Calibri',
+            fontFamily: AtharTypography.fontFamily,
             fontFamilyFallback: AtharTypography.fontFallback,
           ),
         ),

@@ -420,7 +420,7 @@ class _TasksPageViewState extends State<TasksPageView> {
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
-                      fontFamily: 'Calibri',
+                      fontFamily: AtharTypography.fontFamily,
                       fontFamilyFallback: AtharTypography.fontFallback,
                     ),
                   ),
@@ -439,7 +439,7 @@ class _TasksPageViewState extends State<TasksPageView> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 12.sp,
-                        fontFamily: 'Calibri',
+                        fontFamily: AtharTypography.fontFamily,
                         fontFamilyFallback: AtharTypography.fontFallback,
                       ),
                     ),
@@ -520,7 +520,7 @@ class _TasksPageViewState extends State<TasksPageView> {
           Text(
             l10n.dayClear,
             style: TextStyle(
-              fontFamily: 'Calibri',
+              fontFamily: AtharTypography.fontFamily,
               fontFamilyFallback: AtharTypography.fontFallback,
               fontSize: 18,
               fontWeight: FontWeight.w700,
@@ -532,7 +532,7 @@ class _TasksPageViewState extends State<TasksPageView> {
             l10n.addTasksToStart,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: 'Calibri',
+              fontFamily: AtharTypography.fontFamily,
               fontFamilyFallback: AtharTypography.fontFallback,
               fontSize: 14,
               color: colorScheme.outline,

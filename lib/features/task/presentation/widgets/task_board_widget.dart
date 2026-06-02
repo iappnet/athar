@@ -82,7 +82,7 @@ class _TaskBoardWidgetState extends State<TaskBoardWidget> {
                 fontWeight: FontWeight.bold,
                 fontSize: 16.sp,
                 color: colorScheme.onSurfaceVariant,
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: AtharTypography.fontFallback,
               ),
             ),
@@ -112,13 +112,13 @@ class _TaskBoardWidgetState extends State<TaskBoardWidget> {
           children: [
             Text(
               l10n.myBoard,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
             ),
             // ✅ التصحيح 3: لا نعرض التاريخ إذا كانت الملاحظة null
             if (myNote != null)
               Text(
                 l10n.lastUpdate(timeago.format(myNote.updatedAt, locale: 'ar')),
-                style: TextStyle(fontSize: 12.sp, color: colorScheme.outline, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+                style: TextStyle(fontSize: 12.sp, color: colorScheme.outline, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
               ),
           ],
         ),
@@ -145,7 +145,7 @@ class _TaskBoardWidgetState extends State<TaskBoardWidget> {
                 maxLines: 6,
                 hint: l10n.boardNoteHint,
                 customStyle: AtharTextFieldStyle(
-                  textStyle: TextStyle(fontSize: 14.sp, height: 1.5, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+                  textStyle: TextStyle(fontSize: 14.sp, height: 1.5, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
@@ -204,13 +204,13 @@ class _TaskBoardWidgetState extends State<TaskBoardWidget> {
               AtharGap.hSm,
               Text(
                 l10n.teamMember,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
               ),
               const Spacer(),
               // هنا updatedAt مضمونة الوجود لأننا جلبنا only valid notes في الـ Cubit
               Text(
                 timeago.format(note.updatedAt, locale: 'ar'),
-                style: TextStyle(fontSize: 10.sp, color: colorScheme.outline, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+                style: TextStyle(fontSize: 10.sp, color: colorScheme.outline, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
               ),
             ],
           ),
@@ -221,7 +221,7 @@ class _TaskBoardWidgetState extends State<TaskBoardWidget> {
               fontSize: 13.sp,
               color: colorScheme.onSurface,
               height: 1.5,
-              fontFamily: 'Calibri',
+              fontFamily: AtharTypography.fontFamily,
               fontFamilyFallback: AtharTypography.fontFallback,
             ),
           ),

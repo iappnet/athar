@@ -51,7 +51,7 @@ class ConflictDialog extends StatelessWidget {
             AtharGap.lg,
             Text(
               l10n.conflictWarningTitle,
-              style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+              style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
             ),
             AtharGap.sm,
             Text(
@@ -60,7 +60,7 @@ class ConflictDialog extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14.sp,
                 color: colorScheme.onSurfaceVariant,
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: AtharTypography.fontFallback,
               ),
             ),
@@ -97,7 +97,7 @@ class ConflictDialog extends StatelessWidget {
                 style: TextStyle(
                   color: colorScheme.onSurfaceVariant,
                   fontSize: 13.sp,
-                  fontFamily: 'Calibri',
+                  fontFamily: AtharTypography.fontFamily,
                   fontFamilyFallback: AtharTypography.fontFallback,
                 ),
               ),
@@ -137,7 +137,7 @@ class ConflictDialog extends StatelessWidget {
                       color: textC,
                       fontWeight: FontWeight.bold,
                       fontSize: 13.sp,
-                      fontFamily: 'Calibri',
+                      fontFamily: AtharTypography.fontFamily,
                       fontFamilyFallback: AtharTypography.fontFallback,
                     ),
                   ),
@@ -146,7 +146,7 @@ class ConflictDialog extends StatelessWidget {
                     style: TextStyle(
                       color: textC.withValues(alpha: 0.8),
                       fontSize: 11.sp,
-                      fontFamily: 'Calibri',
+                      fontFamily: AtharTypography.fontFamily,
                       fontFamilyFallback: AtharTypography.fontFallback,
                     ),
                   ),

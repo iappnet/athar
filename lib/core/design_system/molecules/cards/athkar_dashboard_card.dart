@@ -106,7 +106,7 @@ class AthkarDashboardCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.bold,
-                          fontFamily: 'Calibri',
+                          fontFamily: AtharTypography.fontFamily,
                           fontFamilyFallback: AtharTypography.fontFallback,
                           color: colorScheme.onSurface,
                         ),

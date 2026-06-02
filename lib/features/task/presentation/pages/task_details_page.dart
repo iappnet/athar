@@ -128,7 +128,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             ),
             title: Text(
               l10n.taskDetails,
-              style: TextStyle(color: colorScheme.onSurface, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+              style: TextStyle(color: colorScheme.onSurface, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
             ),
             centerTitle: true,
             actions: [
@@ -148,7 +148,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
               labelStyle: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14.sp,
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: AtharTypography.fontFallback,
               ),
               tabs: [
@@ -179,7 +179,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
         AtharTextField.borderless(
           controller: _titleController,
           hint: l10n.taskTitleHint,
-          textStyle: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+          textStyle: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
           maxLines: null,
         ),
         AtharGap.xl,
@@ -223,7 +223,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
         // 4. الوصف
         Text(
           l10n.descriptionAndNotes,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
         ),
         AtharGap.sm,
         Container(
@@ -238,7 +238,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             hint: l10n.addDetailsHint,
             maxLines: 8,
             customStyle: AtharTextFieldStyle(
-              textStyle: TextStyle(height: 1.5, fontSize: 14.sp, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+              textStyle: TextStyle(height: 1.5, fontSize: 14.sp, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
               contentPadding: EdgeInsets.zero,
             ),
           ),
@@ -337,7 +337,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 fontWeight:
                     isActive ? FontWeight.bold : FontWeight.normal,
                 color: isActive ? activeColor : colorScheme.outline,
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: AtharTypography.fontFallback,
               ),
             ),
@@ -384,7 +384,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
               fontSize: 13.sp,
               color: colorScheme.primary,
               fontWeight: FontWeight.w600,
-              fontFamily: 'Calibri',
+              fontFamily: AtharTypography.fontFamily,
               fontFamilyFallback: AtharTypography.fontFallback,
             ),
           ),
@@ -417,7 +417,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                   fontWeight: FontWeight.bold,
                   fontSize: 13.sp,
                   color: context.colors.success,
-                  fontFamily: 'Calibri',
+                  fontFamily: AtharTypography.fontFamily,
                   fontFamilyFallback: AtharTypography.fontFallback,
                 ),
               ),
@@ -427,7 +427,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
           Text(
             widget.task.completionNote!,
             style:
-                TextStyle(fontSize: 13.sp, height: 1.5, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+                TextStyle(fontSize: 13.sp, height: 1.5, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
           ),
         ],
       ),
@@ -470,7 +470,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                   fontSize: 10.sp,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                   color: isSelected ? color : colorScheme.outline,
-                  fontFamily: 'Calibri',
+                  fontFamily: AtharTypography.fontFamily,
                   fontFamilyFallback: AtharTypography.fontFallback,
                 ),
               ),
@@ -546,7 +546,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14.sp,
-                        fontFamily: 'Calibri',
+                        fontFamily: AtharTypography.fontFamily,
                         fontFamilyFallback: AtharTypography.fontFallback,
                       ),
                     ),
@@ -557,7 +557,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                       style: TextStyle(
                         color: colorScheme.onSurfaceVariant,
                         fontSize: 11.sp,
-                        fontFamily: 'Calibri',
+                        fontFamily: AtharTypography.fontFamily,
                         fontFamilyFallback: AtharTypography.fontFallback,
                       ),
                     ),
@@ -618,7 +618,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                           color: _reminderTime != null
                               ? context.colors.warning
                               : colorScheme.outline,
-                          fontFamily: 'Calibri',
+                          fontFamily: AtharTypography.fontFamily,
                           fontFamilyFallback: AtharTypography.fontFallback,
                         ),
                       ),
@@ -640,7 +640,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
               style: TextStyle(
                 fontSize: 11.sp,
                 color: colorScheme.onSurfaceVariant,
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: AtharTypography.fontFallback,
               ),
             ),
@@ -718,7 +718,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 color: !isValidTime ? colorScheme.outline : context.colors.warning,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 decoration: !isValidTime ? TextDecoration.lineThrough : null,
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: AtharTypography.fontFallback,
               ),
             ),
@@ -824,11 +824,11 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             children: [
               Text(
                 label,
-                style: TextStyle(fontSize: 10.sp, color: colorScheme.outline, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+                style: TextStyle(fontSize: 10.sp, color: colorScheme.outline, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
               ),
               Text(
                 value,
-                style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+                style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
               ),
             ],
           ),

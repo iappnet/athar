@@ -49,7 +49,7 @@ class MinimalHeaderDelegate extends SliverPersistentHeaderDelegate {
                     fontSize: dateFontSize,
                     color: colorScheme.outline,
                     fontWeight: FontWeight.w500,
-                    fontFamily: 'Calibri',
+                    fontFamily: AtharTypography.fontFamily,
                     fontFamilyFallback: AtharTypography.fontFallback,
                   ),
                   maxLines: 1,

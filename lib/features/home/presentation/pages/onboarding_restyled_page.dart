@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:athar/core/design_system/tokens/athar_typography.dart';
 import 'package:athar/core/services/onboarding_analytics_service.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -233,7 +234,7 @@ class _BSlide extends StatelessWidget {
                       child: Text(
                         l10n.skip,
                         style: const TextStyle(
-                          fontFamily: 'Calibri',
+                          fontFamily: AtharTypography.fontFamily,
                           fontFamilyFallback: ['Cairo'],
                           fontSize: 14,
                         ),
@@ -266,7 +267,7 @@ class _BSlide extends StatelessWidget {
                   child: Text(
                     data.category,
                     style: const TextStyle(
-                      fontFamily: 'Calibri',
+                      fontFamily: AtharTypography.fontFamily,
                       fontFamilyFallback: ['Cairo'],
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -281,7 +282,7 @@ class _BSlide extends StatelessWidget {
                     data.title,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                      fontFamily: 'Calibri',
+                      fontFamily: AtharTypography.fontFamily,
                       fontFamilyFallback: ['Cairo'],
                       fontSize: 30,
                       fontWeight: FontWeight.w700,
@@ -297,7 +298,7 @@ class _BSlide extends StatelessWidget {
                     data.description,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontFamily: 'Calibri',
+                      fontFamily: AtharTypography.fontFamily,
                       fontFamilyFallback: const ['Cairo'],
                       fontSize: 15,
                       color: Colors.white.withValues(alpha: 0.8),
@@ -338,7 +339,7 @@ class _BChip extends StatelessWidget {
       child: Text(
         label,
         style: TextStyle(
-          fontFamily: 'Calibri',
+          fontFamily: AtharTypography.fontFamily,
           fontFamilyFallback: const ['Cairo'],
           fontSize: 13,
           fontWeight: FontWeight.w500,
@@ -402,7 +403,7 @@ class _BBottomBar extends StatelessWidget {
                   child: Text(
                     isLast ? l10n.getStarted : l10n.next,
                     style: const TextStyle(
-                      fontFamily: 'Calibri',
+                      fontFamily: AtharTypography.fontFamily,
                       fontFamilyFallback: ['Cairo'],
                       fontSize: 15,
                       fontWeight: FontWeight.w700,

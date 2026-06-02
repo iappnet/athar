@@ -46,7 +46,7 @@ class ReminderPickerWidget extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14.sp,
-                  fontFamily: 'Calibri',
+                  fontFamily: AtharTypography.fontFamily,
                   fontFamilyFallback: AtharTypography.fontFallback,
                 ),
               ),
@@ -90,7 +90,7 @@ class ReminderPickerWidget extends StatelessWidget {
                       l10n.reminderTimeLabel,
                       style: TextStyle(
                         fontSize: 13.sp,
-                        fontFamily: 'Calibri',
+                        fontFamily: AtharTypography.fontFamily,
                         fontFamilyFallback: AtharTypography.fontFallback,
                       ),
                     ),
@@ -102,7 +102,7 @@ class ReminderPickerWidget extends StatelessWidget {
                         color: colorScheme.primary,
                         fontWeight: FontWeight.bold,
                         fontSize: 14.sp,
-                        fontFamily: 'Calibri',
+                        fontFamily: AtharTypography.fontFamily,
                         fontFamilyFallback: AtharTypography.fontFallback,
                       ),
                     ),

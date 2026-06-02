@@ -87,7 +87,7 @@ class UnifiedTimelineTile extends StatelessWidget {
                             fontSize: 10.sp,
                             color: color,
                             fontWeight: FontWeight.bold,
-                            fontFamily: 'Calibri',
+                            fontFamily: AtharTypography.fontFamily,
                             fontFamilyFallback: AtharTypography.fontFallback,
                           ),
                         ),
@@ -121,7 +121,7 @@ class UnifiedTimelineTile extends StatelessWidget {
                         color: isCompleted
                             ? colorScheme.outline
                             : colorScheme.onSurface,
-                        fontFamily: 'Calibri',
+                        fontFamily: AtharTypography.fontFamily,
                         fontFamilyFallback: AtharTypography.fontFallback,
                       ),
                     ),

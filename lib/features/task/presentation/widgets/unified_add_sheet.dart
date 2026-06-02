@@ -434,7 +434,7 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
           onChanged: (v) => setState(() => _schedulingType = v!),
           decoration: InputDecoration(
             labelText: l10n.schedulePattern,
-            labelStyle: TextStyle(color: colorScheme.onSurfaceVariant, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+            labelStyle: TextStyle(color: colorScheme.onSurfaceVariant, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
             border: OutlineInputBorder(
               borderRadius: AtharRadii.radiusMd,
               borderSide: BorderSide(color: colorScheme.outline),
@@ -489,7 +489,7 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
       children: [
         Text(
           l10n.selectIntakeTimes,
-          style: TextStyle(fontSize: 12.sp, color: colorScheme.outline, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+          style: TextStyle(fontSize: 12.sp, color: colorScheme.outline, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
         ),
         AtharGap.sm,
         Wrap(
@@ -531,7 +531,7 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
       children: [
         Icon(Icons.timelapse, color: context.colors.warning),
         AtharGap.hMd,
-        Text(l10n.every, style: TextStyle(fontSize: 14.sp, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback)),
+        Text(l10n.every, style: TextStyle(fontSize: 14.sp, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback)),
         AtharGap.hMd,
         DropdownButton<int>(
           value: _intervalHours,
@@ -719,7 +719,7 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
         selectedColor: colorScheme.primary,
         labelStyle: TextStyle(
           color: isSelected ? colorScheme.surface : colorScheme.onSurface,
-          fontFamily: 'Calibri',
+          fontFamily: AtharTypography.fontFamily,
           fontFamilyFallback: AtharTypography.fontFallback,
         ),
         onSelected: (v) => setState(() => _medType = key),
@@ -740,7 +740,7 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
         selectedColor: colorScheme.primary,
         labelStyle: TextStyle(
           color: isSelected ? colorScheme.surface : colorScheme.onSurface,
-          fontFamily: 'Calibri',
+          fontFamily: AtharTypography.fontFamily,
           fontFamilyFallback: AtharTypography.fontFallback,
         ),
         onSelected: (v) => setState(() => _apptType = key),
@@ -756,7 +756,7 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
       initialValue: _instructions,
       decoration: InputDecoration(
         labelText: l10n.usageInstructions,
-        labelStyle: TextStyle(color: colorScheme.onSurfaceVariant, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+        labelStyle: TextStyle(color: colorScheme.onSurfaceVariant, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
         border: OutlineInputBorder(
           borderRadius: AtharRadii.radiusMd,
           borderSide: BorderSide(color: colorScheme.outline),
@@ -783,7 +783,7 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
       child: ExpansionTile(
         title: Text(
           l10n.smartRefill,
-          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
         ),
         children: [
           Padding(
@@ -880,7 +880,7 @@ class _UnifiedAddSheetState extends State<UnifiedAddSheet> {
           Expanded(
             child: Text(
               _prayerConflict.message,
-              style: TextStyle(color: _prayerConflict.color, fontFamily: 'Calibri', fontFamilyFallback: AtharTypography.fontFallback),
+              style: TextStyle(color: _prayerConflict.color, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
             ),
           ),
         ],

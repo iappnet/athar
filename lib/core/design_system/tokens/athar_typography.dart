@@ -26,6 +26,10 @@ abstract class AtharTypography {
   /// الخط الرئيسي للإنجليزية (Calibri — canonical brand font)
   static const String fontFamilyEn = 'Calibri';
 
+  /// Canonical brand font — single source of truth for all fontFamily: parameters.
+  /// Always use this constant; never write the literal 'Calibri' in Dart code.
+  static const String fontFamily = fontFamilyAr;
+
   /// خط الأرقام والكود
   static const String fontFamilyMono = 'JetBrains Mono';
 

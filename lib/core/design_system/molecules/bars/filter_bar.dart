@@ -67,7 +67,7 @@ class FilterBar<T> extends StatelessWidget {
                     ? colorScheme.onPrimary
                     : colorScheme.onSurface,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                fontFamily: 'Calibri',
+                fontFamily: AtharTypography.fontFamily,
                 fontFamilyFallback: AtharTypography.fontFallback,
               ),
               side: isSelected

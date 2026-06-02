@@ -69,7 +69,7 @@ class CalendarStrip extends StatelessWidget {
                           ? colorScheme.onPrimary.withValues(alpha: 0.7)
                           : colorScheme.outline,
                       fontWeight: FontWeight.w600,
-                      fontFamily: 'Calibri',
+                      fontFamily: AtharTypography.fontFamily,
                       fontFamilyFallback: AtharTypography.fontFallback,
                     ),
                   ),
@@ -82,7 +82,7 @@ class CalendarStrip extends StatelessWidget {
                           ? colorScheme.onPrimary
                           : colorScheme.onSurface,
                       fontWeight: FontWeight.bold,
-                      fontFamily: 'Calibri',
+                      fontFamily: AtharTypography.fontFamily,
                       fontFamilyFallback: AtharTypography.fontFallback,
                     ),
                   ),
