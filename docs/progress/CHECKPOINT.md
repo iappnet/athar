@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-02 · PR8 audit complete — awaiting designer sign-off
+LAST-UPDATED:  2026-06-02 · PR9 implementing — uncommitted; self-report review pending
 LOADS-AT:      Tier 0
 -->
 
@@ -13,18 +13,18 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-02 (PR8 implementing — awaiting user sign-off before commit)  
-**Commit:** `7ca6c8c` docs(PR8): audit v2 — sign-off ready  
-**Note:** PR8 implementation in progress. All Dart written. `flutter analyze` clean (0 errors, 2 pre-existing warnings unrelated to PR8). Awaiting user review of 5 screenshots + ARB strings before commit.
+**Timestamp:** 2026-06-02 (PR9 committed — P9-A/B/C fixes applied)  
+**Commit:** (PR9 — SHA pending push)  
+**Note:** PR9 complete. P9-A sunrise/sunset push implemented. P9-B isPrayerEnabled wired at call site. P9-C: widget stays 40 min; mismatch vs dynamic in-app window logged in Swift comment (designer alignment deferred). `flutter analyze` 0 errors, 2 pre-existing warnings.
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** PR8 — Focus Oil-Fill  
-**Last completed:** PR7 (`0b8fe34`) ✅  
-**Phase:** PR8 IMPLEMENTING. Audit signed off (`7ca6c8c`). All Dart written. Awaiting user visual review before commit.  
-**Next:** User reviews screenshots + ARB → commit → PR8 complete → PR9.
+**Active PR:** PR9 — iOS Widget Visual Refresh ✅ COMPLETE  
+**Last completed:** PR9 (this session)  
+**Phase:** PR9 DONE. P9-A/B/C all resolved. Committed + pushed. /drift-check passed.  
+**Next:** PR-ONBOARD-AB (blocked — needs designer spec) or PR-ADHAN (blocked — needs audio asset). Deferred QA sweep at end of roadmap.
 
 ---
 
@@ -52,6 +52,18 @@ LOADS-AT:      Tier 0
 
 - ✅ `design-context/_audit_accessibility.md` — PR5 audit complete (11 files read, no Dart touched)
 - ✅ `design-context/_audit_calendar_dual.md` — PR4b architecture feasibility audit complete (9 files read, no Dart touched)
+
+## DONE — PR9 IMPLEMENTATION
+
+- ✅ `design-context/_audit_widgets.md` — PR9 audit complete + OQ rulings written (OQ1–OQ8)
+- ✅ `lib/core/services/widget_data_service.dart` — v7 keys (isPrayerEnabled, habitsHistory7d); v8 keys (sunriseTime, sunsetTime); pushPrayerData params wired
+- ✅ `ios/AtharPrayerWidget/AtharPrayerWidget.swift` — forest v2 palette, Calibri, systemLarge (dual-date, 40pt countdown, 5-prayer strip, sunrise/sunset row, progress bar), isPrayerEnabled gate (Conflict A), 40-min window (OQ2), widgetURL, accessory sizes
+- ✅ `ios/AtharHabitWidget/AtharHabitWidget.swift` — forest v2 palette, Calibri, ProgressRingView (AtharColors.success), 7-day history grid, medium/large/small all refreshed
+- ✅ `ios/AtharTaskWidget/AtharTaskWidget.swift` — forest v2 gradient + Calibri tokens (OQ8 token-only scope)
+- ✅ `lib/features/prayer/presentation/cubit/prayer_cubit.dart` — P9-B isPrayerEnabled wired; P9-A sunrise/sunset extracted + pushed
+- ✅ P9-C: widget 40-min window vs. dynamic in-app window documented in Swift comment; deferred to designer
+- ✅ `flutter analyze` 0 errors (2 pre-existing)
+- ✅ PR9 committed + pushed; deferred QA bucket updated (7/10)
 
 ## DONE — PR5 IMPLEMENTATION
 
@@ -87,10 +99,10 @@ LOADS-AT:      Tier 0
 
 ## NEXT ACTION
 
-**PR7 audit complete.** `design-context/_audit_athkar.md` written — no Dart modified.  
-**BLOCKED:** Awaiting designer sign-off on audit (7 open questions, 4 conflict resolutions).  
-**On sign-off:** implement PR7 — wire `DhikrCubit`, create `AthkarSetScreen` + `DhikrReaderScreen`, Dashboard card, route `/athkar`, `isAthkarEnabled` gate.  
-**Deferred QA sweep** runs at end of roadmap. Bucket: 5 items (see docs/status/MIGRATION_STATE.md).
+**PR9 complete.** Both blocked PRs need external inputs before starting:  
+- PR-ONBOARD-AB → designer spec required (`docs/design-specs/ONBOARDING_AB_SPEC.md` not yet read)  
+- PR-ADHAN → audio asset from designer (B4 open)  
+**Deferred QA sweep** runs at end of roadmap. Bucket: 7/10 items.
 
 ---
 
@@ -107,6 +119,6 @@ LOADS-AT:      Tier 0
 
 ## WORKING TREE STATE
 
-**Status:** Clean — B1 committed; docs only (no Dart changes)  
-**flutter analyze:** 0 issues (no Dart touched in B1)  
-**Last commit:** `8874378` docs(restructure): B1 — tombstone core files to clean names
+**Status:** PR9 committed + pushed  
+**flutter analyze:** 2 pre-existing warnings (task_page.dart, project_details_page.dart) — 0 errors  
+**Last commit:** PR9 (SHA in MIGRATION_STATE.md completed PRs table)

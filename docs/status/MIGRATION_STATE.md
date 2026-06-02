@@ -41,6 +41,7 @@ CANONICAL-SINCE: 2026-06-01
 | **PR4b** — Calendar Dual-Display | `65fc417` | (in branch) | ✅ 12/12 spec items PASS · AR visual QA deferred to final sweep | 2026-06-01 |
 | **PR7** — Athkar v1 | `0b8fe34` | (in branch) | ✅ `flutter analyze` 0 new issues · 5 conformance fixes applied · AR visual QA deferred to final sweep | 2026-06-02 |
 | **PR8** — Focus Oil-Fill | `2b10844` | (in branch) | ✅ `flutter analyze` 0 errors · 4 conformance deviations fixed · device QA deferred | 2026-06-02 |
+| **PR9** — iOS Widget Visual Refresh | (pending SHA) | (in branch) | ✅ `flutter analyze` 0 errors · Prayer+Habit+Task v2 · P9-A/B/C fixes · device QA deferred | 2026-06-02 |
 
 ---
 
@@ -84,17 +85,16 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Active PR
 
-**None.** PR8 complete (`2b10844`). See `docs/status/ROADMAP.md` for full status.
+**PR9 — iOS Widget Visual Refresh.** ✅ Complete (2026-06-02). Device QA deferred to final sweep. Next: PR-ONBOARD-AB or PR-ADHAN (blocked on assets).
 
 ---
 
 ## Current Working Tree State
 
 ```
-flutter analyze → 2 pre-existing issues (project_details_page.dart, task_page.dart — unrelated to PR8)
+flutter analyze → 2 pre-existing issues (project_details_page.dart, task_page.dart — unrelated to PR9)
+PR9 committed. Last commit: see CHECKPOINT.md for SHA.
 ```
-
-All changes committed and pushed. Last commit: `2b10844` feat(PR8): Focus oil-fill.
 
 ---
 
@@ -144,7 +144,7 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 - All fixes in this bucket are **UNVERIFIED** — logical hypotheses, confirmed only on a physical device. Do NOT apply any fix until device validation.
 - To add an item: assign an ID (PR origin + sequential number), describe the pass condition, and write the candidate fix as a hypothesis.
 
-**Current count: 6 of 10.**
+**Current count: 7 of 10.**
 
 | ID | Description | Origin | Status |
 |----|-------------|--------|--------|
@@ -154,6 +154,7 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 | PR4a-G2 | Today-state dark alpha legibility | PR4a | Unverified — see below |
 | DEVICE-1 | Forest-dark surfaces, Cairo fallback, RTL drawer, countdown tick (general device pass) | PR-THEME/PR2 | Unverified |
 | PR8-perf | PR8 final-sweep (physical device): 5 visual states + gyro slosh + sudden-flip splash + 60fps iPhone 12 tripwire — highest priority | PR8 | Unverified |
+| PR9-sweep | PR9 all-widget device sweep: Prayer (sm/md/lg) × ar/en · Habit (sm/md/lg) × ar/en · Task (sm/md/lg) × ar/en · Calibri renders in each extension · forest gradient parity · widgetURL deep-link · systemLarge dual-date/strip/sunrise-sunset · ring+7-day history · post-prayer label (40 min vs dynamic app window — P9-C, flag for designer) · manual Xcode font steps (OQ3) required before sweep | PR9 | Unverified |
 
 ---
 

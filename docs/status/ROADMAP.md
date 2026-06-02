@@ -57,11 +57,11 @@ CANONICAL-SINCE: 2026-06-01
 | 9 | **PR6** | Stats redesign (`STATS_KPI_SPEC.md`) | ✅ **Complete 2026-06-01** | `2a6a46a` | — |
 | 10 | **PR7** | Athkar feature net-new (curated sets v1; designer review before screens) | ✅ **Complete 2026-06-02** | `0b8fe34` | — |
 | 11 | **PR8** | Focus screen oil-fill (`FOCUS_OIL_SPEC.md`; procedural colour carve-out) | ✅ **Complete 2026-06-02** | `2b10844` | — |
-| 12 | **PR9** | iOS widgets visual refresh (infra complete; visuals only) | 🔲 Not started | — | PR2 |
+| 12 | **PR9** | iOS widgets visual refresh (infra complete; visuals only) | ✅ **Complete 2026-06-02** | — | — |
 | 13 | **PR-ONBOARD-AB** | Four-variant onboarding A/B/C/D; Variant A must not regress | 🔲 Not started | — | PR2 + designer |
 | 14 | **PR-CLEANUP** | Hardcoded colour sweep (files untouched by other PRs) | 🔲 Not started | — | All others |
 
-**Total PRs:** 14 (+ PR-FONT-FALLBACK as 2b) · **Complete:** 11 (PR1, PR-THEME arc incl PR-FONT-FALLBACK, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8) · **Ready:** 1 (PR9 — unblocked) · **Blocked:** 3 (PR-ONBOARD-AB needs designer spec; PR-ADHAN needs audio asset; PR-CLEANUP needs all others first)
+**Total PRs:** 14 (+ PR-FONT-FALLBACK as 2b) · **Complete:** 12 (PR1, PR-THEME arc incl PR-FONT-FALLBACK, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8, PR9) · **Blocked:** 3 (PR-ONBOARD-AB needs designer spec; PR-ADHAN needs audio asset; PR-CLEANUP needs all others first)
 
 ---
 
@@ -69,12 +69,12 @@ CANONICAL-SINCE: 2026-06-01
 
 | Dimension | Complete | Total | % |
 |-----------|---------|-------|---|
-| v2 Design System PRs | 10 logical (PR1, PR-THEME arc, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8) | 14 | **~71%** |
+| v2 Design System PRs | 11 logical (PR1, PR-THEME arc, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8, PR9) | 14 | **~79%** |
 | Design system token migration | ✅ Foundation done; design system themes now live in app | Component + screen migration pending | ~20% |
 | Typography migration | Tokens + 88 theme fallbacks + 38 base styles — all correct | Component `.arabic`/`.english` callsites still use Cairo in some files | ~25% |
 | Dark-mode migration | Tokens ✅ + ThemeMode ✅ + AtharDarkTheme now wired ✅ | Component-level color migration pending (PR5+) | ~70% |
 | Component library | Prayer card (PR3 ✅) · Calendar refresh (PR4a ✅) | AdaptiveShell (PR2 ✅) + stats, focus, Athkar, widget visuals pending | ~25% |
-| iOS widget visual refresh | 0 visual refresh | PR9 | 0% |
+| iOS widget visual refresh | Prayer ✅ · Habit ✅ · Task ✅ (token-only) | PR9 complete | 100% |
 
 ---
 

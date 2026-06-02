@@ -70,10 +70,26 @@ abstract final class WidgetKeys {
   static const tasksDone = 'athar_tasks_done';
   static const currentPeriod = 'athar_current_period';
 
+  // ── v7 Prayer key ─────────────────────────────────────────────────────────
+  /// 1 = Prayer feature is enabled in app settings, 0 = disabled.
+  /// Prayer widget reads this to show "Enable Prayer in Athar" when 0.
+  static const isPrayerEnabled = 'athar_is_prayer_enabled';
+
   // ── Habit keys ─────────────────────────────────────────────────────────────
   static const habits = 'athar_habits';
   static const habitsTotal = 'athar_habits_total';
   static const habitsDone = 'athar_habits_done';
+
+  // ── v7 Habit key ──────────────────────────────────────────────────────────
+  /// JSON array of 7 ints: count of regular habits completed on each of the
+  /// last 7 days. Index 0 = 6 days ago, index 6 = today.
+  static const habitsHistory7d = 'athar_habits_history_7d';
+
+  // ── v8 Prayer keys (sunrise/sunset for systemLarge strip) ─────────────────
+  /// ISO-8601 string of today's sunrise time (PrayerType.sunrise).
+  static const sunriseTime = 'athar_sunrise_time';
+  /// ISO-8601 string of today's sunset time (PrayerType.maghrib used as proxy).
+  static const sunsetTime  = 'athar_sunset_time';
 
   // ── Pending action keys (widget → Flutter) ─────────────────────────────────
   static const pendingTaskActions  = 'athar_pending_task_actions';
@@ -123,6 +139,13 @@ class WidgetDataService {
     String locale = 'system',
     bool isDuhaTime = false,
     bool isQiyamTime = false,
+    /// Whether the Prayer feature is enabled in app settings.
+    /// Widget shows "Enable Prayer in Athar" prompt when false.
+    bool isPrayerEnabled = true,
+    /// Sunrise time (PrayerType.sunrise) — rendered in systemLarge prayer strip.
+    DateTime? sunriseTime,
+    /// Sunset time (PrayerType.maghrib used as proxy) — rendered in systemLarge strip.
+    DateTime? sunsetTime,
   }) async {
     try {
       final now = DateTime.now();
@@ -145,7 +168,7 @@ class WidgetDataService {
         HomeWidget.saveWidgetData<String>(WidgetKeys.appLocale, locale),
         HomeWidget.saveWidgetData<String>(
             WidgetKeys.lastUpdatedAt, now.toIso8601String()),
-        HomeWidget.saveWidgetData<int>(WidgetKeys.widgetDataVersion, 6),
+        HomeWidget.saveWidgetData<int>(WidgetKeys.widgetDataVersion, 8),
         // v3 keys
         HomeWidget.saveWidgetData<int>(WidgetKeys.remainingSeconds, remaining),
         HomeWidget.saveWidgetData<String>(WidgetKeys.currentDateAr, dateAr),
@@ -160,6 +183,14 @@ class WidgetDataService {
         // v6 keys — previous prayer name for current-prayer state
         HomeWidget.saveWidgetData<String>(WidgetKeys.prevPrayerNameAr, prevNameAr),
         HomeWidget.saveWidgetData<String>(WidgetKeys.prevPrayerNameEn, prevNameEn),
+        // v7 key — prayer feature gate (0 = disabled; widget shows enable prompt)
+        HomeWidget.saveWidgetData<int>(
+            WidgetKeys.isPrayerEnabled, isPrayerEnabled ? 1 : 0),
+        // v8 keys — sunrise/sunset for systemLarge prayer strip
+        HomeWidget.saveWidgetData<String>(
+            WidgetKeys.sunriseTime, sunriseTime?.toIso8601String() ?? ''),
+        HomeWidget.saveWidgetData<String>(
+            WidgetKeys.sunsetTime, sunsetTime?.toIso8601String() ?? ''),
       ]);
       if (kDebugMode) {
         print('[WidgetDataService] pushPrayerData OK'
@@ -284,9 +315,9 @@ class WidgetDataService {
       final sortedAthkar = [...todayAthkar]
         ..sort((a, b) => a.isCompleted == b.isCompleted ? 0 : (a.isCompleted ? 1 : -1));
 
-      // Regular fills first slots; Athkar appended; cap at 5; skip null uuid
+      // Regular fills first slots; Athkar appended; cap at 6; skip null uuid
       final top = [...sortedRegular, ...sortedAthkar]
-          .take(5)
+          .take(6)
           .where((h) => h.uuid != null)
           .toList();
 
@@ -302,11 +333,29 @@ class WidgetDataService {
               })
           .toList());
 
+      // 7-day completion history: count of regular habits completed per day.
+      // Index 0 = 6 days ago, index 6 = today.
+      final allRegular = allHabits
+          .where((h) => h.type == HabitType.regular && h.deletedAt == null)
+          .toList();
+      final history7d = List<int>.generate(7, (i) {
+        final day = today.subtract(Duration(days: 6 - i));
+        return allRegular
+            .where((h) => h.completedDays.any((cd) =>
+                cd.year == day.year &&
+                cd.month == day.month &&
+                cd.day == day.day))
+            .length;
+      });
+      final history7dJson = jsonEncode(history7d);
+
       await Future.wait([
         HomeWidget.saveWidgetData<String>(WidgetKeys.habits, habitsJson),
         HomeWidget.saveWidgetData<int>(WidgetKeys.habitsTotal, todayRegular.length),
         HomeWidget.saveWidgetData<int>(WidgetKeys.habitsDone, done),
         HomeWidget.saveWidgetData<String>(WidgetKeys.appLocale, locale),
+        HomeWidget.saveWidgetData<String>(
+            WidgetKeys.habitsHistory7d, history7dJson),
       ]);
       if (kDebugMode) {
         print('[WidgetDataService] pushHabitData OK'

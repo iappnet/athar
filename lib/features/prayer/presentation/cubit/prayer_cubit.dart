@@ -113,6 +113,19 @@ class PrayerCubit extends Cubit<PrayerState> {
         ),
       );
 
+      // Extract sunrise/sunset for widget systemLarge strip (P9-A).
+      // sunsetTime proxied by maghrib time — closest observable event.
+      DateTime? sunriseTimeForWidget;
+      DateTime? sunsetTimeForWidget;
+      try {
+        sunriseTimeForWidget = todayPrayers
+            .firstWhere((p) => p.type == PrayerType.sunrise)
+            .time;
+        sunsetTimeForWidget = todayPrayers
+            .firstWhere((p) => p.type == PrayerType.maghrib)
+            .time;
+      } catch (_) {}
+
       // Push next prayer data to home screen widget (fire-and-forget)
       unawaited(
         _widgetDataService.pushPrayerData(
@@ -127,6 +140,9 @@ class PrayerCubit extends Cubit<PrayerState> {
           locale: locale,
           isDuhaTime: isDuhaTime,
           isQiyamTime: isQiyamTime,
+          isPrayerEnabled: settings.isPrayerEnabled,
+          sunriseTime: sunriseTimeForWidget,
+          sunsetTime: sunsetTimeForWidget,
         ),
       );
     } catch (e) {
