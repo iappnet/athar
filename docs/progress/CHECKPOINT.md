@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-02 · /drift-check B2 — dead Tier-2 paths fixed (f6db9e5)
+LAST-UPDATED:  2026-06-02 · PR8 audit complete — awaiting designer sign-off
 LOADS-AT:      Tier 0
 -->
 
@@ -13,19 +13,18 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-02 (/drift-check B2 — governance arc closed)  
-**Commit:** `f6db9e5` docs(drift-check): fix 4 dead Tier-2 paths after Stage-B restructure  
-**Note:** Second /drift-check post governance commit `153e77d`. 4 dead Tier-2 paths fixed in CLAUDE.md + .claude/CONTEXT_TIERS.md: CALENDAR_CELL_SPEC.md, CALENDAR_FOCUS_REDESIGN.md, DUAL_DATE_SPEC.md → docs/design-specs/; IPAD_LAYER2_OWNERSHIP_MAP.md → docs/ai/. All 5 drift-check gates PASS. PR7 governance arc complete.  
-**Previous commit:** `0b8fe34` feat(PR7): Athkar v1
+**Timestamp:** 2026-06-02 (PR8 audit — BLOCKED awaiting designer sign-off)  
+**Commit:** `61dcd3b` docs(governance): fix 2 remaining active handoff_v2-2 nav refs  
+**Note:** PR8 audit written to `design-context/_audit_focus.md`. No Dart modified. 14 spec gaps identified (G1–G14); 7 open questions (OQ1–OQ7). Key findings: sensors_plus already present, flutter_shaders not needed yet, CustomPainter+RepaintBoundary recommended, fluid_engine.dart is dead code (delete), PR5 flags confirmed and readable. Awaiting designer sign-off before any Dart work.
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** PR8 — Focus / Oil next  
-**Last completed:** PR7 (`0b8fe34`) ✅; PR4b (`65fc417`) ✅; B1–B4 ✅  
-**Phase:** PR7 COMPLETE. AR screenshot review deferred to final sweep (per designer).  
-**Next:** PR8 — Focus mode / Oil spec, or final sweep screenshots first.
+**Active PR:** PR8 — Focus Oil-Fill  
+**Last completed:** PR7 (`0b8fe34`) ✅  
+**Phase:** PR8 AUDIT COMPLETE. Blocked — awaiting designer sign-off on `design-context/_audit_focus.md` (7 open questions OQ1–OQ7).  
+**Next:** Implement PR8 on sign-off.
 
 ---
 
