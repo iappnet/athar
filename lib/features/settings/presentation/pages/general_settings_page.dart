@@ -16,8 +16,11 @@ import 'package:athar/features/settings/presentation/pages/smart_zones_page.dart
 import 'package:athar/features/settings/presentation/widgets/delete_account_dialog.dart';
 import 'package:athar/features/subscription/presentation/pages/subscription_page.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
+import 'package:athar/core/services/onboarding_variant_service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
@@ -496,6 +499,29 @@ class GeneralSettingsPage extends StatelessWidget {
                       trailing: '1.0.0',
                     ),
                   ]),
+
+                  if (kDebugMode) ...[
+                    AtharGap.lg,
+                    _SectionHeader('Developer'),
+                    _SettingsCard(children: [
+                      _NavTile(
+                        icon: Icons.restart_alt_rounded,
+                        iconColor: Colors.deepOrange,
+                        title: 'Reset onboarding',
+                        onTap: () async {
+                          final prefs = await SharedPreferences.getInstance();
+                          await OnboardingVariantService(prefs).reset();
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Onboarding reset — restart the app to re-enter'),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ]),
+                  ],
 
                   SizedBox(height: 32.h),
                 ],

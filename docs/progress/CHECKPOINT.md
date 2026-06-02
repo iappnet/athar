@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-02 · P9-C fix + spec corrected · 0247c2a
+LAST-UPDATED:  2026-06-02 · PR-ONBOARD-AB audit complete — awaiting designer sign-off
 LOADS-AT:      Tier 0
 -->
 
@@ -13,18 +13,49 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-02 (P9-C resolved — dynamic window, spec corrected)  
-**Commit:** `0247c2a` fix(PR9): widget post-prayer window matches in-app dynamic formula  
-**Note:** P9-C fully resolved. Widget now uses `round(0.3 × minutesBetween) clamp(15,45)` + Fajr=40/Maghrib=20 overrides — exact parity with `prayer_timer_service.dart`. PRAYER_CARD_SPEC §4/§10/§11/§12 + IOS_WIDGETS_SPEC §1e corrected from flat 40 min to dynamic formula. `flutter analyze` 0 errors, 2 pre-existing warnings.
+**Timestamp:** 2026-06-02 (PR-ONBOARD-AB-INFRA implemented — HOLD for review before commit)  
+**Commit:** `0247c2a` fix(PR9): widget post-prayer window matches in-app dynamic formula (last commit; INFRA not yet committed — held for review)  
+**Note:** INFRA implementation complete. 5 files modified, 3 new files created. `flutter analyze` 0 errors, 2 pre-existing warnings. Bucket distribution verified (~25% each). All dart-define overrides map correctly. SQL migration written. HELD for designer/user review before commit.
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** PR9 — iOS Widget Visual Refresh ✅ COMPLETE  
-**Last completed:** PR9 (this session)  
-**Phase:** PR9 DONE. P9-A/B/C all resolved. Committed + pushed. /drift-check passed.  
-**Next:** PR-ONBOARD-AB (blocked — needs designer spec) or PR-ADHAN (blocked — needs audio asset). Deferred QA sweep at end of roadmap.
+**Active PR:** PR-ONBOARD-AB-INFRA — INFRA half of 4-Variant Onboarding A/B  
+**Last completed:** PR9 (previous session) · commit `0247c2a`  
+**Phase:** INFRA IMPLEMENTATION COMPLETE. HOLD — awaiting user review before commit.  
+**Next:** User reviews delta → commit → push → /drift-check → UI PR starts.
+
+---
+
+## DONE — PR-ONBOARD-AB-INFRA IMPLEMENTATION (HELD — not yet committed)
+
+- ✅ Sign-off note + OQ rulings written into `design-context/_audit_onboarding.md`
+- ✅ `lib/core/services/onboarding_variant_service.dart` — `OnboardingVariant` enum + `assignOrGet()` (25/25/25/25 by device_id.hashCode, dart-define override, reset())
+- ✅ `lib/core/services/onboarding_analytics_service.dart` — 5 emitters (started/step_completed/step_skipped/completed/abandoned), Supabase anon insert, silent fail
+- ✅ `lib/main.dart` — SharedPreferences.getInstance(), UUID v4 device_id seeding, `OnboardingVariantService.assignOrGet()`, pass variant to `AtharApp`
+- ✅ `lib/app.dart` — `onboardingVariant` constructor param added; `home:` is now 4-branch switch (all → `OnboardingPage` for INFRA); variant pages land in UI PR
+- ✅ `lib/features/settings/presentation/pages/general_settings_page.dart` — dev "Reset onboarding" tile (`kDebugMode` gate, clears `onboarding_seen` + `onboarding_variant`, SnackBar prompt)
+- ✅ `supabase/migrations/20260602_onboarding_events.sql` — table + anon insert RLS policy + authenticated select
+- ✅ `test/widget_test.dart` — updated with `onboardingVariant` param
+- ✅ `flutter analyze`: 0 errors, 2 pre-existing warnings
+- ✅ Bucket distribution verified: 25.7/21.6/27.6/25.1% across 1000 simulated device_ids
+- ✅ dart-define override mapping verified: all 4 snake_case → camelCase conversions correct
+- ⏸ COMMIT HELD — awaiting user review
+
+---
+
+## DONE — PR-ONBOARD-AB AUDIT SESSION
+
+- ✅ `docs/design-specs/ONBOARDING_AB_SPEC.md` — 502 lines fully read
+- ✅ `lib/features/home/presentation/pages/onboarding_page.dart` — Variant A scaffold confirmed (4 slides, onboarding_seen key, RTL-safe skip)
+- ✅ `lib/app.dart` — routing section read; current home: switch at ~line 200-202 (spec says 187-189)
+- ✅ Infra grep — Supabase analytics: ABSENT (net-new). device_id: ABSENT (A/B split broken).
+- ✅ UserSettings model — module flag inventory: Prayer + Athkar exist; Tasks/Habits/Health/Assets have NO master feature toggle
+- ✅ JoinSpaceCubit, SpaceCubit, LocationSettingsPage, NotificationService, LocationService — all confirmed present with correct signatures
+- ✅ `design-context/_audit_onboarding.md` — written (6 OQs, 2 blockers, scope recommendation, full dependency table)
+- ✅ CHECKPOINT.md updated (audit-in-progress state)
+- ⏸ NO DART MODIFIED THIS SESSION
 
 ---
 
@@ -99,10 +130,12 @@ LOADS-AT:      Tier 0
 
 ## NEXT ACTION
 
-**PR9 complete.** Both blocked PRs need external inputs before starting:  
-- PR-ONBOARD-AB → designer spec required (`docs/design-specs/ONBOARDING_AB_SPEC.md` not yet read)  
-- PR-ADHAN → audio asset from designer (B4 open)  
-**Deferred QA sweep** runs at end of roadmap. Bucket: 7/10 items.
+**INFRA implementation complete — held for review.** After user approves:
+1. Commit PR-ONBOARD-AB-INFRA
+2. Push + /drift-check
+3. Start UI PR (variant pages, ARB, module toggle resolution for OQ1)
+
+PR-ADHAN still blocked on B4 (audio asset). Deferred QA sweep bucket: 7/10 items.
 
 ---
 
