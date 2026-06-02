@@ -43,7 +43,7 @@ class GeneralSettingsPage extends StatelessWidget {
         title: Text(
           l10n.settings,
           style: TextStyle(
-            fontFamily: 'Cairo',
+            fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
             fontSize: 20,
             fontWeight: FontWeight.w700,
             color: colorScheme.onSurface,
@@ -91,7 +91,7 @@ class GeneralSettingsPage extends StatelessWidget {
                     // Master toggle — enables all prayer sub-features
                     _SwitchTile(
                       icon: Icons.mosque_outlined,
-                      iconColor: const Color(0xFF1A6B3C),
+                      iconColor: colorScheme.primary,
                       title: l10n.prayerTimes,
                       value: settings?.isPrayerEnabled ?? false,
                       onChanged: (v) =>
@@ -102,7 +102,7 @@ class GeneralSettingsPage extends StatelessWidget {
                       // Sub: prayer card on dashboard
                       _SwitchTile(
                         icon: Icons.calendar_today_outlined,
-                        iconColor: const Color(0xFF1A6B3C),
+                        iconColor: colorScheme.primary,
                         title: l10n.prayerCard,
                         value: settings?.isPrayerCardEnabled ?? false,
                         onChanged: (v) => context
@@ -113,7 +113,7 @@ class GeneralSettingsPage extends StatelessWidget {
                       // Sub: prayer athan notifications
                       _SwitchTile(
                         icon: Icons.notifications_outlined,
-                        iconColor: const Color(0xFF1A6B3C),
+                        iconColor: colorScheme.primary,
                         title: l10n.prayerNotifications,
                         value: settings?.isPrayerNotificationsEnabled ?? false,
                         onChanged: (v) => context
@@ -125,7 +125,7 @@ class GeneralSettingsPage extends StatelessWidget {
                         // Sub-sub: 15-min early reminder
                         _SwitchTile(
                           icon: Icons.alarm_outlined,
-                          iconColor: const Color(0xFF1A6B3C),
+                          iconColor: colorScheme.primary,
                           title: l10n.prayerReminder,
                           value: settings?.enablePrayerReminders ?? true,
                           onChanged: (v) => context
@@ -137,7 +137,7 @@ class GeneralSettingsPage extends StatelessWidget {
                       // Sub: prayer dots on calendar
                       _SwitchTile(
                         icon: Icons.calendar_month_outlined,
-                        iconColor: const Color(0xFF1A6B3C),
+                        iconColor: colorScheme.primary,
                         title: l10n.calendarPrayerDots,
                         subtitle: l10n.calendarPrayerDotsSub,
                         value: settings?.showPrayerDotsOnCalendar ?? true,
@@ -148,7 +148,7 @@ class GeneralSettingsPage extends StatelessWidget {
                       _Divider(),
                       _NavTile(
                         icon: Icons.location_on_outlined,
-                        iconColor: const Color(0xFF0288D1),
+                        iconColor: context.colors.accentBlue,
                         title: l10n.prayerTimesLocation,
                         onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(
@@ -160,7 +160,7 @@ class GeneralSettingsPage extends StatelessWidget {
                     _Divider(),
                     _SwitchTile(
                       icon: Icons.menu_book_outlined,
-                      iconColor: const Color(0xFF00897B),
+                      iconColor: context.colors.accentTeal,
                       title: l10n.morningEveningAthkar,
                       value: settings?.isAthkarEnabled ?? true,
                       onChanged: (v) =>
@@ -170,7 +170,7 @@ class GeneralSettingsPage extends StatelessWidget {
                       _Divider(),
                       _SwitchTile(
                         icon: Icons.notifications_outlined,
-                        iconColor: const Color(0xFF00897B),
+                        iconColor: context.colors.accentTeal,
                         title: l10n.athkarRemindersTitle,
                         value: settings?.isAthkarRemindersEnabled ?? true,
                         onChanged: (v) => context
@@ -181,7 +181,7 @@ class GeneralSettingsPage extends StatelessWidget {
                         _Divider(),
                         _AthkarTimeTile(
                           icon: Icons.wb_sunny_outlined,
-                          iconColor: const Color(0xFFFF8F00),
+                          iconColor: AtharColors.athkarMorning,
                           title: l10n.athkarMorningTime,
                           time: settings?.morningAthkarTime ?? '06:00',
                           onPick: (t) => context
@@ -191,7 +191,7 @@ class GeneralSettingsPage extends StatelessWidget {
                         _Divider(),
                         _AthkarTimeTile(
                           icon: Icons.nights_stay_outlined,
-                          iconColor: const Color(0xFF3949AB),
+                          iconColor: AtharColors.athkarEvening,
                           title: l10n.athkarEveningTime,
                           time: settings?.eveningAthkarTime ?? '17:00',
                           onPick: (t) => context
@@ -201,7 +201,7 @@ class GeneralSettingsPage extends StatelessWidget {
                         _Divider(),
                         _AthkarTimeTile(
                           icon: Icons.bedtime_outlined,
-                          iconColor: const Color(0xFF6A1B9A),
+                          iconColor: AtharColors.athkarSleep,
                           title: l10n.athkarSleepTime,
                           time: settings?.sleepAthkarTime ?? '22:00',
                           onPick: (t) => context
@@ -218,7 +218,7 @@ class GeneralSettingsPage extends StatelessWidget {
                   _SettingsCard(children: [
                     _SwitchTile(
                       icon: Icons.task_alt_outlined,
-                      iconColor: const Color(0xFF1565C0),
+                      iconColor: context.colors.accentBlue,
                       title: '${l10n.task} & ${l10n.habits}',
                       subtitle: l10n.reminders,
                       value: settings?.isTaskRemindersEnabled ?? true,
@@ -229,7 +229,7 @@ class GeneralSettingsPage extends StatelessWidget {
                     _Divider(),
                     _SwitchTile(
                       icon: Icons.calendar_today_outlined,
-                      iconColor: const Color(0xFF6D4C41),
+                      iconColor: context.colors.accentOrange,
                       title: l10n.hijriCalendar,
                       subtitle: l10n.hijriCalendarDesc,
                       value: settings?.isHijriMode ?? false,
@@ -239,7 +239,7 @@ class GeneralSettingsPage extends StatelessWidget {
                     _Divider(),
                     _NavTile(
                       icon: Icons.schedule_outlined,
-                      iconColor: const Color(0xFF7B1FA2),
+                      iconColor: context.colors.accentPurple,
                       title: l10n.smartZones,
                       subtitle: l10n.smartZonesDesc,
                       onTap: () => Navigator.of(context).push(
@@ -256,7 +256,7 @@ class GeneralSettingsPage extends StatelessWidget {
                   _SettingsCard(children: [
                     _SwitchTile(
                       icon: Icons.fingerprint,
-                      iconColor: const Color(0xFFC62828),
+                      iconColor: context.colors.accentRed,
                       title: l10n.biometricLogin,
                       subtitle: l10n.biometricLoginDesc,
                       value: settings?.isBiometricEnabled ?? false,
@@ -312,7 +312,7 @@ class GeneralSettingsPage extends StatelessWidget {
                           Text(
                             l10n.focusIntensitySectionDesc,
                             style: AtharTypography.bodySmall.copyWith(
-                              color: const Color(0xFF636E72),
+                              color: colorScheme.onSurfaceVariant,
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -350,7 +350,7 @@ class GeneralSettingsPage extends StatelessWidget {
                     _SettingsCard(children: [
                       _SwitchTile(
                         icon: Icons.cloud_sync_outlined,
-                        iconColor: const Color(0xFF0288D1),
+                        iconColor: context.colors.accentBlue,
                         title: l10n.autoSync,
                         subtitle: l10n.autoSyncDesc,
                         value: settings?.isAutoSyncEnabled ?? false,
@@ -403,10 +403,10 @@ class GeneralSettingsPage extends StatelessWidget {
                                       ? Icons.cloud_off_outlined
                                       : Icons.cloud_upload_outlined;
                           final Color iconColor = isOffline
-                              ? Colors.orange
+                              ? context.colors.warning
                               : showErrorState
                                   ? Theme.of(context).colorScheme.error
-                                  : const Color(0xFF0288D1);
+                                  : context.colors.accentBlue;
 
                           return _NavTile(
                             icon: icon,
@@ -436,7 +436,7 @@ class GeneralSettingsPage extends StatelessWidget {
                     _SettingsCard(children: [
                       _NavTile(
                         icon: Icons.person_outline_rounded,
-                        iconColor: const Color(0xFF1A6B3C),
+                        iconColor: colorScheme.primary,
                         title: l10n.editProfile,
                         onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(builder: (_) => const ProfilePage()),
@@ -445,7 +445,7 @@ class GeneralSettingsPage extends StatelessWidget {
                       _Divider(),
                       _NavTile(
                         icon: Icons.workspace_premium_outlined,
-                        iconColor: const Color(0xFFF57C00),
+                        iconColor: context.colors.accentOrange,
                         title: 'Athar Pro',
                         onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(
@@ -456,24 +456,24 @@ class GeneralSettingsPage extends StatelessWidget {
                       _Divider(),
                       _NavTile(
                         icon: Icons.lock_reset_rounded,
-                        iconColor: const Color(0xFF0288D1),
+                        iconColor: context.colors.accentBlue,
                         title: l10n.resetPassword,
                         onTap: () => _confirmResetPassword(context, l10n),
                       ),
                       _Divider(),
                       _NavTile(
                         icon: Icons.delete_outline_rounded,
-                        iconColor: Colors.red.shade600,
+                        iconColor: colorScheme.error,
                         title: l10n.deleteAccount,
-                        titleColor: Colors.red.shade600,
+                        titleColor: colorScheme.error,
                         onTap: () => _showDeleteAccount(context),
                       ),
                       _Divider(),
                       _NavTile(
                         icon: Icons.logout_rounded,
-                        iconColor: Colors.red.shade600,
+                        iconColor: colorScheme.error,
                         title: l10n.logout,
-                        titleColor: Colors.red.shade600,
+                        titleColor: colorScheme.error,
                         onTap: () => _confirmLogout(context, l10n),
                       ),
                     ]),
@@ -485,7 +485,7 @@ class GeneralSettingsPage extends StatelessWidget {
                   _SettingsCard(children: [
                     _NavTile(
                       icon: Icons.share_outlined,
-                      iconColor: const Color(0xFF1A6B3C),
+                      iconColor: colorScheme.primary,
                       title: l10n.shareApp,
                       onTap: () => SharePlus.instance.share(
                         ShareParams(text: 'أثر — حياة متوازنة، أثر مستدام'),
@@ -494,7 +494,7 @@ class GeneralSettingsPage extends StatelessWidget {
                     _Divider(),
                     _InfoTile(
                       icon: Icons.info_outline_rounded,
-                      iconColor: const Color(0xFF546E7A),
+                      iconColor: colorScheme.onSurfaceVariant,
                       title: l10n.version,
                       trailing: '1.0.0',
                     ),
@@ -540,19 +540,19 @@ class GeneralSettingsPage extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AtharRadii.radiusLg),
         title: Text(
           l10n.logout,
-          style: const TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.w700),
+          style: const TextStyle(fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback, fontWeight: FontWeight.w700),
         ),
         content: Text(
           l10n.logout,
-          style: const TextStyle(fontFamily: 'Cairo'),
+          style: const TextStyle(fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: Text(l10n.cancel, style: const TextStyle(fontFamily: 'Cairo')),
+            child: Text(l10n.cancel, style: const TextStyle(fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback)),
           ),
           FilledButton(
-            style: FilledButton.styleFrom(backgroundColor: Colors.red.shade600),
+            style: FilledButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.error),
             onPressed: () {
               Navigator.pop(ctx);
               context.read<AuthCubit>().signOut();
@@ -563,7 +563,7 @@ class GeneralSettingsPage extends StatelessWidget {
             },
             child: Text(
               l10n.logout,
-              style: const TextStyle(fontFamily: 'Cairo', color: Colors.white),
+              style: TextStyle(fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback, color: Theme.of(context).colorScheme.onPrimary),
             ),
           ),
         ],
@@ -585,7 +585,7 @@ class GeneralSettingsPage extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               l10n.resetPassword,
-              style: const TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.w700),
+              style: const TextStyle(fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback, fontWeight: FontWeight.w700),
             ),
           ],
         ),
@@ -595,7 +595,7 @@ class GeneralSettingsPage extends StatelessWidget {
           children: [
             Text(
               'سيتم إرسال رابط إعادة تعيين كلمة المرور إلى:',
-              style: TextStyle(fontFamily: 'Cairo', fontSize: 14, color: colorScheme.onSurfaceVariant),
+              style: TextStyle(fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback, fontSize: 14, color: colorScheme.onSurfaceVariant),
             ),
             const SizedBox(height: 8),
             Container(
@@ -609,7 +609,7 @@ class GeneralSettingsPage extends StatelessWidget {
               child: Text(
                 email,
                 style: TextStyle(
-                  fontFamily: 'Cairo',
+                  fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: colorScheme.onSurface,
@@ -621,7 +621,7 @@ class GeneralSettingsPage extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: Text(l10n.cancel, style: const TextStyle(fontFamily: 'Cairo')),
+            child: Text(l10n.cancel, style: const TextStyle(fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback)),
           ),
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: colorScheme.primary),
@@ -634,7 +634,7 @@ class GeneralSettingsPage extends StatelessWidget {
                     SnackBar(
                       content: const Text(
                         'تم إرسال رابط إعادة التعيين. تحقق من بريدك الإلكتروني.',
-                        style: TextStyle(fontFamily: 'Cairo'),
+                        style: TextStyle(fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
                       ),
                       backgroundColor: colorScheme.primary,
                     ),
@@ -646,7 +646,7 @@ class GeneralSettingsPage extends StatelessWidget {
                     SnackBar(
                       content: const Text(
                         'تعذّر الإرسال. حاول مجدداً.',
-                        style: TextStyle(fontFamily: 'Cairo'),
+                        style: TextStyle(fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
                       ),
                       backgroundColor: colorScheme.error,
                     ),
@@ -654,9 +654,9 @@ class GeneralSettingsPage extends StatelessWidget {
                 }
               }
             },
-            child: const Text(
+            child: Text(
               'إرسال الرابط',
-              style: TextStyle(fontFamily: 'Cairo', color: Colors.white),
+              style: TextStyle(fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback, color: colorScheme.onPrimary),
             ),
           ),
         ],
@@ -715,14 +715,14 @@ class _ProfileCard extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 28,
-            backgroundColor: const Color(0xFF1A6B3C).withValues(alpha: 0.12),
+            backgroundColor: colorScheme.primary.withValues(alpha: 0.12),
             child: Text(
               initial,
-              style: const TextStyle(
-                fontFamily: 'Cairo',
+              style: TextStyle(
+                fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
                 fontSize: 22,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF1A6B3C),
+                color: colorScheme.primary,
               ),
             ),
           ),
@@ -734,7 +734,7 @@ class _ProfileCard extends StatelessWidget {
                 Text(
                   name,
                   style: TextStyle(
-                    fontFamily: 'Cairo',
+                    fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: colorScheme.onSurface,
@@ -743,7 +743,7 @@ class _ProfileCard extends StatelessWidget {
                 Text(
                   isAuth ? l10n.accountSettings : l10n.autoSyncDesc,
                   style: TextStyle(
-                    fontFamily: 'Cairo',
+                    fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
                     fontSize: 13,
                     color: colorScheme.outline,
                   ),
@@ -757,7 +757,7 @@ class _ProfileCard extends StatelessWidget {
                 MaterialPageRoute(builder: (_) => const LoginPage()),
               ),
               style: FilledButton.styleFrom(
-                backgroundColor: const Color(0xFF1A6B3C),
+                backgroundColor: colorScheme.primary,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 shape: RoundedRectangleBorder(
@@ -765,10 +765,10 @@ class _ProfileCard extends StatelessWidget {
               ),
               child: Text(
                 l10n.login,
-                style: const TextStyle(
-                  fontFamily: 'Cairo',
+                style: TextStyle(
+                  fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
                   fontSize: 13,
-                  color: Colors.white,
+                  color: colorScheme.onPrimary,
                 ),
               ),
             ),
@@ -783,6 +783,7 @@ class _ProfileCard extends StatelessWidget {
 class _LanguageTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context);
     final currentLocale = context.watch<LocaleCubit>().state.locale;
 
@@ -797,14 +798,14 @@ class _LanguageTile extends StatelessWidget {
 
     return _NavTile(
       icon: Icons.language_outlined,
-      iconColor: const Color(0xFF0288D1),
+      iconColor: context.colors.accentBlue,
       title: l10n.language,
       trailing2: Text(
         label,
-        style: const TextStyle(
-          fontFamily: 'Cairo',
+        style: TextStyle(
+          fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
           fontSize: 13,
-          color: Color(0xFF636E72),
+          color: colorScheme.onSurfaceVariant,
         ),
       ),
       onTap: () => _showPicker(context, l10n, currentLocale),
@@ -831,7 +832,7 @@ class _LanguageTile extends StatelessWidget {
               width: 36,
               height: 4,
               decoration: BoxDecoration(
-                color: Colors.grey.shade300,
+                color: Theme.of(context).colorScheme.outlineVariant,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -843,7 +844,7 @@ class _LanguageTile extends StatelessWidget {
                 child: Text(
                   l10n.language,
                   style: const TextStyle(
-                    fontFamily: 'Cairo',
+                    fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                   ),
@@ -901,6 +902,7 @@ class _LangOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return ListTile(
       onTap: onTap,
       contentPadding: const EdgeInsets.symmetric(horizontal: 20),
@@ -909,34 +911,33 @@ class _LangOption extends StatelessWidget {
         height: 42,
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFF1A6B3C).withValues(alpha: 0.1)
-              : Colors.grey.shade100,
+              ? colorScheme.primary.withValues(alpha: 0.1)
+              : colorScheme.surfaceContainerLow,
           shape: BoxShape.circle,
         ),
         child: Icon(
           isSelected
               ? Icons.check_circle_rounded
               : Icons.radio_button_unchecked,
-          color:
-              isSelected ? const Color(0xFF1A6B3C) : Colors.grey.shade400,
+          color: isSelected ? colorScheme.primary : colorScheme.outlineVariant,
           size: 22,
         ),
       ),
       title: Text(
         label,
         style: TextStyle(
-          fontFamily: 'Cairo',
+          fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
           fontSize: 15,
           fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-          color: isSelected ? const Color(0xFF1A6B3C) : null,
+          color: isSelected ? colorScheme.primary : null,
         ),
       ),
       subtitle: Text(
         subtitle,
         style: TextStyle(
-          fontFamily: 'Cairo',
+          fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
           fontSize: 12,
-          color: Colors.grey.shade500,
+          color: colorScheme.outline,
         ),
       ),
     );
@@ -956,7 +957,7 @@ class _SectionHeader extends StatelessWidget {
       child: Text(
         title,
         style: TextStyle(
-          fontFamily: 'Cairo',
+          fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
           fontSize: 13,
           fontWeight: FontWeight.w600,
           color: Theme.of(context).colorScheme.outline,
@@ -1027,6 +1028,7 @@ class _SwitchTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return ListTile(
       contentPadding:
           EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.h),
@@ -1034,7 +1036,7 @@ class _SwitchTile extends StatelessWidget {
       title: Text(
         title,
         style: const TextStyle(
-          fontFamily: 'Cairo',
+          fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
           fontSize: 15,
           fontWeight: FontWeight.w500,
         ),
@@ -1043,17 +1045,17 @@ class _SwitchTile extends StatelessWidget {
           ? Text(
               subtitle!,
               style: TextStyle(
-                fontFamily: 'Cairo',
+                fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
                 fontSize: 12,
-                color: Theme.of(context).colorScheme.outline,
+                color: colorScheme.outline,
               ),
             )
           : null,
       trailing: Switch.adaptive(
         value: value,
         onChanged: onChanged,
-        activeThumbColor: Colors.white,
-        activeTrackColor: const Color(0xFF1A6B3C),
+        activeThumbColor: colorScheme.onPrimary,
+        activeTrackColor: colorScheme.primary,
       ),
     );
   }
@@ -1090,7 +1092,7 @@ class _NavTile extends StatelessWidget {
       title: Text(
         title,
         style: TextStyle(
-          fontFamily: 'Cairo',
+          fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
           fontSize: 15,
           fontWeight: FontWeight.w500,
           color: titleColor,
@@ -1100,7 +1102,7 @@ class _NavTile extends StatelessWidget {
           ? Text(
               subtitle!,
               style: TextStyle(
-                fontFamily: 'Cairo',
+                fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
                 fontSize: 12,
                 color: Theme.of(context).colorScheme.outline,
               ),
@@ -1140,7 +1142,7 @@ class _InfoTile extends StatelessWidget {
       title: Text(
         title,
         style: const TextStyle(
-          fontFamily: 'Cairo',
+          fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
           fontSize: 15,
           fontWeight: FontWeight.w500,
         ),
@@ -1148,7 +1150,7 @@ class _InfoTile extends StatelessWidget {
       trailing: Text(
         trailing,
         style: TextStyle(
-          fontFamily: 'Cairo',
+          fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
           fontSize: 13,
           color: Theme.of(context).colorScheme.outline,
         ),
@@ -1185,7 +1187,7 @@ class _ThemeTile extends StatelessWidget {
               width: 36,
               height: 4,
               decoration: BoxDecoration(
-                color: Colors.grey.shade300,
+                color: Theme.of(context).colorScheme.outlineVariant,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -1197,7 +1199,7 @@ class _ThemeTile extends StatelessWidget {
                 child: Text(
                   l10n.theme,
                   style: const TextStyle(
-                    fontFamily: 'Cairo',
+                    fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                   ),
@@ -1223,17 +1225,18 @@ class _ThemeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context);
     return _NavTile(
       icon: Icons.dark_mode_outlined,
-      iconColor: const Color(0xFF5C35C9),
+      iconColor: context.colors.accentPurple,
       title: l10n.theme,
       trailing2: Text(
         _label(current, l10n),
-        style: const TextStyle(
-          fontFamily: 'Cairo',
+        style: TextStyle(
+          fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
           fontSize: 13,
-          color: Color(0xFF636E72),
+          color: colorScheme.onSurfaceVariant,
         ),
       ),
       onTap: () => _showPicker(context, l10n),
@@ -1251,6 +1254,7 @@ class _ThemeOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return ListTile(
       onTap: onTap,
       contentPadding: const EdgeInsets.symmetric(horizontal: 20),
@@ -1259,23 +1263,23 @@ class _ThemeOption extends StatelessWidget {
         height: 42,
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFF1A6B3C).withValues(alpha: 0.1)
-              : Colors.grey.shade100,
+              ? colorScheme.primary.withValues(alpha: 0.1)
+              : colorScheme.surfaceContainerLow,
           shape: BoxShape.circle,
         ),
         child: Icon(
           isSelected ? Icons.check_circle_rounded : Icons.radio_button_unchecked,
-          color: isSelected ? const Color(0xFF1A6B3C) : Colors.grey.shade400,
+          color: isSelected ? colorScheme.primary : colorScheme.outlineVariant,
           size: 22,
         ),
       ),
       title: Text(
         label,
         style: TextStyle(
-          fontFamily: 'Cairo',
+          fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
           fontSize: 15,
           fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-          color: isSelected ? const Color(0xFF1A6B3C) : null,
+          color: isSelected ? colorScheme.primary : null,
         ),
       ),
     );
@@ -1327,7 +1331,7 @@ class _AthkarTimeTile extends StatelessWidget {
       title: Text(
         title,
         style: const TextStyle(
-          fontFamily: 'Cairo',
+          fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
           fontSize: 15,
           fontWeight: FontWeight.w500,
         ),
@@ -1335,7 +1339,7 @@ class _AthkarTimeTile extends StatelessWidget {
       trailing: Text(
         time,
         style: TextStyle(
-          fontFamily: 'Cairo',
+          fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback,
           fontSize: 13,
           color: colorScheme.outline,
           fontFeatures: [const FontFeature.tabularFigures()],

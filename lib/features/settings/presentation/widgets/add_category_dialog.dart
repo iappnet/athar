@@ -112,6 +112,8 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
             Text(
               l10n.icon,
               style: TextStyle(
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
                 fontWeight: FontWeight.bold,
                 fontSize: 14.sp,
               ),
@@ -148,6 +150,8 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                       child: Text(
                         l10n.tapToChangeIcon,
                         style: TextStyle(
+                          fontFamily: AtharTypography.fontFamily,
+                          fontFamilyFallback: AtharTypography.fontFallback,
                           color: colorScheme.onSurfaceVariant,
                           fontSize: 14.sp,
                         ),
@@ -169,6 +173,8 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
             Text(
               l10n.color,
               style: TextStyle(
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
                 fontWeight: FontWeight.bold,
                 fontSize: 14.sp,
               ),
@@ -182,7 +188,7 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                 return GestureDetector(
                   onTap: () => setState(() => _selectedColor = color),
                   child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
+                    duration: AtharAnimations.normalFast,
                     width: 36.w,
                     height: 36.w,
                     decoration: BoxDecoration(

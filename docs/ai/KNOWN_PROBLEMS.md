@@ -50,6 +50,22 @@ App currently renders mixed forest (v2) / navy (v1) surfaces across ~76% of the 
 
 ---
 
+## OPEN — Prayer Month View Deferred Items
+
+### P5: `_getPrayerShortName()` uses hardcoded Arabic strings (not l10n)
+`lib/features/prayer/presentation/widgets/prayer_month_view.dart` — `_getPrayerShortName()` returns hardcoded Arabic string literals (`'الفجر'`, `'الشروق'`, etc.) instead of using `AppLocalizations`. In English locale the prayer names will still show Arabic.
+- **Impact:** English UI shows Arabic prayer names in the month view's selected-day panel.
+- **Action required:** Replace with `l10n.prayerFajrShort`, `l10n.prayerSunrise`, etc. Requires confirming all short-name keys exist in both ARBs.
+- **Deferred from:** PR-PRAYER-DETAILS (audit note — not in scope without ARB key audit).
+
+### P6: `_toArabicNumerals()` in prayer month view ignores `easternNumerals` setting
+`lib/features/prayer/presentation/widgets/prayer_month_view.dart` — `_toArabicNumerals()` always converts digits to Arabic-Indic numerals unconditionally. The `easternNumerals` user setting (in `UserSettings`) is not consulted.
+- **Impact:** Users who disable Eastern Numerals will still see Arabic-Indic digits in the prayer calendar.
+- **Action required:** Read `context.watch<SettingsCubit>().state` in `_buildDayCell` and `_buildMonthGrid` and pass `useArabicNumerals` flag; call `_toArabicNumerals()` only when the setting is enabled.
+- **Deferred from:** PR-PRAYER-DETAILS (isPast dimming also deferred in the same PR).
+
+---
+
 ## RESOLVED — Previously Fixed Issues
 
 ### FIXED: B2 — `isAutoModeEnabled` → `ThemeMode` not wired
