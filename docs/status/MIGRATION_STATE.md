@@ -42,6 +42,7 @@ CANONICAL-SINCE: 2026-06-01
 | **PR7** — Athkar v1 | `0b8fe34` | (in branch) | ✅ `flutter analyze` 0 new issues · 5 conformance fixes applied · AR visual QA deferred to final sweep | 2026-06-02 |
 | **PR8** — Focus Oil-Fill | `2b10844` | (in branch) | ✅ `flutter analyze` 0 errors · 4 conformance deviations fixed · device QA deferred | 2026-06-02 |
 | **PR9** — iOS Widget Visual Refresh | `4718207` | (in branch) | ✅ `flutter analyze` 0 errors · Prayer+Habit+Task v2 · P9-A/B/C fixes · device QA deferred | 2026-06-02 |
+| **PR-ONBOARD-AB-INFRA** — A/B variant infra | `1f868f9` | (in branch) | ✅ `flutter analyze` 0 errors · device_id seed · OnboardingVariantService · 4-branch routing · analytics service · Supabase migration · dev reset tile · OPS-1 deploy step deferred | 2026-06-02 |
 
 ---
 
@@ -85,7 +86,7 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Active PR
 
-**PR9 — iOS Widget Visual Refresh.** ✅ Complete (2026-06-02). Device QA deferred to final sweep. Next: PR-ONBOARD-AB or PR-ADHAN (blocked on assets).
+**PR-ONBOARD-AB-INFRA.** ✅ Complete (2026-06-02) · `1f868f9`. INFRA half only — UI PR (variant pages, ARB, module toggles) pending designer confirmation of OQ1. OPS-1 deploy step (SQL migration) added to deferred bucket. Next: PR-ONBOARD-AB-UI or PR-ADHAN (blocked on B4 audio asset).
 
 ---
 
@@ -144,7 +145,7 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 - All fixes in this bucket are **UNVERIFIED** — logical hypotheses, confirmed only on a physical device. Do NOT apply any fix until device validation.
 - To add an item: assign an ID (PR origin + sequential number), describe the pass condition, and write the candidate fix as a hypothesis.
 
-**Current count: 7 of 10.**
+**Current count: 8 of 10.**
 
 | ID | Description | Origin | Status |
 |----|-------------|--------|--------|
@@ -155,6 +156,7 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 | DEVICE-1 | Forest-dark surfaces, Cairo fallback, RTL drawer, countdown tick (general device pass) | PR-THEME/PR2 | Unverified |
 | PR8-perf | PR8 final-sweep (physical device): 5 visual states + gyro slosh + sudden-flip splash + 60fps iPhone 12 tripwire — highest priority | PR8 | Unverified |
 | PR9-sweep | PR9 all-widget device sweep: Prayer (sm/md/lg) × ar/en · Habit (sm/md/lg) × ar/en · Task (sm/md/lg) × ar/en · Calibri renders in each extension · forest gradient parity · widgetURL deep-link · systemLarge dual-date/strip/sunrise-sunset · ring+7-day history · post-prayer label (40 min vs dynamic app window — P9-C, flag for designer) · manual Xcode font steps (OQ3) required before sweep | PR9 | Unverified |
+| OPS-1 | **Apply `supabase/migrations/20260602_onboarding_events.sql` to the live Supabase project.** Until applied, all `onboarding_events` anon inserts no-op silently (by design — service catches the error). Analytics records nothing until this migration is deployed. This is a deploy step, not a code step. Must be done before the A/B test goes live. | PR-ONBOARD-AB-INFRA | ⚠️ Deploy step — not a device QA item |
 
 ---
 

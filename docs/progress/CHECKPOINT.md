@@ -13,18 +13,18 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-02 (PR-ONBOARD-AB-INFRA implemented — HOLD for review before commit)  
-**Commit:** `0247c2a` fix(PR9): widget post-prayer window matches in-app dynamic formula (last commit; INFRA not yet committed — held for review)  
-**Note:** INFRA implementation complete. 5 files modified, 3 new files created. `flutter analyze` 0 errors, 2 pre-existing warnings. Bucket distribution verified (~25% each). All dart-define overrides map correctly. SQL migration written. HELD for designer/user review before commit.
+**Timestamp:** 2026-06-02 (PR-ONBOARD-AB-INFRA committed + pushed · `1f868f9`)  
+**Commit:** `1f868f9` feat(PR-ONBOARD-AB-INFRA): variant service + device_id seed + 4-branch routing + Supabase onboarding_events + dev reset tile  
+**Note:** INFRA complete. 9 files (3 new, 6 modified). `flutter analyze` 0 errors, 2 pre-existing warnings. Bucket distribution verified (~25% each). OPS-1 added to deferred bucket: SQL migration must be applied to live Supabase before A/B goes live.
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** PR-ONBOARD-AB-INFRA — INFRA half of 4-Variant Onboarding A/B  
-**Last completed:** PR9 (previous session) · commit `0247c2a`  
-**Phase:** INFRA IMPLEMENTATION COMPLETE. HOLD — awaiting user review before commit.  
-**Next:** User reviews delta → commit → push → /drift-check → UI PR starts.
+**Active PR:** PR-ONBOARD-AB-INFRA ✅ COMPLETE  
+**Last completed:** PR-ONBOARD-AB-INFRA (this session) · commit `1f868f9`  
+**Phase:** INFRA DONE. Committed + pushed. /drift-check passed.  
+**Next:** PR-ONBOARD-AB-UI (variant pages + ARB — needs OQ1 ruling) or PR-ADHAN (blocked on B4 audio asset).
 
 ---
 
@@ -41,7 +41,7 @@ LOADS-AT:      Tier 0
 - ✅ `flutter analyze`: 0 errors, 2 pre-existing warnings
 - ✅ Bucket distribution verified: 25.7/21.6/27.6/25.1% across 1000 simulated device_ids
 - ✅ dart-define override mapping verified: all 4 snake_case → camelCase conversions correct
-- ⏸ COMMIT HELD — awaiting user review
+- ✅ COMMITTED `1f868f9` + pushed
 
 ---
 
@@ -130,12 +130,13 @@ LOADS-AT:      Tier 0
 
 ## NEXT ACTION
 
-**INFRA implementation complete — held for review.** After user approves:
-1. Commit PR-ONBOARD-AB-INFRA
-2. Push + /drift-check
-3. Start UI PR (variant pages, ARB, module toggle resolution for OQ1)
+**PR-ONBOARD-AB-INFRA complete.** Next options:
+- **PR-ONBOARD-AB-UI** — variant pages + ARB; needs OQ1 ruling (module toggle backing fields) before step 02 can be built
+- **PR-ADHAN** — blocked on B4 (audio asset from designer)
 
-PR-ADHAN still blocked on B4 (audio asset). Deferred QA sweep bucket: 7/10 items.
+**OPS-1 reminder:** `supabase/migrations/20260602_onboarding_events.sql` must be applied to live Supabase project before A/B test goes live. Until then, analytics inserts no-op silently.
+
+Deferred QA sweep bucket: 8/10 items (ceiling: 10).
 
 ---
 
