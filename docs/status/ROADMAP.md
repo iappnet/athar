@@ -15,7 +15,7 @@ CANONICAL-SINCE: 2026-06-01
 > **SINGLE SOURCE OF TRUTH** — roadmap + % live here ONLY. Other docs must not restate these numbers.
 
 **Last updated:** 2026-06-02
-**Updated by:** PR9 complete (4718207) + drift-check fixes
+**Updated by:** PR-ONBOARD-AB-INFRA complete (1f868f9) + drift-check fixes
 
 **Branch strategy:** `docs/status/MIGRATION_BRANCH_STRATEGY.md`  
 **Canonical handoff package:** `docs/design-specs/` (B2 mirror, read-only)  
@@ -58,7 +58,7 @@ CANONICAL-SINCE: 2026-06-01
 | 10 | **PR7** | Athkar feature net-new (curated sets v1; designer review before screens) | ✅ **Complete 2026-06-02** | `0b8fe34` | — |
 | 11 | **PR8** | Focus screen oil-fill (`FOCUS_OIL_SPEC.md`; procedural colour carve-out) | ✅ **Complete 2026-06-02** | `2b10844` | — |
 | 12 | **PR9** | iOS widgets visual refresh (infra complete; visuals only) | ✅ **Complete 2026-06-02** | — | — |
-| 13 | **PR-ONBOARD-AB** | Four-variant onboarding A/B/C/D; Variant A must not regress | 🔲 Not started | — | PR2 + designer |
+| 13 | **PR-ONBOARD-AB** | Four-variant onboarding A/B/C/D; Variant A must not regress | 🔄 INFRA done (`1f868f9`) · UI half pending (OQ1) | — | UI: OQ1 ruling needed |
 | 14 | **PR-CLEANUP** | Hardcoded colour sweep (files untouched by other PRs) | 🔲 Not started | — | All others |
 
 **Total PRs:** 14 (+ PR-FONT-FALLBACK as 2b) · **Complete:** 11 logical (PR1, PR-THEME arc incl PR-FONT-FALLBACK, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8, PR9) · **Blocked:** 3 (PR-ONBOARD-AB needs designer spec; PR-ADHAN needs audio asset; PR-CLEANUP needs all others first)
@@ -124,17 +124,17 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Recommended Next PR
 
-**PR9 ✅ complete (`4718207`).** Deferred QA sweep runs at end of roadmap (after last feature PR).
+**PR-ONBOARD-AB-INFRA ✅ complete (`1f868f9`).** Deferred QA sweep runs at end of roadmap (after last feature PR).
 
-**All remaining PRs are blocked:**
+**Remaining:**
 
-| PR | Blocker |
-|----|---------|
-| **PR-ONBOARD-AB** | Designer spec required — read `docs/design-specs/ONBOARDING_AB_SPEC.md` before starting |
-| **PR-ADHAN** | Audio asset delivery from designer (B4 open) |
-| **PR-CLEANUP** | Must run after all other PRs complete |
+| PR | Status | Blocker |
+|----|--------|---------|
+| **PR-ONBOARD-AB-UI** | Not started | OQ1 ruling — module toggle backing fields (Tasks/Habits/Health/Assets) |
+| **PR-ADHAN** | Not started | Audio asset delivery from designer (B4 open) |
+| **PR-CLEANUP** | Not started | Must run after all other PRs complete |
 
-**Next:** Awaiting designer input. See `docs/status/NEXT_STEPS.md` for next-arc guidance.
+**Next:** OQ1 ruling or B4 asset delivery. See `docs/status/NEXT_STEPS.md` for next-arc guidance.
 
 ---
 
@@ -166,7 +166,7 @@ CANONICAL-SINCE: 2026-06-01
 | `CALENDAR_FOCUS_REDESIGN.md` | Calendar dual-display spec (root copy) | ✅ Read — PR4b complete |
 | `docs/design-specs/FOCUS_OIL_SPEC.md` | Focus oil-fill animation spec | ✅ Read — PR8 complete (`2b10844`) |
 | `docs/design-specs/IPAD_OPTIMIZATION.md` | iPad breakpoints | ✅ Read (2026-05-09) — PR2 readiness closure |
-| `docs/design-specs/ONBOARDING_AB_SPEC.md` | Onboarding A/B variants | ❌ Not read — required before PR-ONBOARD-AB |
+| `docs/design-specs/ONBOARDING_AB_SPEC.md` | Onboarding A/B variants | ✅ Read — INFRA complete; UI PR pending OQ1 |
 
 ---
 

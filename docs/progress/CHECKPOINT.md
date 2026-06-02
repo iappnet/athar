@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-02 · PR-ONBOARD-AB audit complete — awaiting designer sign-off
+LAST-UPDATED:  2026-06-02 · PR-ONBOARD-AB-INFRA committed + pushed · 1f868f9
 LOADS-AT:      Tier 0
 -->
 
@@ -28,7 +28,7 @@ LOADS-AT:      Tier 0
 
 ---
 
-## DONE — PR-ONBOARD-AB-INFRA IMPLEMENTATION (HELD — not yet committed)
+## DONE — PR-ONBOARD-AB-INFRA IMPLEMENTATION
 
 - ✅ Sign-off note + OQ rulings written into `design-context/_audit_onboarding.md`
 - ✅ `lib/core/services/onboarding_variant_service.dart` — `OnboardingVariant` enum + `assignOrGet()` (25/25/25/25 by device_id.hashCode, dart-define override, reset())
@@ -153,6 +153,6 @@ Deferred QA sweep bucket: 8/10 items (ceiling: 10).
 
 ## WORKING TREE STATE
 
-**Status:** Clean — PR9 committed + pushed  
+**Status:** Clean — PR-ONBOARD-AB-INFRA committed + pushed  
 **flutter analyze:** 2 pre-existing warnings (task_page.dart, project_details_page.dart) — 0 errors  
-**Last commit:** `0247c2a` fix(PR9): widget post-prayer window matches in-app dynamic formula
+**Last commit:** `28d320a` docs(PR-ONBOARD-AB-INFRA): update CHECKPOINT + MIGRATION_STATE post-commit

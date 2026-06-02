@@ -93,8 +93,8 @@ CANONICAL-SINCE: 2026-06-01
 ## Current Working Tree State
 
 ```
-flutter analyze → 2 pre-existing issues (project_details_page.dart, task_page.dart — unrelated to PR9)
-PR9 committed. Last commit: see CHECKPOINT.md for SHA.
+flutter analyze → 2 pre-existing issues (project_details_page.dart, task_page.dart — pre-existing)
+PR-ONBOARD-AB-INFRA committed. Last commit: 28d320a. See CHECKPOINT.md for full state.
 ```
 
 ---
