@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-02 · PR7 complete (0b8fe34)
+LAST-UPDATED:  2026-06-02 · /drift-check B2 — dead Tier-2 paths fixed (f6db9e5)
 LOADS-AT:      Tier 0
 -->
 
@@ -13,9 +13,10 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-02 (PR7 — COMPLETE ✅)  
-**Commit:** `0b8fe34` feat(PR7): Athkar v1  
-**Note:** PR7 Athkar v1 complete. AthkarSetScreen (gated), DhikrReaderScreen (focus+list), Dashboard card, /athkar route, DhikrCubit in MultiBlocProvider, Settings reminders section, DhikrComplete chokepoint. 5 conformance fixes applied (gate, 56sp counter, FittedBox, RTL swipe, AtharColors tokens). AR visual QA → final sweep pending.
+**Timestamp:** 2026-06-02 (/drift-check B2 — governance arc closed)  
+**Commit:** `f6db9e5` docs(drift-check): fix 4 dead Tier-2 paths after Stage-B restructure  
+**Note:** Second /drift-check post governance commit `153e77d`. 4 dead Tier-2 paths fixed in CLAUDE.md + .claude/CONTEXT_TIERS.md: CALENDAR_CELL_SPEC.md, CALENDAR_FOCUS_REDESIGN.md, DUAL_DATE_SPEC.md → docs/design-specs/; IPAD_LAYER2_OWNERSHIP_MAP.md → docs/ai/. All 5 drift-check gates PASS. PR7 governance arc complete.  
+**Previous commit:** `0b8fe34` feat(PR7): Athkar v1
 
 ---
 
