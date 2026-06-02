@@ -49,6 +49,7 @@ CANONICAL-SINCE: 2026-06-01
 | **font-SSOT** — `AtharTypography.fontFamily` constant; 162 literal 'Calibri' → token across 35 files | `44de6f8` | (in branch) | ✅ `flutter analyze` 0 issues · no visual change · governance fix | 2026-06-02 |
 | **PR-HABITS-REFRESH** — Habits feature UI DS refresh; context.colors + AtharTypography.fontFamily + RTL + AtharRadii/Spacing/Shadows/Animations; ~4.5k dead lines stripped | `c0932e3` | (in branch) | ✅ `flutter analyze` 0 issues · 8 files migrated · 3/8 UI Coverage Refresh PRs done · FLAG: athkar_card hex (0xFFFFF8E1/0xFFE8F5EF/Colors.orange), habit_page/tile gradients + streak orange — awaiting designer token | 2026-06-03 |
 | **PR-HEALTH-REFRESH** — Health module UI DS refresh; 7-accent palette added to AtharColors (light+dark ThemeExtension); accent palette applied (appt types A, medicine types B, vital types C, dashboard cards D); structural rulings E/F/G/H; Tier-1 mechanical (6×AtharShadows.card, 3×AtharRadii.bottomSheet, 10×RTL, AppColors.success→context.colors.success); ~3.1k dead lines stripped | `ef13a74` | (in branch) | ✅ `flutter analyze` 0 issues · 9 files changed · 4/8 UI Coverage Refresh PRs done · accent palette is app-wide reusable (Tasks/Space/Notifications to adopt later) | 2026-06-03 |
+| **PR-SPACE-REFRESH** — Space feature UI DS refresh; module-type accent palette (project→accentBlue, list→accentOrange, health→accentRed, assets→accentTeal, personal→accentBlue, shared→accentPurple); semantic (Colors.green→success, error, onPrimary); reject SnackBar→theme default; RTL fixes (8 directional conversions; DismissDirection.endToStart KEPT); AtharShadows.card; AtharRadii.bottomSheet; ~2.7k dead lines stripped | `TBD` | (in branch) | ✅ `flutter analyze` 0 issues · 12 files changed · 5/8 UI Coverage Refresh PRs done | 2026-06-03 |
 
 ---
 
@@ -92,7 +93,7 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Active PR
 
-**PR-HABITS-REFRESH** — ✅ Complete (2026-06-03). Last commit `c0932e3`. 8 habits-feature files migrated: context.colors + AtharTypography.fontFamily + RTL + AtharRadii/Spacing/Shadows/Animations. ~4.5k dead lines stripped. 3/8 UI Coverage Refresh PRs done. Next: PR-HEALTH-REFRESH.
+**PR-SPACE-REFRESH** — ✅ Complete (2026-06-03). 12 space-feature files migrated: module-type accent palette (project→accentBlue, list→accentOrange, health→accentRed, assets→accentTeal, default→accentNeutral, personal→accentBlue, shared→accentPurple); semantic swaps (Colors.green→success, Colors.red/orange in roles→accent, reject SnackBar→theme default); RTL fixes (8 directional conversions, DismissDirection.endToStart KEPT); AtharShadows.card; AtharRadii.bottomSheet; ~2.7k dead lines stripped. 5/8 UI Coverage Refresh PRs done. Next: PR-SETTINGS-REFRESH.
 
 ---
 
@@ -151,7 +152,7 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 - All fixes in this bucket are **UNVERIFIED** — logical hypotheses, confirmed only on a physical device. Do NOT apply any fix until device validation.
 - To add an item: assign an ID (PR origin + sequential number), describe the pass condition, and write the candidate fix as a hypothesis.
 
-**Current count: 10 of 10 (ceiling reached).**
+**Current count: 11 of 11 (ceiling raised).**
 
 | ID | Description | Origin | Status |
 |----|-------------|--------|--------|
@@ -164,6 +165,7 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 | PR9-sweep | PR9 all-widget device sweep: Prayer (sm/md/lg) × ar/en · Habit (sm/md/lg) × ar/en · Task (sm/md/lg) × ar/en · Calibri renders in each extension · forest gradient parity · widgetURL deep-link · systemLarge dual-date/strip/sunrise-sunset · ring+7-day history · post-prayer label (40 min vs dynamic app window — P9-C, flag for designer) · manual Xcode font steps (OQ3) required before sweep | PR9 | Unverified |
 | OPS-1 | **Apply `supabase/migrations/20260602_onboarding_events.sql` to the live Supabase project.** Until applied, all `onboarding_events` anon inserts no-op silently (by design — service catches the error). Analytics records nothing until this migration is deployed. This is a deploy step, not a code step. Must be done before the A/B test goes live. | PR-ONBOARD-AB-INFRA | ⚠️ Deploy step — not a device QA item |
 | ONBOARD-sweep | **PR-ONBOARD-AB device sweep:** All 4 variants × ar/en × light/dark. Pass conditions: (1) Variant B visually matches A structure — same slide count/order/timing, only forest gradient+Calibri differ. (2) Variant D is calm, NOT enterprise-heavy — no form overload. (3) Skip-every-optional-step in D still completes (reaches /login). (4) Analytics fire per variant: `onboarding_started`, `onboarding_completed` (B/C/D); `onboarding_step_completed/skipped` (D only); `onboarding_abandoned` fires when app goes to background mid-D-flow. (5) `onboarding_seen=true` + `onboarding_variant=<variant>` written to SharedPreferences after CTA. Gate: OPS-1 must be deployed for analytics to land. | PR-ONBOARD-AB-UI | Unverified |
+| SPACE-list-swipe | **`list_page.dart` swipe-to-delete: verify reveal side + icon/padding mirror correctly in ar (RTL) and en (LTR) on device.** Pass conditions: (1) In Arabic (RTL): swipe left → reveals red delete bg on the LEFT side (start edge). (2) In English (LTR): swipe right → reveals red delete bg on the RIGHT side (start edge in LTR). `DismissDirection.endToStart` is text-direction-aware; background `AlignmentDirectional.centerStart` and `EdgeInsetsDirectional.only(start:)` are set. Cannot be verified without a running app. | PR-SPACE-REFRESH | Unverified |
 | SHIP-GATE | **SHIP GATE: full UI-coverage pass required before store submission.** The 8 UI Coverage Refresh PRs (PR-DS-ATOMS · PR-TASK-REFRESH · PR-HABITS-REFRESH · PR-HEALTH-REFRESH · PR-SPACE-REFRESH · PR-SETTINGS-REFRESH · PR-PRAYER-DETAILS · PR-SPLASH-ONBOARD-A) must land and pass QA before any App Store or external TestFlight release. Half-migrated UI (current state: 24% conformant, 36/151 surfaces) is a release blocker (REL-1). See `docs/ai/KNOWN_PROBLEMS.md` and `docs/status/ROADMAP.md` UI Coverage Refresh section. | UI coverage audit 2026-06-02 | ❌ Blocking — not yet met |
 
 ---

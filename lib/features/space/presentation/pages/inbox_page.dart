@@ -1,5 +1,4 @@
-import 'package:athar/core/design_system/tokens/athar_radii.dart';
-import 'package:athar/core/design_system/tokens/athar_spacing.dart';
+import 'package:athar/core/design_system/tokens.dart';
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/features/space/presentation/cubit/inbox_cubit.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
@@ -26,15 +25,14 @@ class InboxPage extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text('🎉 انضممت إلى "${state.spaceName}" بنجاح'),
-                backgroundColor: Colors.green,
+                backgroundColor: context.colors.success,
                 duration: const Duration(seconds: 3),
               ),
             );
           } else if (state is InboxRejectSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Text('تم رفض الدعوة'),
-                backgroundColor: Colors.grey[700],
+              const SnackBar(
+                content: Text('تم رفض الدعوة'),
               ),
             );
           } else if (state is InboxError) {
@@ -207,8 +205,8 @@ class InboxPage extends StatelessWidget {
                                   icon: const Icon(Icons.check_rounded, size: 16),
                                   label: Text(l10n.inboxAcceptInvite),
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.green,
-                                    foregroundColor: Colors.white,
+                                    backgroundColor: context.colors.success,
+                                    foregroundColor: colorScheme.onPrimary,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: AtharRadii.radiusSm,
                                     ),

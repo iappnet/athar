@@ -9,8 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:athar/core/design_system/tokens/athar_radii.dart';
-import 'package:athar/core/design_system/tokens/athar_spacing.dart';
+import 'package:athar/core/design_system/tokens.dart';
 import 'package:athar/core/utils/responsive_helper.dart';
 import 'package:athar/features/notifications/presentation/widgets/notification_center_button.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
@@ -234,13 +233,7 @@ class _SpaceListPageState extends State<SpaceListPage> {
           border: isSelected
               ? Border.all(color: colorScheme.primary, width: 2)
               : Border.all(color: colorScheme.outlineVariant),
-          boxShadow: [
-            BoxShadow(
-              color: colorScheme.shadow.withValues(alpha: 0.03),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          boxShadow: AtharShadows.card,
         ),
         child: Row(
           children: [
@@ -249,13 +242,13 @@ class _SpaceListPageState extends State<SpaceListPage> {
               padding: EdgeInsets.all(10.w),
               decoration: BoxDecoration(
                 color: isPersonal
-                    ? Colors.blue.withValues(alpha: 0.1)
-                    : Colors.purple.withValues(alpha: 0.1),
+                    ? context.colors.accentBlue.withValues(alpha: 0.1)
+                    : context.colors.accentPurple.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 isPersonal ? Icons.person_rounded : Icons.groups_rounded,
-                color: isPersonal ? Colors.blue : Colors.purple,
+                color: isPersonal ? context.colors.accentBlue : context.colors.accentPurple,
                 size: 22.sp,
               ),
             ),
@@ -283,20 +276,20 @@ class _SpaceListPageState extends State<SpaceListPage> {
                       // ✅ علامة البيانات التجريبية
                       if (isSampleData)
                         Container(
-                          margin: EdgeInsets.only(right: 6.w),
+                          margin: EdgeInsetsDirectional.only(end: 6.w),
                           padding: EdgeInsets.symmetric(
                             horizontal: 6.w,
                             vertical: 2.h,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.orange.shade100,
+                            color: context.colors.accentOrange.withValues(alpha: 0.15),
                             borderRadius: AtharRadii.radiusXxs,
                           ),
                           child: Text(
                             'تجريبي',
                             style: TextStyle(
                               fontSize: 10.sp,
-                              color: Colors.orange.shade800,
+                              color: context.colors.accentOrange,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
