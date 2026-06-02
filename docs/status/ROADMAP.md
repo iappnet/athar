@@ -67,7 +67,7 @@ CANONICAL-SINCE: 2026-06-01
 
 ## UI Coverage Refresh PRs — Required Before App Store Submission
 
-> **UI design-system coverage: 24% (36/151 surfaces) — source: `design-context/_audit_ui_coverage.md` (2026-06-02)**
+> **UI design-system coverage: ~63% (95/151 surfaces) as of post-PR-SPACE-REFRESH, 2026-06-03 — source: `design-context/_audit_ui_coverage.md` (2026-06-02, updated)**
 >
 > These 8 PRs are additive to the 14-PR feature track above. They address the long tail of UI surfaces (dialogs, shared components, per-feature screens) not covered by any existing PR scope. All are **required before any App Store or external TestFlight submission** — see REL-1 in `docs/ai/KNOWN_PROBLEMS.md`.
 
@@ -89,7 +89,7 @@ CANONICAL-SINCE: 2026-06-01
 | Dimension | Complete | Total | % |
 |-----------|---------|-------|---|
 | Feature PRs complete (14-PR roadmap) | 12 (PR1, PR-THEME arc, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8, PR9, PR-ONBOARD-AB) | 14 | **~86%** |
-| UI surface coverage | 36 of 151 surfaces conformant — source: `design-context/_audit_ui_coverage.md` 2026-06-02 | 151 | **24%** |
+| UI surface coverage | 95 of 151 surfaces conformant (post-PR-SPACE-REFRESH, 2026-06-03) — source: `design-context/_audit_ui_coverage.md` | 151 | **~63%** |
 | Design system token migration | ✅ Foundation done; design system themes now live in app | Component + screen migration pending | ~20% |
 | Typography migration | Tokens + 88 theme fallbacks + 38 base styles — all correct | Component `.arabic`/`.english` callsites still use Cairo in some files | ~25% |
 | Dark-mode migration | Tokens ✅ + ThemeMode ✅ + AtharDarkTheme now wired ✅ | Component-level color migration pending (PR5+) | ~70% |
