@@ -13,19 +13,19 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-02 (PR-DS-ATOMS · `028f99f`)
-**Commit:** `028f99f` refactor(PR-DS-ATOMS): migrate DS atoms/molecules to context.colors + Calibri + RTL
-**Prior:** `2f617cb` refactor(ds): athkar semantic consts in AtharColors + Calibri on athar_app_bar
-**Note:** PR-DS-ATOMS complete. 9 files migrated. Canonical pattern established. /drift-check PASS.
+**Timestamp:** 2026-06-02 (PR-TASK-REFRESH · `a1f28e0`)
+**Commit:** `a1f28e0` refactor(PR-TASK-REFRESH): Tasks UI → context.colors + Calibri + RTL, dark-mode-correct; strip ~7.1k dead lines
+**Prior:** `028f99f` refactor(PR-DS-ATOMS): migrate DS atoms/molecules to context.colors + Calibri + RTL
+**Note:** PR-TASK-REFRESH complete. 20 files migrated. FLAG: Color(0xFF009688) (medicine teal) + Colors.indigo (quiet zone) kept — no semantic token. /drift-check PASS.
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** PR-DS-ATOMS ✅ COMPLETE  
-**Last committed:** PR-DS-ATOMS · `028f99f`  
+**Active PR:** PR-TASK-REFRESH ✅ COMPLETE  
+**Last committed:** PR-TASK-REFRESH · `a1f28e0`  
 **Phase:** Complete. /drift-check PASS. Pushed to remote.  
-**Next:** PR-TASK-REFRESH (PR-DS-ATOMS unblocked all 7 UI coverage refresh PRs).
+**Next:** PR-HABITS-REFRESH (next UI coverage refresh PR — same canonical DS recipe).
 
 ---
 
@@ -177,8 +177,8 @@ LOADS-AT:      Tier 0
 
 ## NEXT ACTION
 
-**PR-DS-ATOMS complete.** All 7 UI coverage refresh PRs are now unblocked. Next:
-- **PR-TASK-REFRESH** — Task feature UI DS refresh (follow app_button canonical recipe)
+**PR-TASK-REFRESH complete.** 20 task-feature files migrated (context.colors + Calibri + RTL). Next:
+- **PR-HABITS-REFRESH** — Habits feature UI DS refresh (same canonical DS recipe)
 - **PR-ADHAN** — blocked on B4 (audio asset from designer)
 
 **OPS-1 reminder:** `supabase/migrations/20260602_onboarding_events.sql` must be applied to live Supabase project before A/B test goes live. Until then, analytics inserts no-op silently.
@@ -200,6 +200,6 @@ Deferred QA sweep bucket: 8/10 items (ceiling: 10).
 
 ## WORKING TREE STATE
 
-**Status:** Clean — PR-ONBOARD-AB-INFRA committed + pushed  
-**flutter analyze:** 2 pre-existing warnings (task_page.dart, project_details_page.dart) — 0 errors  
-**Last commit:** `28d320a` docs(PR-ONBOARD-AB-INFRA): update CHECKPOINT + MIGRATION_STATE post-commit
+**Status:** Clean — PR-TASK-REFRESH committed + pushed  
+**flutter analyze:** 0 issues (pre-existing task_page.dart + project_details_page.dart warnings now suppressed inline)  
+**Last commit:** `a1f28e0` refactor(PR-TASK-REFRESH): Tasks UI → context.colors + Calibri + RTL, dark-mode-correct; strip ~7.1k dead lines

@@ -74,7 +74,7 @@ CANONICAL-SINCE: 2026-06-01
 | # | PR | Name | Status | Blocker |
 | --- | ---- | ----- | -------- | --------- |
 | 15 | **PR-DS-ATOMS** | App bar + legacy design-system atoms — cross-cutting | ✅ **Complete 2026-06-02** · `028f99f` | — |
-| 16 | **PR-TASK-REFRESH** | Task feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
+| 16 | **PR-TASK-REFRESH** | Task feature UI design-system refresh | ✅ **Complete 2026-06-02** · `a1f28e0` | — |
 | 17 | **PR-HABITS-REFRESH** | Habits feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
 | 18 | **PR-HEALTH-REFRESH** | Health feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
 | 19 | **PR-SPACE-REFRESH** | Space feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
@@ -144,7 +144,7 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Recommended Next PR
 
-**PR-DS-ATOMS ✅ complete.** `028f99f` — context.colors + Calibri + RTL on all 9 DS atoms/molecules. Canonical migration pattern established for remaining 7 UI refresh PRs.
+**PR-TASK-REFRESH ✅ complete.** `a1f28e0` — context.colors + Calibri + RTL on 20 task-feature files. 2/8 UI Coverage Refresh PRs done (PR-DS-ATOMS + PR-TASK-REFRESH).
 
 **Remaining (feature track):**
 
@@ -157,7 +157,7 @@ CANONICAL-SINCE: 2026-06-01
 
 | PR | Status | Blocker |
 |----|--------|---------|
-| **PR-TASK-REFRESH** | Not started | — (PR-DS-ATOMS ✅ done) |
+| **PR-TASK-REFRESH** | ✅ Complete `a1f28e0` | — |
 | **PR-HABITS-REFRESH** | Not started | — |
 | **PR-HEALTH-REFRESH** | Not started | — |
 | **PR-SPACE-REFRESH** | Not started | — |
@@ -165,7 +165,7 @@ CANONICAL-SINCE: 2026-06-01
 | **PR-PRAYER-DETAILS** | Not started | — |
 | **PR-SPLASH-ONBOARD-A** | Not started | — |
 
-**Next:** PR-TASK-REFRESH (PR-DS-ATOMS unblocked all 7). See `docs/status/NEXT_STEPS.md` for next-arc guidance.
+**Next:** PR-HABITS-REFRESH. See `docs/status/NEXT_STEPS.md` for next-arc guidance.
 
 ---
 

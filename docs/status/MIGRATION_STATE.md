@@ -44,6 +44,8 @@ CANONICAL-SINCE: 2026-06-01
 | **PR9** — iOS Widget Visual Refresh | `4718207` | (in branch) | ✅ `flutter analyze` 0 errors · Prayer+Habit+Task v2 · P9-A/B/C fixes · device QA deferred | 2026-06-02 |
 | **PR-ONBOARD-AB-INFRA** — A/B variant infra | `1f868f9` | (in branch) | ✅ `flutter analyze` 0 errors · device_id seed · OnboardingVariantService · 4-branch routing · analytics service · Supabase migration · dev reset tile · OPS-1 deploy step deferred | 2026-06-02 |
 | **PR-ONBOARD-AB-UI** — Variants B/C/D pages + ARB + analytics wiring | `729c23d` | (in branch) | ✅ `flutter analyze` 0 errors · 3 new pages · 37 ARB keys · AR byte-verified · gen-l10n run · deferred device sweep in bucket | 2026-06-02 |
+| **PR-DS-ATOMS** — DS atoms/molecules context.colors + Calibri + RTL | `028f99f` | (in branch) | ✅ `flutter analyze` 0 errors · 9 files migrated · canonical recipe established | 2026-06-02 |
+| **PR-TASK-REFRESH** — Task feature UI DS refresh | `a1f28e0` | (in branch) | ✅ `flutter analyze` 0 issues · 20 files migrated · FLAG: 2 kept category hues (medicine teal + quiet zone indigo) | 2026-06-02 |
 
 ---
 
@@ -87,15 +89,15 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Active PR
 
-**PR-DS-ATOMS** — ✅ Complete (2026-06-02). `028f99f` — context.colors + Calibri + RTL on all 9 DS atoms/molecules; canonical migration pattern. Next: PR-TASK-REFRESH (first of 7 UI coverage refresh PRs now unblocked).
+**PR-TASK-REFRESH** — ✅ Complete (2026-06-02). `a1f28e0` — context.colors + Calibri + RTL on 20 task-feature files; 2/8 UI Coverage Refresh PRs done. Next: PR-HABITS-REFRESH.
 
 ---
 
 ## Current Working Tree State
 
 ```
-flutter analyze → 2 pre-existing issues (project_details_page.dart, task_page.dart — pre-existing)
-PR-DS-ATOMS complete. Last commit: 028f99f. See CHECKPOINT.md for full state.
+flutter analyze → 0 issues (pre-existing task_page.dart + project_details_page.dart warnings suppressed inline)
+PR-TASK-REFRESH complete. Last commit: a1f28e0. See CHECKPOINT.md for full state.
 ```
 
 ---
