@@ -4699,4 +4699,119 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get athkarSleepTime => 'وقت أذكار النوم';
+
+  @override
+  String get onboardingShortWelcomeTitle => 'أهلاً بك في أثر';
+
+  @override
+  String get onboardingShortWelcomeSubtitle =>
+      'المهام والصلاة والتركيز — في مكان واحد.';
+
+  @override
+  String get onboardingShortWelcomeFeatureTasks => 'المهام';
+
+  @override
+  String get onboardingShortWelcomeFeaturePrayer => 'الصلاة';
+
+  @override
+  String get onboardingShortWelcomeFeatureFocus => 'التركيز';
+
+  @override
+  String get onboardingShortStartTitle => 'لنبدأ';
+
+  @override
+  String get onboardingShortStartSubtitle => 'يومك، مُنظَّم بهدوء.';
+
+  @override
+  String get onboardingShortStartCta => 'ابدأ الآن';
+
+  @override
+  String get onboardingExpandedWelcomeTitle => 'أهلاً بك في أثر';
+
+  @override
+  String get onboardingExpandedWelcomeSubtitle => 'لحظة لإعداد كل شيء بطريقتك.';
+
+  @override
+  String get onboardingExpandedModulesTitle => 'فيم تريد أن يساعدك أثر؟';
+
+  @override
+  String get onboardingExpandedModulesSubtitle =>
+      'يمكنك تغيير هذا لاحقًا من الإعدادات.';
+
+  @override
+  String get onboardingExpandedModulesTasksLabel => 'المهام';
+
+  @override
+  String get onboardingExpandedModulesHabitsLabel => 'العادات';
+
+  @override
+  String get onboardingExpandedModulesPrayerLabel => 'الصلاة';
+
+  @override
+  String get onboardingExpandedModulesDhikrLabel => 'الذكر والأذكار';
+
+  @override
+  String get onboardingExpandedLocationTitle => 'حدّد موقعك';
+
+  @override
+  String get onboardingExpandedLocationSubtitle => 'لأوقات صلاة دقيقة.';
+
+  @override
+  String get onboardingExpandedLocationUseCurrent => 'استخدم موقعي الحالي';
+
+  @override
+  String get onboardingExpandedLocationEnterManual => 'إدخال يدوي';
+
+  @override
+  String get onboardingExpandedNotificationsTitle => 'لا تفوّت شيئًا';
+
+  @override
+  String get onboardingExpandedNotificationsSubtitle =>
+      'تذكيرات لطيفة للصلاة والمهام والعادات.';
+
+  @override
+  String get onboardingExpandedNotificationsAllow => 'السماح بالإشعارات';
+
+  @override
+  String get onboardingExpandedSpaceTitle => 'أين ستعمل؟';
+
+  @override
+  String get onboardingExpandedSpaceSubtitle =>
+      'شخصية بشكل افتراضي. يمكنك إضافة مساحات لاحقًا.';
+
+  @override
+  String get onboardingExpandedSpaceJustForMe => 'لي وحدي';
+
+  @override
+  String get onboardingExpandedSpaceJoinCode => 'لديك رمز؟ انضم إلى مساحة';
+
+  @override
+  String get onboardingExpandedSpaceCodeHint => 'أدخل رمز الدعوة';
+
+  @override
+  String get onboardingExpandedSpaceJoin => 'انضمام';
+
+  @override
+  String get onboardingExpandedFinishTitle => 'كل شيء جاهز';
+
+  @override
+  String get onboardingExpandedFinishSubtitle => 'أثر بانتظارك.';
+
+  @override
+  String get onboardingExpandedFinishCta => 'افتح أثر';
+
+  @override
+  String get onboardingExpandedFinishRecapPrayer => 'تم تفعيل أوقات الصلاة';
+
+  @override
+  String get onboardingExpandedFinishRecapDhikr => 'تم تفعيل الذكر والأذكار';
+
+  @override
+  String get onboardingExpandedFinishRecapLocation => 'تم تحديد الموقع';
+
+  @override
+  String get onboardingExpandedFinishRecapNotifications => 'تم تفعيل الإشعارات';
+
+  @override
+  String get onboardingExpandedFinishRecapSpace => 'تم إنشاء مساحتك الشخصية';
 }

@@ -4718,4 +4718,122 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get athkarSleepTime => 'Sleep Athkar Time';
+
+  @override
+  String get onboardingShortWelcomeTitle => 'Welcome to Athar';
+
+  @override
+  String get onboardingShortWelcomeSubtitle =>
+      'Tasks, prayer, focus — in one place.';
+
+  @override
+  String get onboardingShortWelcomeFeatureTasks => 'Tasks';
+
+  @override
+  String get onboardingShortWelcomeFeaturePrayer => 'Prayer';
+
+  @override
+  String get onboardingShortWelcomeFeatureFocus => 'Focus';
+
+  @override
+  String get onboardingShortStartTitle => 'Let\'s begin';
+
+  @override
+  String get onboardingShortStartSubtitle => 'Your day, gently organized.';
+
+  @override
+  String get onboardingShortStartCta => 'Get Started';
+
+  @override
+  String get onboardingExpandedWelcomeTitle => 'Welcome to Athar';
+
+  @override
+  String get onboardingExpandedWelcomeSubtitle =>
+      'A moment to set things up, your way.';
+
+  @override
+  String get onboardingExpandedModulesTitle =>
+      'What would you like Athar to help with?';
+
+  @override
+  String get onboardingExpandedModulesSubtitle =>
+      'You can change these later in Settings.';
+
+  @override
+  String get onboardingExpandedModulesTasksLabel => 'Tasks';
+
+  @override
+  String get onboardingExpandedModulesHabitsLabel => 'Habits';
+
+  @override
+  String get onboardingExpandedModulesPrayerLabel => 'Prayer';
+
+  @override
+  String get onboardingExpandedModulesDhikrLabel => 'Dhikr & Athkar';
+
+  @override
+  String get onboardingExpandedLocationTitle => 'Set your location';
+
+  @override
+  String get onboardingExpandedLocationSubtitle => 'For accurate prayer times.';
+
+  @override
+  String get onboardingExpandedLocationUseCurrent => 'Use current location';
+
+  @override
+  String get onboardingExpandedLocationEnterManual => 'Enter manually';
+
+  @override
+  String get onboardingExpandedNotificationsTitle => 'Stay on track';
+
+  @override
+  String get onboardingExpandedNotificationsSubtitle =>
+      'Gentle reminders for prayer, tasks, and habits.';
+
+  @override
+  String get onboardingExpandedNotificationsAllow => 'Allow notifications';
+
+  @override
+  String get onboardingExpandedSpaceTitle => 'Where will you work?';
+
+  @override
+  String get onboardingExpandedSpaceSubtitle =>
+      'Personal by default. You can add spaces later.';
+
+  @override
+  String get onboardingExpandedSpaceJustForMe => 'Just for me';
+
+  @override
+  String get onboardingExpandedSpaceJoinCode => 'Have a code? Join a space';
+
+  @override
+  String get onboardingExpandedSpaceCodeHint => 'Enter invite code';
+
+  @override
+  String get onboardingExpandedSpaceJoin => 'Join';
+
+  @override
+  String get onboardingExpandedFinishTitle => 'You\'re all set';
+
+  @override
+  String get onboardingExpandedFinishSubtitle => 'Athar is ready for you.';
+
+  @override
+  String get onboardingExpandedFinishCta => 'Open Athar';
+
+  @override
+  String get onboardingExpandedFinishRecapPrayer => 'Prayer times enabled';
+
+  @override
+  String get onboardingExpandedFinishRecapDhikr => 'Dhikr & Athkar enabled';
+
+  @override
+  String get onboardingExpandedFinishRecapLocation => 'Location set';
+
+  @override
+  String get onboardingExpandedFinishRecapNotifications =>
+      'Notifications enabled';
+
+  @override
+  String get onboardingExpandedFinishRecapSpace => 'Personal space created';
 }

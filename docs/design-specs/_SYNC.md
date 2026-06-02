@@ -15,6 +15,7 @@ LOADS-AT:      Tier 3 (reference only)
 **Sync log:**
 - `2026-06-02` — design-specs mirror synced from handoff_v2-2 base @ 2026-06-02; PRAYER_CARD_SPEC reconciled from design SOURCE v2.2 @ 2026-06-01.
 - `2026-06-02` — PRAYER_CARD_SPEC + IOS_WIDGETS_SPEC re-synced from SOURCE 2026-06-02: post-prayer window corrected from flat 40 min to dynamic formula (P9-C resolution). Canonical: `prayer_timer_service.dart:50–58`. PRAYER_CARD_SPEC §4/§10/§11/§12 updated; IOS_WIDGETS_SPEC §1e added.
+- `2026-06-02` — ONBOARDING_AB_SPEC corrected (3 items, OQ rulings): (1) Variant B+C routing: SplashPage → /login (OQ3). (2) Variant D step 05: joinByCode → joinSpace(token) (OQ4). (3) Variant D step 02 module step: 6 toggles → 2 real toggles (Prayer+Dhikr) + 2 chips (Tasks+Habits always-included) + Health/Assets removed (OQ1).
 
 ---
 

@@ -145,7 +145,7 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 - All fixes in this bucket are **UNVERIFIED** — logical hypotheses, confirmed only on a physical device. Do NOT apply any fix until device validation.
 - To add an item: assign an ID (PR origin + sequential number), describe the pass condition, and write the candidate fix as a hypothesis.
 
-**Current count: 8 of 10.**
+**Current count: 9 of 10.**
 
 | ID | Description | Origin | Status |
 |----|-------------|--------|--------|
@@ -157,6 +157,7 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 | PR8-perf | PR8 final-sweep (physical device): 5 visual states + gyro slosh + sudden-flip splash + 60fps iPhone 12 tripwire — highest priority | PR8 | Unverified |
 | PR9-sweep | PR9 all-widget device sweep: Prayer (sm/md/lg) × ar/en · Habit (sm/md/lg) × ar/en · Task (sm/md/lg) × ar/en · Calibri renders in each extension · forest gradient parity · widgetURL deep-link · systemLarge dual-date/strip/sunrise-sunset · ring+7-day history · post-prayer label (40 min vs dynamic app window — P9-C, flag for designer) · manual Xcode font steps (OQ3) required before sweep | PR9 | Unverified |
 | OPS-1 | **Apply `supabase/migrations/20260602_onboarding_events.sql` to the live Supabase project.** Until applied, all `onboarding_events` anon inserts no-op silently (by design — service catches the error). Analytics records nothing until this migration is deployed. This is a deploy step, not a code step. Must be done before the A/B test goes live. | PR-ONBOARD-AB-INFRA | ⚠️ Deploy step — not a device QA item |
+| ONBOARD-sweep | **PR-ONBOARD-AB device sweep:** All 4 variants × ar/en × light/dark. Pass conditions: (1) Variant B visually matches A structure — same slide count/order/timing, only forest gradient+Calibri differ. (2) Variant D is calm, NOT enterprise-heavy — no form overload. (3) Skip-every-optional-step in D still completes (reaches /login). (4) Analytics fire per variant: `onboarding_started`, `onboarding_completed` (B/C/D); `onboarding_step_completed/skipped` (D only); `onboarding_abandoned` fires when app goes to background mid-D-flow. (5) `onboarding_seen=true` + `onboarding_variant=<variant>` written to SharedPreferences after CTA. Gate: OPS-1 must be deployed for analytics to land. | PR-ONBOARD-AB-UI | Unverified |
 
 ---
 

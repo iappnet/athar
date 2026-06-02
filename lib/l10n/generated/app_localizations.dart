@@ -8983,6 +8983,228 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'وقت أذكار النوم'**
   String get athkarSleepTime;
+
+  /// No description provided for @onboardingShortWelcomeTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أهلاً بك في أثر'**
+  String get onboardingShortWelcomeTitle;
+
+  /// No description provided for @onboardingShortWelcomeSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المهام والصلاة والتركيز — في مكان واحد.'**
+  String get onboardingShortWelcomeSubtitle;
+
+  /// No description provided for @onboardingShortWelcomeFeatureTasks.
+  ///
+  /// In ar, this message translates to:
+  /// **'المهام'**
+  String get onboardingShortWelcomeFeatureTasks;
+
+  /// No description provided for @onboardingShortWelcomeFeaturePrayer.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصلاة'**
+  String get onboardingShortWelcomeFeaturePrayer;
+
+  /// No description provided for @onboardingShortWelcomeFeatureFocus.
+  ///
+  /// In ar, this message translates to:
+  /// **'التركيز'**
+  String get onboardingShortWelcomeFeatureFocus;
+
+  /// No description provided for @onboardingShortStartTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لنبدأ'**
+  String get onboardingShortStartTitle;
+
+  /// No description provided for @onboardingShortStartSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'يومك، مُنظَّم بهدوء.'**
+  String get onboardingShortStartSubtitle;
+
+  /// No description provided for @onboardingShortStartCta.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ الآن'**
+  String get onboardingShortStartCta;
+
+  /// No description provided for @onboardingExpandedWelcomeTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أهلاً بك في أثر'**
+  String get onboardingExpandedWelcomeTitle;
+
+  /// No description provided for @onboardingExpandedWelcomeSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لحظة لإعداد كل شيء بطريقتك.'**
+  String get onboardingExpandedWelcomeSubtitle;
+
+  /// No description provided for @onboardingExpandedModulesTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'فيم تريد أن يساعدك أثر؟'**
+  String get onboardingExpandedModulesTitle;
+
+  /// No description provided for @onboardingExpandedModulesSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'يمكنك تغيير هذا لاحقًا من الإعدادات.'**
+  String get onboardingExpandedModulesSubtitle;
+
+  /// No description provided for @onboardingExpandedModulesTasksLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'المهام'**
+  String get onboardingExpandedModulesTasksLabel;
+
+  /// No description provided for @onboardingExpandedModulesHabitsLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'العادات'**
+  String get onboardingExpandedModulesHabitsLabel;
+
+  /// No description provided for @onboardingExpandedModulesPrayerLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصلاة'**
+  String get onboardingExpandedModulesPrayerLabel;
+
+  /// No description provided for @onboardingExpandedModulesDhikrLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'الذكر والأذكار'**
+  String get onboardingExpandedModulesDhikrLabel;
+
+  /// No description provided for @onboardingExpandedLocationTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حدّد موقعك'**
+  String get onboardingExpandedLocationTitle;
+
+  /// No description provided for @onboardingExpandedLocationSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لأوقات صلاة دقيقة.'**
+  String get onboardingExpandedLocationSubtitle;
+
+  /// No description provided for @onboardingExpandedLocationUseCurrent.
+  ///
+  /// In ar, this message translates to:
+  /// **'استخدم موقعي الحالي'**
+  String get onboardingExpandedLocationUseCurrent;
+
+  /// No description provided for @onboardingExpandedLocationEnterManual.
+  ///
+  /// In ar, this message translates to:
+  /// **'إدخال يدوي'**
+  String get onboardingExpandedLocationEnterManual;
+
+  /// No description provided for @onboardingExpandedNotificationsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا تفوّت شيئًا'**
+  String get onboardingExpandedNotificationsTitle;
+
+  /// No description provided for @onboardingExpandedNotificationsSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تذكيرات لطيفة للصلاة والمهام والعادات.'**
+  String get onboardingExpandedNotificationsSubtitle;
+
+  /// No description provided for @onboardingExpandedNotificationsAllow.
+  ///
+  /// In ar, this message translates to:
+  /// **'السماح بالإشعارات'**
+  String get onboardingExpandedNotificationsAllow;
+
+  /// No description provided for @onboardingExpandedSpaceTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أين ستعمل؟'**
+  String get onboardingExpandedSpaceTitle;
+
+  /// No description provided for @onboardingExpandedSpaceSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'شخصية بشكل افتراضي. يمكنك إضافة مساحات لاحقًا.'**
+  String get onboardingExpandedSpaceSubtitle;
+
+  /// No description provided for @onboardingExpandedSpaceJustForMe.
+  ///
+  /// In ar, this message translates to:
+  /// **'لي وحدي'**
+  String get onboardingExpandedSpaceJustForMe;
+
+  /// No description provided for @onboardingExpandedSpaceJoinCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'لديك رمز؟ انضم إلى مساحة'**
+  String get onboardingExpandedSpaceJoinCode;
+
+  /// No description provided for @onboardingExpandedSpaceCodeHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'أدخل رمز الدعوة'**
+  String get onboardingExpandedSpaceCodeHint;
+
+  /// No description provided for @onboardingExpandedSpaceJoin.
+  ///
+  /// In ar, this message translates to:
+  /// **'انضمام'**
+  String get onboardingExpandedSpaceJoin;
+
+  /// No description provided for @onboardingExpandedFinishTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'كل شيء جاهز'**
+  String get onboardingExpandedFinishTitle;
+
+  /// No description provided for @onboardingExpandedFinishSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أثر بانتظارك.'**
+  String get onboardingExpandedFinishSubtitle;
+
+  /// No description provided for @onboardingExpandedFinishCta.
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح أثر'**
+  String get onboardingExpandedFinishCta;
+
+  /// No description provided for @onboardingExpandedFinishRecapPrayer.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تفعيل أوقات الصلاة'**
+  String get onboardingExpandedFinishRecapPrayer;
+
+  /// No description provided for @onboardingExpandedFinishRecapDhikr.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تفعيل الذكر والأذكار'**
+  String get onboardingExpandedFinishRecapDhikr;
+
+  /// No description provided for @onboardingExpandedFinishRecapLocation.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تحديد الموقع'**
+  String get onboardingExpandedFinishRecapLocation;
+
+  /// No description provided for @onboardingExpandedFinishRecapNotifications.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تفعيل الإشعارات'**
+  String get onboardingExpandedFinishRecapNotifications;
+
+  /// No description provided for @onboardingExpandedFinishRecapSpace.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم إنشاء مساحتك الشخصية'**
+  String get onboardingExpandedFinishRecapSpace;
 }
 
 class _AppLocalizationsDelegate

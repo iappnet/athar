@@ -122,8 +122,9 @@ titles, same subtitles (sourced via ARB), same CTA placement.
 ### Wiring
 
 - Tapping the final CTA writes `onboarding_seen = true` and
-  `onboarding_variant = 'existing_restyled'`, then routes to
-  `SplashPage`.
+  `onboarding_variant = 'existing_restyled'`, then routes to `/login`
+  (matching Variant A's actual destination — not SplashPage; corrected
+  2026-06-02 per OQ3 ruling).
 - Skip behavior matches Variant A exactly.
 
 ---
@@ -167,8 +168,9 @@ lib/features/home/presentation/widgets/onboarding_short/
 ### Wiring
 
 - Tapping the final CTA writes `onboarding_seen = true` and
-  `onboarding_variant = 'short'`, then routes to `SplashPage` (or
-  directly to dashboard).
+  `onboarding_variant = 'short'`, then routes to `/login` (corrected
+  2026-06-02 per OQ3 ruling — all variants use Variant A's actual
+  destination).
 - No location / notifications / module prompts — those are deferred to
   the empty-state cards on the relevant pages (e.g. the prayer card
   shows "Set your location" when no location is set).
@@ -218,13 +220,18 @@ services.
 
 #### 02 · Modules
 - Title: "What do you want Athar to help with? / فيم تريد أن يساعدك أثر؟"
-- Calm tile grid, 6 toggle cards:
-  - **Tasks** — default ON (always on, dim toggle visually but allow opt-out)
-  - **Habits** — default ON
-  - **Prayer** — default ON (cascades to widget + notifications per Phase 8.1)
-  - **Dhikr / Athkar** — **default OFF** (locked decision: do not auto-enable spiritual modules during onboarding; users may intentionally enable later)
-  - **Health & Appointments** — default OFF
-  - **Assets** — default OFF
+- **Corrected 2026-06-02 (OQ1 ruling):** Only 2 real toggles + 2 always-included chips.
+  No new UserSettings fields (spec previously listed 6 toggles; 4 of them had no
+  backing field — OQ1 resolved as cosmetic/chips-only for Tasks+Habits, not shown
+  for Health+Assets).
+  - **Prayer** — real toggle, default ON; writes `isPrayerEnabled` via
+    `SettingsCubit.togglePrayerEnabled()` with Phase 8.1 cascade.
+  - **Dhikr / Athkar** — real toggle, default OFF (locked decision); writes
+    `isAthkarEnabled` via `SettingsCubit.toggleAthkarEnabled()`.
+  - **Tasks** — always-included non-interactive chip (no flag write). Shown dim.
+  - **Habits** — always-included non-interactive chip (no flag write). Shown dim.
+  - **Health & Appointments** — NOT shown in onboarding.
+  - **Assets** — NOT shown in onboarding.
 - Skip allowed; defaults persist.
 
 #### 03 · Location (only if Prayer module is ON)
@@ -252,7 +259,7 @@ Spaces complexity is reduced and pre-decided.
 - **"Just for me" is pre-selected by default** as a calm progressive-disclosure step.
 - Two visible options:
   - **"Just for me"** (pre-selected) — creates a default personal space silently. No name input.
-  - "Have a code? Join with a code" — collapsed link below; expands an inline code input on tap → calls `JoinSpaceCubit.joinByCode`.
+  - "Have a code? Join with a code" — collapsed link below; expands an inline code input on tap → calls `JoinSpaceCubit.joinSpace(token)` (corrected 2026-06-02; spec previously said `joinByCode` — actual method name is `joinSpace`).
 - **"Create a shared space" is removed** from onboarding. Users who want to create a shared space discover it in-product later.
 - Single primary CTA: "Continue / متابعة".
 - Skip allowed; default personal space is created automatically either way.

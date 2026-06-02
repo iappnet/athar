@@ -21,6 +21,9 @@ import 'core/design_system/themes/athar_light_theme.dart';
 import 'core/design_system/themes/athar_dark_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'features/home/presentation/pages/onboarding_page.dart';
+import 'features/home/presentation/pages/onboarding_restyled_page.dart';
+import 'features/home/presentation/pages/onboarding_short_page.dart';
+import 'features/home/presentation/pages/onboarding_expanded_page.dart';
 import 'package:athar/core/services/onboarding_variant_service.dart';
 import 'features/home/presentation/pages/splash_page.dart';
 import 'features/settings/presentation/cubit/settings_state.dart';
@@ -206,13 +209,10 @@ class _AtharAppState extends State<AtharApp> {
             home: widget.hasSeenOnboarding
                 ? const SplashPage()
                 : switch (widget.onboardingVariant) {
-                    // Variant UI pages land in PR-ONBOARD-AB-UI.
-                    // All non-existing branches fall through to OnboardingPage
-                    // until their dedicated pages are implemented.
-                    OnboardingVariant.existing => const OnboardingPage(),
-                    OnboardingVariant.existingRestyled => const OnboardingPage(),
-                    OnboardingVariant.short => const OnboardingPage(),
-                    OnboardingVariant.expanded => const OnboardingPage(),
+                    OnboardingVariant.existing         => const OnboardingPage(),
+                    OnboardingVariant.existingRestyled => const OnboardingRestyledPage(),
+                    OnboardingVariant.short            => const OnboardingShortPage(),
+                    OnboardingVariant.expanded         => const OnboardingExpandedPage(),
                   },
             routes: {
               '/join-space': (context) {

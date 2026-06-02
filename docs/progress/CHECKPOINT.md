@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-02 · PR-ONBOARD-AB-INFRA committed + pushed · 1f868f9
+LAST-UPDATED:  2026-06-02 · PR-ONBOARD-AB-UI variant pages written — HOLD commit for ARB review
 LOADS-AT:      Tier 0
 -->
 
@@ -13,18 +13,34 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-02 (PR-ONBOARD-AB-INFRA committed + pushed · `1f868f9`)  
-**Commit:** `1f868f9` feat(PR-ONBOARD-AB-INFRA): variant service + device_id seed + 4-branch routing + Supabase onboarding_events + dev reset tile  
-**Note:** INFRA complete. 9 files (3 new, 6 modified). `flutter analyze` 0 errors, 2 pre-existing warnings. Bucket distribution verified (~25% each). OPS-1 added to deferred bucket: SQL migration must be applied to live Supabase before A/B goes live.
+**Timestamp:** 2026-06-02 (PR-ONBOARD-AB-UI variant pages written — awaiting user ARB review before commit)  
+**Commit (last pushed):** `1f868f9` feat(PR-ONBOARD-AB-INFRA): variant service + device_id seed + 4-branch routing + Supabase onboarding_events + dev reset tile  
+**Note:** Variant B/C/D pages written + wired in app.dart. `flutter gen-l10n` run. `flutter analyze` 0 errors. HOLD commit until user reviews ARB copy.
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** PR-ONBOARD-AB-INFRA ✅ COMPLETE  
-**Last completed:** PR-ONBOARD-AB-INFRA (this session) · commit `1f868f9`  
-**Phase:** INFRA DONE. Committed + pushed. /drift-check passed.  
-**Next:** PR-ONBOARD-AB-UI (variant pages + ARB — needs OQ1 ruling) or PR-ADHAN (blocked on B4 audio asset).
+**Active PR:** PR-ONBOARD-AB-UI 🔄 IN PROGRESS (HOLD — awaiting ARB review)  
+**Last committed:** PR-ONBOARD-AB-INFRA · `1f868f9`  
+**Phase:** Variant pages complete; gen-l10n done; analyze clean. Uncommitted.  
+**Next:** User approves ARB → commit PR-ONBOARD-AB-UI → /drift-check → PR-ADHAN or next arc.
+
+---
+
+## IN PROGRESS — PR-ONBOARD-AB-UI (HOLD — awaiting ARB review)
+
+- ✅ `docs/design-specs/ONBOARDING_AB_SPEC.md` — corrected (3 OQ rulings: /login routing, joinSpace(token), OQ1 module step)
+- ✅ `docs/design-specs/_SYNC.md` — sync log entry added
+- ✅ `lib/l10n/app_en.arb` + `lib/l10n/app_ar.arb` — 37 new keys: 8 Variant C + 29 Variant D (EN+AR)
+- ✅ `lib/features/home/presentation/pages/onboarding_restyled_page.dart` — Variant B (forest+Calibri, strict parity with A, 380ms, same ARB keys, `/login`)
+- ✅ `lib/features/home/presentation/pages/onboarding_short_page.dart` — Variant C (2 slides, forest, Calibri, `/login`)
+- ✅ `lib/features/home/presentation/pages/onboarding_expanded_page.dart` — Variant D (6 steps, PageView, WidgetsBindingObserver, OQ1 modules, location skip if prayer off, personal space created at finish, dynamic recap)
+- ✅ `lib/app.dart` — 4-branch switch wired (B→RestyledPage, C→ShortPage, D→ExpandedPage)
+- ✅ `flutter gen-l10n` — run; all 37 new keys generated
+- ✅ `flutter analyze` — 0 errors (2 pre-existing warnings unrelated)
+- ✅ Deferred QA bucket — ONBOARD-sweep entry added (MIGRATION_STATE.md, item 9/10)
+- ⏸ **HOLD** — waiting for user ARB copy review before commit
 
 ---
 
