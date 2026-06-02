@@ -2,7 +2,7 @@
 CANONICAL-FOR: Branch state, RULE 1/2 enforcement, Deferred QA bucket
 OWNER:         Claude Code
 PRECEDENCE:    4 (Tier 1 — loads after Tier-0 on any PR arc)
-LAST-UPDATED:  2026-06-03 · PR-SPACE-REFRESH 6d3b303 logged
+LAST-UPDATED:  2026-06-03 · PR-SETTINGS-REFRESH 0cfd53e + PR-PRAYER-DETAILS e1962c2 logged
 LOADS-AT:      Tier 1
 LEGACY-ALIASES: CURRENT_MIGRATION_STATE.md (root)
 CANONICAL-SINCE: 2026-06-01
@@ -50,6 +50,8 @@ CANONICAL-SINCE: 2026-06-01
 | **PR-HABITS-REFRESH** — Habits feature UI DS refresh; context.colors + AtharTypography.fontFamily + RTL + AtharRadii/Spacing/Shadows/Animations; ~4.5k dead lines stripped | `c0932e3` | (in branch) | ✅ `flutter analyze` 0 issues · 8 files migrated · 3/8 UI Coverage Refresh PRs done · FLAG: athkar_card hex (0xFFFFF8E1/0xFFE8F5EF/Colors.orange), habit_page/tile gradients + streak orange — awaiting designer token | 2026-06-03 |
 | **PR-HEALTH-REFRESH** — Health module UI DS refresh; 7-accent palette added to AtharColors (light+dark ThemeExtension); accent palette applied (appt types A, medicine types B, vital types C, dashboard cards D); structural rulings E/F/G/H; Tier-1 mechanical (6×AtharShadows.card, 3×AtharRadii.bottomSheet, 10×RTL, AppColors.success→context.colors.success); ~3.1k dead lines stripped | `ef13a74` | (in branch) | ✅ `flutter analyze` 0 issues · 9 files changed · 4/8 UI Coverage Refresh PRs done · accent palette is app-wide reusable (Tasks/Space/Notifications to adopt later) | 2026-06-03 |
 | **PR-SPACE-REFRESH** — Space feature UI DS refresh; module-type accent palette (project→accentBlue, list→accentOrange, health→accentRed, assets→accentTeal, personal→accentBlue, shared→accentPurple); semantic (Colors.green→success, error, onPrimary); reject SnackBar→theme default; RTL fixes (8 directional conversions; DismissDirection.endToStart KEPT); AtharShadows.card; AtharRadii.bottomSheet; ~2.7k dead lines stripped | `6d3b303` | (in branch) | ✅ `flutter analyze` 0 issues · 12 files changed · 5/8 UI Coverage Refresh PRs done | 2026-06-03 |
+| **PR-SETTINGS-REFRESH** — Settings UI DS refresh; AtharColors: accentGreen (#3C9A5F/#6FCB8E) + accentIndigo (#4754B5/#8A93DD) added; Cairo×42→Calibri; prayer/account icons→colorScheme.primary; athkar icons→AtharColors.athkar*; zone/smart icons→accent palette; frozen PR5 Accessibility icons untouched; Switch activeTrack→primary; dialog Colors.white→onPrimary; red.shade600→error; Colors.orange→warning; grey variants→outline/outlineVariant/surfaceContainerLow; smart_zones boxShadow→AtharShadows.card; zone colors→accentBlue/Green/Purple/Teal/Indigo; add_category Duration→AtharAnimations.normalFast; KNOWN_PROBLEMS P5+P6 logged | `0cfd53e` | (in branch) | ✅ `flutter analyze` 0 issues · 7 files changed · 6/8 UI Coverage Refresh PRs done | 2026-06-03 |
+| **PR-PRAYER-DETAILS** — Prayer detail views DS refresh; RTL chevrons (locale-aware via `Localizations.localeOf`) in prayer_month_view; no-font TS→Calibri across all 4 prayer views (prayer_details_page, prayer_day_view, prayer_week_view, prayer_month_view); AtharTypography import added; isPast dimming DEFERRED; P5+P6 logged in KNOWN_PROBLEMS | `e1962c2` | (in branch) | ✅ `flutter analyze` 0 issues · 4 files changed · 7/8 UI Coverage Refresh PRs done | 2026-06-03 |
 
 ---
 

@@ -15,7 +15,7 @@ CANONICAL-SINCE: 2026-06-01
 > **SINGLE SOURCE OF TRUTH** — roadmap + % live here ONLY. Other docs must not restate these numbers.
 
 **Last updated:** 2026-06-03
-**Updated by:** PR-SPACE-REFRESH complete (6d3b303) — Space feature tokens + module-type accent palette + RTL + ~2.7k dead lines stripped
+**Updated by:** PR-SETTINGS-REFRESH (0cfd53e) + PR-PRAYER-DETAILS (e1962c2) complete — Settings + prayer detail views tokens + accentGreen/Indigo + Calibri + RTL chevrons
 
 **Branch strategy:** `docs/status/MIGRATION_BRANCH_STRATEGY.md`  
 **Canonical handoff package:** `docs/design-specs/` (B2 mirror, read-only)  
@@ -67,7 +67,7 @@ CANONICAL-SINCE: 2026-06-01
 
 ## UI Coverage Refresh PRs — Required Before App Store Submission
 
-> **UI design-system coverage: ~63% (95/151 surfaces) as of post-PR-SPACE-REFRESH, 2026-06-03 — source: `design-context/_audit_ui_coverage.md` (2026-06-02, updated)**
+> **UI design-system coverage: ~63%+ (95+/151 surfaces) as of post-PR-PRAYER-DETAILS, 2026-06-03 — source: `design-context/_audit_ui_coverage.md` (2026-06-02, updated); exact re-count deferred to next audit session**
 >
 > These 8 PRs are additive to the 14-PR feature track above. They address the long tail of UI surfaces (dialogs, shared components, per-feature screens) not covered by any existing PR scope. All are **required before any App Store or external TestFlight submission** — see REL-1 in `docs/ai/KNOWN_PROBLEMS.md`.
 
@@ -78,8 +78,8 @@ CANONICAL-SINCE: 2026-06-01
 | 17 | **PR-HABITS-REFRESH** | Habits feature UI design-system refresh | ✅ **Complete 2026-06-03** · `c0932e3` | — |
 | 18 | **PR-HEALTH-REFRESH** | Health feature UI design-system refresh | ✅ **Complete 2026-06-03** · `ef13a74` | — |
 | 19 | **PR-SPACE-REFRESH** | Space feature UI design-system refresh | ✅ **Complete 2026-06-03** · `6d3b303` | — |
-| 20 | **PR-SETTINGS-REFRESH** | Settings feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
-| 21 | **PR-PRAYER-DETAILS** | Prayer details screens UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
+| 20 | **PR-SETTINGS-REFRESH** | Settings feature UI design-system refresh | ✅ **Complete 2026-06-03** · `0cfd53e` | — |
+| 21 | **PR-PRAYER-DETAILS** | Prayer details screens UI design-system refresh | ✅ **Complete 2026-06-03** · `e1962c2` | — |
 | 22 | **PR-SPLASH-ONBOARD-A** | Splash + Onboarding Variant A UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
 
 ---
@@ -89,7 +89,7 @@ CANONICAL-SINCE: 2026-06-01
 | Dimension | Complete | Total | % |
 |-----------|---------|-------|---|
 | Feature PRs complete (14-PR roadmap) | 12 (PR1, PR-THEME arc, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8, PR9, PR-ONBOARD-AB) | 14 | **~86%** |
-| UI surface coverage | 95 of 151 surfaces conformant (post-PR-SPACE-REFRESH, 2026-06-03) — source: `design-context/_audit_ui_coverage.md` | 151 | **~63%** |
+| UI surface coverage | 95+ of 151 surfaces conformant (post-PR-PRAYER-DETAILS, 2026-06-03) — exact re-count deferred to next audit session | 151 | **~63%+** |
 | Design system token migration | ✅ Foundation done; design system themes now live in app | Component + screen migration pending | ~20% |
 | Typography migration | Tokens + 88 theme fallbacks + 38 base styles — all correct | Component `.arabic`/`.english` callsites still use Cairo in some files | ~25% |
 | Dark-mode migration | Tokens ✅ + ThemeMode ✅ + AtharDarkTheme now wired ✅ | Component-level color migration pending (PR5+) | ~70% |

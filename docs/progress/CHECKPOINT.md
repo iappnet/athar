@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-03 · PR-HEALTH-REFRESH complete · ef13a74
+LAST-UPDATED:  2026-06-03 · PR-SETTINGS-REFRESH + PR-PRAYER-DETAILS complete · e1962c2
 LOADS-AT:      Tier 0
 -->
 
@@ -13,19 +13,19 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-03 (PR-HEALTH-REFRESH · `ef13a74`)
-**Commit:** `ef13a74` refactor(PR-HEALTH-REFRESH): Health module → tokens + accent palette + RTL, dark-mode-correct; strip ~3.1k dead lines
-**Prior:** `c0932e3` refactor(PR-HABITS-REFRESH): Habits UI → tokens + Calibri + RTL, dark-mode-correct; strip ~4.5k dead lines
-**Note:** 7-accent categorical palette added to AtharColors ThemeExtension (light+dark). 8 health files migrated (accent palette A–D + rulings E/F/G/H + Tier-1 mechanical: BoxShadow→AtharShadows.card, bottomSheet radii, RTL, success). ~3.1k dead lines removed (6,748→3,601 lines). flutter analyze: 0 issues. /drift-check PASS.
+**Timestamp:** 2026-06-03 (PR-SETTINGS-REFRESH `0cfd53e` · PR-PRAYER-DETAILS `e1962c2`)
+**Commit:** `e1962c2` refactor(PR-PRAYER-DETAILS): prayer detail views → tokens + RTL chevrons + Calibri, dark-mode-correct
+**Prior:** `0cfd53e` refactor(PR-SETTINGS-REFRESH): Settings UI → tokens + accent palette (+accentGreen/Indigo) + Calibri, dark-mode-correct
+**Note:** Two UI Coverage Refresh PRs in one session. AtharColors: accentGreen + accentIndigo added. Settings group (6 files): Cairo×42→Calibri, icon colors→accent palette, frozen PR5 Accessibility icons untouched, AtharShadows.card, zone colors→accentBlue/Green/Purple/Teal/Indigo. Prayer group (4 files): RTL chevrons (locale-aware), no-font TS→Calibri. KNOWN_PROBLEMS: P5+P6 logged (prayer_month_view hardcoded strings + easternNumerals). flutter analyze: 0 issues. /drift-check PASS. 7/8 UI Coverage Refresh PRs done.
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** PR-HEALTH-REFRESH ✅ COMPLETE  
-**Last committed:** PR-HEALTH-REFRESH · `ef13a74`  
-**Phase:** Complete. /drift-check PASS. Pushed to remote.  
-**Next:** PR-SPACE-REFRESH (next UI coverage refresh PR — same canonical DS recipe).
+**Active PR:** PR-PRAYER-DETAILS ✅ COMPLETE (PR-SETTINGS-REFRESH ✅ also complete this session)
+**Last committed:** PR-PRAYER-DETAILS · `e1962c2`
+**Phase:** Complete. /drift-check PASS. Pushed to remote.
+**Next:** PR-SPLASH-ONBOARD-A (final UI Coverage Refresh PR — same canonical DS recipe).
 
 ---
 
@@ -200,6 +200,6 @@ Deferred QA sweep bucket: 10/10 items (ceiling reached).
 
 ## WORKING TREE STATE
 
-**Status:** Clean — PR-HEALTH-REFRESH committed + pushed  
-**flutter analyze:** 0 issues  
-**Last commit:** `ef13a74` refactor(PR-HEALTH-REFRESH): Health module → tokens + accent palette + RTL, dark-mode-correct; strip ~3.1k dead lines
+**Status:** Clean — PR-SETTINGS-REFRESH + PR-PRAYER-DETAILS committed + pushed
+**flutter analyze:** 0 issues
+**Last commit:** `e1962c2` refactor(PR-PRAYER-DETAILS): prayer detail views → tokens + RTL chevrons + Calibri, dark-mode-correct
