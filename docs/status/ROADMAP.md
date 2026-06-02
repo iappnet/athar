@@ -30,7 +30,7 @@ CANONICAL-SINCE: 2026-06-01
 ### Legacy Phase Track (Phases 0–5 — iOS Widget + Stability)
 
 | Phase | Name | Status |
-|-------|------|--------|
+| ------- | ------ | -------- |
 | Phase 0 | Project stabilization + iOS widget scaffolding | ✅ Complete |
 | Phase 1 | Core workflow fixes (crashes, error handling, locale) | ✅ Complete |
 | Phase 2 | Task interactive iOS widget | ✅ Complete |
@@ -44,7 +44,7 @@ CANONICAL-SINCE: 2026-06-01
 > `main` stays at `32e59c3` until full migration + QA is complete. See `MIGRATION_BRANCH_STRATEGY.md`.
 
 | # | PR | Name | Status | Tag | Blocker |
-|---|----|----- |--------|-----|---------|
+| --- | ---- | ----- | -------- | ----- | --------- |
 | 1 | **PR1** | Tokens & Theme — green palette, Calibri, dark surfaces | ✅ Complete | `athar-v2-pr1-complete` | — |
 | 2 | **PR-THEME** | `ThemeMode.system` wiring + `ThemePreference` enum + 3-mode picker + PR-FONT-FALLBACK + wire `AtharLightTheme`/`AtharDarkTheme` + 88 fontFamilyFallback + RTL drawer | ✅ **Complete 2026-06-01** | `athar-v2-prtheme-complete-final` | — |
 | 2b | **PR-FONT-FALLBACK** | Cairo fallback on all 38 `AtharTypography` base styles + 3 extensions | ✅ Complete | — (part of PR-THEME arc) | — |
@@ -65,11 +65,31 @@ CANONICAL-SINCE: 2026-06-01
 
 ---
 
+## UI Coverage Refresh PRs — Required Before App Store Submission
+
+> **UI design-system coverage: 24% (36/151 surfaces) — source: `design-context/_audit_ui_coverage.md` (2026-06-02)**
+>
+> These 8 PRs are additive to the 14-PR feature track above. They address the long tail of UI surfaces (dialogs, shared components, per-feature screens) not covered by any existing PR scope. All are **required before any App Store or external TestFlight submission** — see REL-1 in `docs/ai/KNOWN_PROBLEMS.md`.
+
+| # | PR | Name | Status | Blocker |
+| --- | ---- | ----- | -------- | --------- |
+| 15 | **PR-DS-ATOMS** | App bar + legacy design-system atoms — cross-cutting | 🔲 Not started | — |
+| 16 | **PR-TASK-REFRESH** | Task feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
+| 17 | **PR-HABITS-REFRESH** | Habits feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
+| 18 | **PR-HEALTH-REFRESH** | Health feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
+| 19 | **PR-SPACE-REFRESH** | Space feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
+| 20 | **PR-SETTINGS-REFRESH** | Settings feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
+| 21 | **PR-PRAYER-DETAILS** | Prayer details screens UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
+| 22 | **PR-SPLASH-ONBOARD-A** | Splash + Onboarding Variant A UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
+
+---
+
 ## Completion Percentages
 
 | Dimension | Complete | Total | % |
 |-----------|---------|-------|---|
-| v2 Design System PRs | 12 logical (PR1, PR-THEME arc, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8, PR9, PR-ONBOARD-AB) | 14 | **~86%** |
+| Feature PRs complete (14-PR roadmap) | 12 (PR1, PR-THEME arc, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8, PR9, PR-ONBOARD-AB) | 14 | **~86%** |
+| UI surface coverage | 36 of 151 surfaces conformant — source: `design-context/_audit_ui_coverage.md` 2026-06-02 | 151 | **24%** |
 | Design system token migration | ✅ Foundation done; design system themes now live in app | Component + screen migration pending | ~20% |
 | Typography migration | Tokens + 88 theme fallbacks + 38 base styles — all correct | Component `.arabic`/`.english` callsites still use Cairo in some files | ~25% |
 | Dark-mode migration | Tokens ✅ + ThemeMode ✅ + AtharDarkTheme now wired ✅ | Component-level color migration pending (PR5+) | ~70% |
@@ -83,7 +103,7 @@ CANONICAL-SINCE: 2026-06-01
 | ID | Description | Severity | Blocks |
 |----|-------------|----------|--------|
 | B1 | **Calibri App Store licence** — designer must confirm before submission | Medium | App Store submission only (not dev/build) |
-| B2 | Dark secondary gradient variants not in CSS spec | Low | Dark mode secondary gradient in PR-THEME or later |
+| B2 | Dark secondary gradient variants not in CSS spec | Low | Dark mode secondary gradient in PR-THEME or later — **part of REL-1** (dark mode launch requirement; must resolve before store submission) |
 | ~~B3~~ | ~~Calendar dual-display requires dedicated designer spec~~ | **Closed** | PR4b shipped `65fc417` |
 | B4 | ~~`isAutoModeEnabled` settings UI unknown~~ | **Closed** | DRIFT-6: field is Smart Zones only; PR-THEME used `isDarkMode` + `ThemeMode.system` |
 | B5 | ~~Dark surface token conflict~~ | **Closed** | Resolved: `THEME_DARK_SPEC.md` adopted as canonical |

@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-02 · PR-ONBOARD-AB-UI variant pages written — HOLD commit for ARB review
+LAST-UPDATED:  2026-06-02 · drift-check governance fixes committed · f439c29
 LOADS-AT:      Tier 0
 -->
 
@@ -13,18 +13,19 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-02 (PR-ONBOARD-AB-UI variant pages written — awaiting user ARB review before commit)  
-**Commit (last pushed):** `1f868f9` feat(PR-ONBOARD-AB-INFRA): variant service + device_id seed + 4-branch routing + Supabase onboarding_events + dev reset tile  
-**Note:** Variant B/C/D pages written + wired in app.dart. `flutter gen-l10n` run. `flutter analyze` 0 errors. HOLD commit until user reviews ARB copy.
+**Timestamp:** 2026-06-02 (governance: UI-coverage finding + REL-1 + 8 refresh PRs + ship gate)
+**Commit:** pending review — governance docs staged, DS Quick Wins Dart code on HOLD
+**Prior:** `f439c29` docs: drift-check fixes — PR-ONBOARD-AB-UI completion in ROADMAP + MIGRATION_STATE
+**Note:** PR-ONBOARD-AB complete. ROADMAP 12/14 ~86% (feature PRs) + 24% UI surface coverage. REL-1 release blocker recorded. /drift-check PASS.
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** PR-ONBOARD-AB-UI 🔄 IN PROGRESS (HOLD — awaiting ARB review)  
-**Last committed:** PR-ONBOARD-AB-INFRA · `1f868f9`  
-**Phase:** Variant pages complete; gen-l10n done; analyze clean. Uncommitted.  
-**Next:** User approves ARB → commit PR-ONBOARD-AB-UI → /drift-check → PR-ADHAN or next arc.
+**Active PR:** PR-ONBOARD-AB-UI ✅ COMPLETE  
+**Last committed:** PR-ONBOARD-AB-UI · `729c23d`  
+**Phase:** Complete. /drift-check PASS. Governance fixes pushed (`f439c29`).  
+**Next:** PR-ADHAN (blocked on B4 audio asset) or next arc per ROADMAP.
 
 ---
 
@@ -40,7 +41,8 @@ LOADS-AT:      Tier 0
 - ✅ `flutter gen-l10n` — run; all 37 new keys generated
 - ✅ `flutter analyze` — 0 errors (2 pre-existing warnings unrelated)
 - ✅ Deferred QA bucket — ONBOARD-sweep entry added (MIGRATION_STATE.md, item 9/10)
-- ⏸ **HOLD** — waiting for user ARB copy review before commit
+- ✅ AR byte-verified: tanwin nasb (لاحقًا/شيئًا/مُنظَّم) clean; no direction marks; all 10 canonical values confirmed
+- ✅ COMMITTED `729c23d` + pushed
 
 ---
 
@@ -143,6 +145,19 @@ LOADS-AT:      Tier 0
 - ✅ A4: Context Loading Directive added to CLAUDE.md — commit `ee39e43`
 - ✅ /drift-check gate: 3 failures found and fixed (PR5+PR6 rows, %, CHECKPOINT internal drift)
 - ✅ A5 (addendum): VCS policy — blanket `.claude/` ignore replaced with machine-local-only rules; 7 project-memory files now tracked — commit `510cb0a`
+
+## DONE — UI COVERAGE AUDIT SESSION (2026-06-02)
+
+- ✅ `design-context/_audit_ui_coverage.md` — full 3-pass coverage audit written
+- ✅ Pass 1: 53 screens/pages classified (12 ✅ / 23 🟡 / 18 ❌)
+- ✅ Pass 2: 71 widgets + DS components (24 ✅ / 32 🟡 / 15 ❌)
+- ✅ Pass 3: 27 dialogs/sheets (0 ✅ / 5 🟡 / 22 ❌) + combined summary
+- ✅ Grand total: 151 surfaces — 24% conformant, 40% partial, 36% not-migrated
+- ✅ Key finding: 5 missing refresh PRs not in current roadmap (Task, Health, Space, Settings, DS-Atoms)
+- ✅ Key finding: `add_task_sheet.dart` = 112 old refs (heaviest single file); `athar_app_bar.dart` = highest-ROI DS fix
+- ⏸ NO DART CODE MODIFIED THIS SESSION
+
+---
 
 ## NEXT ACTION
 
