@@ -15,7 +15,7 @@ CANONICAL-SINCE: 2026-06-01
 > **SINGLE SOURCE OF TRUTH** — roadmap + % live here ONLY. Other docs must not restate these numbers.
 
 **Last updated:** 2026-06-03
-**Updated by:** PR-HEALTH-REFRESH complete (ef13a74) — Health module tokens + 7-accent palette + RTL, ~3.1k dead lines stripped
+**Updated by:** PR-SPACE-REFRESH complete (6d3b303) — Space feature tokens + module-type accent palette + RTL + ~2.7k dead lines stripped
 
 **Branch strategy:** `docs/status/MIGRATION_BRANCH_STRATEGY.md`  
 **Canonical handoff package:** `docs/design-specs/` (B2 mirror, read-only)  
@@ -77,7 +77,7 @@ CANONICAL-SINCE: 2026-06-01
 | 16 | **PR-TASK-REFRESH** | Task feature UI design-system refresh | ✅ **Complete 2026-06-02** · `a1f28e0` | — |
 | 17 | **PR-HABITS-REFRESH** | Habits feature UI design-system refresh | ✅ **Complete 2026-06-03** · `c0932e3` | — |
 | 18 | **PR-HEALTH-REFRESH** | Health feature UI design-system refresh | ✅ **Complete 2026-06-03** · `ef13a74` | — |
-| 19 | **PR-SPACE-REFRESH** | Space feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
+| 19 | **PR-SPACE-REFRESH** | Space feature UI design-system refresh | ✅ **Complete 2026-06-03** · `6d3b303` | — |
 | 20 | **PR-SETTINGS-REFRESH** | Settings feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
 | 21 | **PR-PRAYER-DETAILS** | Prayer details screens UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
 | 22 | **PR-SPLASH-ONBOARD-A** | Splash + Onboarding Variant A UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
@@ -144,7 +144,7 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Recommended Next PR
 
-**PR-HABITS-REFRESH ✅ complete.** `c0932e3` — context.colors + AtharTypography.fontFamily + RTL + AtharRadii/Spacing/Shadows/Animations on 8 habits-feature files. ~4.5k dead lines stripped. 3/8 UI Coverage Refresh PRs done (PR-DS-ATOMS + PR-TASK-REFRESH + PR-HABITS-REFRESH).
+**PR-SPACE-REFRESH ✅ complete.** `6d3b303` — module-type accent palette + semantic swaps + RTL fixes (DismissDirection.endToStart KEPT) + AtharShadows/Radii + ~2.7k dead lines stripped across 12 space-feature files. 5/8 UI Coverage Refresh PRs done (PR-DS-ATOMS + PR-TASK-REFRESH + PR-HABITS-REFRESH + PR-HEALTH-REFRESH + PR-SPACE-REFRESH).
 
 **Remaining (feature track):**
 
@@ -157,14 +157,13 @@ CANONICAL-SINCE: 2026-06-01
 
 | PR | Status | Blocker |
 |----|--------|---------|
-| **PR-HABITS-REFRESH** | ✅ Complete `c0932e3` | — |
-| **PR-HEALTH-REFRESH** | Not started | — |
-| **PR-SPACE-REFRESH** | Not started | — |
+| **PR-HEALTH-REFRESH** | ✅ Complete `ef13a74` | — |
+| **PR-SPACE-REFRESH** | ✅ Complete `6d3b303` | — |
 | **PR-SETTINGS-REFRESH** | Not started | — |
 | **PR-PRAYER-DETAILS** | Not started | — |
 | **PR-SPLASH-ONBOARD-A** | Not started | — |
 
-**Next:** PR-HEALTH-REFRESH. See `docs/status/NEXT_STEPS.md` for next-arc guidance.
+**Next:** PR-SETTINGS-REFRESH. See `docs/status/NEXT_STEPS.md` for next-arc guidance.
 
 ---
 
