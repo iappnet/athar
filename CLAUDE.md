@@ -348,14 +348,14 @@ Read files in this order at the start of every session. Stop at the first tier t
 | PR | Load |
 |----|------|
 | Any screen PR | `docs/ai/FEATURE_INDEX.md`, `docs/design-specs/REDESIGN_AUDIT.md` |
-| PR4b — Calendar | `docs/design-specs/CALENDAR_CELL_SPEC.md`, `docs/design-specs/CALENDAR_FOCUS_REDESIGN.md`, `DUAL_DATE_SPEC.md`, `design-context/_audit_calendar_dual.md` |
+| PR4b — Calendar | `docs/design-specs/CALENDAR_CELL_SPEC.md`, `docs/design-specs/CALENDAR_FOCUS_REDESIGN.md`, `docs/design-specs/DUAL_DATE_SPEC.md`, `design-context/_audit_calendar_dual.md` |
 | PR7 — Athkar | `docs/design-specs/ATHKAR_SPEC.md` |
 | PR8 — Focus | `docs/design-specs/FOCUS_OIL_SPEC.md` |
 | PR9 — iOS Widgets | `docs/design-specs/IOS_WIDGETS_SPEC.md`, `docs/ai/WIDGET_INDEX.md` |
 | PR-ONBOARD-AB | `docs/design-specs/ONBOARDING_AB_SPEC.md` |
 | Any cubit change | `docs/ai/STATE_MANAGEMENT_INDEX.md` |
 | Any dark-mode work | `docs/design-specs/THEME_DARK_SPEC.md` |
-| Any iPad layout | `docs/design-specs/IPAD_OPTIMIZATION.md`, `IPAD_LAYER2_OWNERSHIP_MAP.md` |
+| Any iPad layout | `docs/design-specs/IPAD_OPTIMIZATION.md`, `docs/ai/IPAD_LAYER2_OWNERSHIP_MAP.md` |
 | Any typography | `docs/design-specs/DESIGN_SYSTEM_GAP_VALIDATION.md` |
 | Any data-flow | `docs/ai/DATA_FLOW_INDEX.md` |
 | Any Supabase | `docs/ai/SUPABASE_INDEX.md` |
