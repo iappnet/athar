@@ -15,7 +15,7 @@ CANONICAL-SINCE: 2026-06-01
 > **SINGLE SOURCE OF TRUTH** — roadmap + % live here ONLY. Other docs must not restate these numbers.
 
 **Last updated:** 2026-06-03
-**Updated by:** PR-HABITS-REFRESH complete (c0932e3) — Habits UI tokens + Calibri + RTL, ~4.5k dead lines stripped
+**Updated by:** PR-HEALTH-REFRESH complete (ef13a74) — Health module tokens + 7-accent palette + RTL, ~3.1k dead lines stripped
 
 **Branch strategy:** `docs/status/MIGRATION_BRANCH_STRATEGY.md`  
 **Canonical handoff package:** `docs/design-specs/` (B2 mirror, read-only)  
@@ -76,7 +76,7 @@ CANONICAL-SINCE: 2026-06-01
 | 15 | **PR-DS-ATOMS** | App bar + legacy design-system atoms — cross-cutting | ✅ **Complete 2026-06-02** · `028f99f` | — |
 | 16 | **PR-TASK-REFRESH** | Task feature UI design-system refresh | ✅ **Complete 2026-06-02** · `a1f28e0` | — |
 | 17 | **PR-HABITS-REFRESH** | Habits feature UI design-system refresh | ✅ **Complete 2026-06-03** · `c0932e3` | — |
-| 18 | **PR-HEALTH-REFRESH** | Health feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
+| 18 | **PR-HEALTH-REFRESH** | Health feature UI design-system refresh | ✅ **Complete 2026-06-03** · `ef13a74` | — |
 | 19 | **PR-SPACE-REFRESH** | Space feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
 | 20 | **PR-SETTINGS-REFRESH** | Settings feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
 | 21 | **PR-PRAYER-DETAILS** | Prayer details screens UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |

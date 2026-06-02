@@ -2,7 +2,7 @@
 CANONICAL-FOR: Branch state, RULE 1/2 enforcement, Deferred QA bucket
 OWNER:         Claude Code
 PRECEDENCE:    4 (Tier 1 — loads after Tier-0 on any PR arc)
-LAST-UPDATED:  2026-06-03 · PR-HABITS-REFRESH c0932e3 logged
+LAST-UPDATED:  2026-06-03 · PR-HEALTH-REFRESH ef13a74 logged
 LOADS-AT:      Tier 1
 LEGACY-ALIASES: CURRENT_MIGRATION_STATE.md (root)
 CANONICAL-SINCE: 2026-06-01
@@ -48,6 +48,7 @@ CANONICAL-SINCE: 2026-06-01
 | **PR-TASK-REFRESH** — Task feature UI DS refresh | `a1f28e0` | (in branch) | ✅ `flutter analyze` 0 issues · 20 files migrated · FLAG: 2 kept category hues (medicine teal + quiet zone indigo) | 2026-06-02 |
 | **font-SSOT** — `AtharTypography.fontFamily` constant; 162 literal 'Calibri' → token across 35 files | `44de6f8` | (in branch) | ✅ `flutter analyze` 0 issues · no visual change · governance fix | 2026-06-02 |
 | **PR-HABITS-REFRESH** — Habits feature UI DS refresh; context.colors + AtharTypography.fontFamily + RTL + AtharRadii/Spacing/Shadows/Animations; ~4.5k dead lines stripped | `c0932e3` | (in branch) | ✅ `flutter analyze` 0 issues · 8 files migrated · 3/8 UI Coverage Refresh PRs done · FLAG: athkar_card hex (0xFFFFF8E1/0xFFE8F5EF/Colors.orange), habit_page/tile gradients + streak orange — awaiting designer token | 2026-06-03 |
+| **PR-HEALTH-REFRESH** — Health module UI DS refresh; 7-accent palette added to AtharColors (light+dark ThemeExtension); accent palette applied (appt types A, medicine types B, vital types C, dashboard cards D); structural rulings E/F/G/H; Tier-1 mechanical (6×AtharShadows.card, 3×AtharRadii.bottomSheet, 10×RTL, AppColors.success→context.colors.success); ~3.1k dead lines stripped | `ef13a74` | (in branch) | ✅ `flutter analyze` 0 issues · 9 files changed · 4/8 UI Coverage Refresh PRs done · accent palette is app-wide reusable (Tasks/Space/Notifications to adopt later) | 2026-06-03 |
 
 ---
 
