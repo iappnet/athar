@@ -38,6 +38,20 @@ Mirrors the in-app prayer card's compact/expanded selection (widget-local state 
 - Strip: 5 prayers (Fajr → Isha) with past/now/next/future states.
 - Bottom: progress bar + sunrise/sunset markers.
 
+### 1e · Post-prayer window
+The prayer widget's "After {prayer}" state uses the **dynamic post-prayer window** —
+not a fixed value. Formula (canonical source: `prayer_timer_service.dart:50–58`):
+`round(0.3 × minutesBetween(prevPrayer, nextPrayer))`, clamp(15, 45) min,
+with overrides applied **after** the clamp: Fajr = 40 min, Maghrib = 20 min.
+
+Inputs already in the payload — no new keys required:
+- `athar_prev_prayer_timestamp` (Unix epoch ms) → `prevPrayer.time`
+- `athar_next_prayer_timestamp` (Unix epoch ms) → `nextPrayer.time`
+- `athar_prev_prayer_name_en` (e.g. `"Fajr"`, `"Maghrib"`) → prayer type lookup
+
+The widget must replicate the formula exactly so the "After Fajr" / "After Maghrib"
+label and the in-app card flip at the same moment. (P9-C resolved 2026-06-02.)
+
 ---
 
 ## 2 · Habits Widget

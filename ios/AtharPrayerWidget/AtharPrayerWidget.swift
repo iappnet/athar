@@ -135,13 +135,24 @@ struct PrayerEntry: TimelineEntry {
     var isArabic: Bool   { resolvedLocale == "ar" }
     var isDetailed: Bool { intentDisplayMode == .detailed }
 
-    /// True when within 40 minutes after the previous prayer began (OQ2: 2400s).
-    /// In-app window is dynamic (15–45 min; Fajr=40, Maghrib=20). Widget uses fixed 40 min
-    /// — matches the Fajr special case; worst-case over-extends by ~10 min vs. Maghrib.
-    /// Alignment decision deferred to designer. (P9-C)
+    /// Dynamic post-prayer window — exact parity with prayer_timer_service.dart:50–58.
+    /// Formula: round(0.3 × minutesBetween(prev, next)), clamp(15,45),
+    /// then overrides AFTER clamp: Fajr=40 min, Maghrib=20 min. (P9-C resolved 2026-06-02)
+    var dynamicWindow: TimeInterval {
+        guard let prev = prevPrayerTime, let next = prayerTime else { return 2400 }
+        let timeBetween = next.timeIntervalSince(prev) / 60  // minutes
+        var w = (timeBetween * 0.3).rounded()
+        if w <= 0 { w = 30 }
+        w = min(45, max(15, w))
+        let prevType = inferTypeFromEnglishName(prevNameEn)
+        if prevType == "maghrib" { w = 20 }
+        if prevType == "fajr"    { w = 40 }
+        return w * 60  // back to seconds
+    }
+
     var isCurrentPrayerWindow: Bool {
         guard let prev = prevPrayerTime, !prevNameAr.isEmpty else { return false }
-        return Date().timeIntervalSince(prev) < 2400
+        return Date().timeIntervalSince(prev) < dynamicWindow
     }
 
     var localizedName: String     { isArabic ? nameAr : nameEn }

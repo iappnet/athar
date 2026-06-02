@@ -14,6 +14,7 @@ LOADS-AT:      Tier 3 (reference only)
 
 **Sync log:**
 - `2026-06-02` — design-specs mirror synced from handoff_v2-2 base @ 2026-06-02; PRAYER_CARD_SPEC reconciled from design SOURCE v2.2 @ 2026-06-01.
+- `2026-06-02` — PRAYER_CARD_SPEC + IOS_WIDGETS_SPEC re-synced from SOURCE 2026-06-02: post-prayer window corrected from flat 40 min to dynamic formula (P9-C resolution). Canonical: `prayer_timer_service.dart:50–58`. PRAYER_CARD_SPEC §4/§10/§11/§12 updated; IOS_WIDGETS_SPEC §1e added.
 
 ---
 
@@ -34,12 +35,12 @@ LOADS-AT:      Tier 3 (reference only)
 | `HIJRI_MONTH_ABBREVIATIONS.md` | athar project root (PR4b) | PR4b abbreviation table; no handoff_v2-2 counterpart |
 | `INVESTIGATION_RECONCILIATION.md` | `handoff_v2-2/` | Read-only mirror |
 | `INVESTIGATION_REPORT.md` | `handoff_v2-2/` | Read-only mirror |
-| `IOS_WIDGETS_SPEC.md` | `handoff_v2-2/` | Read-only mirror |
+| `IOS_WIDGETS_SPEC.md` | `handoff_v2-2/`; §1e added 2026-06-02 (post-prayer window, dynamic formula) | Read-only mirror |
 | `IPAD_OPTIMIZATION.md` | `handoff_v2-2/` | Read-only mirror |
 | `ONBOARDING_AB_SPEC.md` | `handoff_v2-2/` | Read-only mirror |
 | `PACKAGE_A_DECISIONS.md` | `handoff_v2-2/` | Read-only mirror |
 | `PACKAGE_C_DECISIONS.md` | `handoff_v2-2/` | Read-only mirror |
-| `PRAYER_CARD_SPEC.md` | design SOURCE v2.2 @ 2026-06-01 (designer-provided, reconciled) | Supersedes handoff_v2-2 (104-line, stale 64px) and root (313-line, duplicated §8–10). Archives in `docs/history/handoff-duplicates/`. Read-only mirror. |
+| `PRAYER_CARD_SPEC.md` | design SOURCE v2.2 @ 2026-06-01 (designer-provided, reconciled); §4/§10/§11/§12 corrected 2026-06-02 (flat 40 min → dynamic formula) | Supersedes handoff_v2-2 (104-line, stale 64px) and root (313-line, duplicated §8–10). Archives in `docs/history/handoff-duplicates/`. Read-only mirror. |
 | `README.md` | `handoff_v2-2/` | Read-only mirror |
 | `REDESIGN_AUDIT.md` | `handoff_v2-2/` | Read-only mirror |
 | `SKILL.md` | `handoff_v2-2/` | Read-only mirror |

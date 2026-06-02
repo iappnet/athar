@@ -130,17 +130,22 @@ This flow is already correct in production and must not be altered by PR3.
 Documenting it here so no later change accidentally breaks it.
 
 - After a prayer's start time, a **post-prayer athkar surface** becomes
-  active for **40 minutes**.
+  active for a **per-prayer window**. Formula (canonical,
+  `prayer_timer_service.dart:50–58`):
+  `round(0.3 × minutesBetween(prevPrayer, nextPrayer))`, clamp(15, 45) min,
+  with overrides after clamp: Fajr = 40 min, Maghrib = 20 min.
+  (Earlier drafts said flat 40 min — oversimplified; the dynamic formula is
+  canonical. The iOS widget mirrors it exactly.)
 - During that window, the dashboard's calm-awareness state shifts: the
   prayer card's hero row swaps the countdown for a "After {prayer}"
   affordance that deep-links into the post-prayer athkar set. Visual
   treatment: same surface, same calm typography — only the label and
   destination change. **No animation transition.** State swaps on the
   next second-tick.
-- After 40 minutes elapse, the card returns to its normal "next prayer"
+- After the window elapses, the card returns to its normal "next prayer"
   state automatically.
-- The 40-minute window is **per prayer**, not a session timer the user
-  starts. Do not add controls for it.
+- The window is **per prayer**, not a session timer the user starts.
+  Do not add controls for it.
 
 PR3 implementation note: this swap is already wired through
 `PrayerCubit` + `SmartPrayerCardWrapper`. PR3 should preserve the
@@ -286,7 +291,7 @@ automatically. Detect via `MediaQuery.sizeOf(context).height`.
 | No location permission | Surface unchanged. Hero replaced by "Set location" CTA (one-line, deep-links to Settings → Location). City pill hidden. |
 | Location set, prayer times unavailable (network error first run) | Surface unchanged. Hero shows "—:—" with caption "Couldn't load prayer times" + retry icon (small, top-right of hero). |
 | Prayer-start window (active prayer) | §6 calm state. |
-| Post-prayer 40-min window | §4 dhikr swap. |
+| Post-prayer window (per-prayer formula — see §4) | §4 dhikr swap. |
 | `isPrayerEnabled = false` | Card is hidden entirely (handled upstream by `SmartPrayerCardWrapper`). |
 | `isPrayerCardEnabled = false` | Card hidden, prayer notifications still active. |
 | `prayerCardDisplayMode = dashboardOnly` (default) | Card on Dashboard only. |
@@ -306,7 +311,7 @@ automatically. Detect via `MediaQuery.sizeOf(context).height`.
 | Nafl badges | "Duha + Witr" (incorrect) | **Duha + Qiyam (last third of night)** — matches production |
 | Sunrise/sunset data source | Earlier draft asked for new model field | **Reuse** existing `PrayerType.sunrise` / `.maghrib` from `PrayerCubit` |
 | Variant routing | "Add `prayerCardVariant` to UserSettings" | **Widget-local state.** `UserSettings.prayerCardDisplayMode` controls placement, not visual variant |
-| Post-prayer flow | Described as new design work | **Preserve existing behavior.** 40-min window already wired; PR3 only restyles the surface |
+| Post-prayer flow | Described as new design work | **Preserve existing behavior.** Per-prayer dynamic window already wired; PR3 only restyles the surface |
 | Progress-bar RTL | `transform: scaleX(-1)` | **`Directionality`-aware** trailing-edge fill |
 | Shadow blurRadius | 42/12 (earlier spec) | **20/8 canonical** — approved 2026-06-01; forest colors unchanged |
 | Arabic font | Cairo (earlier drafts) | **Calibri only** (Package A lockdown) |
@@ -318,7 +323,7 @@ automatically. Detect via `MediaQuery.sizeOf(context).height`.
 - New animations of any kind.
 - New `UserSettings` fields.
 - Changes to `PrayerCubit` state shape or refresh cadence.
-- Changes to the post-prayer 40-min window logic.
+- Changes to the post-prayer window formula (dynamic; canonical in `prayer_timer_service.dart:50–58`).
 - Adhan audio handling (covered by PR-ADHAN, separate).
 - iOS widget visuals **and data sync** (covered by `IOS_WIDGETS_SPEC.md` +
   `docs/ai/WIDGET_INDEX.md`: App Group `UserDefaults` payload +
