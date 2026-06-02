@@ -13,10 +13,10 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-02 (governance: UI-coverage finding + REL-1 + 8 refresh PRs + ship gate)
-**Commit:** pending review — governance docs staged, DS Quick Wins Dart code on HOLD
-**Prior:** `f439c29` docs: drift-check fixes — PR-ONBOARD-AB-UI completion in ROADMAP + MIGRATION_STATE
-**Note:** PR-ONBOARD-AB complete. ROADMAP 12/14 ~86% (feature PRs) + 24% UI surface coverage. REL-1 release blocker recorded. /drift-check PASS.
+**Timestamp:** 2026-06-02 (DS Quick Wins + governance · `2f617cb`)
+**Commit:** `2f617cb` refactor(ds): athkar semantic consts in AtharColors + Calibri on athar_app_bar
+**Prior:** `9a2a851` docs(governance): record UI-coverage finding + 8 refresh PRs + dark-mode ship gate (REL-1)
+**Note:** PR-ONBOARD-AB complete. Governance: REL-1 blocker + 8 UI refresh PRs recorded. DS Quick Wins shipped. /drift-check PASS.
 
 ---
 
