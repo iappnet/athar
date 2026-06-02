@@ -122,7 +122,7 @@ The central NavBar `+` button is the only add entry point. Duplicate FABs are a 
 
 ### Before any design-system PR
 1. Read `docs/status/ROADMAP.md` — check PR sequence and blockers
-2. Read the relevant handoff_v2-2 spec doc (listed in master status)
+2. Read the relevant spec doc from `docs/design-specs/` (listed in master status)
 3. Write audit doc in `design-context/_audit_<feature>.md` BEFORE touching Dart
 4. No Dart edits without audit sign-off
 
