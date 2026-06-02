@@ -14,8 +14,8 @@ CANONICAL-SINCE: 2026-06-01
 >
 > **SINGLE SOURCE OF TRUTH** — roadmap + % live here ONLY. Other docs must not restate these numbers.
 
-**Last updated:** 2026-06-02
-**Updated by:** PR-DS-ATOMS complete (028f99f) — DS atoms/molecules context.colors + Calibri + RTL
+**Last updated:** 2026-06-03
+**Updated by:** PR-HABITS-REFRESH complete (c0932e3) — Habits UI tokens + Calibri + RTL, ~4.5k dead lines stripped
 
 **Branch strategy:** `docs/status/MIGRATION_BRANCH_STRATEGY.md`  
 **Canonical handoff package:** `docs/design-specs/` (B2 mirror, read-only)  
@@ -75,7 +75,7 @@ CANONICAL-SINCE: 2026-06-01
 | --- | ---- | ----- | -------- | --------- |
 | 15 | **PR-DS-ATOMS** | App bar + legacy design-system atoms — cross-cutting | ✅ **Complete 2026-06-02** · `028f99f` | — |
 | 16 | **PR-TASK-REFRESH** | Task feature UI design-system refresh | ✅ **Complete 2026-06-02** · `a1f28e0` | — |
-| 17 | **PR-HABITS-REFRESH** | Habits feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
+| 17 | **PR-HABITS-REFRESH** | Habits feature UI design-system refresh | ✅ **Complete 2026-06-03** · `c0932e3` | — |
 | 18 | **PR-HEALTH-REFRESH** | Health feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
 | 19 | **PR-SPACE-REFRESH** | Space feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
 | 20 | **PR-SETTINGS-REFRESH** | Settings feature UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
@@ -144,7 +144,7 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Recommended Next PR
 
-**PR-TASK-REFRESH ✅ complete.** `a1f28e0` — context.colors + Calibri + RTL on 20 task-feature files. 2/8 UI Coverage Refresh PRs done (PR-DS-ATOMS + PR-TASK-REFRESH).
+**PR-HABITS-REFRESH ✅ complete.** `c0932e3` — context.colors + AtharTypography.fontFamily + RTL + AtharRadii/Spacing/Shadows/Animations on 8 habits-feature files. ~4.5k dead lines stripped. 3/8 UI Coverage Refresh PRs done (PR-DS-ATOMS + PR-TASK-REFRESH + PR-HABITS-REFRESH).
 
 **Remaining (feature track):**
 
@@ -157,15 +157,14 @@ CANONICAL-SINCE: 2026-06-01
 
 | PR | Status | Blocker |
 |----|--------|---------|
-| **PR-TASK-REFRESH** | ✅ Complete `a1f28e0` | — |
-| **PR-HABITS-REFRESH** | Not started | — |
+| **PR-HABITS-REFRESH** | ✅ Complete `c0932e3` | — |
 | **PR-HEALTH-REFRESH** | Not started | — |
 | **PR-SPACE-REFRESH** | Not started | — |
 | **PR-SETTINGS-REFRESH** | Not started | — |
 | **PR-PRAYER-DETAILS** | Not started | — |
 | **PR-SPLASH-ONBOARD-A** | Not started | — |
 
-**Next:** PR-HABITS-REFRESH. See `docs/status/NEXT_STEPS.md` for next-arc guidance.
+**Next:** PR-HEALTH-REFRESH. See `docs/status/NEXT_STEPS.md` for next-arc guidance.
 
 ---
 

@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-02 · font name SSOT refactor committed · 44de6f8
+LAST-UPDATED:  2026-06-03 · PR-HABITS-REFRESH complete · c0932e3
 LOADS-AT:      Tier 0
 -->
 
@@ -13,19 +13,19 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-02 (font-SSOT refactor · `44de6f8`)
-**Commit:** `44de6f8` refactor(ds): font name single-source via AtharTypography.fontFamily (no literal Calibri)
-**Prior:** `a1f28e0` refactor(PR-TASK-REFRESH): Tasks UI → context.colors + Calibri + RTL, dark-mode-correct; strip ~7.1k dead lines
-**Note:** Inter-PR governance fix (no visual change). 162 `fontFamily: 'Calibri'` literals → `AtharTypography.fontFamily` across 35 files. `static const String fontFamily = fontFamilyAr` added to AtharTypography. flutter analyze: 0 issues. /drift-check PASS.
+**Timestamp:** 2026-06-03 (PR-HABITS-REFRESH · `c0932e3`)
+**Commit:** `c0932e3` refactor(PR-HABITS-REFRESH): Habits UI → tokens + Calibri + RTL, dark-mode-correct; strip ~4.5k dead lines
+**Prior:** `44de6f8` refactor(ds): font name single-source via AtharTypography.fontFamily (no literal Calibri)
+**Note:** 8 habits files migrated (context.colors + AtharTypography.fontFamily + AtharRadii + AtharSpacing + AtharShadows + AtharAnimations + RTL). ~4.5k dead lines removed. flutter analyze: 0 issues. /drift-check PASS.
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** PR-TASK-REFRESH ✅ COMPLETE  
-**Last committed:** PR-TASK-REFRESH · `a1f28e0`  
+**Active PR:** PR-HABITS-REFRESH ✅ COMPLETE  
+**Last committed:** PR-HABITS-REFRESH · `c0932e3`  
 **Phase:** Complete. /drift-check PASS. Pushed to remote.  
-**Next:** PR-HABITS-REFRESH (next UI coverage refresh PR — same canonical DS recipe).
+**Next:** PR-HEALTH-REFRESH (next UI coverage refresh PR — same canonical DS recipe).
 
 ---
 
@@ -177,13 +177,13 @@ LOADS-AT:      Tier 0
 
 ## NEXT ACTION
 
-**PR-TASK-REFRESH complete.** 20 task-feature files migrated (context.colors + Calibri + RTL). Next:
-- **PR-HABITS-REFRESH** — Habits feature UI DS refresh (same canonical DS recipe)
+**PR-HABITS-REFRESH complete.** 8 habits-feature files migrated (context.colors + AtharTypography.fontFamily + RTL + AtharRadii/Spacing/Shadows/Animations). ~4.5k dead lines stripped. Next:
+- **PR-HEALTH-REFRESH** — Health feature UI DS refresh (same canonical DS recipe)
 - **PR-ADHAN** — blocked on B4 (audio asset from designer)
 
 **OPS-1 reminder:** `supabase/migrations/20260602_onboarding_events.sql` must be applied to live Supabase project before A/B test goes live. Until then, analytics inserts no-op silently.
 
-Deferred QA sweep bucket: 8/10 items (ceiling: 10).
+Deferred QA sweep bucket: 10/10 items (ceiling reached).
 
 ---
 
@@ -200,6 +200,6 @@ Deferred QA sweep bucket: 8/10 items (ceiling: 10).
 
 ## WORKING TREE STATE
 
-**Status:** Clean — font SSOT refactor committed + pushed  
+**Status:** Clean — PR-HABITS-REFRESH committed + pushed  
 **flutter analyze:** 0 issues  
-**Last commit:** `44de6f8` refactor(ds): font name single-source via AtharTypography.fontFamily (no literal Calibri)
+**Last commit:** `c0932e3` refactor(PR-HABITS-REFRESH): Habits UI → tokens + Calibri + RTL, dark-mode-correct; strip ~4.5k dead lines
