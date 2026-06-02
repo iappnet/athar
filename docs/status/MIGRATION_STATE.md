@@ -2,7 +2,7 @@
 CANONICAL-FOR: Branch state, RULE 1/2 enforcement, Deferred QA bucket
 OWNER:         Claude Code
 PRECEDENCE:    4 (Tier 1 — loads after Tier-0 on any PR arc)
-LAST-UPDATED:  2026-06-02 · B4 — sign-off artifact paths repointed to docs/history/pr-reports/
+LAST-UPDATED:  2026-06-02 · font SSOT refactor 44de6f8 logged
 LOADS-AT:      Tier 1
 LEGACY-ALIASES: CURRENT_MIGRATION_STATE.md (root)
 CANONICAL-SINCE: 2026-06-01
@@ -46,6 +46,7 @@ CANONICAL-SINCE: 2026-06-01
 | **PR-ONBOARD-AB-UI** — Variants B/C/D pages + ARB + analytics wiring | `729c23d` | (in branch) | ✅ `flutter analyze` 0 errors · 3 new pages · 37 ARB keys · AR byte-verified · gen-l10n run · deferred device sweep in bucket | 2026-06-02 |
 | **PR-DS-ATOMS** — DS atoms/molecules context.colors + Calibri + RTL | `028f99f` | (in branch) | ✅ `flutter analyze` 0 errors · 9 files migrated · canonical recipe established | 2026-06-02 |
 | **PR-TASK-REFRESH** — Task feature UI DS refresh | `a1f28e0` | (in branch) | ✅ `flutter analyze` 0 issues · 20 files migrated · FLAG: 2 kept category hues (medicine teal + quiet zone indigo) | 2026-06-02 |
+| **font-SSOT** — `AtharTypography.fontFamily` constant; 162 literal 'Calibri' → token across 35 files | `44de6f8` | (in branch) | ✅ `flutter analyze` 0 issues · no visual change · governance fix | 2026-06-02 |
 
 ---
 
@@ -89,7 +90,7 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Active PR
 
-**PR-TASK-REFRESH** — ✅ Complete (2026-06-02). `a1f28e0` — context.colors + Calibri + RTL on 20 task-feature files; 2/8 UI Coverage Refresh PRs done. Next: PR-HABITS-REFRESH.
+**PR-TASK-REFRESH + font-SSOT** — ✅ Complete (2026-06-02). Last commit `44de6f8` (font governance fix, no visual change); `a1f28e0` was PR-TASK-REFRESH content. 2/8 UI Coverage Refresh PRs done. Next: PR-HABITS-REFRESH.
 
 ---
 

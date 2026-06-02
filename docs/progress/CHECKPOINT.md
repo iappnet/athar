@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-02 · drift-check governance fixes committed · f439c29
+LAST-UPDATED:  2026-06-02 · font name SSOT refactor committed · 44de6f8
 LOADS-AT:      Tier 0
 -->
 
@@ -13,10 +13,10 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-02 (PR-TASK-REFRESH · `a1f28e0`)
-**Commit:** `a1f28e0` refactor(PR-TASK-REFRESH): Tasks UI → context.colors + Calibri + RTL, dark-mode-correct; strip ~7.1k dead lines
-**Prior:** `028f99f` refactor(PR-DS-ATOMS): migrate DS atoms/molecules to context.colors + Calibri + RTL
-**Note:** PR-TASK-REFRESH complete. 20 files migrated. FLAG: Color(0xFF009688) (medicine teal) + Colors.indigo (quiet zone) kept — no semantic token. /drift-check PASS.
+**Timestamp:** 2026-06-02 (font-SSOT refactor · `44de6f8`)
+**Commit:** `44de6f8` refactor(ds): font name single-source via AtharTypography.fontFamily (no literal Calibri)
+**Prior:** `a1f28e0` refactor(PR-TASK-REFRESH): Tasks UI → context.colors + Calibri + RTL, dark-mode-correct; strip ~7.1k dead lines
+**Note:** Inter-PR governance fix (no visual change). 162 `fontFamily: 'Calibri'` literals → `AtharTypography.fontFamily` across 35 files. `static const String fontFamily = fontFamilyAr` added to AtharTypography. flutter analyze: 0 issues. /drift-check PASS.
 
 ---
 
@@ -200,6 +200,6 @@ Deferred QA sweep bucket: 8/10 items (ceiling: 10).
 
 ## WORKING TREE STATE
 
-**Status:** Clean — PR-TASK-REFRESH committed + pushed  
-**flutter analyze:** 0 issues (pre-existing task_page.dart + project_details_page.dart warnings now suppressed inline)  
-**Last commit:** `a1f28e0` refactor(PR-TASK-REFRESH): Tasks UI → context.colors + Calibri + RTL, dark-mode-correct; strip ~7.1k dead lines
+**Status:** Clean — font SSOT refactor committed + pushed  
+**flutter analyze:** 0 issues  
+**Last commit:** `44de6f8` refactor(ds): font name single-source via AtharTypography.fontFamily (no literal Calibri)
