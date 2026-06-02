@@ -95,6 +95,17 @@ class AtharColors extends ThemeExtension<AtharColors> {
   final Color overlayLight;
 
   // ─────────────────────────────────────────────────────────────────
+  // CATEGORY ACCENT PALETTE — ألوان الفئات
+  // ─────────────────────────────────────────────────────────────────
+  final Color accentBlue;
+  final Color accentPurple;
+  final Color accentTeal;
+  final Color accentRed;
+  final Color accentOrange;
+  final Color accentPink;
+  final Color accentNeutral;
+
+  // ─────────────────────────────────────────────────────────────────
   // GRADIENTS - التدرجات اللونية
   // ─────────────────────────────────────────────────────────────────
   final LinearGradient primaryGradient;
@@ -187,6 +198,14 @@ class AtharColors extends ThemeExtension<AtharColors> {
     // Overlay
     required this.overlay,
     required this.overlayLight,
+    // Category Accents
+    required this.accentBlue,
+    required this.accentPurple,
+    required this.accentTeal,
+    required this.accentRed,
+    required this.accentOrange,
+    required this.accentPink,
+    required this.accentNeutral,
     // Gradients
     required this.primaryGradient,
     required this.secondaryGradient,
@@ -263,6 +282,15 @@ class AtharColors extends ThemeExtension<AtharColors> {
     // Overlay
     overlay: Color(0x80000000),
     overlayLight: Color(0x40000000),
+
+    // Category Accents
+    accentBlue:    Color(0xFF2D6CB5),
+    accentPurple:  Color(0xFF6B4FA8),
+    accentTeal:    Color(0xFF1F8A7A),
+    accentRed:     Color(0xFFC0453B),
+    accentOrange:  Color(0xFFC77A2E),
+    accentPink:    Color(0xFFB5557F),
+    accentNeutral: Color(0xFF6B7280),
 
     // Gradients
     primaryGradient: LinearGradient(
@@ -353,6 +381,15 @@ class AtharColors extends ThemeExtension<AtharColors> {
     overlay: Color(0xCC000000),
     overlayLight: Color(0x80000000),
 
+    // Category Accents
+    accentBlue:    Color(0xFF6FA8E0),
+    accentPurple:  Color(0xFFA48BD6),
+    accentTeal:    Color(0xFF5FBCAD),
+    accentRed:     Color(0xFFE08379),
+    accentOrange:  Color(0xFFE0A867),
+    accentPink:    Color(0xFFD68BAC),
+    accentNeutral: Color(0xFF9AA2AE),
+
     // Gradients
     primaryGradient: LinearGradient(
       begin: Alignment.topLeft,
@@ -431,6 +468,14 @@ class AtharColors extends ThemeExtension<AtharColors> {
     // Overlay
     Color? overlay,
     Color? overlayLight,
+    // Category Accents
+    Color? accentBlue,
+    Color? accentPurple,
+    Color? accentTeal,
+    Color? accentRed,
+    Color? accentOrange,
+    Color? accentPink,
+    Color? accentNeutral,
     // Gradients
     LinearGradient? primaryGradient,
     LinearGradient? secondaryGradient,
@@ -492,6 +537,14 @@ class AtharColors extends ThemeExtension<AtharColors> {
       // Overlay
       overlay: overlay ?? this.overlay,
       overlayLight: overlayLight ?? this.overlayLight,
+      // Category Accents
+      accentBlue: accentBlue ?? this.accentBlue,
+      accentPurple: accentPurple ?? this.accentPurple,
+      accentTeal: accentTeal ?? this.accentTeal,
+      accentRed: accentRed ?? this.accentRed,
+      accentOrange: accentOrange ?? this.accentOrange,
+      accentPink: accentPink ?? this.accentPink,
+      accentNeutral: accentNeutral ?? this.accentNeutral,
       // Gradients
       primaryGradient: primaryGradient ?? this.primaryGradient,
       secondaryGradient: secondaryGradient ?? this.secondaryGradient,
@@ -583,6 +636,14 @@ class AtharColors extends ThemeExtension<AtharColors> {
       // Overlay
       overlay: Color.lerp(overlay, other.overlay, t)!,
       overlayLight: Color.lerp(overlayLight, other.overlayLight, t)!,
+      // Category Accents
+      accentBlue: Color.lerp(accentBlue, other.accentBlue, t)!,
+      accentPurple: Color.lerp(accentPurple, other.accentPurple, t)!,
+      accentTeal: Color.lerp(accentTeal, other.accentTeal, t)!,
+      accentRed: Color.lerp(accentRed, other.accentRed, t)!,
+      accentOrange: Color.lerp(accentOrange, other.accentOrange, t)!,
+      accentPink: Color.lerp(accentPink, other.accentPink, t)!,
+      accentNeutral: Color.lerp(accentNeutral, other.accentNeutral, t)!,
       // Gradients - لا يمكن عمل lerp للـ gradients بشكل مباشر
       primaryGradient: t < 0.5 ? primaryGradient : other.primaryGradient,
       secondaryGradient: t < 0.5 ? secondaryGradient : other.secondaryGradient,

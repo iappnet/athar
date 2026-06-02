@@ -25,9 +25,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-/// Semantic colors (not in ColorScheme)
-const _successColor = AppColors.success;
-
 class HealthDashboardPage extends StatefulWidget {
   final ModuleModel module;
 
@@ -67,7 +64,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
-                backgroundColor: Colors.green,
+                backgroundColor: context.colors.success,
                 behavior: SnackBarBehavior.floating,
               ),
             );
@@ -159,8 +156,8 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
                 colorScheme.primary,
                 colorScheme.primary.withValues(alpha: 0.8),
               ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+              begin: AlignmentDirectional.topStart,
+              end: AlignmentDirectional.bottomEnd,
             ),
             borderRadius: AtharRadii.radiusXl,
             boxShadow: [
@@ -179,7 +176,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
                   CircleAvatar(
                     radius: 30.r,
                     backgroundColor: Colors.white.withValues(alpha: 0.2),
-                    child: Icon(Icons.person, size: 35.sp, color: Colors.white),
+                    child: Icon(Icons.person, size: 35.sp, color: colorScheme.onPrimary),
                   ),
                   AtharGap.hLg,
                   Expanded(
@@ -189,7 +186,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
                         Text(
                           widget.module.name,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: colorScheme.onPrimary,
                             fontSize: 18.sp,
                             fontWeight: FontWeight.bold,
                           ),
@@ -198,7 +195,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
                           Text(
                             l10n.healthBloodType(profile!.bloodType!),
                             style: TextStyle(
-                              color: Colors.white.withValues(alpha: 0.9),
+                              color: colorScheme.onPrimary.withValues(alpha: 0.9),
                               fontSize: 12.sp,
                             ),
                           ),
@@ -206,7 +203,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.edit, color: Colors.white),
+                    icon: Icon(Icons.edit, color: colorScheme.onPrimary),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -229,15 +226,18 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
                     vertical: 8.h,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.red.withValues(alpha: 0.2),
+                    color: context.colors.error.withValues(alpha: 0.2),
                     borderRadius: AtharRadii.radiusMd,
-                    border: Border.all(color: Colors.red.shade100, width: 0.5),
+                    border: Border.all(
+                      color: context.colors.error.withValues(alpha: 0.3),
+                      width: 0.5,
+                    ),
                   ),
                   child: Row(
                     children: [
                       Icon(
                         Icons.warning_amber_rounded,
-                        color: Colors.white,
+                        color: colorScheme.onPrimary,
                         size: 18.sp,
                       ),
                       AtharGap.hSm,
@@ -245,7 +245,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
                         child: Text(
                           l10n.healthAllergy(profile.allergies!),
                           style: TextStyle(
-                            color: Colors.white,
+                            color: colorScheme.onPrimary,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.bold,
                           ),
@@ -271,7 +271,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
           colorScheme: colorScheme,
           title: l10n.healthMedicines,
           icon: Icons.medication_rounded,
-          color: Colors.blue,
+          color: context.colors.accentBlue,
           onTap: () {
             Navigator.push(
               context,
@@ -288,7 +288,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
           colorScheme: colorScheme,
           title: l10n.healthAppointments,
           icon: Icons.calendar_month_rounded,
-          color: Colors.purple,
+          color: context.colors.accentPurple,
           onTap: () {
             Navigator.push(
               context,
@@ -305,7 +305,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
           colorScheme: colorScheme,
           title: l10n.healthVitals,
           icon: Icons.monitor_heart_rounded,
-          color: Colors.red,
+          color: context.colors.accentRed,
           onTap: () {
             Navigator.push(
               context,
@@ -322,7 +322,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
           colorScheme: colorScheme,
           title: l10n.healthRecords,
           icon: Icons.history_edu_rounded,
-          color: Colors.orange,
+          color: context.colors.accentOrange,
           onTap: () {
             Navigator.push(
               context,
@@ -355,13 +355,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
         decoration: BoxDecoration(
           color: colorScheme.surface,
           borderRadius: AtharRadii.radiusLg,
-          boxShadow: [
-            BoxShadow(
-              color: colorScheme.shadow.withValues(alpha: 0.05),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          boxShadow: AtharShadows.card,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -479,13 +473,13 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
       decoration: BoxDecoration(
         color: colorScheme.surface,
         borderRadius: AtharRadii.radiusMd,
-        border: Border(
-          left: BorderSide(color: Colors.blue, width: 4.w),
+        border: BorderDirectional(
+          start: BorderSide(color: context.colors.accentBlue, width: 4.w),
         ),
       ),
       child: Row(
         children: [
-          Icon(Icons.medication, color: Colors.blue, size: 24.sp),
+          Icon(Icons.medication, color: context.colors.accentBlue, size: 24.sp),
           AtharGap.hMd,
           Expanded(
             child: Column(
@@ -531,12 +525,12 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
       margin: EdgeInsets.only(bottom: 8.h),
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
-        color: Colors.purple.shade50,
+        color: context.colors.accentPurple.withValues(alpha: 0.1),
         borderRadius: AtharRadii.radiusMd,
       ),
       child: Row(
         children: [
-          Icon(Icons.access_time_filled, color: Colors.purple, size: 20.sp),
+          Icon(Icons.access_time_filled, color: context.colors.accentPurple, size: 20.sp),
           AtharGap.hMd,
           Expanded(
             child: Column(
@@ -551,7 +545,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
                         height: 1.6,
                       ).copyWith(
                         fontWeight: FontWeight.bold,
-                        color: Colors.purple.shade900,
+                        color: context.colors.accentPurple,
                       ),
                 ),
                 Text(
@@ -561,7 +555,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
                     fontWeight: FontWeight.w500,
                     height: 1.4,
                     letterSpacing: 0.5,
-                  ).copyWith(color: Colors.purple.shade700),
+                  ).copyWith(color: context.colors.accentPurple),
                 ),
               ],
             ),
@@ -580,7 +574,7 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
             Icon(
               Icons.check_circle_rounded,
               size: 40.sp,
-              color: _successColor.withValues(alpha: 0.3),
+              color: context.colors.success.withValues(alpha: 0.3),
             ),
             AtharGap.sm,
             Text(
@@ -598,549 +592,4 @@ class _HealthDashboardPageState extends State<HealthDashboardPage> {
     );
   }
 }
-//-----------------------------------------------------------------------
-// import 'package:athar/core/design_system/themes/app_colors.dart';
-// import 'package:athar/core/di/injection.dart';
-// import 'package:athar/features/health/presentation/cubit/health_cubit.dart';
-// import 'package:athar/features/health/presentation/cubit/health_state.dart';
-// import 'package:athar/features/health/data/models/appointment_model.dart';
-// import 'package:athar/features/health/data/models/health_profile_model.dart';
-// import 'package:athar/features/health/data/models/medicine_model.dart';
-// import 'package:athar/features/health/presentation/pages/appointments_page.dart';
-// import 'package:athar/features/health/presentation/pages/health_timeline_page.dart';
-// import 'package:athar/features/health/presentation/pages/medicines_page.dart';
-// import 'package:athar/features/health/presentation/pages/vitals_page.dart';
-// import 'package:athar/features/space/data/models/module_model.dart';
-// import 'package:athar/features/space/presentation/widgets/module_settings_dialog.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:intl/intl.dart';
 
-// class HealthDashboardPage extends StatefulWidget {
-//   final ModuleModel module;
-
-//   const HealthDashboardPage({super.key, required this.module});
-
-//   @override
-//   State<HealthDashboardPage> createState() => _HealthDashboardPageState();
-// }
-
-// class _HealthDashboardPageState extends State<HealthDashboardPage> {
-//   // نستخدم كيوبت خاص بهذه الصفحة (أو نستخدم global إذا تم حقنه في app.dart)
-//   // هنا سنستخدم getIt لإنشاء نسخة جديدة خاصة بهذه الصفحة لإدارة حالتها
-//   late HealthCubit _cubit;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _cubit = getIt<HealthCubit>();
-//     // ✅ ضروري جداً: تهيئة سياق الصلاحيات في الكيوبت
-//     _cubit.setContext(widget.module);
-//     _cubit.loadProfile(widget.module.uuid);
-//   }
-
-//   @override
-//   void dispose() {
-//     _cubit.close();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocProvider.value(
-//       value: _cubit,
-//       child: Scaffold(
-//         backgroundColor: AppColors.background,
-//         appBar: AppBar(
-//           title: Text(
-//             widget.module.name,
-//             style: const TextStyle(
-//               fontFamily: 'Tajawal',
-//               fontWeight: FontWeight.bold,
-//             ),
-//           ),
-//           centerTitle: true,
-//           backgroundColor: Colors.transparent,
-//           elevation: 0,
-//           foregroundColor: AppColors.textPrimary,
-//           actions: [
-//             // ✅ 2. تفعيل زر الإعدادات
-//             IconButton(
-//               icon: const Icon(Icons.settings_outlined),
-//               onPressed: () async {
-//                 // فتح نافذة التحكم بصلاحيات الموديول
-//                 await showDialog(
-//                   context: context,
-//                   builder: (_) => ModuleSettingsDialog(module: widget.module),
-//                 );
-
-//                 // (اختياري) بعد العودة، قد نحتاج لتحديث حالة الكيوبت
-//                 // إذا تغيرت الصلاحيات، لكن PermissionService يقرأ من DB مباشرة غالباً
-//                 // أو يمكن تحديث widget.module إذا كنت تستخدم State Management للموديولات
-//                 setState(() {}); // تحديث الواجهة لتعكس أي تغييرات فورية
-//               },
-//             ),
-//           ],
-//         ),
-//         body: SingleChildScrollView(
-//           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               // 1. البطاقة الذكية (Header)
-//               _buildSmartHeader(),
-
-//               SizedBox(height: 24.h),
-
-//               // 2. شبكة الوصول السريع (Quick Access)
-//               Text(
-//                 "الوصول السريع",
-//                 style: TextStyle(
-//                   fontSize: 16.sp,
-//                   fontWeight: FontWeight.bold,
-//                   fontFamily: 'Tajawal',
-//                 ),
-//               ),
-//               SizedBox(height: 12.h),
-//               _buildQuickAccessGrid(),
-
-//               SizedBox(height: 24.h),
-
-//               // 3. جدولي اليوم (Action Center)
-//               _buildTodayActionCenter(),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-
-//   // ===========================================================================
-//   // 1. البطاقة الذكية (Smart Header) 🪪
-//   // ===========================================================================
-//   Widget _buildSmartHeader() {
-//     return BlocBuilder<HealthCubit, HealthState>(
-//       builder: (context, state) {
-//         HealthProfileModel? profile;
-//         if (state is HealthProfileLoaded) {
-//           profile = state.profile;
-//         }
-
-//         return Container(
-//           width: double.infinity,
-//           padding: EdgeInsets.all(20.w),
-//           decoration: BoxDecoration(
-//             gradient: LinearGradient(
-//               colors: [AppColors.primary, AppColors.primary.withValues(alpha: 0.8)],
-//               begin: Alignment.topLeft,
-//               end: Alignment.bottomRight,
-//             ),
-//             borderRadius: BorderRadius.circular(20.r),
-//             boxShadow: [
-//               BoxShadow(
-//                 color: AppColors.primary.withValues(alpha: 0.3),
-//                 blurRadius: 15,
-//                 offset: const Offset(0, 8),
-//               ),
-//             ],
-//           ),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               Row(
-//                 children: [
-//                   CircleAvatar(
-//                     radius: 30.r,
-//                     backgroundColor: Colors.white.withValues(alpha: 0.2),
-//                     child: Icon(Icons.person, size: 35.sp, color: Colors.white),
-//                   ),
-//                   SizedBox(width: 16.w),
-//                   Expanded(
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: [
-//                         Text(
-//                           widget.module.name, // اسم الملف (علي، الوالد..)
-//                           style: TextStyle(
-//                             color: Colors.white,
-//                             fontSize: 18.sp,
-//                             fontWeight: FontWeight.bold,
-//                             fontFamily: 'Tajawal',
-//                           ),
-//                         ),
-//                         if (profile?.bloodType != null)
-//                           Text(
-//                             "فصيلة الدم: ${profile!.bloodType}",
-//                             style: TextStyle(
-//                               color: Colors.white.withValues(alpha: 0.9),
-//                               fontSize: 12.sp,
-//                               fontFamily: 'Tajawal',
-//                             ),
-//                           ),
-//                       ],
-//                     ),
-//                   ),
-//                   IconButton(
-//                     icon: const Icon(Icons.edit, color: Colors.white),
-//                     onPressed: () {
-//                     },
-//                   ),
-//                 ],
-//               ),
-
-//               // تنبيه الحساسية الذكي 🚨
-//               if (profile?.allergies != null &&
-//                   profile!.allergies!.isNotEmpty) ...[
-//                 SizedBox(height: 16.h),
-//                 Container(
-//                   padding: EdgeInsets.symmetric(
-//                     horizontal: 12.w,
-//                     vertical: 8.h,
-//                   ),
-//                   decoration: BoxDecoration(
-//                     color: Colors.red.withValues(alpha: 0.2),
-//                     borderRadius: BorderRadius.circular(10.r),
-//                     border: Border.all(color: Colors.red.shade100, width: 0.5),
-//                   ),
-//                   child: Row(
-//                     children: [
-//                       Icon(
-//                         Icons.warning_amber_rounded,
-//                         color: Colors.white,
-//                         size: 18.sp,
-//                       ),
-//                       SizedBox(width: 8.w),
-//                       Expanded(
-//                         child: Text(
-//                           "حساسية: ${profile.allergies}",
-//                           style: TextStyle(
-//                             color: Colors.white,
-//                             fontSize: 12.sp,
-//                             fontWeight: FontWeight.bold,
-//                           ),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ],
-//             ],
-//           ),
-//         );
-//       },
-//     );
-//   }
-
-//   // ===========================================================================
-//   // 2. شبكة الوصول السريع (Quick Access Grid) 📂
-//   // ===========================================================================
-//   Widget _buildQuickAccessGrid() {
-//     return Row(
-//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//       children: [
-//         _buildAccessCard(
-//           title: "الأدوية",
-//           icon: Icons.medication_rounded,
-//           color: Colors.blue,
-//           onTap: () {
-//             Navigator.push(
-//               context,
-//               MaterialPageRoute(
-//                 builder: (context) => MedicinesPage(
-//                   moduleId: widget.module.uuid,
-//                   moduleName: widget.module.name,
-//                 ),
-//               ),
-//             );
-//           },
-//         ),
-//         _buildAccessCard(
-//           title: "المواعيد",
-//           icon: Icons.calendar_month_rounded,
-//           color: Colors.purple,
-//           onTap: () {
-//             Navigator.push(
-//               context,
-//               MaterialPageRoute(
-//                 builder: (context) => AppointmentsPage(
-//                   moduleId: widget.module.uuid,
-//                   moduleName: widget.module.name,
-//                 ),
-//               ),
-//             );
-//           },
-//         ),
-//         _buildAccessCard(
-//           title: "المؤشرات",
-//           icon: Icons.monitor_heart_rounded,
-//           color: Colors.red,
-//           onTap: () {
-//             Navigator.push(
-//               context,
-//               MaterialPageRoute(
-//                 builder: (context) => VitalsPage(
-//                   moduleId: widget.module.uuid,
-//                   moduleName: widget.module.name,
-//                 ),
-//               ),
-//             );
-//           },
-//         ),
-//         _buildAccessCard(
-//           title: "السجل",
-//           icon: Icons.history_edu_rounded,
-//           color: Colors.orange,
-//           onTap: () {
-//             Navigator.push(
-//               context,
-//               MaterialPageRoute(
-//                 builder: (context) => HealthTimelinePage(
-//                   // ✅ يفتح الأرشيف الشامل
-//                   moduleId: widget.module.uuid,
-//                   moduleName: widget.module.name,
-//                 ),
-//               ),
-//             );
-//           },
-//         ),
-//       ],
-//     );
-//   }
-
-//   Widget _buildAccessCard({
-//     required String title,
-//     required IconData icon,
-//     required Color color,
-//     required VoidCallback onTap,
-//   }) {
-//     return InkWell(
-//       onTap: onTap,
-//       borderRadius: BorderRadius.circular(16.r),
-//       child: Container(
-//         width: 80.w,
-//         height: 90.h,
-//         decoration: BoxDecoration(
-//           color: Colors.white,
-//           borderRadius: BorderRadius.circular(16.r),
-//           boxShadow: [
-//             BoxShadow(
-//               color: Colors.grey.withValues(alpha: 0.05),
-//               blurRadius: 10,
-//               offset: const Offset(0, 4),
-//             ),
-//           ],
-//         ),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             Container(
-//               padding: EdgeInsets.all(10.w),
-//               decoration: BoxDecoration(
-//                 color: color.withValues(alpha: 0.1),
-//                 shape: BoxShape.circle,
-//               ),
-//               child: Icon(icon, color: color, size: 24.sp),
-//             ),
-//             SizedBox(height: 8.h),
-//             Text(
-//               title,
-//               style: TextStyle(
-//                 fontSize: 12.sp,
-//                 fontWeight: FontWeight.bold,
-//                 fontFamily: 'Tajawal',
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   // ===========================================================================
-//   // 3. مركز العمليات اليومي (Action Center) ⚡
-//   // ===========================================================================
-//   Widget _buildTodayActionCenter() {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [
-//             Text(
-//               "جدولي اليوم",
-//               style: TextStyle(
-//                 fontSize: 16.sp,
-//                 fontWeight: FontWeight.bold,
-//                 fontFamily: 'Tajawal',
-//               ),
-//             ),
-//             Text(
-//               DateFormat('EEEE, d MMM', 'ar').format(DateTime.now()),
-//               style: TextStyle(
-//                 fontSize: 12.sp,
-//                 color: Colors.grey,
-//                 fontFamily: 'Tajawal',
-//               ),
-//             ),
-//           ],
-//         ),
-//         SizedBox(height: 12.h),
-
-//         // أ. قسم الأدوية الحالية
-//         StreamBuilder<List<MedicineModel>>(
-//           stream: _cubit.watchMedicines(widget.module.uuid),
-//           builder: (context, snapshot) {
-//             final meds = snapshot.data?.where((m) => m.isActive).toList() ?? [];
-
-//             if (meds.isEmpty)
-//               return const SizedBox.shrink(); // لا نعرض شيئاً إذا لا يوجد أدوية
-
-//             return Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 ...meds.map((medicine) => _buildMedicineTile(medicine)),
-//                 SizedBox(height: 12.h),
-//               ],
-//             );
-//           },
-//         ),
-
-//         // ب. قسم مواعيد اليوم
-//         StreamBuilder<List<AppointmentModel>>(
-//           stream: _cubit.watchAppointments(widget.module.uuid),
-//           builder: (context, snapshot) {
-//             // نفلتر فقط مواعيد اليوم
-//             final today = DateTime.now();
-//             final appointments =
-//                 snapshot.data?.where((apt) {
-//                   return apt.appointmentDate.year == today.year &&
-//                       apt.appointmentDate.month == today.month &&
-//                       apt.appointmentDate.day == today.day;
-//                 }).toList() ??
-//                 [];
-
-//             if (appointments.isEmpty &&
-//                 (snapshot.data == null || snapshot.data!.isEmpty)) {
-//               return _buildEmptyState();
-//             }
-
-//             return Column(
-//               children: appointments
-//                   .map((apt) => _buildAppointmentTile(apt))
-//                   .toList(),
-//             );
-//           },
-//         ),
-//       ],
-//     );
-//   }
-
-//   Widget _buildMedicineTile(MedicineModel medicine) {
-//     return Container(
-//       margin: EdgeInsets.only(bottom: 8.h),
-//       padding: EdgeInsets.all(12.w),
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.circular(12.r),
-//         border: Border(
-//           left: BorderSide(color: Colors.blue, width: 4.w),
-//         ),
-//       ),
-//       child: Row(
-//         children: [
-//           Icon(Icons.medication, color: Colors.blue, size: 24.sp),
-//           SizedBox(width: 12.w),
-//           Expanded(
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Text(
-//                   medicine.name,
-//                   style: TextStyle(
-//                     fontSize: 14.sp,
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-//                 Text(
-//                   medicine.schedulingType == 'fixed'
-//                       ? "أوقات ثابتة"
-//                       : "كل ${medicine.intervalHours} ساعات",
-//                   style: TextStyle(fontSize: 12.sp, color: Colors.grey),
-//                 ),
-//               ],
-//             ),
-//           ),
-//           IconButton(
-//             icon: const Icon(Icons.check_circle_outline, color: Colors.grey),
-//             onPressed: () {
-//               _cubit.takeDose(widget.module.uuid, medicine);
-//             },
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   Widget _buildAppointmentTile(AppointmentModel apt) {
-//     return Container(
-//       margin: EdgeInsets.only(bottom: 8.h),
-//       padding: EdgeInsets.all(12.w),
-//       decoration: BoxDecoration(
-//         color: Colors.purple.shade50,
-//         borderRadius: BorderRadius.circular(12.r),
-//       ),
-//       child: Row(
-//         children: [
-//           Icon(Icons.access_time_filled, color: Colors.purple, size: 20.sp),
-//           SizedBox(width: 12.w),
-//           Expanded(
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Text(
-//                   apt.title,
-//                   style: TextStyle(
-//                     fontSize: 14.sp,
-//                     fontWeight: FontWeight.bold,
-//                     color: Colors.purple.shade900,
-//                   ),
-//                 ),
-//                 Text(
-//                   DateFormat('hh:mm a').format(apt.appointmentDate),
-//                   style: TextStyle(
-//                     fontSize: 12.sp,
-//                     color: Colors.purple.shade700,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   Widget _buildEmptyState() {
-//     return Center(
-//       child: Container(
-//         padding: EdgeInsets.all(20.h),
-//         child: Column(
-//           children: [
-//             Icon(
-//               Icons.check_circle_rounded,
-//               size: 40.sp,
-//               color: Colors.green.shade100,
-//             ),
-//             SizedBox(height: 8.h),
-//             Text(
-//               "لا توجد مواعيد اليوم، صحتك تمام! 🌟",
-//               style: TextStyle(color: Colors.grey, fontSize: 12.sp),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-//-----------------------------------------------------------------------
