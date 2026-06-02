@@ -2,7 +2,7 @@
 CANONICAL-FOR: Documentation governance rules — header format, precedence ladder, mandatory update protocol
 OWNER:         Claude Design
 PRECEDENCE:    off-ladder (governance authority)
-LAST-UPDATED:  2026-06-01 · Stage A
+LAST-UPDATED:  2026-06-02 · section 8 — Design Token SSOT rule added
 LOADS-AT:      off-ladder (read when governance process is in question)
 -->
 
@@ -177,3 +177,80 @@ The check is **five reads, no writes**. It is the cheapest possible insurance ag
 ## 7. The one-paragraph version (for `CLAUDE.md`)
 
 > Every fact has one home (see `CANONICAL_SOURCE_MAP.md`). Update that home *inside* the change that makes the fact true — never later. Supporting files point; they never copy. Design specs are edited only at SOURCE and mirrored read-only. `CHECKPOINT.md` is written last each session and wins on "what's current." History lives in `docs/history/` and is never auto-loaded. When in doubt, the precedence ladder decides; a file that contradicts a higher one is stale, not a second opinion.
+
+---
+
+## 8. Design Token Single-Source-of-Truth
+
+### 8.1 Rule statement
+
+**Feature code MUST NOT contain literal visual values.** Every visual constant resolves through exactly one token source:
+
+| Category | Token source | Never write |
+|----------|-------------|-------------|
+| Colors | `context.colors.*` / `colorScheme.*` | `Color(0x…)`, `Colors.<named>` (except `Colors.transparent`) |
+| Font family | `AtharTypography.fontFamily` | the literal `'Calibri'` |
+| Spacing / gaps | `AtharSpacing.*` / `AtharGap.*` | magic pixels in brand layout (e.g. `SizedBox(height: 16)` when `AtharSpacing.md` exists) |
+| Border radii | `AtharRadii.*` | `BorderRadius.circular(…)`, `Radius.circular(…)` |
+| Shadows / elevation | `AtharShadows.*` | inline `BoxShadow(…)` |
+| Durations / curves | `AtharAnimations.*` | inline `Duration(milliseconds: …)` |
+| Text roles | `AtharTypography.<role>` / `context.textTheme.<role>` | ad-hoc `fontSize` / `fontWeight` where a clean scale role exists |
+
+**Changing any design decision must be a one-file edit at the token source.** If changing the brand font requires touching more than `athar_typography.dart`, the single-source guarantee is broken.
+
+### 8.2 Token file inventory — confirmed sole definitions
+
+All six token files exist in `lib/core/design_system/tokens/`:
+
+| File | Class | Domain | Sole definition? |
+|------|-------|--------|-----------------|
+| `athar_colors.dart` | `AtharColors` | Color palette | ✅ Sole (28 files still use `Color(0x…)` — target of PR-CLEANUP) |
+| `athar_typography.dart` | `AtharTypography` | Font family, weights, sizes, text styles | ✅ Sole — `fontFamily = fontFamilyAr = 'Calibri'`; 0 literals remain (fixed 2026-06-02 · `44de6f8`) |
+| `athar_spacing.dart` | `AtharSpacing` | Spacing constants | ✅ Sole (magic-pixel callsite count TBD — see Step-0 Verify) |
+| `athar_radii.dart` | `AtharRadii` | Border radii | ✅ Sole (87 files with inline `BorderRadius.circular()` — PR-CLEANUP target) |
+| `athar_animations.dart` | `AtharAnimations` | Durations, curves | ✅ Sole (28 files with inline `Duration(milliseconds:…)` — PR-CLEANUP target) |
+| `athar_shadows.dart` | `AtharShadows` | Shadows / elevation | ✅ Sole (53 files with inline `BoxShadow(…)` — PR-CLEANUP target) |
+
+No `AtharElevation` class is needed — `AtharShadows` is the elevation token.
+
+### 8.3 Two-tier refresh recipe (all remaining UI coverage PRs)
+
+Apply this recipe inside every per-feature refresh PR (PR-HABITS-REFRESH, PR-HEALTH-REFRESH, etc.).
+
+**TIER 1 — Enforce silently (value-identical swap, zero visual change):**
+
+Replace these mechanically without designer review — the token value equals the literal:
+
+- `Color(0x…)` / `Colors.<named>` → `context.colors.*` (where a semantic mapping exists)
+- `fontFamily: 'Calibri'` → `fontFamily: AtharTypography.fontFamily` (done globally 2026-06-02)
+- `BorderRadius.circular(N)` → `AtharRadii.*` (where N matches a token)
+- `SizedBox(height/width: N)` / `EdgeInsets.all(N)` → `AtharSpacing.*` / `AtharGap.*` (where N matches)
+- `BoxShadow(…)` → `AtharShadows.*` (where the shadow matches a token tier)
+- `Duration(milliseconds: N)` → `AtharAnimations.*` (where N matches a token)
+
+**TIER 2 — Flag, do not auto-change (metric-changing values):**
+
+These alter rendered size and may reflow text. List them per-file in the PR audit; wait for designer decision:
+
+- Ad-hoc `fontSize: N` that would map to a `AtharTypography.<role>` (may change line metrics)
+- Ad-hoc `fontWeight: FontWeight.wXXX` that deviates from the scale
+- `BorderRadius.circular(N)` where N does NOT match any `AtharRadii` token (non-standard corner)
+- `EdgeInsets` values that don't match any `AtharSpacing` token (brand-layout magic numbers)
+
+### 8.4 Step-0 Verify (mandatory for every remaining refresh PR)
+
+Before touching any Dart file in a per-feature PR, run this check and record counts in the PR audit doc:
+
+```
+Token category          | Count | Method
+------------------------|-------|-------
+Colors (static AppColors / Color(0x…) / Colors.named)  | grep -c
+Font literals ('Calibri')                              | grep -c  (expect 0)
+Magic radii (BorderRadius.circular not via AtharRadii) | grep -c
+Magic spacing (SizedBox / EdgeInsets with hardcoded N) | grep -c
+Inline shadows (BoxShadow outside AtharShadows)        | grep -c
+Inline durations (Duration(milliseconds:) outside token)| grep -c
+Ad-hoc text sizes (fontSize: N) [Tier 2 — FLAG]       | grep -c
+```
+
+Record pre-patch and post-patch counts. Tier 1 counts must go to zero for all files in scope. Tier 2 counts are listed with a designer decision for each.
