@@ -2,7 +2,7 @@
 AUDIT: PR8 — Focus Oil-Fill
 AUDITOR: Claude Code
 DATE: 2026-06-02
-STATUS: Complete — awaiting designer sign-off
+STATUS: SIGNED OFF — 2026-06-02. All 7 OQs resolved. Implementation approved.
 SPEC: docs/design-specs/FOCUS_OIL_SPEC.md
 NO DART MODIFIED IN THIS SESSION
 -->

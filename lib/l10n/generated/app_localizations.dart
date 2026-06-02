@@ -7880,6 +7880,78 @@ abstract class AppLocalizations {
   /// **'إعادة'**
   String get focusReset;
 
+  /// No description provided for @focusStatusCompleted.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتملت الجلسة ✓'**
+  String get focusStatusCompleted;
+
+  /// No description provided for @focusNewSession.
+  ///
+  /// In ar, this message translates to:
+  /// **'جلسة جديدة'**
+  String get focusNewSession;
+
+  /// No description provided for @focusExitDialogTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنهاء الجلسة؟'**
+  String get focusExitDialogTitle;
+
+  /// No description provided for @focusExitDialogBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيُفقد تقدم هذه الجلسة'**
+  String get focusExitDialogBody;
+
+  /// No description provided for @focusExitDialogContinue.
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة'**
+  String get focusExitDialogContinue;
+
+  /// No description provided for @focusExitDialogEnd.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنهاء'**
+  String get focusExitDialogEnd;
+
+  /// No description provided for @focusDurationSheetTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر مدة الجلسة'**
+  String get focusDurationSheetTitle;
+
+  /// No description provided for @focusIntensitySection.
+  ///
+  /// In ar, this message translates to:
+  /// **'شدة التركيز'**
+  String get focusIntensitySection;
+
+  /// No description provided for @focusIntensityCalm.
+  ///
+  /// In ar, this message translates to:
+  /// **'هادئ'**
+  String get focusIntensityCalm;
+
+  /// No description provided for @focusIntensityStandard.
+  ///
+  /// In ar, this message translates to:
+  /// **'معتدل'**
+  String get focusIntensityStandard;
+
+  /// No description provided for @focusIntensityIntense.
+  ///
+  /// In ar, this message translates to:
+  /// **'مكثف'**
+  String get focusIntensityIntense;
+
+  /// No description provided for @focusIntensitySectionDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'تتحكم في شدة حركة شاشة التركيز'**
+  String get focusIntensitySectionDesc;
+
   /// No description provided for @notificationsTitle.
   ///
   /// In ar, this message translates to:

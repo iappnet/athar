@@ -298,6 +298,49 @@ class GeneralSettingsPage extends StatelessWidget {
                   ]),
                   AtharGap.lg,
 
+                  // ── Focus ────────────────────────────────────────────────
+                  _SectionHeader(l10n.focusIntensitySection),
+                  _SettingsCard(children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l10n.focusIntensitySectionDesc,
+                            style: AtharTypography.bodySmall.copyWith(
+                              color: const Color(0xFF636E72),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          SegmentedButton<FocusIntensity>(
+                            segments: [
+                              ButtonSegment(
+                                value: FocusIntensity.calm,
+                                label: Text(l10n.focusIntensityCalm),
+                              ),
+                              ButtonSegment(
+                                value: FocusIntensity.standard,
+                                label: Text(l10n.focusIntensityStandard),
+                              ),
+                              ButtonSegment(
+                                value: FocusIntensity.intense,
+                                label: Text(l10n.focusIntensityIntense),
+                              ),
+                            ],
+                            selected: {
+                              settings?.focusIntensity ?? FocusIntensity.standard
+                            },
+                            onSelectionChanged: (v) => context
+                                .read<SettingsCubit>()
+                                .updateFocusIntensity(v.first),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ]),
+                  AtharGap.lg,
+
                   // ── Sync & Account ──────────────────────────────────────
                   if (authState is AuthAuthenticated) ...[
                     _SectionHeader(l10n.syncAndData),

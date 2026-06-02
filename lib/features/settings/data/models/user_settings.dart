@@ -18,6 +18,8 @@ enum PrayerCardDisplayMode { dashboardOnly, dashboardAndTasks, allPages }
 /// Theme mode preference — three explicit options.
 enum ThemePreference { system, light, dark }
 
+enum FocusIntensity { calm, standard, intense }
+
 @collection
 class UserSettings {
   Id id = Isar.autoIncrement;
@@ -204,6 +206,9 @@ class UserSettings {
   bool disableGyroscope = false;
   bool easternNumerals = false;
 
+  @Enumerated(EnumType.name)
+  FocusIntensity focusIntensity = FocusIntensity.standard;
+
   // ═══════════════════════════════════════════════════════════════════════════
   // 📅 CALENDAR
   // ═══════════════════════════════════════════════════════════════════════════
@@ -291,6 +296,7 @@ class UserSettings {
     this.reduceMotion = false,
     this.disableGyroscope = false,
     this.easternNumerals = false,
+    this.focusIntensity = FocusIntensity.standard,
 
     // 📅 Calendar
     this.showPrayerDotsOnCalendar = true,

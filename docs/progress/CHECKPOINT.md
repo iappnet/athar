@@ -13,9 +13,9 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-02 (PR8 audit v2 — BLOCKED awaiting designer sign-off)  
-**Commit:** `31a3918` docs(PR8): focus oil-fill audit — 14 gaps, 7 open questions, no Dart  
-**Note:** PR8 audit revised in `design-context/_audit_focus.md`. 15 gaps (G1–G15 incl. new focusIntensity field); 7 open questions (OQ1–OQ7). focusIntensity additive plan documented (isAthkar pattern: UserSettings enum + build_runner + SettingsCubit + Settings UI SegmentedButton). sensors_plus present, flutter_shaders deferred. No Dart modified.
+**Timestamp:** 2026-06-02 (PR8 implementing — awaiting user sign-off before commit)  
+**Commit:** `7ca6c8c` docs(PR8): audit v2 — sign-off ready  
+**Note:** PR8 implementation in progress. All Dart written. `flutter analyze` clean (0 errors, 2 pre-existing warnings unrelated to PR8). Awaiting user review of 5 screenshots + ARB strings before commit.
 
 ---
 
@@ -23,8 +23,8 @@ LOADS-AT:      Tier 0
 
 **Active PR:** PR8 — Focus Oil-Fill  
 **Last completed:** PR7 (`0b8fe34`) ✅  
-**Phase:** PR8 AUDIT COMPLETE. Blocked — awaiting designer sign-off on `design-context/_audit_focus.md` (7 open questions OQ1–OQ7).  
-**Next:** Implement PR8 on sign-off.
+**Phase:** PR8 IMPLEMENTING. Audit signed off (`7ca6c8c`). All Dart written. Awaiting user visual review before commit.  
+**Next:** User reviews screenshots + ARB → commit → PR8 complete → PR9.
 
 ---
 

@@ -4108,6 +4108,42 @@ class AppLocalizationsAr extends AppLocalizations {
   String get focusReset => 'إعادة';
 
   @override
+  String get focusStatusCompleted => 'اكتملت الجلسة ✓';
+
+  @override
+  String get focusNewSession => 'جلسة جديدة';
+
+  @override
+  String get focusExitDialogTitle => 'إنهاء الجلسة؟';
+
+  @override
+  String get focusExitDialogBody => 'سيُفقد تقدم هذه الجلسة';
+
+  @override
+  String get focusExitDialogContinue => 'متابعة';
+
+  @override
+  String get focusExitDialogEnd => 'إنهاء';
+
+  @override
+  String get focusDurationSheetTitle => 'اختر مدة الجلسة';
+
+  @override
+  String get focusIntensitySection => 'شدة التركيز';
+
+  @override
+  String get focusIntensityCalm => 'هادئ';
+
+  @override
+  String get focusIntensityStandard => 'معتدل';
+
+  @override
+  String get focusIntensityIntense => 'مكثف';
+
+  @override
+  String get focusIntensitySectionDesc => 'تتحكم في شدة حركة شاشة التركيز';
+
+  @override
   String get notificationsTitle => 'مركز التنبيهات';
 
   @override

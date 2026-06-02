@@ -143,7 +143,7 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 - All fixes in this bucket are **UNVERIFIED** — logical hypotheses, confirmed only on a physical device. Do NOT apply any fix until device validation.
 - To add an item: assign an ID (PR origin + sequential number), describe the pass condition, and write the candidate fix as a hypothesis.
 
-**Current count: 5 of 10.**
+**Current count: 6 of 10.**
 
 | ID | Description | Origin | Status |
 |----|-------------|--------|--------|
@@ -152,6 +152,7 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 | PR4a-G1 | iPhone SE calendar overflow (6-row month) | PR4a | Unverified — see below |
 | PR4a-G2 | Today-state dark alpha legibility | PR4a | Unverified — see below |
 | DEVICE-1 | Forest-dark surfaces, Cairo fallback, RTL drawer, countdown tick (general device pass) | PR-THEME/PR2 | Unverified |
+| PR8-perf | Oil sim sustained frame rate on iPhone 12 — if <55fps under intense/high-fill, escalate to flutter_shaders SDF | PR8 | Unverified |
 
 ---
 

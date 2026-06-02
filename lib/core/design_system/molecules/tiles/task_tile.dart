@@ -14,7 +14,7 @@ import 'package:athar/core/di/injection.dart';
 import 'package:athar/core/iam/permission_service.dart';
 import '../../../../features/task/data/models/task_model.dart';
 import '../../../../features/task/presentation/pages/task_details_page.dart';
-import '../../../../features/focus/presentation/pages/focus_page.dart';
+import '../../../../features/focus/presentation/screens/focus_screen.dart';
 
 class TaskTile extends StatelessWidget {
   final TaskModel task;
@@ -261,7 +261,7 @@ class TaskTile extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        FocusPage(focusTarget: task.title),
+                                        FocusScreen(focusTarget: task.title),
                                   ),
                                 );
                               },
@@ -526,7 +526,7 @@ class TaskTile extends StatelessWidget {
 // import 'package:athar/core/iam/permission_service.dart';
 // import '../../../../features/task/data/models/task_model.dart';
 // import '../../../../features/task/presentation/pages/task_details_page.dart';
-// import '../../../../features/focus/presentation/pages/focus_page.dart';
+// import '../../../../features/focus/presentation/screens/focus_screen.dart';
 
 // class TaskTile extends StatelessWidget {
 //   final TaskModel task;
@@ -1044,7 +1044,7 @@ class TaskTile extends StatelessWidget {
 // import '../../../../features/task/data/models/task_model.dart';
 // import '../../themes/app_colors.dart';
 // import '../../../../features/task/presentation/pages/task_details_page.dart';
-// import '../../../../features/focus/presentation/pages/focus_page.dart';
+// import '../../../../features/focus/presentation/screens/focus_screen.dart';
 
 // class TaskTile extends StatelessWidget {
 //   final TaskModel task;
@@ -1509,7 +1509,7 @@ class TaskTile extends StatelessWidget {
 // import '../../../../features/task/data/models/task_model.dart';
 // import '../../theme/app_colors.dart';
 // import '../../../../features/task/presentation/pages/task_details_page.dart';
-// import '../../../../features/focus/presentation/pages/focus_page.dart';
+// import '../../../../features/focus/presentation/screens/focus_screen.dart';
 
 // class TaskTile extends StatelessWidget {
 //   final TaskModel task;
@@ -1814,7 +1814,7 @@ class TaskTile extends StatelessWidget {
 // import '../../../../features/task/data/models/task_model.dart';
 // import '../../theme/app_colors.dart';
 // import '../../../../features/task/presentation/pages/task_details_page.dart';
-// import '../../../../features/focus/presentation/pages/focus_page.dart';
+// import '../../../../features/focus/presentation/screens/focus_screen.dart';
 
 // class TaskTile extends StatelessWidget {
 //   final TaskModel task;
@@ -2166,7 +2166,7 @@ class TaskTile extends StatelessWidget {
 // import '../../../../features/task/data/models/task_model.dart';
 // import '../../theme/app_colors.dart';
 // // استيراد صفحة التركيز
-// import '../../../../features/focus/presentation/pages/focus_page.dart';
+// import '../../../../features/focus/presentation/screens/focus_screen.dart';
 // import '../../../../features/task/presentation/pages/task_details_page.dart';
 
 // class TaskTile extends StatelessWidget {

@@ -43,5 +43,6 @@ class SettingsLoaded extends SettingsState {
     settings.disableGyroscope,
     settings.easternNumerals,
     settings.showPrayerDotsOnCalendar,
+    settings.focusIntensity,
   ];
 }

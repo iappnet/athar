@@ -4124,6 +4124,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get focusReset => 'Reset';
 
   @override
+  String get focusStatusCompleted => 'Session complete ✓';
+
+  @override
+  String get focusNewSession => 'New session';
+
+  @override
+  String get focusExitDialogTitle => 'End session?';
+
+  @override
+  String get focusExitDialogBody => 'Progress for this session will be lost';
+
+  @override
+  String get focusExitDialogContinue => 'Continue';
+
+  @override
+  String get focusExitDialogEnd => 'End';
+
+  @override
+  String get focusDurationSheetTitle => 'Choose session duration';
+
+  @override
+  String get focusIntensitySection => 'Focus Intensity';
+
+  @override
+  String get focusIntensityCalm => 'Calm';
+
+  @override
+  String get focusIntensityStandard => 'Standard';
+
+  @override
+  String get focusIntensityIntense => 'Intense';
+
+  @override
+  String get focusIntensitySectionDesc =>
+      'Controls the intensity of the focus animation';
+
+  @override
   String get notificationsTitle => 'Notification Center';
 
   @override

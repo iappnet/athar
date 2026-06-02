@@ -498,6 +498,12 @@ class SettingsCubit extends Cubit<SettingsState> {
     await _repository.updateSettings(s);
   }
 
+  Future<void> updateFocusIntensity(FocusIntensity intensity) async {
+    final s = await _repository.getSettings();
+    s.focusIntensity = intensity;
+    await _repository.updateSettings(s);
+  }
+
   // ═══════════════════════════════════════════════════════════════════
   // 🧹 التنظيف
   // ═══════════════════════════════════════════════════════════════════

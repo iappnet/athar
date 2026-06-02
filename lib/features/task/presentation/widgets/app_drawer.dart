@@ -3,7 +3,7 @@
 // ✅ MIGRATED - Phase 4 | Part 1 | File 1
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import 'package:athar/features/focus/presentation/pages/focus_page.dart';
+import 'package:athar/features/focus/presentation/screens/focus_screen.dart';
 import 'package:athar/features/habits/presentation/pages/habit_page.dart';
 import 'package:athar/features/stats/presentation/pages/stats_page.dart';
 import 'package:athar/features/task/presentation/cubit/task_cubit.dart';
@@ -133,7 +133,7 @@ class AppDrawer extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const FocusPage(),
+                        builder: (context) => const FocusScreen(),
                       ),
                     );
                   },
