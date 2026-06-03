@@ -223,7 +223,7 @@ class _IslandHalo extends StatelessWidget {
           width: 126,
           height: 36,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(AtharRadii.xl),
             border: Border.all(
               color: const Color(0x1EFFFFFF), // rgba(255,255,255,0.12)
               width: 1.5,
@@ -315,7 +315,7 @@ class _TopBar extends StatelessWidget {
       context: context,
       backgroundColor: const Color(0xFF0d141a),
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: AtharRadii.bottomSheet,
       ),
       builder: (_) {
         const presets = [

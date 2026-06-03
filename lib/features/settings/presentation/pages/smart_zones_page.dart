@@ -503,7 +503,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
             onChanged(newSelection);
           },
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
+            duration: AtharAnimations.normalFast,
             width: 36.w,
             height: 36.w,
             decoration: BoxDecoration(

@@ -310,7 +310,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
+        duration: AtharAnimations.normalFast,
         padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 12.w),
         decoration: BoxDecoration(
           color: isActive

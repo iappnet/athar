@@ -49,7 +49,7 @@ class _HabitsPageState extends State<HabitsPage> {
   void initState() {
     super.initState();
     _confettiController = ConfettiController(
-      duration: const Duration(seconds: 2),
+      duration: AtharAnimations.snackbarVisibleShort,
     );
     context.read<HabitCubit>().loadHabits();
   }

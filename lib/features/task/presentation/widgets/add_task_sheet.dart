@@ -192,7 +192,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
     return Container(
       decoration: BoxDecoration(
         color: colorScheme.surface,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+        borderRadius: AtharRadii.bottomSheet,
       ),
       padding: EdgeInsets.fromLTRB(
         20.w,
@@ -590,7 +590,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
         padding: EdgeInsets.all(20.w),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+          borderRadius: AtharRadii.bottomSheet,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -685,7 +685,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
 
   Widget _buildConflictWarning() {
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
+      duration: AtharAnimations.normalSlow,
       padding: AtharSpacing.allMd,
       decoration: BoxDecoration(
         color: _prayerConflict.color.withValues(alpha: 0.1),

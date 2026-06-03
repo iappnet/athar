@@ -468,7 +468,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
             ),
             decoration: BoxDecoration(
               color: colorScheme.surface,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+              borderRadius: AtharRadii.bottomSheet,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,

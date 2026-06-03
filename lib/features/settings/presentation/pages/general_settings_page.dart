@@ -821,7 +821,7 @@ class _LanguageTile extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: AtharRadii.bottomSheet,
       ),
       builder: (sheetCtx) => SafeArea(
         child: Column(
@@ -833,7 +833,7 @@ class _LanguageTile extends StatelessWidget {
               height: 4,
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.outlineVariant,
-                borderRadius: BorderRadius.circular(2),
+                borderRadius: BorderRadius.circular(AtharRadii.xxxs),
               ),
             ),
             const SizedBox(height: 12),
@@ -1176,7 +1176,7 @@ class _ThemeTile extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: AtharRadii.bottomSheet,
       ),
       builder: (sheetCtx) => SafeArea(
         child: Column(
@@ -1188,7 +1188,7 @@ class _ThemeTile extends StatelessWidget {
               height: 4,
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.outlineVariant,
-                borderRadius: BorderRadius.circular(2),
+                borderRadius: BorderRadius.circular(AtharRadii.xxxs),
               ),
             ),
             const SizedBox(height: 12),
