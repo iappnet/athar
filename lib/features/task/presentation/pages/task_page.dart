@@ -7,7 +7,6 @@ import 'package:athar/core/utils/responsive_helper.dart';
 import 'package:athar/core/design_system/widgets/athar_feedback.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:athar/core/design_system/molecules/cards/smart_prayer_wrapper.dart';
-import 'package:athar/core/design_system/molecules/skeletons/athar_skeleton.dart';
 import 'package:athar/core/design_system/organisms/app_bar/athar_app_bar.dart';
 import 'package:athar/features/calendar/presentation/pages/calendar_page.dart';
 import 'package:athar/features/task/domain/models/filter_item.dart';
@@ -68,6 +67,7 @@ class _TasksPageViewState extends State<TasksPageView> {
       messenger: messenger,
       message: l10n.itemDeleted,
       colorScheme: colorScheme,
+      semanticColors: context.colors,
       variant: AtharSnackbarVariant.info,
       icon: Icons.delete_outline_rounded,
       actionLabel: l10n.undo,

@@ -17,7 +17,8 @@ class AtharSnackbar {
     IconData? icon,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
-    final snackbarColors = _getVariantColors(variant, colorScheme);
+    final colors = context.colors;
+    final snackbarColors = _getVariantColors(variant, colorScheme, colors);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -81,6 +82,7 @@ class AtharSnackbar {
     required ScaffoldMessengerState messenger,
     required String message,
     required ColorScheme colorScheme,
+    AtharColors? semanticColors,
     AtharSnackbarVariant variant = AtharSnackbarVariant.info,
     String? actionLabel,
     VoidCallback? onAction,
@@ -88,7 +90,7 @@ class AtharSnackbar {
     bool clearPrevious = true,
     IconData? icon,
   }) {
-    final snackbarColors = _getVariantColors(variant, colorScheme);
+    final snackbarColors = _getVariantColors(variant, colorScheme, semanticColors);
 
     if (clearPrevious) {
       messenger.clearSnackBars();
@@ -206,23 +208,18 @@ class AtharSnackbar {
     icon: icon,
   );
 
-  // Semantic colors — not in ColorScheme, defined as constants
-  static const _infoColor = Color(0xFF74B9FF);
-  static const _successColor = Color(0xFF00B894);
-  static const _warningColor = Color(0xFFFDCB6E);
-  static const _onWarningColor = Color(0xFF000000);
-
   static _SnackbarColors _getVariantColors(
     AtharSnackbarVariant variant,
     ColorScheme colorScheme,
+    AtharColors? colors,
   ) {
     switch (variant) {
       case AtharSnackbarVariant.info:
-        return const _SnackbarColors(_infoColor, Colors.white);
+        return _SnackbarColors(colors?.info ?? const Color(0xFF74B9FF), Colors.white);
       case AtharSnackbarVariant.success:
-        return const _SnackbarColors(_successColor, Colors.white);
+        return _SnackbarColors(colors?.success ?? const Color(0xFF00B894), Colors.white);
       case AtharSnackbarVariant.warning:
-        return const _SnackbarColors(_warningColor, _onWarningColor);
+        return _SnackbarColors(colors?.warning ?? const Color(0xFFFDCB6E), Colors.black);
       case AtharSnackbarVariant.error:
         return _SnackbarColors(colorScheme.error, colorScheme.onError);
     }
@@ -440,124 +437,6 @@ class AtharLoadingOverlay extends StatelessWidget {
   }
 }
 
-/// ATHAR SHIMMER
-
-class AtharShimmer extends StatefulWidget {
-  const AtharShimmer({
-    super.key,
-    this.baseColor,
-    this.highlightColor,
-    this.enabled = true,
-    required this.child,
-  });
-
-  final Widget child;
-  final Color? baseColor;
-  final Color? highlightColor;
-  final bool enabled;
-
-  factory AtharShimmer.rect({
-    double? width,
-    double? height,
-    double borderRadius = 8,
-    Color? baseColor,
-    Color? highlightColor,
-  }) {
-    return AtharShimmer(
-      baseColor: baseColor,
-      highlightColor: highlightColor,
-      child: Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(borderRadius),
-        ),
-      ),
-    );
-  }
-
-  factory AtharShimmer.circle({
-    double size = 48,
-    Color? baseColor,
-    Color? highlightColor,
-  }) {
-    return AtharShimmer(
-      baseColor: baseColor,
-      highlightColor: highlightColor,
-      child: Container(
-        width: size,
-        height: size,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle,
-        ),
-      ),
-    );
-  }
-
-  // Shimmer colors — not in ColorScheme
-  static const _defaultBase = Color(0xFFE0E0E0);
-  static const _defaultHighlight = Color(0xFFF5F5F5);
-
-  @override
-  State<AtharShimmer> createState() => _AtharShimmerState();
-}
-
-class _AtharShimmerState extends State<AtharShimmer>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: AtharAnimations.shimmerDuration,
-      vsync: this,
-    )..repeat();
-    _animation = Tween<double>(begin: -1.0, end: 2.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOutSine),
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (!widget.enabled) return widget.child;
-
-    final baseColor = widget.baseColor ?? AtharShimmer._defaultBase;
-    final highlightColor =
-        widget.highlightColor ?? AtharShimmer._defaultHighlight;
-
-    return AnimatedBuilder(
-      animation: _animation,
-      builder: (context, child) {
-        return ShaderMask(
-          shaderCallback: (bounds) {
-            return LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [baseColor, highlightColor, baseColor],
-              stops: [
-                (_animation.value - 0.3).clamp(0.0, 1.0),
-                _animation.value.clamp(0.0, 1.0),
-                (_animation.value + 0.3).clamp(0.0, 1.0),
-              ],
-            ).createShader(bounds);
-          },
-          blendMode: BlendMode.srcATop,
-          child: widget.child,
-        );
-      },
-    );
-  }
-}
 //-----------------------------------------------------------------------
 // import 'package:flutter/material.dart';
 // import '../tokens.dart';

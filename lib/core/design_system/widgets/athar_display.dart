@@ -77,11 +77,10 @@ class AtharAvatar extends StatelessWidget {
     return parts[0][0].toUpperCase();
   }
 
-  static const Color _successColor = Color(0xFF00B894);
-
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final colors = context.colors;
     final effectiveBgColor = backgroundColor ?? colorScheme.primaryContainer;
     final effectiveFgColor = foregroundColor ?? colorScheme.primary;
 
@@ -131,10 +130,10 @@ class AtharAvatar extends StatelessWidget {
         children: [
           avatar,
           if (badge != null)
-            Positioned(right: 0, bottom: 0, child: badge!)
+            PositionedDirectional(end: 0, bottom: 0, child: badge!)
           else if (isOnline != null)
-            Positioned(
-              right: 0,
+            PositionedDirectional(
+              end: 0,
               bottom: 0,
               child: Container(
                 width: _size * 0.3,
@@ -142,7 +141,7 @@ class AtharAvatar extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: isOnline!
-                      ? _successColor
+                      ? colors.success
                       : colorScheme.onSurface.withValues(alpha: 0.38),
                   border: Border.all(color: colorScheme.surface, width: 2),
                 ),
@@ -186,14 +185,17 @@ class AtharAvatarGroup extends StatelessWidget {
       borderRadius: BorderRadius.circular(avatarSize / 2),
       child: SizedBox(
         height: avatarSize,
+        width: (visibleAvatars.length + (remaining > 0 ? 1 : 0)) *
+                (avatarSize - overlapOffset) +
+            overlapOffset,
         child: Stack(
           clipBehavior: Clip.none,
           children: [
             ...visibleAvatars.asMap().entries.map((entry) {
               final index = entry.key;
               final avatar = entry.value;
-              return Positioned(
-                left: index * (avatarSize - overlapOffset),
+              return PositionedDirectional(
+                start: index * (avatarSize - overlapOffset),
                 child: AtharAvatar(
                   size: size,
                   imageUrl: avatar.imageUrl,
@@ -204,8 +206,8 @@ class AtharAvatarGroup extends StatelessWidget {
               );
             }),
             if (remaining > 0)
-              Positioned(
-                left: visibleAvatars.length * (avatarSize - overlapOffset),
+              PositionedDirectional(
+                start: visibleAvatars.length * (avatarSize - overlapOffset),
                 child: Container(
                   width: avatarSize,
                   height: avatarSize,

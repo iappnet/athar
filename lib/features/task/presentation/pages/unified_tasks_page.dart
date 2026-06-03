@@ -73,6 +73,7 @@ class _UnifiedTasksViewState extends State<UnifiedTasksView> {
         messenger: messenger,
         message: l10n.deletedItem(item.title),
         colorScheme: colorScheme,
+        semanticColors: context.colors,
         variant: AtharSnackbarVariant.info,
         icon: Icons.delete_outline_rounded,
         actionLabel: l10n.undo,

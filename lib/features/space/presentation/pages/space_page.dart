@@ -1,5 +1,4 @@
 import 'package:athar/core/config/subscription_config.dart';
-import 'package:athar/core/design_system/molecules/skeletons/athar_skeleton.dart';
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/features/subscription/domain/entities/subscription_status.dart';
 import 'package:athar/features/subscription/presentation/cubit/subscription_cubit.dart';
