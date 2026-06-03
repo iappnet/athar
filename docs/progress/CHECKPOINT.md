@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-03 · PR-SPLASH-ONBOARD-A complete · df5e268
+LAST-UPDATED:  2026-06-03 · PR-CLEANUP complete · 98f4efe
 LOADS-AT:      Tier 0
 -->
 
@@ -13,19 +13,19 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-03 (PR-SPLASH-ONBOARD-A `df5e268`)
-**Commit:** `df5e268` refactor(PR-SPLASH-ONBOARD-A): splash + all onboarding variants → tokens + cream + Calibri, on-brand forest; artistic colors named-consted
-**Prior:** `e1962c2` refactor(PR-PRAYER-DETAILS): prayer detail views → tokens + RTL chevrons + Calibri, dark-mode-correct
-**Note:** PR-SPLASH-ONBOARD-A complete — final UI Coverage Refresh PR. 8/8 done. Governance: §8.5 Artistic-surface exception added. AtharColors.cream added. splash: _kNightSky1/2/3/_kGlow/_kTagline/_kParticle named consts; progress → colorScheme.primary; Cairo×2→Calibri. Variant A: forest gradient all 4 slides; per-slide accent from context.colors; Cairo×6→Calibri; AtharRadii. Variants B/C/D: _kForest/Mid/Cream → AtharColors static consts; _kAccents cream entry → AtharColors.cream; AtharRadii throughout. flutter analyze: 0 issues. /drift-check PASS.
+**Timestamp:** 2026-06-03 (PR-CLEANUP `98f4efe`)
+**Commit:** `98f4efe` refactor(PR-CLEANUP-HYGIENE): residual radii + durations → tokens
+**Prior:** `df5e268` refactor(PR-SPLASH-ONBOARD-A): splash + all onboarding variants → tokens + cream + Calibri
+**Note:** PR-CLEANUP complete — 4-commit sweep (Phase-A `a805aa9`, ORPHANS `da272da`, fix `a3b71ec`, HYGIENE `98f4efe`). ~3134 dead lines deleted. Orphan surfaces migrated (accent tokens for notifications, semantic dhikr colors, AtharAnimations.standard alias added). Row 3+5 color fix (outline→onSurfaceVariant). Residual radii/durations: 10 radii (bottomSheet/xl/xxxs) + 4 durations (normalFast/normalSlow/snackbarVisibleShort) across 8 files. flutter analyze: 0 issues. /drift-check PASS.
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** PR-SPLASH-ONBOARD-A ✅ COMPLETE
-**Last committed:** PR-SPLASH-ONBOARD-A · `df5e268`
+**Active PR:** PR-CLEANUP ✅ COMPLETE
+**Last committed:** PR-CLEANUP-HYGIENE · `98f4efe`
 **Phase:** Complete. /drift-check PASS. Pushed to remote.
-**Next:** All 8/8 UI Coverage Refresh PRs complete. Remaining: PR-ADHAN (blocked on audio asset B4) · PR-CLEANUP (blocked on all others).
+**Next:** 13/14 feature PRs complete. Remaining: PR-ADHAN (blocked on audio asset B4). All UI Coverage Refresh PRs done. Deferred QA sweep is the final gate before store submission.
 
 ---
 
@@ -177,13 +177,11 @@ LOADS-AT:      Tier 0
 
 ## NEXT ACTION
 
-**PR-HEALTH-REFRESH complete.** 7-accent palette added to AtharColors. 8 health files migrated. ~3.1k dead lines stripped. Next:
-- **PR-SPACE-REFRESH** — Space feature UI DS refresh (same canonical DS recipe)
-- **PR-ADHAN** — blocked on B4 (audio asset from designer)
+**PR-CLEANUP complete.** 4-commit sweep done. All 14 scoped feature PRs + 8 UI Coverage Refresh PRs complete (except PR-ADHAN blocked on audio asset). Next:
+- **PR-ADHAN** — blocked on audio asset B4 from designer
+- **Deferred QA sweep** — 11/11 items in bucket (device validation required; cannot proceed without physical device)
 
 **OPS-1 reminder:** `supabase/migrations/20260602_onboarding_events.sql` must be applied to live Supabase project before A/B test goes live. Until then, analytics inserts no-op silently.
-
-Deferred QA sweep bucket: 10/10 items (ceiling reached).
 
 ---
 
@@ -200,6 +198,6 @@ Deferred QA sweep bucket: 10/10 items (ceiling reached).
 
 ## WORKING TREE STATE
 
-**Status:** Clean — PR-SETTINGS-REFRESH + PR-PRAYER-DETAILS committed + pushed
+**Status:** Clean — PR-CLEANUP 4 commits committed + pushed
 **flutter analyze:** 0 issues
-**Last commit:** `e1962c2` refactor(PR-PRAYER-DETAILS): prayer detail views → tokens + RTL chevrons + Calibri, dark-mode-correct
+**Last commit:** `98f4efe` refactor(PR-CLEANUP-HYGIENE): residual radii + durations → tokens

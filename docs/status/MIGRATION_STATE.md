@@ -2,7 +2,7 @@
 CANONICAL-FOR: Branch state, RULE 1/2 enforcement, Deferred QA bucket
 OWNER:         Claude Code
 PRECEDENCE:    4 (Tier 1 — loads after Tier-0 on any PR arc)
-LAST-UPDATED:  2026-06-03 · PR-SPLASH-ONBOARD-A df5e268 logged
+LAST-UPDATED:  2026-06-03 · PR-CLEANUP 98f4efe logged
 LOADS-AT:      Tier 1
 LEGACY-ALIASES: CURRENT_MIGRATION_STATE.md (root)
 CANONICAL-SINCE: 2026-06-01
@@ -53,6 +53,9 @@ CANONICAL-SINCE: 2026-06-01
 | **PR-SETTINGS-REFRESH** — Settings UI DS refresh; AtharColors: accentGreen (#3C9A5F/#6FCB8E) + accentIndigo (#4754B5/#8A93DD) added; Cairo×42→Calibri; prayer/account icons→colorScheme.primary; athkar icons→AtharColors.athkar*; zone/smart icons→accent palette; frozen PR5 Accessibility icons untouched; Switch activeTrack→primary; dialog Colors.white→onPrimary; red.shade600→error; Colors.orange→warning; grey variants→outline/outlineVariant/surfaceContainerLow; smart_zones boxShadow→AtharShadows.card; zone colors→accentBlue/Green/Purple/Teal/Indigo; add_category Duration→AtharAnimations.normalFast; KNOWN_PROBLEMS P5+P6 logged | `0cfd53e` | (in branch) | ✅ `flutter analyze` 0 issues · 7 files changed · 6/8 UI Coverage Refresh PRs done | 2026-06-03 |
 | **PR-PRAYER-DETAILS** — Prayer detail views DS refresh; RTL chevrons (locale-aware via `Localizations.localeOf`) in prayer_month_view; no-font TS→Calibri across all 4 prayer views (prayer_details_page, prayer_day_view, prayer_week_view, prayer_month_view); AtharTypography import added; isPast dimming DEFERRED; P5+P6 logged in KNOWN_PROBLEMS | `e1962c2` | (in branch) | ✅ `flutter analyze` 0 issues · 4 files changed · 7/8 UI Coverage Refresh PRs done | 2026-06-03 |
 | **PR-SPLASH-ONBOARD-A** — Splash + all 4 onboarding variants DS refresh; docs/governance §8.5 Artistic-surface exception added; AtharColors.cream = Color(0xFFEDE6C8) added; splash: _kNightSky1/2/3/_kGlow/_kTagline/_kParticle named consts; progress → colorScheme.primary; Cairo×2→Calibri+fontFallback; AtharRadii.xxxs; Variant A: _visual→_buildSlides(context); forest gradient all 4 slides; per-slide accent context.colors.accentGreen/Blue/Purple/primary; icon uses accent; Cairo×6→Calibri; AtharRadii.xl/full/xxs; EdgeInsetsDirectional dots; Variants B/C/D: _kForest/Mid → AtharColors.prayerCardShadowDeep/Mid; _kCream → AtharColors.cream; _kAccents cream entry → AtharColors.cream; AtharRadii.full/lg/md/xl/xxs | `df5e268` | (in branch) | ✅ `flutter analyze` 0 issues · 7 files changed · **8/8 UI Coverage Refresh PRs done** | 2026-06-03 |
+| **PR-CLEANUP-PHASE-A** — Delete ~3134 lines of commented-out dead code: main_page.dart (1636L), dashboard_page.dart (1090L), statistics_card.dart (82L), smart_habits_strip.dart (777L dead missed in earlier sweep) | `a805aa9` | (in branch) | ✅ `flutter analyze` 0 issues | 2026-06-03 |
+| **PR-CLEANUP-ORPHANS** — Orphan surface token migration: accent palette (notifications: accentOrange/Blue/Red); semantic dhikr colors (shadow/outlineVariant/surfaceContainerHighest/error/success/onSurface/onSurfaceVariant); Duration migrations (snackbarVisibleShort, normalSlow×2, normalFast); AtharAnimations.standard alias added; dashboard_page 2s→snackbarVisibleShort; dhikr outline→onSurfaceVariant fix (row 3+5) | `da272da` · fix `a3b71ec` | (in branch) | ✅ `flutter analyze` 0 issues | 2026-06-03 |
+| **PR-CLEANUP-HYGIENE** — Residual radii + durations in 8 already-done feature files: 10 radii (bottomSheet/xl/xxxs) across project_details, add_task_sheet, general_settings, focus_screen, liquid_background; 4 durations (normalFast/normalSlow/snackbarVisibleShort) across task_details, add_task_sheet, habit_page, smart_zones. Kept raw: 500ms (no token), 1s system/ticker, 2s artistic, 3s snackbar, focus_cubit 300ms (cubit layer boundary) | `98f4efe` | (in branch) | ✅ `flutter analyze` 0 issues · 8 files changed | 2026-06-03 |
 
 ---
 
@@ -96,7 +99,7 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Active PR
 
-**PR-SPLASH-ONBOARD-A** — ✅ Complete (2026-06-03) · `df5e268`. 7 files changed. 8/8 UI Coverage Refresh PRs done. All required refresh PRs shipped. Remaining: PR-ADHAN (blocked on audio asset B4) + PR-CLEANUP (final hardcoded-colour sweep).
+**PR-CLEANUP** — ✅ Complete (2026-06-03) · final commit `98f4efe`. 4 commits total. All 13/14 scoped feature PRs + 8/8 UI Coverage Refresh PRs done. Remaining: PR-ADHAN (blocked on audio asset B4).
 
 ---
 
@@ -169,7 +172,7 @@ See `IPAD_LAYER2_OWNERSHIP_MAP.md` for per-screen ownership matrix.
 | OPS-1 | **Apply `supabase/migrations/20260602_onboarding_events.sql` to the live Supabase project.** Until applied, all `onboarding_events` anon inserts no-op silently (by design — service catches the error). Analytics records nothing until this migration is deployed. This is a deploy step, not a code step. Must be done before the A/B test goes live. | PR-ONBOARD-AB-INFRA | ⚠️ Deploy step — not a device QA item |
 | ONBOARD-sweep | **PR-ONBOARD-AB device sweep:** All 4 variants × ar/en × light/dark. Pass conditions: (1) Variant B visually matches A structure — same slide count/order/timing, only forest gradient+Calibri differ. (2) Variant D is calm, NOT enterprise-heavy — no form overload. (3) Skip-every-optional-step in D still completes (reaches /login). (4) Analytics fire per variant: `onboarding_started`, `onboarding_completed` (B/C/D); `onboarding_step_completed/skipped` (D only); `onboarding_abandoned` fires when app goes to background mid-D-flow. (5) `onboarding_seen=true` + `onboarding_variant=<variant>` written to SharedPreferences after CTA. Gate: OPS-1 must be deployed for analytics to land. | PR-ONBOARD-AB-UI | Unverified |
 | SPACE-list-swipe | **`list_page.dart` swipe-to-delete: verify reveal side + icon/padding mirror correctly in ar (RTL) and en (LTR) on device.** Pass conditions: (1) In Arabic (RTL): swipe left → reveals red delete bg on the LEFT side (start edge). (2) In English (LTR): swipe right → reveals red delete bg on the RIGHT side (start edge in LTR). `DismissDirection.endToStart` is text-direction-aware; background `AlignmentDirectional.centerStart` and `EdgeInsetsDirectional.only(start:)` are set. Cannot be verified without a running app. | PR-SPACE-REFRESH | Unverified |
-| SHIP-GATE | **SHIP GATE: full UI-coverage pass required before store submission.** The 8 UI Coverage Refresh PRs (PR-DS-ATOMS · PR-TASK-REFRESH · PR-HABITS-REFRESH · PR-HEALTH-REFRESH · PR-SPACE-REFRESH · PR-SETTINGS-REFRESH · PR-PRAYER-DETAILS · PR-SPLASH-ONBOARD-A) must land and pass QA before any App Store or external TestFlight release. Half-migrated UI (current state: 24% conformant, 36/151 surfaces) is a release blocker (REL-1). See `docs/ai/KNOWN_PROBLEMS.md` and `docs/status/ROADMAP.md` UI Coverage Refresh section. | UI coverage audit 2026-06-02 | ❌ Blocking — not yet met |
+| SHIP-GATE | **SHIP GATE: full UI-coverage pass required before store submission.** All 8 UI Coverage Refresh PRs have now landed (PR-DS-ATOMS · PR-TASK-REFRESH · PR-HABITS-REFRESH · PR-HEALTH-REFRESH · PR-SPACE-REFRESH · PR-SETTINGS-REFRESH · PR-PRAYER-DETAILS · PR-SPLASH-ONBOARD-A ✅). PR-CLEANUP also complete. Remaining gate items: (1) Device QA sweep of all 11 deferred bucket items. (2) B1 Calibri licence confirmation. (3) PR-ADHAN audio asset. See `docs/ai/KNOWN_PROBLEMS.md` and `docs/status/ROADMAP.md`. | UI Coverage Refresh PRs complete 2026-06-03 | ⚠️ PRs shipped; QA + B1 + B4 gates remain |
 
 ---
 

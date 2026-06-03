@@ -15,7 +15,7 @@ CANONICAL-SINCE: 2026-06-01
 > **SINGLE SOURCE OF TRUTH** — roadmap + % live here ONLY. Other docs must not restate these numbers.
 
 **Last updated:** 2026-06-03
-**Updated by:** PR-SPLASH-ONBOARD-A (df5e268) complete — splash + all onboarding variants → tokens + cream + Calibri + named artistic consts. 8/8 UI Coverage Refresh PRs done.
+**Updated by:** PR-CLEANUP (98f4efe) complete — Phase-A dead code + ORPHANS token migration + HYGIENE residual radii/durations. 13/14 feature PRs done. All 8/8 UI Coverage Refresh PRs done.
 
 **Branch strategy:** `docs/status/MIGRATION_BRANCH_STRATEGY.md`  
 **Canonical handoff package:** `docs/design-specs/` (B2 mirror, read-only)  
@@ -59,9 +59,9 @@ CANONICAL-SINCE: 2026-06-01
 | 11 | **PR8** | Focus screen oil-fill (`FOCUS_OIL_SPEC.md`; procedural colour carve-out) | ✅ **Complete 2026-06-02** | `2b10844` | — |
 | 12 | **PR9** | iOS widgets visual refresh (infra complete; visuals only) | ✅ **Complete 2026-06-02** | — | — |
 | 13 | **PR-ONBOARD-AB** | Four-variant onboarding A/B/C/D; Variant A must not regress | ✅ **Complete 2026-06-02** · INFRA `1f868f9` · UI `729c23d` | — | — |
-| 14 | **PR-CLEANUP** | Hardcoded colour sweep (files untouched by other PRs) | 🔲 Not started | — | All others |
+| 14 | **PR-CLEANUP** | Hardcoded colour sweep (files untouched by other PRs) | ✅ **Complete 2026-06-03** · Phase-A `a805aa9` · ORPHANS `da272da` · fix `a3b71ec` · HYGIENE `98f4efe` | — | — |
 
-**Total PRs:** 14 (+ PR-FONT-FALLBACK as 2b) · **Complete:** 12 logical (PR1, PR-THEME arc incl PR-FONT-FALLBACK, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8, PR9, PR-ONBOARD-AB) · **Blocked:** 2 (PR-ADHAN needs audio asset; PR-CLEANUP needs all others first)
+**Total PRs:** 14 (+ PR-FONT-FALLBACK as 2b) · **Complete:** 13 logical (PR1, PR-THEME arc incl PR-FONT-FALLBACK, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8, PR9, PR-ONBOARD-AB, PR-CLEANUP) · **Blocked:** 1 (PR-ADHAN needs audio asset B4)
 
 ---
 
@@ -88,7 +88,7 @@ CANONICAL-SINCE: 2026-06-01
 
 | Dimension | Complete | Total | % |
 |-----------|---------|-------|---|
-| Feature PRs complete (14-PR roadmap) | 12 (PR1, PR-THEME arc, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8, PR9, PR-ONBOARD-AB) | 14 | **~86%** |
+| Feature PRs complete (14-PR roadmap) | 13 (PR1, PR-THEME arc, PR2, PR3, PR4a, PR4b, PR5, PR6, PR7, PR8, PR9, PR-ONBOARD-AB, PR-CLEANUP) | 14 | **~93%** |
 | UI surface coverage | 95+ of 151 surfaces conformant (post-PR-PRAYER-DETAILS, 2026-06-03) — exact re-count deferred to next audit session | 151 | **~63%+** |
 | Design system token migration | ✅ Foundation done; design system themes now live in app | Component + screen migration pending | ~20% |
 | Typography migration | Tokens + 88 theme fallbacks + 38 base styles — all correct | Component `.arabic`/`.english` callsites still use Cairo in some files | ~25% |
@@ -144,16 +144,15 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Recommended Next PR
 
-**PR-SPLASH-ONBOARD-A ✅ complete.** `df5e268` — splash + all 4 onboarding variants migrated: AtharColors.cream token added; §8.5 Artistic-surface exception governance rule added; splash night-sky named consts + colorScheme.primary progress; Variant A forest gradient + per-slide accent from context.colors; Variants B/C/D _kForest/Mid/Cream → AtharColors tokens; AtharRadii throughout. **8/8 UI Coverage Refresh PRs done.**
+**PR-CLEANUP ✅ complete.** `98f4efe` (HYGIENE) — final DS sweep: ~3134 dead lines removed (Phase-A); orphan surfaces migrated to accent/semantic tokens (ORPHANS); AtharAnimations.standard alias added; dhikr outline→onSurfaceVariant fix; 10 radii + 4 durations across 8 files (HYGIENE). **13/14 feature PRs done. 8/8 UI Coverage Refresh PRs done.**
 
 **Remaining (feature track):**
 
 | PR | Status | Blocker |
 |----|--------|---------|
 | **PR-ADHAN** | Not started | Audio asset delivery from designer (B4 open) |
-| **PR-CLEANUP** | Not started | Must run after all other PRs complete |
 
-**Next:** PR-ADHAN (blocked on audio asset) or PR-CLEANUP (last pass). See `docs/status/NEXT_STEPS.md` for next-arc guidance.
+**Next:** PR-ADHAN (blocked on audio asset B4). Deferred QA sweep is the final gate before store submission. See `docs/status/NEXT_STEPS.md` for next-arc guidance.
 
 ---
 

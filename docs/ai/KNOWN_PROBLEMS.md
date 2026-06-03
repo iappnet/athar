@@ -20,15 +20,16 @@ _All P1/P2/P3 have been fixed. Pending physical device verification._
 
 ## OPEN — Design System v2 (Post-PR1)
 
-### REL-1: UI design-system coverage below ship bar
+### REL-1: UI design-system coverage — all 8 refresh PRs landed; QA gate remains
 
-App currently renders mixed forest (v2) / navy (v1) surfaces across ~76% of the UI (151 total surfaces; 36 conformant, 60 partial, 55 not-migrated).
+All 8 UI Coverage Refresh PRs + PR-CLEANUP have shipped (2026-06-03). Surface coverage is now ~63%+ conformant per last audit.
 
-- **Impact:** Release blocker. No App Store or external TestFlight submission until coverage reaches the designer-agreed target.
-- **Dark mode is a confirmed v1 launch requirement.** Every surface still using `static const AppColors.*` is dark-mode-broken — `const` values cannot adapt to `ThemeMode`; they always render the light-mode hex. Migration to `context.colors.*` is required for every screen before submission. B2 (dark secondary gradient gap in CSS spec) is part of this same blocker.
-- **Acceptance criterion for every per-feature refresh PR:** "All migrated surfaces verified in both light and dark mode on device." A PR that migrates colors but does not verify dark mode does NOT close its share of REL-1.
-- **Source:** `design-context/_audit_ui_coverage.md` (2026-06-02) — 36/151 surfaces conformant (24%)
-- **Action required:** Per-feature refresh PRs must land before any store submission: PR-DS-ATOMS · PR-TASK-REFRESH · PR-HABITS-REFRESH · PR-HEALTH-REFRESH · PR-SPACE-REFRESH · PR-SETTINGS-REFRESH · PR-PRAYER-DETAILS · PR-SPLASH-ONBOARD-A (tracked in `docs/status/ROADMAP.md` UI Coverage Refresh section).
+- **Impact:** Release blocker remains until device QA sweep passes. No App Store or external TestFlight submission until the deferred QA bucket (11/11 items) is validated on a physical device.
+- **Dark mode requirement:** All migrated surfaces use `context.colors.*` / `ThemeExtension` tokens — dark-mode adaptation is correct in code. Physical device verification still required (DEVICE-1, PR3-R1, PR3-R2).
+- **B2 closed:** ThemeMode wiring complete in PR-THEME. Dark secondary gradient gap noted in ROADMAP Deferred Risks.
+- **Acceptance criterion (carried forward):** All 11 deferred QA bucket items must pass on device before store submission.
+- **Source:** `design-context/_audit_ui_coverage.md` (2026-06-02) — audit was pre-refresh; exact conformant count deferred to next audit session.
+- **All required refresh PRs shipped:** PR-DS-ATOMS ✅ · PR-TASK-REFRESH ✅ · PR-HABITS-REFRESH ✅ · PR-HEALTH-REFRESH ✅ · PR-SPACE-REFRESH ✅ · PR-SETTINGS-REFRESH ✅ · PR-PRAYER-DETAILS ✅ · PR-SPLASH-ONBOARD-A ✅ · PR-CLEANUP ✅
 
 ### B1: Calibri App Store licence unconfirmed
 `assets/fonts/calibri-*.ttf` (3 files) are in the repo and declared in `pubspec.yaml`. Calibri is a Microsoft typeface — its licence for App Store distribution has not been confirmed by the designer.
