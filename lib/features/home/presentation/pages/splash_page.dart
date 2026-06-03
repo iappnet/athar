@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:math' as math;
+import 'package:athar/core/design_system/tokens/athar_radii.dart';
+import 'package:athar/core/design_system/tokens/athar_typography.dart';
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/core/services/biometric_service.dart';
 import 'package:athar/features/auth/presentation/cubit/auth_cubit.dart';
@@ -10,6 +12,15 @@ import 'package:athar/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:athar/features/settings/presentation/cubit/settings_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Artistic-surface named consts (§8.5 exception): splash cinematic night-sky palette.
+// Values kept; literals named so they are single-sourced per file.
+const _kNightSky1 = Color(0xFF07111A); // deep navy
+const _kNightSky2 = Color(0xFF0A1C12); // deep forest
+const _kNightSky3 = Color(0xFF060E0A); // near black
+const _kGlow      = Color(0xFF22A05B); // star / ambient glow
+const _kTagline   = Color(0xFF6EAF8A); // tagline muted green
+const _kParticle  = Color(0xFF4ADE80); // particle + progress shimmer end
 
 // ═══════════════════════════════════════════════════════════════════════════
 // SPLASH PAGE
@@ -182,7 +193,7 @@ class _SplashPageState extends State<SplashPage>
           if (_isTimerDone && _lastState != null) _navigate(_lastState!);
         },
         child: Scaffold(
-          backgroundColor: const Color(0xFF07111A),
+          backgroundColor: _kNightSky1,
           body: AnimatedBuilder(
             animation: Listenable.merge(
                 [_starCtrl, _textCtrl, _progressCtrl, _glowCtrl]),
@@ -203,11 +214,7 @@ class _SplashPageState extends State<SplashPage>
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [
-                Color(0xFF07111A), // deep navy
-                Color(0xFF0A1C12), // deep forest
-                Color(0xFF060E0A), // near black
-              ],
+              colors: [_kNightSky1, _kNightSky2, _kNightSky3],
               stops: [0.0, 0.55, 1.0],
             ),
           ),
@@ -230,7 +237,7 @@ class _SplashPageState extends State<SplashPage>
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  const Color(0xFF22A05B).withValues(alpha: 0.12),
+                  _kGlow.withValues(alpha: 0.12),
                   Colors.transparent,
                 ],
               ),
@@ -261,7 +268,8 @@ class _SplashPageState extends State<SplashPage>
                 child: const Text(
                   'أثر',
                   style: TextStyle(
-                    fontFamily: 'Cairo',
+                    fontFamily: AtharTypography.fontFamily,
+                    fontFamilyFallback: AtharTypography.fontFallback,
                     fontSize: 64,
                     fontWeight: FontWeight.w800,
                     color: Colors.white,
@@ -280,9 +288,10 @@ class _SplashPageState extends State<SplashPage>
               child: const Text(
                 'حياة متوازنة · أثر مستدام',
                 style: TextStyle(
-                  fontFamily: 'Cairo',
+                  fontFamily: AtharTypography.fontFamily,
+                  fontFamilyFallback: AtharTypography.fontFallback,
                   fontSize: 14,
-                  color: Color(0xFF6EAF8A),
+                  color: _kTagline,
                   letterSpacing: 0.8,
                 ),
               ),
@@ -301,16 +310,19 @@ class _SplashPageState extends State<SplashPage>
                 width: 160,
                 height: 2,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(1),
+                  borderRadius: BorderRadius.circular(AtharRadii.xxxs),
                   child: Align(
                     alignment: AlignmentDirectional.centerStart,
                     child: FractionallySizedBox(
                       widthFactor: _progressWidth.value,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(1),
-                          gradient: const LinearGradient(
-                            colors: [Color(0xFF1A6B3C), Color(0xFF4ADE80)],
+                          borderRadius: BorderRadius.circular(AtharRadii.xxxs),
+                          gradient: LinearGradient(
+                            colors: [
+                              Theme.of(context).colorScheme.primary,
+                              _kParticle,
+                            ],
                           ),
                         ),
                         child: const SizedBox.expand(),
@@ -371,7 +383,7 @@ class _StarDrawPainter extends CustomPainter {
     if (progress > 0.85) {
       final fillOpacity = ((progress - 0.85) / 0.15).clamp(0.0, 1.0);
       final fillPaint = Paint()
-        ..color = const Color(0xFF22A05B).withValues(alpha: 0.08 * fillOpacity)
+        ..color = _kGlow.withValues(alpha: 0.08 * fillOpacity)
         ..style = PaintingStyle.fill;
       canvas.drawPath(path, fillPaint);
     }
@@ -503,7 +515,7 @@ class _FloatingParticleState extends State<_FloatingParticle>
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF4ADE80).withValues(alpha: 0.6),
+                    color: _kParticle.withValues(alpha: 0.6),
                     blurRadius: _size * 2,
                     spreadRadius: _size * 0.5,
                   ),

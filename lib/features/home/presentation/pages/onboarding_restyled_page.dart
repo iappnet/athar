@@ -1,4 +1,6 @@
 import 'dart:math' as math;
+import 'package:athar/core/design_system/tokens/athar_colors.dart';
+import 'package:athar/core/design_system/tokens/athar_radii.dart';
 import 'package:athar/core/design_system/tokens/athar_typography.dart';
 import 'package:athar/core/services/onboarding_analytics_service.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
@@ -23,7 +25,7 @@ class _OnboardingRestyledPageState extends State<OnboardingRestyledPage> {
   DateTime? _startTime;
   String? _deviceId;
 
-  static const _kForest = Color(0xFF0F3D2E);
+  static const _kForest = AtharColors.prayerCardShadowDeep;
 
   static const _kIcons = [
     Icons.checklist_rounded,
@@ -34,7 +36,7 @@ class _OnboardingRestyledPageState extends State<OnboardingRestyledPage> {
 
   static const _kAccents = [
     Color(0xFF81C784),
-    Color(0xFFEDE6C8),
+    AtharColors.cream,
     Color(0xFFFFCC80),
     Color(0xFFA5D6A7),
   ];
@@ -190,8 +192,8 @@ class _BSlideData {
 class _BSlide extends StatelessWidget {
   final _BSlideData data;
   final VoidCallback onSkip;
-  static const _kForest    = Color(0xFF0F3D2E);
-  static const _kForestMid = Color(0xFF1A5A45);
+  static const _kForest    = AtharColors.prayerCardShadowDeep;
+  static const _kForestMid = AtharColors.prayerCardShadowMid;
 
   const _BSlide({required this.data, required this.onSkip});
 
@@ -261,7 +263,7 @@ class _BSlide extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(AtharRadii.xl),
                     border: Border.all(color: Colors.white.withValues(alpha: 0.25)),
                   ),
                   child: Text(
@@ -333,7 +335,7 @@ class _BChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(AtharRadii.xl),
         border: Border.all(color: accent.withValues(alpha: 0.5)),
       ),
       child: Text(
@@ -354,9 +356,9 @@ class _BBottomBar extends StatelessWidget {
   final int current, total;
   final bool isLast;
   final VoidCallback onNext;
-  static const _kForest    = Color(0xFF0F3D2E);
-  static const _kForestMid = Color(0xFF1A5A45);
-  static const _kCream     = Color(0xFFEDE6C8);
+  static const _kForest    = AtharColors.prayerCardShadowDeep;
+  static const _kForestMid = AtharColors.prayerCardShadowMid;
+  static const _kCream     = AtharColors.cream;
 
   const _BBottomBar({
     required this.current, required this.total,
@@ -385,7 +387,7 @@ class _BBottomBar extends StatelessWidget {
                     height: 7,
                     decoration: BoxDecoration(
                       color: active ? _kCream : _kCream.withValues(alpha: 0.35),
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: BorderRadius.circular(AtharRadii.xxs),
                     ),
                   );
                 }),
@@ -398,7 +400,7 @@ class _BBottomBar extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   decoration: BoxDecoration(
                     color: _kCream,
-                    borderRadius: BorderRadius.circular(28),
+                    borderRadius: BorderRadius.circular(AtharRadii.full),
                   ),
                   child: Text(
                     isLast ? l10n.getStarted : l10n.next,

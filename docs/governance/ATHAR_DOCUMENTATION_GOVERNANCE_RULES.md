@@ -2,7 +2,7 @@
 CANONICAL-FOR: Documentation governance rules — header format, precedence ladder, mandatory update protocol
 OWNER:         Claude Design
 PRECEDENCE:    off-ladder (governance authority)
-LAST-UPDATED:  2026-06-02 · section 8 — Design Token SSOT rule added
+LAST-UPDATED:  2026-06-03 · section 8.5 — Artistic-surface exception added
 LOADS-AT:      off-ladder (read when governance process is in question)
 -->
 
@@ -254,3 +254,18 @@ Ad-hoc text sizes (fontSize: N) [Tier 2 — FLAG]       | grep -c
 ```
 
 Record pre-patch and post-patch counts. Tier 1 counts must go to zero for all files in scope. Tier 2 counts are listed with a designer decision for each.
+
+### 8.5 Artistic-surface exception
+
+Intentional one-off brand-moment colors — splash cinematics, per-slide onboarding gradients, per-slide onboarding accents — are exempt from the "everything is a global semantic token" requirement. They follow a lighter version of the same rule: **named + single-sourced.**
+
+| Allowed | Not allowed |
+|---------|------------|
+| `static const _kNightSky1 = Color(0xFF07111A);` | `Color(0xFF07111A)` anonymous inline |
+| `static const _kForest = AtharColors.prayerCardShadowDeep;` | Duplicating the hex in a new literal |
+| `static const _kAccents = [AtharColors.cream, …];` | `[Color(0xFFEDE6C8), …]` anonymous inline |
+
+**Rules:**
+- One named `_k…` const per distinct colour per file. If the same artistic value is needed in two files, decide: promote to a global token (preferred), or accept two named consts with identical values.
+- Where a global `static const` already exists (`AtharColors.prayerCardShadowDeep`, `AtharColors.cream`, etc.), reference it — do not introduce a new literal.
+- This exception does **not** cover semantic UI surfaces (buttons, cards, text, icons outside brand cinematics). Those must use `context.colors.*` / `colorScheme.*`.

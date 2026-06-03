@@ -1,3 +1,5 @@
+import 'package:athar/core/design_system/tokens/athar_colors.dart';
+import 'package:athar/core/design_system/tokens/athar_radii.dart';
 import 'package:athar/core/design_system/tokens/athar_typography.dart';
 import 'package:athar/core/services/onboarding_analytics_service.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
@@ -19,7 +21,7 @@ class _OnboardingShortPageState extends State<OnboardingShortPage> {
   DateTime? _startTime;
   String? _deviceId;
 
-  static const _kForest = Color(0xFF0F3D2E);
+  static const _kForest = AtharColors.prayerCardShadowDeep;
 
   @override
   void initState() {
@@ -94,9 +96,9 @@ class _CWelcomeSlide extends StatelessWidget {
   final VoidCallback onContinue;
   final VoidCallback onSkip;
 
-  static const _kForest    = Color(0xFF0F3D2E);
-  static const _kForestMid = Color(0xFF1A5A45);
-  static const _kCream     = Color(0xFFEDE6C8);
+  static const _kForest    = AtharColors.prayerCardShadowDeep;
+  static const _kForestMid = AtharColors.prayerCardShadowMid;
+  static const _kCream     = AtharColors.cream;
 
   const _CWelcomeSlide({
     required this.l10n,
@@ -216,7 +218,7 @@ class _CWelcomeSlide extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   decoration: BoxDecoration(
                     color: _kCream,
-                    borderRadius: BorderRadius.circular(28),
+                    borderRadius: BorderRadius.circular(AtharRadii.full),
                   ),
                   child: Text(
                     l10n.next,
@@ -242,7 +244,7 @@ class _CWelcomeSlide extends StatelessWidget {
 class _CFeaturePill extends StatelessWidget {
   final IconData icon;
   final String label;
-  static const _kCream = Color(0xFFEDE6C8);
+  static const _kCream = AtharColors.cream;
 
   const _CFeaturePill({required this.icon, required this.label});
 
@@ -252,7 +254,7 @@ class _CFeaturePill extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(AtharRadii.xl),
         border: Border.all(color: Colors.white.withValues(alpha: 0.25)),
       ),
       child: Column(
@@ -282,9 +284,9 @@ class _CStartSlide extends StatelessWidget {
   final AppLocalizations l10n;
   final VoidCallback onGetStarted;
 
-  static const _kForest    = Color(0xFF0F3D2E);
-  static const _kForestMid = Color(0xFF1A5A45);
-  static const _kCream     = Color(0xFFEDE6C8);
+  static const _kForest    = AtharColors.prayerCardShadowDeep;
+  static const _kForestMid = AtharColors.prayerCardShadowMid;
+  static const _kCream     = AtharColors.cream;
 
   const _CStartSlide({required this.l10n, required this.onGetStarted});
 
@@ -342,7 +344,7 @@ class _CStartSlide extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   decoration: BoxDecoration(
                     color: _kCream,
-                    borderRadius: BorderRadius.circular(28),
+                    borderRadius: BorderRadius.circular(AtharRadii.full),
                   ),
                   child: Text(
                     l10n.onboardingShortStartCta,

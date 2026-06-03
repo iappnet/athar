@@ -1,3 +1,5 @@
+import 'package:athar/core/design_system/tokens/athar_colors.dart';
+import 'package:athar/core/design_system/tokens/athar_radii.dart';
 import 'package:athar/core/design_system/tokens/athar_typography.dart';
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/core/services/location_service.dart';
@@ -44,9 +46,9 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
   DateTime? _startTime;
   String? _deviceId;
 
-  static const _kForest    = Color(0xFF0F3D2E);
-  static const _kForestMid = Color(0xFF1A5A45);
-  static const _kCream     = Color(0xFFEDE6C8);
+  static const _kForest    = AtharColors.prayerCardShadowDeep;
+  static const _kForestMid = AtharColors.prayerCardShadowMid;
+  static const _kCream     = AtharColors.cream;
 
   static const _kLocationPage = 2;
   static const _kTotalPages   = 6;
@@ -254,7 +256,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   decoration: BoxDecoration(
                     color: _kCream,
-                    borderRadius: BorderRadius.circular(28),
+                    borderRadius: BorderRadius.circular(AtharRadii.full),
                   ),
                   child: Text(
                     nextLabel,
@@ -562,7 +564,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
               decoration: BoxDecoration(
                 color: _kCream.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(AtharRadii.lg),
                 border: Border.all(color: _kCream.withValues(alpha: 0.4)),
               ),
               child: Row(
@@ -623,13 +625,13 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
                             hintText: l10n.onboardingExpandedSpaceCodeHint,
                             hintStyle: TextStyle(color: Colors.white38),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(AtharRadii.md),
                               borderSide: BorderSide(
                                 color: Colors.white.withValues(alpha: 0.3),
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(AtharRadii.md),
                               borderSide: BorderSide(color: _kCream),
                             ),
                             contentPadding: const EdgeInsets.symmetric(
@@ -647,7 +649,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
                           ),
                           decoration: BoxDecoration(
                             color: _kCream,
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(AtharRadii.md),
                           ),
                           child: _joinLoading
                               ? const SizedBox(
@@ -760,7 +762,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   decoration: BoxDecoration(
                     color: _kCream,
-                    borderRadius: BorderRadius.circular(28),
+                    borderRadius: BorderRadius.circular(AtharRadii.full),
                   ),
                   child: Text(
                     l10n.onboardingExpandedFinishCta,
@@ -788,7 +790,7 @@ class _OnboardingExpandedPageState extends State<OnboardingExpandedPage>
 class _StepIndicator extends StatelessWidget {
   final int current;
   final int total;
-  static const _kCream = Color(0xFFEDE6C8);
+  static const _kCream = AtharColors.cream;
 
   const _StepIndicator({required this.current, required this.total});
 
@@ -807,7 +809,7 @@ class _StepIndicator extends StatelessWidget {
             height: 6,
             decoration: BoxDecoration(
               color: active ? _kCream : _kCream.withValues(alpha: 0.3),
-              borderRadius: BorderRadius.circular(3),
+              borderRadius: BorderRadius.circular(AtharRadii.xxs),
             ),
           );
         }),
@@ -821,7 +823,7 @@ class _ModuleToggleRow extends StatelessWidget {
   final IconData icon;
   final bool value;
   final ValueChanged<bool> onChanged;
-  static const _kCream = Color(0xFFEDE6C8);
+  static const _kCream = AtharColors.cream;
 
   const _ModuleToggleRow({
     required this.label,
@@ -863,7 +865,7 @@ class _ModuleToggleRow extends StatelessWidget {
 
 class _AlwaysIncludedChip extends StatelessWidget {
   final String label;
-  static const _kCream = Color(0xFFEDE6C8);
+  static const _kCream = AtharColors.cream;
 
   const _AlwaysIncludedChip({required this.label});
 
@@ -873,7 +875,7 @@ class _AlwaysIncludedChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(AtharRadii.xl),
         border: Border.all(color: Colors.white.withValues(alpha: 0.15)),
       ),
       child: Row(
@@ -901,8 +903,8 @@ class _DOutlineButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onTap;
   final bool loading;
-  static const _kCream  = Color(0xFFEDE6C8);
-  static const _kForest = Color(0xFF0F3D2E);
+  static const _kCream  = AtharColors.cream;
+  static const _kForest = AtharColors.prayerCardShadowDeep;
 
   const _DOutlineButton({
     required this.label,
@@ -920,7 +922,7 @@ class _DOutlineButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         decoration: BoxDecoration(
           color: _kCream,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AtharRadii.lg),
         ),
         child: loading
             ? const Center(
@@ -955,7 +957,7 @@ class _DOutlineButton extends StatelessWidget {
 
 class _GrantedBadge extends StatelessWidget {
   final IconData icon;
-  static const _kCream = Color(0xFFEDE6C8);
+  static const _kCream = AtharColors.cream;
 
   const _GrantedBadge({required this.icon});
 
@@ -965,7 +967,7 @@ class _GrantedBadge extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(AtharRadii.lg),
         border: Border.all(color: _kCream.withValues(alpha: 0.4)),
       ),
       child: Row(
@@ -982,7 +984,7 @@ class _GrantedBadge extends StatelessWidget {
 
 class _RecapChip extends StatelessWidget {
   final String label;
-  static const _kCream = Color(0xFFEDE6C8);
+  static const _kCream = AtharColors.cream;
 
   const _RecapChip({required this.label});
 
@@ -992,7 +994,7 @@ class _RecapChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(AtharRadii.xl),
         border: Border.all(color: _kCream.withValues(alpha: 0.35)),
       ),
       child: Row(
