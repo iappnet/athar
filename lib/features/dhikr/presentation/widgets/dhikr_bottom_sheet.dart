@@ -133,7 +133,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
                     IconButton(
                       icon: const Icon(Icons.close),
                       onPressed: () => Navigator.pop(context),
-                      color: colorScheme.outline,
+                      color: colorScheme.onSurfaceVariant,
                     ),
 
                     // العنوان
@@ -176,7 +176,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
                 AtharGap.sm,
                 Text(
                   l10n.progressPercent((progress * 100).toInt()),
-                  style: TextStyle(fontSize: 12.sp, color: colorScheme.outline),
+                  style: TextStyle(fontSize: 12.sp, color: colorScheme.onSurfaceVariant),
                 ),
               ],
             ),
