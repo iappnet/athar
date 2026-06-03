@@ -1,3 +1,4 @@
+import 'package:athar/core/design_system/tokens/athar_radii.dart';
 import 'package:athar/core/design_system/tokens/athar_spacing.dart';
 import 'package:athar/core/design_system/tokens/athar_typography.dart';
 import 'package:athar/features/calendar/domain/entities/activity_set.dart';
@@ -531,7 +532,7 @@ class _AppointmentTile extends StatelessWidget {
       elevation: 0,
       color: colorScheme.primaryContainer.withValues(alpha: 0.4),
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.r)),
+          borderRadius: AtharRadii.radiusMd),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
         child: Row(

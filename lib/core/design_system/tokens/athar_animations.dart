@@ -40,6 +40,9 @@ abstract class AtharAnimations {
   /// 300ms - عادي بطيء
   static const Duration normalSlow = Duration(milliseconds: 300);
 
+  /// 300ms - standard interaction (canonical alias)
+  static const Duration standard = normalSlow;
+
   /// 350ms - بطيء
   static const Duration slow = Duration(milliseconds: 350);
 

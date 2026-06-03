@@ -1,4 +1,5 @@
 import 'package:athar/core/design_system/tokens/athar_colors.dart';
+import 'package:athar/core/design_system/tokens/athar_radii.dart';
 import 'package:athar/core/design_system/tokens/athar_typography.dart';
 import 'package:athar/features/calendar/domain/entities/activity_set.dart';
 import 'package:athar/features/calendar/domain/entities/dual_date.dart';
@@ -102,7 +103,7 @@ class CalendarDayCell extends StatelessWidget {
         margin: const EdgeInsets.all(1),
         decoration: BoxDecoration(
           color: bgColor,
-          borderRadius: BorderRadius.circular(11),
+          borderRadius: BorderRadius.circular(AtharRadii.md),
         ),
         child: Stack(
           children: [

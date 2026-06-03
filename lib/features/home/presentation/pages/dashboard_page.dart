@@ -98,7 +98,7 @@ class DashboardPage extends StatelessWidget {
                 // ✅ Colors.green → colors.success
                 backgroundColor: context.colors.success,
                 behavior: SnackBarBehavior.floating,
-                duration: const Duration(seconds: 2),
+                duration: AtharAnimations.snackbarVisibleShort,
               ),
             );
           }

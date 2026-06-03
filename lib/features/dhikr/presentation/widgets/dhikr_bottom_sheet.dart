@@ -73,7 +73,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
               // إغلاق الشيت لأنه سيعاد تحميله
               Navigator.pop(context);
             },
-            child: Text(l10n.update, style: const TextStyle(color: Colors.red)),
+            child: Text(l10n.update, style: TextStyle(color: Theme.of(ctx).colorScheme.error)),
           ),
         ],
       ),
@@ -83,6 +83,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final colorScheme = Theme.of(context).colorScheme;
     // حساب نسبة الإنجاز الكلي
     double progress = widget.habit.athkarItems.isEmpty
         ? 0
@@ -104,11 +105,11 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(20),
               ),
-              boxShadow: const [
+              boxShadow: [
                 BoxShadow(
-                  color: Colors.black12,
+                  color: colorScheme.shadow.withValues(alpha: 0.12),
                   blurRadius: 4,
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
@@ -120,7 +121,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
                   height: 4.h,
                   margin: EdgeInsets.only(bottom: 16.h),
                   decoration: BoxDecoration(
-                    color: Colors.grey[300],
+                    color: colorScheme.outlineVariant,
                     borderRadius: AtharRadii.radiusXxxs,
                   ),
                 ),
@@ -132,7 +133,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
                     IconButton(
                       icon: const Icon(Icons.close),
                       onPressed: () => Navigator.pop(context),
-                      color: Colors.grey,
+                      color: colorScheme.outline,
                     ),
 
                     // العنوان
@@ -166,7 +167,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
                   child: LinearProgressIndicator(
                     value: progress,
                     minHeight: 8.h,
-                    backgroundColor: Colors.grey[200],
+                    backgroundColor: colorScheme.surfaceContainerHighest,
                     valueColor: AlwaysStoppedAnimation<Color>(
                       Theme.of(context).primaryColor,
                     ),
@@ -175,7 +176,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
                 AtharGap.sm,
                 Text(
                   l10n.progressPercent((progress * 100).toInt()),
-                  style: TextStyle(fontSize: 12.sp, color: Colors.grey),
+                  style: TextStyle(fontSize: 12.sp, color: colorScheme.outline),
                 ),
               ],
             ),
@@ -202,6 +203,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
   Widget _buildDhikrItem(BuildContext context, AthkarItem item, int index) {
     bool isCompleted = item.isDone;
     final l10n = AppLocalizations.of(context);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return GestureDetector(
       onTap: isCompleted
@@ -225,7 +227,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
                 if (context.mounted) {
                   context.read<CelebrationCubit>().celebrate();
                   // اختياري: إغلاق النافذة بعد ثانية
-                  Future.delayed(const Duration(seconds: 1), () {
+                  Future.delayed(AtharAnimations.long, () {
                     if (context.mounted) Navigator.pop(context);
                   });
                 }
@@ -235,7 +237,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
                   if (index + 1 < widget.habit.athkarItems.length) {
                     _itemScrollController.scrollTo(
                       index: index + 1,
-                      duration: const Duration(milliseconds: 300),
+                      duration: AtharAnimations.normalSlow,
                       curve: Curves.easeInOut,
                     );
                   }
@@ -250,7 +252,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
         padding: EdgeInsets.all(16.w),
         decoration: BoxDecoration(
           color: isCompleted
-              ? Colors.green.withValues(alpha: 0.1)
+              ? context.colors.success.withValues(alpha: 0.1)
               : Theme.of(context).cardColor,
           borderRadius: AtharRadii.radiusMd,
           border: Border.all(
@@ -262,7 +264,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
               ? []
               : [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
+                    color: colorScheme.shadow.withValues(alpha: 0.05),
                     blurRadius: 4,
                     offset: const Offset(0, 2),
                   ),
@@ -279,7 +281,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
                 fontSize: 16.sp,
                 height: 1.6,
                 fontWeight: FontWeight.w500,
-                color: isCompleted ? Colors.grey : Colors.black87,
+                color: isCompleted ? colorScheme.onSurfaceVariant : colorScheme.onSurface,
                 decoration: isCompleted ? TextDecoration.lineThrough : null,
               ),
             ),
@@ -296,7 +298,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
                   ),
                   decoration: BoxDecoration(
                     color: isCompleted
-                        ? Colors.green
+                        ? context.colors.success
                         : Theme.of(context).primaryColor,
                     borderRadius: AtharRadii.radiusXl,
                   ),
@@ -319,7 +321,7 @@ class _DhikrBottomSheetState extends State<DhikrBottomSheet> {
                 child: Text(
                   l10n.tapToCount,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 10.sp, color: Colors.grey),
+                  style: TextStyle(fontSize: 10.sp, color: colorScheme.outline),
                 ),
               ),
           ],

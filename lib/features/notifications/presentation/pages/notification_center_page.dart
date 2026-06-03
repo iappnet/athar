@@ -124,7 +124,7 @@ class _NotificationCenterPageState extends State<NotificationCenterPage> {
         ],
       ),
       child: ListTile(
-        leading: _getIcon(colorScheme, note.type),
+        leading: _getIcon(context, colorScheme, note.type),
         title: Text(
           note.title,
           style: TextStyle(
@@ -151,21 +151,22 @@ class _NotificationCenterPageState extends State<NotificationCenterPage> {
     );
   }
 
-  Widget _getIcon(ColorScheme colorScheme, String type) {
+  Widget _getIcon(BuildContext context, ColorScheme colorScheme, String type) {
+    final colors = context.colors;
     IconData icon;
     Color color;
     switch (type) {
       case 'project':
         icon = Icons.folder_special;
-        color = Colors.orange;
+        color = colors.accentOrange;
         break;
       case 'task':
         icon = Icons.check_circle;
-        color = Colors.blue;
+        color = colors.accentBlue;
         break;
       case 'health':
         icon = Icons.favorite;
-        color = Colors.red;
+        color = colors.accentRed;
         break;
       default:
         icon = Icons.notifications;
