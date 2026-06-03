@@ -416,6 +416,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
       context: parentContext,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
+      barrierColor: Colors.black.withValues(alpha: 0.45),
       builder: (context) {
         return MultiBlocProvider(
           providers: [
@@ -433,6 +434,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
       context: parentContext,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
+      barrierColor: Colors.black.withValues(alpha: 0.45),
       builder: (context) {
         return MultiBlocProvider(
           providers: [
@@ -450,6 +452,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
       context: parentContext,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
+      barrierColor: Colors.black.withValues(alpha: 0.45),
       builder: (context) {
         return MultiBlocProvider(
           providers: [

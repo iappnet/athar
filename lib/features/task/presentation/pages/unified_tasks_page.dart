@@ -409,6 +409,7 @@ class _UnifiedTasksViewState extends State<UnifiedTasksView> {
         context: context,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
+        barrierColor: Colors.black.withValues(alpha: 0.45),
         builder: (ctx) => MultiBlocProvider(
           providers: [
             BlocProvider.value(value: context.read<TaskCubit>()),

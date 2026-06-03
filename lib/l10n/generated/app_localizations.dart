@@ -1856,6 +1856,120 @@ abstract class AppLocalizations {
   /// **'العشاء'**
   String get isha;
 
+  /// No description provided for @taskTimeLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقت المهمة'**
+  String get taskTimeLabel;
+
+  /// No description provided for @taskTimeChoose.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر وقت المهمة'**
+  String get taskTimeChoose;
+
+  /// No description provided for @taskTimeTypeFixed.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقت محدد'**
+  String get taskTimeTypeFixed;
+
+  /// No description provided for @taskTimeTypeRelativePrayer.
+  ///
+  /// In ar, this message translates to:
+  /// **'نسبي للصلاة'**
+  String get taskTimeTypeRelativePrayer;
+
+  /// No description provided for @taskTimeTypePeriod.
+  ///
+  /// In ar, this message translates to:
+  /// **'فترة زمنية'**
+  String get taskTimeTypePeriod;
+
+  /// No description provided for @taskTimeUnspecified.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير محدد'**
+  String get taskTimeUnspecified;
+
+  /// No description provided for @taskTimePeriodBakur.
+  ///
+  /// In ar, this message translates to:
+  /// **'البكور'**
+  String get taskTimePeriodBakur;
+
+  /// No description provided for @taskTimePeriodMorning.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصباح'**
+  String get taskTimePeriodMorning;
+
+  /// No description provided for @taskTimePeriodNoon.
+  ///
+  /// In ar, this message translates to:
+  /// **'الظهيرة'**
+  String get taskTimePeriodNoon;
+
+  /// No description provided for @taskTimePeriodNight.
+  ///
+  /// In ar, this message translates to:
+  /// **'الليل'**
+  String get taskTimePeriodNight;
+
+  /// No description provided for @taskTimePeriodLastThird.
+  ///
+  /// In ar, this message translates to:
+  /// **'الثلث الأخير'**
+  String get taskTimePeriodLastThird;
+
+  /// No description provided for @taskTimePeriodStart.
+  ///
+  /// In ar, this message translates to:
+  /// **'بداية {period}'**
+  String taskTimePeriodStart(String period);
+
+  /// No description provided for @taskTimePeriodMiddle.
+  ///
+  /// In ar, this message translates to:
+  /// **'منتصف {period}'**
+  String taskTimePeriodMiddle(String period);
+
+  /// No description provided for @taskTimePeriodEnd.
+  ///
+  /// In ar, this message translates to:
+  /// **'نهاية {period}'**
+  String taskTimePeriodEnd(String period);
+
+  /// No description provided for @taskTimePrayerBefore.
+  ///
+  /// In ar, this message translates to:
+  /// **'{minutes} د قبل {prayer}'**
+  String taskTimePrayerBefore(String prayer, int minutes);
+
+  /// No description provided for @taskTimePrayerAfter.
+  ///
+  /// In ar, this message translates to:
+  /// **'{minutes} د بعد {prayer}'**
+  String taskTimePrayerAfter(String prayer, int minutes);
+
+  /// No description provided for @whenSection.
+  ///
+  /// In ar, this message translates to:
+  /// **'متى'**
+  String get whenSection;
+
+  /// No description provided for @detailsSection.
+  ///
+  /// In ar, this message translates to:
+  /// **'التفاصيل'**
+  String get detailsSection;
+
+  /// No description provided for @whenAndWhere.
+  ///
+  /// In ar, this message translates to:
+  /// **'متى وأين'**
+  String get whenAndWhere;
+
   /// No description provided for @timeRemaining.
   ///
   /// In ar, this message translates to:

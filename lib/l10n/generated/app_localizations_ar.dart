@@ -907,6 +907,73 @@ class AppLocalizationsAr extends AppLocalizations {
   String get isha => 'العشاء';
 
   @override
+  String get taskTimeLabel => 'وقت المهمة';
+
+  @override
+  String get taskTimeChoose => 'اختر وقت المهمة';
+
+  @override
+  String get taskTimeTypeFixed => 'وقت محدد';
+
+  @override
+  String get taskTimeTypeRelativePrayer => 'نسبي للصلاة';
+
+  @override
+  String get taskTimeTypePeriod => 'فترة زمنية';
+
+  @override
+  String get taskTimeUnspecified => 'غير محدد';
+
+  @override
+  String get taskTimePeriodBakur => 'البكور';
+
+  @override
+  String get taskTimePeriodMorning => 'الصباح';
+
+  @override
+  String get taskTimePeriodNoon => 'الظهيرة';
+
+  @override
+  String get taskTimePeriodNight => 'الليل';
+
+  @override
+  String get taskTimePeriodLastThird => 'الثلث الأخير';
+
+  @override
+  String taskTimePeriodStart(String period) {
+    return 'بداية $period';
+  }
+
+  @override
+  String taskTimePeriodMiddle(String period) {
+    return 'منتصف $period';
+  }
+
+  @override
+  String taskTimePeriodEnd(String period) {
+    return 'نهاية $period';
+  }
+
+  @override
+  String taskTimePrayerBefore(String prayer, int minutes) {
+    return '$minutes د قبل $prayer';
+  }
+
+  @override
+  String taskTimePrayerAfter(String prayer, int minutes) {
+    return '$minutes د بعد $prayer';
+  }
+
+  @override
+  String get whenSection => 'متى';
+
+  @override
+  String get detailsSection => 'التفاصيل';
+
+  @override
+  String get whenAndWhere => 'متى وأين';
+
+  @override
   String get timeRemaining => 'الوقت المتبقي';
 
   @override

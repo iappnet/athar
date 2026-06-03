@@ -304,16 +304,12 @@ class _TasksPageViewState extends State<TasksPageView> {
                               showModalBottomSheet(
                                 context: context,
                                 isScrollControlled: true,
-                                backgroundColor:
-                                    Colors.transparent, // مهم للزوايا الدائرية
+                                backgroundColor: Colors.transparent,
+                                barrierColor: Colors.black.withValues(alpha: 0.45),
                                 builder: (context) {
-                                  // نمرر نفس الكيوبت للنافذة الجديدة
                                   return BlocProvider.value(
                                     value: taskCubit,
-                                    child: AddTaskSheet(
-                                      // ✅ نستخدم الشيت المتطور، ونمرر المهمة للتعديل
-                                      taskToEdit: task,
-                                    ),
+                                    child: AddTaskSheet(taskToEdit: task),
                                   );
                                 },
                               );

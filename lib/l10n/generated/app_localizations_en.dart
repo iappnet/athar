@@ -908,6 +908,73 @@ class AppLocalizationsEn extends AppLocalizations {
   String get isha => 'Isha';
 
   @override
+  String get taskTimeLabel => 'Task time';
+
+  @override
+  String get taskTimeChoose => 'Choose task time';
+
+  @override
+  String get taskTimeTypeFixed => 'Fixed time';
+
+  @override
+  String get taskTimeTypeRelativePrayer => 'Relative to prayer';
+
+  @override
+  String get taskTimeTypePeriod => 'Time period';
+
+  @override
+  String get taskTimeUnspecified => 'Not set';
+
+  @override
+  String get taskTimePeriodBakur => 'Early morning';
+
+  @override
+  String get taskTimePeriodMorning => 'Morning';
+
+  @override
+  String get taskTimePeriodNoon => 'Noon';
+
+  @override
+  String get taskTimePeriodNight => 'Night';
+
+  @override
+  String get taskTimePeriodLastThird => 'Last third of night';
+
+  @override
+  String taskTimePeriodStart(String period) {
+    return 'Start of $period';
+  }
+
+  @override
+  String taskTimePeriodMiddle(String period) {
+    return 'Middle of $period';
+  }
+
+  @override
+  String taskTimePeriodEnd(String period) {
+    return 'End of $period';
+  }
+
+  @override
+  String taskTimePrayerBefore(String prayer, int minutes) {
+    return '$minutes min before $prayer';
+  }
+
+  @override
+  String taskTimePrayerAfter(String prayer, int minutes) {
+    return '$minutes min after $prayer';
+  }
+
+  @override
+  String get whenSection => 'When';
+
+  @override
+  String get detailsSection => 'Details';
+
+  @override
+  String get whenAndWhere => 'When & Where';
+
+  @override
   String get timeRemaining => 'Time Remaining';
 
   @override

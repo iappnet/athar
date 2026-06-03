@@ -747,6 +747,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
+      barrierColor: Colors.black.withValues(alpha: 0.45),
       builder: (ctx) => AddTaskSheet(
         targetModuleId: _module.uuid,
         targetSpaceId: _module.spaceId,
@@ -759,6 +760,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
+      barrierColor: Colors.black.withValues(alpha: 0.45),
       builder: (ctx) => AddTaskSheet(
         taskToEdit: task,
         targetModuleId: _module.uuid,

@@ -1,7 +1,8 @@
 // lib/features/task/presentation/widgets/add_task_sheet.dart
-// ✅ محدث مع دعم الأوقات الشرعية (TimeSlotPicker)
+// ✅ PR-SHEET-STANDARD: accordion sections + AtharBottomSheet container
 
 import 'package:athar/core/design_system/molecules/pickers/reminder_picker_widget.dart';
+import 'package:athar/core/design_system/molecules/sections/athar_accordion_section.dart';
 import 'package:athar/core/design_system/widgets/time_slot_picker.dart';
 import 'package:athar/features/task/data/models/recurrence_pattern.dart';
 import 'package:athar/features/task/presentation/widgets/recurrence_picker.dart';
@@ -54,12 +55,9 @@ class AddTaskSheet extends StatefulWidget {
 }
 
 class _AddTaskSheetState extends State<AddTaskSheet> {
-  final TextEditingController _titleController = TextEditingController();
+  final _titleController = TextEditingController();
 
-  // ✅ التاريخ منفصل عن الوقت
   DateTime _selectedDate = DateTime.now();
-
-  // ✅ الحقل الجديد: إعدادات الوقت الشرعي
   TimeSlotSettings? _timeSettings;
 
   bool _isUrgent = false;
@@ -78,6 +76,11 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
   ConflictResult _prayerConflict = ConflictResult.none();
   final _prayerConflictService = getIt<PrayerConflictService>();
 
+  // Accordion keys for Guard #1 (auto-expand on validation error)
+  final _whatKey = GlobalKey<AtharAccordionSectionState>();
+  final _whenKey = GlobalKey<AtharAccordionSectionState>();
+  final _detailsKey = GlobalKey<AtharAccordionSectionState>();
+
   @override
   void initState() {
     super.initState();
@@ -87,16 +90,9 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
   }
 
   void _loadData() async {
-    if (mounted) {
-      context.read<CategoryCubit>().loadCategories();
-    }
+    if (mounted) context.read<CategoryCubit>().loadCategories();
     final settings = await getIt<SettingsRepository>().getSettings();
-
-    if (mounted) {
-      setState(() {
-        _isHijriMode = settings.isHijriMode;
-      });
-    }
+    if (mounted) setState(() => _isHijriMode = settings.isHijriMode);
   }
 
   @override
@@ -115,10 +111,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
       _selectedCategory = t.category.value;
       _selectedDuration = t.durationMinutes;
       _selectedAssigneeId = t.assigneeId;
-
-      // ✅ تحميل إعدادات الوقت الشرعي
       _timeSettings = t.timeSlotSettings;
-
       if (t.reminderTime != null) {
         _reminderTime = t.reminderTime;
         _isReminderEnabled = true;
@@ -126,247 +119,192 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
     }
   }
 
-  void _checkPrayerConflict() {
-    // ✅ التحقق فقط إذا كان الوقت ثابتًا
-    if (_timeSettings?.type != TimeSpecificationType.fixed) {
-      setState(() {
-        _prayerConflict = ConflictResult.none();
-      });
-      return;
-    }
+  // ─── Summary strings ─────────────────────────────────────────────────────
 
-    final prayerState = context.read<PrayerCubit>().state;
-    final settingsState = context.read<SettingsCubit>().state;
+  String get _whatSummary => _titleController.text.trim();
 
-    List<PrayerTime> prayers = [];
-    if (prayerState is PrayerLoaded) {
-      prayers = prayerState.allPrayers;
-    }
-    UserSettings currentSettings = UserSettings();
-    if (settingsState is SettingsLoaded) {
-      currentSettings = settingsState.settings;
-    }
-
-    // حساب الوقت الفعلي
-    final taskTime = _getActualTaskTime();
-    if (taskTime == null) return;
-
-    final result = _prayerConflictService.checkConflict(
-      taskStartTime: taskTime,
-      taskDuration: Duration(minutes: _selectedDuration),
-      prayers: prayers,
-      settings: currentSettings,
-    );
-
-    if (mounted) {
-      setState(() {
-        _prayerConflict = result;
-      });
-    }
+  String get _whenSummary {
+    final l10n = AppLocalizations.of(context);
+    final dateStr = _isHijriMode
+        ? HijriCalendar.fromDate(_selectedDate).toFormat('dd MMMM yyyy')
+        : DateFormat('EEE، d MMM', 'ar').format(_selectedDate);
+    if (_timeSettings == null) return dateStr;
+    return '$dateStr · ${_getTimeDisplayString(l10n)}';
   }
 
-  DateTime? _getActualTaskTime() {
-    if (_timeSettings == null) return null;
-
-    if (_timeSettings!.type == TimeSpecificationType.fixed &&
-        _timeSettings!.fixedTime != null) {
-      return DateTime(
-        _selectedDate.year,
-        _selectedDate.month,
-        _selectedDate.day,
-        _timeSettings!.fixedTime!.hour,
-        _timeSettings!.fixedTime!.minute,
-      );
-    }
-
-    // للأوقات النسبية أو الفترات، نحتاج أوقات الصلاة
-    // سيتم حسابها في الـ Backend
-    return null;
+  String get _detailsSummary {
+    final parts = <String>[
+      if (_selectedCategory != null) _selectedCategory!.name,
+      if (_isUrgent) 'عاجل',
+      if (_isImportant) 'مهم',
+    ];
+    return parts.isEmpty ? '' : parts.join(' · ');
   }
+
+  // ─── Build ───────────────────────────────────────────────────────────────
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context);
+    final colorScheme = Theme.of(context).colorScheme;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: colorScheme.surface,
-        borderRadius: AtharRadii.bottomSheet,
-      ),
-      padding: EdgeInsets.fromLTRB(
-        20.w,
-        20.h,
-        20.w,
-        MediaQuery.of(context).viewInsets.bottom + 20.h,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // --- Handle ---
-            Center(
-              child: Container(
-                width: 40.w,
-                height: 4.h,
-                decoration: BoxDecoration(
-                  color: colorScheme.outlineVariant,
-                  borderRadius: AtharRadii.radiusXxxs,
-                ),
-              ),
-            ),
-            AtharGap.xl,
-
-            // --- العنوان ---
-            Text(
-              widget.taskToEdit != null ? l10n.editTask : l10n.newTask,
-              style: Theme.of(
-                context,
-              ).textTheme.displayLarge?.copyWith(fontSize: 18.sp),
-            ),
-            AtharGap.lg,
-
-            // --- حقل العنوان ---
-            TextField(
-              controller: _titleController,
-              autofocus: true,
-              decoration: InputDecoration(
-                hintText: l10n.whatToAccomplish,
-                filled: true,
-                fillColor: colorScheme.surfaceContainerLowest,
-                border: OutlineInputBorder(
-                  borderRadius: AtharRadii.radiusMd,
-                  borderSide: BorderSide.none,
-                ),
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 16.w,
-                  vertical: 14.h,
-                ),
-              ),
-            ),
-            AtharGap.lg,
-
-            // --- اختيار التاريخ ---
-            _buildDateSelector(colorScheme, l10n),
-            AtharGap.md,
-
-            // ═══════════════════════════════════════════════════════════════
-            // ✅✅✅ اختيار الوقت الشرعي (الجديد) ✅✅✅
-            // ═══════════════════════════════════════════════════════════════
-            Text(
-              'وقت المهمة',
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.bold,
-                color: colorScheme.onSurfaceVariant,
-                fontFamily: AtharTypography.fontFamily,
-                fontFamilyFallback: AtharTypography.fontFallback,
-              ),
-            ),
-            AtharGap.sm,
-
-            // عرض الوقت المختار
-            if (_timeSettings != null)
-              _buildTimeDisplay(colorScheme)
-            else
-              _buildTimePickerButton(colorScheme, l10n),
-
-            // ═══════════════════════════════════════════════════════════════
-            if (_prayerConflict.hasConflict) ...[
-              AtharGap.md,
-              _buildConflictWarning(),
-            ],
-            AtharGap.md,
-
-            // --- المدة ---
-            DurationPicker(
-              selectedDuration: _selectedDuration,
-              onDurationSelected: (val) {
-                setState(() => _selectedDuration = val);
-                _checkPrayerConflict();
-              },
-            ),
-            AtharGap.lg,
-
-            // --- التذكير ---
-            ReminderPickerWidget(
-              reminderTime: _reminderTime,
-              isEnabled: _isReminderEnabled,
-              onToggle: (val) {
-                setState(() {
-                  _isReminderEnabled = val;
-                  if (val && _reminderTime == null) {
-                    _reminderTime = _selectedDate.subtract(
-                      const Duration(minutes: 10),
-                    );
-                  }
-                });
-              },
-              onTimeChanged: (newTime) =>
-                  setState(() => _reminderTime = newTime),
-            ),
-            AtharGap.md,
-
-            // --- التكرار (للمهام الجديدة فقط) ---
-            if (widget.taskToEdit == null) ...[
-              RecurrencePicker(
-                initialPattern: _selectedRecurrence,
-                onChanged: (pattern) =>
-                    setState(() => _selectedRecurrence = pattern),
-              ),
-              AtharGap.md,
-            ],
-
-            // --- الإسناد (للمساحات فقط) ---
-            if (widget.targetSpaceId != null ||
-                (widget.taskToEdit?.spaceId != null)) ...[
-              _buildAssigneeSelector(colorScheme, l10n),
-              const Divider(),
-              AtharGap.md,
-            ],
-
-            // --- الأولوية ---
-            PrioritySelector(
-              isUrgent: _isUrgent,
-              isImportant: _isImportant,
-              onUrgentChanged: (val) => setState(() => _isUrgent = val),
-              onImportantChanged: (val) => setState(() => _isImportant = val),
-            ),
-            AtharGap.md,
-
-            // --- التصنيف ---
-            CategorySelector(
-              selectedCategory: _selectedCategory,
-              onSelected: (cat) => setState(() => _selectedCategory = cat),
-              onAddPressed: () => _showAddCategoryDialog(),
-            ),
-            AtharGap.xl,
-
-            // --- زر الحفظ ---
-            SizedBox(
-              width: double.infinity,
-              child: AtharButton(
-                label: widget.taskToEdit != null
-                    ? l10n.saveChanges
-                    : l10n.addTask,
-                onPressed: _isSaving ? null : _saveTask,
-                isLoading: _isSaving,
-              ),
-            ),
-          ],
+    return AtharBottomSheet(
+      title: widget.taskToEdit != null ? l10n.editTask : l10n.newTask,
+      showDragHandle: true,
+      actions: [
+        AtharButton(
+          label: widget.taskToEdit != null ? l10n.saveChanges : l10n.addTask,
+          onPressed: _isSaving ? null : _saveTask,
+          isLoading: _isSaving,
         ),
+      ],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // ── WHAT (first-open, required) ──────────────────────────────────
+          AtharAccordionSection(
+            key: _whatKey,
+            icon: Icons.task_alt_outlined,
+            title: l10n.whatToAccomplish,
+            summaryValue: _whatSummary,
+            isRequired: true,
+            initiallyExpanded: true,
+            child: _buildWhatBody(colorScheme, l10n),
+          ),
+          // ── WHEN ────────────────────────────────────────────────────────
+          AtharAccordionSection(
+            key: _whenKey,
+            icon: Icons.schedule_outlined,
+            title: l10n.whenSection,
+            summaryValue: _whenSummary,
+            initiallyExpanded: false,
+            child: _buildWhenBody(colorScheme, l10n),
+          ),
+          // ── DETAILS ─────────────────────────────────────────────────────
+          AtharAccordionSection(
+            key: _detailsKey,
+            icon: Icons.tune_outlined,
+            title: l10n.detailsSection,
+            summaryValue: _detailsSummary,
+            initiallyExpanded: false,
+            child: _buildDetailsBody(colorScheme, l10n),
+          ),
+          AtharGap.sm,
+        ],
       ),
     );
   }
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // ✅ Widgets الجديدة للوقت
-  // ═══════════════════════════════════════════════════════════════════════════
+  // ─── Section bodies ───────────────────────────────────────────────────────
+
+  Widget _buildWhatBody(ColorScheme colorScheme, AppLocalizations l10n) {
+    return TextField(
+      controller: _titleController,
+      autofocus: true,
+      onChanged: (_) => setState(() {}), // live red-dot update
+      decoration: InputDecoration(
+        hintText: l10n.taskTitleHint,
+        filled: true,
+        fillColor: colorScheme.surfaceContainerLowest,
+        border: OutlineInputBorder(
+          borderRadius: AtharRadii.radiusMd,
+          borderSide: BorderSide.none,
+        ),
+        contentPadding: const EdgeInsetsDirectional.fromSTEB(16, 14, 16, 14),
+      ),
+    );
+  }
+
+  Widget _buildWhenBody(ColorScheme colorScheme, AppLocalizations l10n) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildDateSelector(colorScheme, l10n),
+        AtharGap.md,
+        Text(
+          l10n.taskTimeLabel,
+          style: TextStyle(
+            fontSize: 14.sp,
+            fontWeight: FontWeight.bold,
+            color: colorScheme.onSurfaceVariant,
+            fontFamily: AtharTypography.fontFamily,
+            fontFamilyFallback: AtharTypography.fontFallback,
+          ),
+        ),
+        AtharGap.sm,
+        if (_timeSettings != null)
+          _buildTimeDisplay(colorScheme, l10n)
+        else
+          _buildTimePickerButton(colorScheme, l10n),
+        if (_prayerConflict.hasConflict) ...[
+          AtharGap.md,
+          _buildConflictWarning(),
+        ],
+        AtharGap.md,
+        DurationPicker(
+          selectedDuration: _selectedDuration,
+          onDurationSelected: (val) {
+            setState(() => _selectedDuration = val);
+            _checkPrayerConflict();
+          },
+        ),
+        AtharGap.md,
+        ReminderPickerWidget(
+          reminderTime: _reminderTime,
+          isEnabled: _isReminderEnabled,
+          onToggle: (val) {
+            setState(() {
+              _isReminderEnabled = val;
+              if (val && _reminderTime == null) {
+                _reminderTime =
+                    _selectedDate.subtract(const Duration(minutes: 10));
+              }
+            });
+          },
+          onTimeChanged: (t) => setState(() => _reminderTime = t),
+        ),
+        if (widget.taskToEdit == null) ...[
+          AtharGap.md,
+          RecurrencePicker(
+            initialPattern: _selectedRecurrence,
+            onChanged: (p) => setState(() => _selectedRecurrence = p),
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildDetailsBody(ColorScheme colorScheme, AppLocalizations l10n) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (widget.targetSpaceId != null ||
+            widget.taskToEdit?.spaceId != null) ...[
+          _buildAssigneeSelector(colorScheme, l10n),
+          const Divider(),
+          AtharGap.sm,
+        ],
+        PrioritySelector(
+          isUrgent: _isUrgent,
+          isImportant: _isImportant,
+          onUrgentChanged: (v) => setState(() => _isUrgent = v),
+          onImportantChanged: (v) => setState(() => _isImportant = v),
+        ),
+        AtharGap.md,
+        CategorySelector(
+          selectedCategory: _selectedCategory,
+          onSelected: (c) => setState(() => _selectedCategory = c),
+          onAddPressed: _showAddCategoryDialog,
+        ),
+      ],
+    );
+  }
+
+  // ─── Date / time widgets ─────────────────────────────────────────────────
 
   Widget _buildDateSelector(ColorScheme colorScheme, AppLocalizations l10n) {
     final gregorianStr =
-        DateFormat('EEEE, d MMMM yyyy', 'ar').format(_selectedDate);
+        DateFormat('EEEE، d MMMM yyyy', 'ar').format(_selectedDate);
     final dateStr = _isHijriMode
         ? HijriCalendar.fromDate(_selectedDate).toFormat('dd MMMM yyyy')
         : gregorianStr;
@@ -387,7 +325,12 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
             Expanded(
               child: Text(
                 dateStr,
-                style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: AtharTypography.fontFamily,
+                  fontFamilyFallback: AtharTypography.fontFallback,
+                ),
               ),
             ),
             Icon(Icons.arrow_drop_down, color: colorScheme.outline),
@@ -397,7 +340,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
     );
   }
 
-  Widget _buildTimeDisplay(ColorScheme colorScheme) {
+  Widget _buildTimeDisplay(ColorScheme colorScheme, AppLocalizations l10n) {
     return Container(
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
@@ -414,11 +357,16 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _getTimeTypeLabel(),
-                  style: TextStyle(fontSize: 11.sp, color: colorScheme.outline, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
+                  _getTimeTypeLabel(l10n),
+                  style: TextStyle(
+                    fontSize: 11.sp,
+                    color: colorScheme.outline,
+                    fontFamily: AtharTypography.fontFamily,
+                    fontFamilyFallback: AtharTypography.fontFallback,
+                  ),
                 ),
                 Text(
-                  _getTimeDisplayString(),
+                  _getTimeDisplayString(l10n),
                   style: TextStyle(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.bold,
@@ -432,7 +380,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
           ),
           IconButton(
             icon: Icon(Icons.edit, color: colorScheme.primary, size: 20.sp),
-            onPressed: () => _showTimeSlotPicker(),
+            onPressed: _showTimeSlotPicker,
           ),
           IconButton(
             icon: Icon(Icons.close, color: colorScheme.error, size: 20.sp),
@@ -443,10 +391,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
     );
   }
 
-  Widget _buildTimePickerButton(
-    ColorScheme colorScheme,
-    AppLocalizations l10n,
-  ) {
+  Widget _buildTimePickerButton(ColorScheme colorScheme, AppLocalizations l10n) {
     return GestureDetector(
       onTap: _showTimeSlotPicker,
       child: Container(
@@ -456,7 +401,6 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
           borderRadius: AtharRadii.radiusMd,
           border: Border.all(
             color: colorScheme.outline.withValues(alpha: 0.3),
-            style: BorderStyle.solid,
           ),
         ),
         child: Row(
@@ -465,8 +409,13 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
             Icon(Icons.access_time, color: colorScheme.outline, size: 22.sp),
             AtharGap.hMd,
             Text(
-              'اختر وقت المهمة',
-              style: TextStyle(fontSize: 14.sp, color: colorScheme.outline, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
+              l10n.taskTimeChoose,
+              style: TextStyle(
+                fontSize: 14.sp,
+                color: colorScheme.outline,
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
+              ),
             ),
           ],
         ),
@@ -476,7 +425,6 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
 
   IconData _getTimeIcon() {
     if (_timeSettings == null) return Icons.access_time;
-
     switch (_timeSettings!.type) {
       case TimeSpecificationType.fixed:
         return Icons.access_time;
@@ -487,153 +435,119 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
     }
   }
 
-  String _getTimeTypeLabel() {
+  String _getTimeTypeLabel(AppLocalizations l10n) {
     if (_timeSettings == null) return '';
-
     switch (_timeSettings!.type) {
       case TimeSpecificationType.fixed:
-        return 'وقت محدد';
+        return l10n.taskTimeTypeFixed;
       case TimeSpecificationType.relativeToPrayer:
-        return 'نسبي للصلاة';
+        return l10n.taskTimeTypeRelativePrayer;
       case TimeSpecificationType.period:
-        return 'فترة زمنية';
+        return l10n.taskTimeTypePeriod;
     }
   }
 
-  String _getTimeDisplayString() {
-    if (_timeSettings == null) return 'غير محدد';
+  String _getTimeDisplayString(AppLocalizations l10n) {
+    if (_timeSettings == null) return l10n.taskTimeUnspecified;
 
     switch (_timeSettings!.type) {
       case TimeSpecificationType.fixed:
-        if (_timeSettings!.fixedTime == null) return 'غير محدد';
-        final time = _timeSettings!.fixedTime!;
-        final hour = time.hour;
-        final minute = time.minute.toString().padLeft(2, '0');
-        final period = hour >= 12 ? 'م' : 'ص';
-        final hour12 = hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour);
-        return '$hour12:$minute $period';
+        if (_timeSettings!.fixedTime == null) return l10n.taskTimeUnspecified;
+        final t = _timeSettings!.fixedTime!;
+        final period = t.hour >= 12 ? 'م' : 'ص';
+        final h12 = t.hour > 12
+            ? t.hour - 12
+            : (t.hour == 0 ? 12 : t.hour);
+        return '$h12:${t.minute.toString().padLeft(2, '0')} $period';
 
       case TimeSpecificationType.relativeToPrayer:
-        final prayerName = _getPrayerName(_timeSettings!.referencePrayer);
-        if (_timeSettings!.offsetMinutes == 0) return prayerName;
-        final relation =
-            _timeSettings!.prayerRelation == PrayerRelativeTime.before
-            ? 'قبل'
-            : 'بعد';
-        return '$relation $prayerName بـ ${_timeSettings!.offsetMinutes} د';
+        final pName = _getPrayerName(l10n, _timeSettings!.referencePrayer);
+        if (_timeSettings!.offsetMinutes == 0) return pName;
+        final mins = _timeSettings!.offsetMinutes;
+        return _timeSettings!.prayerRelation == PrayerRelativeTime.before
+            ? l10n.taskTimePrayerBefore(pName, mins)
+            : l10n.taskTimePrayerAfter(pName, mins);
 
       case TimeSpecificationType.period:
-        final periodName = _getPeriodName(_timeSettings!.period);
+        final pName = _getPeriodName(l10n, _timeSettings!.period);
         switch (_timeSettings!.periodPosition) {
           case PeriodPosition.start:
-            return 'بداية $periodName';
+            return l10n.taskTimePeriodStart(pName);
           case PeriodPosition.middle:
-            return 'منتصف $periodName';
+            return l10n.taskTimePeriodMiddle(pName);
           case PeriodPosition.end:
-            return 'نهاية $periodName';
+            return l10n.taskTimePeriodEnd(pName);
           default:
-            return periodName;
+            return pName;
         }
     }
   }
 
-  String _getPrayerName(ReferencePrayer? prayer) {
+  String _getPrayerName(AppLocalizations l10n, ReferencePrayer? prayer) {
     switch (prayer) {
       case ReferencePrayer.fajr:
-        return 'الفجر';
+        return l10n.fajr;
       case ReferencePrayer.sunrise:
-        return 'الشروق';
+        return l10n.sunrise;
       case ReferencePrayer.dhuhr:
-        return 'الظهر';
+        return l10n.dhuhr;
       case ReferencePrayer.asr:
-        return 'العصر';
+        return l10n.asr;
       case ReferencePrayer.maghrib:
-        return 'المغرب';
+        return l10n.maghrib;
       case ReferencePrayer.isha:
-        return 'العشاء';
+        return l10n.isha;
       default:
-        return 'غير محدد';
+        return l10n.taskTimeUnspecified;
     }
   }
 
-  String _getPeriodName(AtharTimePeriod? period) {
+  String _getPeriodName(AppLocalizations l10n, AtharTimePeriod? period) {
     switch (period) {
       case AtharTimePeriod.dawn:
-        return 'الفجر';
+        return l10n.fajr;
       case AtharTimePeriod.bakur:
-        return 'البكور';
+        return l10n.taskTimePeriodBakur;
       case AtharTimePeriod.morning:
-        return 'الصباح';
+        return l10n.taskTimePeriodMorning;
       case AtharTimePeriod.noon:
-        return 'الظهيرة';
+        return l10n.taskTimePeriodNoon;
       case AtharTimePeriod.afternoon:
-        return 'العصر';
+        return l10n.asr;
       case AtharTimePeriod.maghrib:
-        return 'المغرب';
+        return l10n.maghrib;
       case AtharTimePeriod.isha:
-        return 'العشاء';
+        return l10n.isha;
       case AtharTimePeriod.night:
-        return 'الليل';
+        return l10n.taskTimePeriodNight;
       case AtharTimePeriod.lastThird:
-        return 'الثلث الأخير';
+        return l10n.taskTimePeriodLastThird;
       default:
-        return 'غير محدد';
+        return l10n.taskTimeUnspecified;
     }
   }
 
   void _showTimeSlotPicker() {
-    showModalBottomSheet(
+    AtharBottomSheet.show(
       context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (ctx) => Container(
-        padding: EdgeInsets.all(20.w),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: AtharRadii.bottomSheet,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: 40.w,
-                height: 4.h,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.outlineVariant,
-                  borderRadius: AtharRadii.radiusXxxs,
-                ),
-              ),
-            ),
-            AtharGap.lg,
-            Text(
-              'اختر وقت المهمة',
-              style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
-            ),
-            AtharGap.lg,
-            TimeSlotPicker(
-              initialSettings: _timeSettings,
-              showPeriodPosition: true,
-              onChanged: (settings) {
-                setState(() => _timeSettings = settings);
-                Navigator.pop(ctx);
-                _checkPrayerConflict();
-              },
-            ),
-            SizedBox(height: MediaQuery.of(ctx).viewInsets.bottom + 20.h),
-          ],
-        ),
+      title: AppLocalizations.of(context).taskTimeChoose,
+      isScrollable: true,
+      child: TimeSlotPicker(
+        initialSettings: _timeSettings,
+        showPeriodPosition: true,
+        onChanged: (settings) {
+          setState(() => _timeSettings = settings);
+          Navigator.pop(context);
+          _checkPrayerConflict();
+        },
       ),
     );
   }
 
-  // ═══════════════════════════════════════════════════════════════════════════
+  // ─── Assignee / conflict ─────────────────────────────────────────────────
 
   Widget _buildAssigneeSelector(
-    ColorScheme colorScheme,
-    AppLocalizations l10n,
-  ) {
+      ColorScheme colorScheme, AppLocalizations l10n) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: Container(
@@ -662,9 +576,11 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
               icon: Icon(Icons.clear, color: colorScheme.error),
               onPressed: () => setState(() => _selectedAssigneeId = null),
             )
-          : Icon(Icons.arrow_forward_ios, size: 16, color: colorScheme.outline),
+          : Icon(Icons.arrow_forward_ios,
+              size: 16, color: colorScheme.outline),
       onTap: () async {
-        final spaceId = widget.targetSpaceId ?? widget.taskToEdit?.spaceId;
+        final spaceId =
+            widget.targetSpaceId ?? widget.taskToEdit?.spaceId;
         if (spaceId != null) {
           final result = await showModalBottomSheet(
             context: context,
@@ -674,9 +590,8 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
             ),
           );
           if (result != null) {
-            setState(
-              () => _selectedAssigneeId = result == 'unassign' ? null : result,
-            );
+            setState(() =>
+                _selectedAssigneeId = result == 'unassign' ? null : result);
           }
         }
       },
@@ -713,6 +628,51 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
     );
   }
 
+  // ─── Prayer conflict ─────────────────────────────────────────────────────
+
+  void _checkPrayerConflict() {
+    if (_timeSettings?.type != TimeSpecificationType.fixed) {
+      if (mounted) setState(() => _prayerConflict = ConflictResult.none());
+      return;
+    }
+
+    final prayerState = context.read<PrayerCubit>().state;
+    final settingsState = context.read<SettingsCubit>().state;
+
+    List<PrayerTime> prayers = [];
+    if (prayerState is PrayerLoaded) prayers = prayerState.allPrayers;
+    UserSettings currentSettings = UserSettings();
+    if (settingsState is SettingsLoaded) currentSettings = settingsState.settings;
+
+    final taskTime = _getActualTaskTime();
+    if (taskTime == null) return;
+
+    final result = _prayerConflictService.checkConflict(
+      taskStartTime: taskTime,
+      taskDuration: Duration(minutes: _selectedDuration),
+      prayers: prayers,
+      settings: currentSettings,
+    );
+    if (mounted) setState(() => _prayerConflict = result);
+  }
+
+  DateTime? _getActualTaskTime() {
+    if (_timeSettings == null) return null;
+    if (_timeSettings!.type == TimeSpecificationType.fixed &&
+        _timeSettings!.fixedTime != null) {
+      return DateTime(
+        _selectedDate.year,
+        _selectedDate.month,
+        _selectedDate.day,
+        _timeSettings!.fixedTime!.hour,
+        _timeSettings!.fixedTime!.minute,
+      );
+    }
+    return null;
+  }
+
+  // ─── Date picker ─────────────────────────────────────────────────────────
+
   Future<void> _pickDate() async {
     final date = await showDatePicker(
       context: context,
@@ -724,21 +684,19 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
     if (date != null) {
       setState(() {
         _selectedDate = DateTime(
-          date.year,
-          date.month,
-          date.day,
-          _selectedDate.hour,
-          _selectedDate.minute,
+          date.year, date.month, date.day,
+          _selectedDate.hour, _selectedDate.minute,
         );
       });
       _checkPrayerConflict();
     }
   }
 
+  // ─── Add-category dialog ─────────────────────────────────────────────────
+
   void _showAddCategoryDialog() {
     final nameController = TextEditingController();
     final l10n = AppLocalizations.of(context);
-    int selectedColor = 0xFF9C27B0;
     AtharDialog.show(
       context: context,
       title: l10n.newCategory,
@@ -758,24 +716,29 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
       onConfirm: () {
         if (nameController.text.isNotEmpty) {
           context.read<CategoryCubit>().addCategory(
-            name: nameController.text,
-            colorValue: selectedColor,
-            iconKey: 'bookmark',
-          );
+                name: nameController.text,
+                colorValue: 0xFF9C27B0,
+                iconKey: 'bookmark',
+              );
           Navigator.pop(context);
         }
       },
     );
   }
 
+  // ─── Save ─────────────────────────────────────────────────────────────────
+
   void _saveTask() async {
-    if (_titleController.text.trim().isEmpty) return;
+    // Guard #1: expand What section if title is empty
+    if (_titleController.text.trim().isEmpty) {
+      _whatKey.currentState?.expand();
+      return;
+    }
 
     setState(() => _isSaving = true);
     final taskCubit = context.read<TaskCubit>();
 
     try {
-      // ✅ التحقق من تعارض المهام في نفس الوقت
       final taskConflict = await taskCubit.validateTimeConflict(
         date: _selectedDate,
         startTime: TimeOfDay.fromDateTime(_selectedDate),
@@ -793,7 +756,6 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
       if (finalConflict != null) {
         setState(() => _isSaving = false);
         if (!mounted) return;
-
         showDialog(
           context: context,
           barrierDismissible: false,
@@ -823,7 +785,6 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
         );
         return;
       }
-
       _performSave();
     } catch (e) {
       if (mounted) {
@@ -838,7 +799,6 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
 
   void _performSave() {
     if (!mounted) return;
-
     final cubit = context.read<TaskCubit>();
 
     if (widget.taskToEdit != null) {
@@ -850,19 +810,14 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
         ..durationMinutes = _selectedDuration
         ..assigneeId = _selectedAssigneeId
         ..reminderTime = _isReminderEnabled ? _reminderTime : null;
-
-      // ✅ تطبيق إعدادات الوقت الشرعي
       if (_timeSettings != null) {
         updatedTask.applyTimeSettings(_timeSettings!);
       }
-
       if (_selectedCategory != null) {
         updatedTask.category.value = _selectedCategory;
       }
-
       cubit.updateTask(updatedTask);
     } else {
-      // ✅ إضافة مهمة جديدة مع إعدادات الوقت
       cubit.addTaskWithTimeSlot(
         title: _titleController.text,
         date: _selectedDate,
