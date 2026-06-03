@@ -11,6 +11,7 @@ import 'package:rxdart/rxdart.dart';
 
 // ✅ NEW: Unified Design System Import
 import 'package:athar/core/design_system/tokens.dart';
+import 'package:athar/core/design_system/widgets/athar_display.dart';
 
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/features/health/presentation/cubit/health_cubit.dart';
@@ -381,27 +382,9 @@ class _HealthTimelinePageState extends State<HealthTimelinePage> {
   }
 
   Widget _buildEmptyState(ColorScheme colorScheme, AppLocalizations l10n) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.history_edu,
-            size: 60.sp,
-            color: colorScheme.outlineVariant,
-          ),
-          AtharGap.lg,
-          Text(
-            // ✅ l10n
-            l10n.healthTimelineEmpty,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              height: 1.4,
-            ).copyWith(color: colorScheme.outline),
-          ),
-        ],
-      ),
+    return AtharEmptyState(
+      icon: Icons.history_edu,
+      title: l10n.healthTimelineEmpty,
     );
   }
 }

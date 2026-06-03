@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:athar/core/design_system/tokens.dart';
+import 'package:athar/core/design_system/widgets/athar_display.dart';
 import 'package:athar/core/utils/responsive_helper.dart';
 import 'package:athar/features/notifications/presentation/widgets/notification_center_button.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
@@ -355,22 +356,9 @@ class _SpaceListPageState extends State<SpaceListPage> {
   // ═══════════════════════════════════════════════════════════════════════════
 
   Widget _buildEmptyState(ColorScheme colorScheme, AppLocalizations l10n) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.rocket_launch_rounded,
-            size: 60.sp,
-            color: colorScheme.outlineVariant,
-          ),
-          AtharGap.lg,
-          Text(
-            l10n.spaceListEmptyTitle,
-            style: TextStyle(color: colorScheme.outline),
-          ),
-        ],
-      ),
+    return AtharEmptyState(
+      icon: Icons.rocket_launch_rounded,
+      title: l10n.spaceListEmptyTitle,
     );
   }
 

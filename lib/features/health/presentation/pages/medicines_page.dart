@@ -1,4 +1,5 @@
 import 'package:athar/core/design_system/tokens.dart';
+import 'package:athar/core/design_system/widgets/athar_display.dart';
 import 'package:athar/features/health/presentation/cubit/health_cubit.dart';
 import 'package:athar/features/health/presentation/cubit/health_state.dart';
 import 'package:athar/features/health/presentation/widgets/add_medicine_sheet.dart';
@@ -123,7 +124,6 @@ class _MedicinesPageState extends State<MedicinesPage>
 
   Widget _buildMedicinesList({required bool isActive}) {
     final l10n = AppLocalizations.of(context);
-    final colors = Theme.of(context).colorScheme;
 
     return BlocBuilder<HealthCubit, HealthState>(
       buildWhen: (previous, current) =>
@@ -146,29 +146,13 @@ class _MedicinesPageState extends State<MedicinesPage>
           if (state is! HealthLoading && state is! HealthMedicinesLoaded) {
             return const Center(child: CircularProgressIndicator());
           }
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  isActive
-                      ? Icons.medication_liquid_outlined
-                      : Icons.archive_outlined,
-                  size: 60.sp,
-                  color: colors.outlineVariant,
-                ),
-                AtharGap.md,
-                Text(
-                  isActive
-                      ? l10n.medicinesEmptyActive
-                      : l10n.medicinesEmptyArchive,
-                  style: TextStyle(
-                    color: colors.onSurfaceVariant,
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ],
-            ),
+          return AtharEmptyState(
+            icon: isActive
+                ? Icons.medication_liquid_outlined
+                : Icons.archive_outlined,
+            title: isActive
+                ? l10n.medicinesEmptyActive
+                : l10n.medicinesEmptyArchive,
           );
         }
 

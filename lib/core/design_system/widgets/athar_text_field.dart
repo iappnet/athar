@@ -314,6 +314,8 @@ class _AtharTextFieldState extends State<AtharTextField> {
               fontWeight: FontWeight.w400,
               height: 1.4,
               color: hasError ? colorScheme.error : colorScheme.outline,
+              fontFamily: AtharTypography.fontFamily,
+              fontFamilyFallback: AtharTypography.fontFallback,
             ),
           ),
         ],
@@ -476,22 +478,28 @@ class _AtharTextFieldState extends State<AtharTextField> {
           custom?.contentPadding ??
               const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
           custom?.textStyle ??
-              const TextStyle(
+              TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
                 height: 1.6,
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
               ),
           custom?.hintStyle ??
-              const TextStyle(
+              TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
                 height: 1.6,
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
               ),
           custom?.labelStyle ??
-              const TextStyle(
+              TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.w500,
                 height: 1.4,
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
               ),
           18,
         );
@@ -502,22 +510,28 @@ class _AtharTextFieldState extends State<AtharTextField> {
           custom?.contentPadding ??
               const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
           custom?.textStyle ??
-              const TextStyle(
+              TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
                 height: 1.6,
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
               ),
           custom?.hintStyle ??
-              const TextStyle(
+              TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
                 height: 1.6,
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
               ),
           custom?.labelStyle ??
-              const TextStyle(
+              TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
                 height: 1.4,
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
               ),
           20,
         );
@@ -528,22 +542,28 @@ class _AtharTextFieldState extends State<AtharTextField> {
           custom?.contentPadding ??
               const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           custom?.textStyle ??
-              const TextStyle(
+              TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
                 height: 1.6,
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
               ),
           custom?.hintStyle ??
-              const TextStyle(
+              TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
                 height: 1.6,
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
               ),
           custom?.labelStyle ??
-              const TextStyle(
+              TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
                 height: 1.4,
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
               ),
           24,
         );

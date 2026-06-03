@@ -163,6 +163,8 @@ class _IconPickerContentState extends State<_IconPickerContent> {
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
+              fontFamily: AtharTypography.fontFamily,
+              fontFamilyFallback: AtharTypography.fontFallback,
             ),
           ),
           AtharGap.md,

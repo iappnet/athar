@@ -59,6 +59,26 @@ All 8 UI Coverage Refresh PRs + PR-CLEANUP have shipped (2026-06-03). Surface co
 - **Action required:** Replace with `l10n.prayerFajrShort`, `l10n.prayerSunrise`, etc. Requires confirming all short-name keys exist in both ARBs.
 - **Deferred from:** PR-PRAYER-DETAILS (audit note — not in scope without ARB key audit).
 
+### P8: My Day timeline + smart-habits-strip empty states missed in PR-COMPONENT-P1
+Two live empty states in the home feature were not migrated to `AtharEmptyState` in P1:
+- `lib/features/home/presentation/widgets/daily_timeline_widget.dart:224` — `_buildEmptyState()` uses an inline `Column` with a raw `TextStyle` (no fontFamily). This IS the live "My Day" empty state (shown when timeline has no items).
+- `lib/features/home/presentation/pages/smart_habits_strip.dart:179` — `_buildEmptyState()` renders a green success banner (all habits done). TextStyle has no fontFamily.
+- **Action required (P2):** Add fontFamily+fontFallback to both TextStyles; migrate `daily_timeline_widget` empty state to `AtharEmptyState`; `smart_habits_strip` has a custom success-banner layout that should stay but get fontFamily applied.
+- **Deferred from:** PR-COMPONENT-P1 (not on audit list; discovered during doc-note verification after approval).
+
+### P9: `accentAmber` light (#CA8A21) contrast is 2.93:1 vs white — chip/tint use only
+`lib/core/design_system/tokens/athar_colors.dart` — `accentAmber` light value `Color(0xFFCA8A21)` has relative luminance 0.308, giving a 2.93:1 contrast ratio against a plain white surface. This is marginally below WCAG 3.0 (UI component minimum).
+- **Impact:** Acceptable as period-chip border + tinted background (where the chip BG already reduces the white contrast area). NOT acceptable as standalone text/icon color directly on `colorScheme.surface` or `scaffoldBackground`.
+- **Current usage:** Bakur + Duha period chips in `time_slot_picker.dart` (chip border + icon) — fine because the chip itself has a tinted background (`info.color.withValues(alpha:0.2)`).
+- **Action required:** If `accentAmber` is ever used for body text or standalone icons on white, darken light value by ~5–8 L% to reach ≥ 3.0:1. Dark value `Color(0xFFE8B84B)` is fine on dark surfaces (contrast > 6.0:1).
+- **Deferred:** No current over-contrast usage exists; log for designer sign-off before any text use.
+
+### P7: `time_slot_picker.dart` period names are hardcoded Arabic (not l10n)
+`lib/core/design_system/widgets/time_slot_picker.dart` — `_getPeriodInfo()` returns hardcoded Arabic string literals (`'الفجر'`, `'البكور'`, etc.) for `_PeriodInfo.name`. In English locale the period names will still show Arabic.
+- **Impact:** English UI shows Arabic period names in the time slot picker.
+- **Action required:** Change `_getPeriodInfo(AtharTimePeriod)` → `_getPeriodInfo(AtharTimePeriod, AppLocalizations)`, add ARB keys for each period name, pass `l10n` from `_buildPeriodSelector`.
+- **Deferred from:** PR-COMPONENT-P1 (mechanical but requires new ARB keys across all callers — scope deferred to P2).
+
 ### P6: `_toArabicNumerals()` in prayer month view ignores `easternNumerals` setting
 `lib/features/prayer/presentation/widgets/prayer_month_view.dart` — `_toArabicNumerals()` always converts digits to Arabic-Indic numerals unconditionally. The `easternNumerals` user setting (in `UserSettings`) is not consulted.
 - **Impact:** Users who disable Eastern Numerals will still see Arabic-Indic digits in the prayer calendar.

@@ -1,4 +1,5 @@
 import 'package:athar/core/design_system/tokens.dart';
+import 'package:athar/core/design_system/widgets/athar_display.dart';
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/features/health/presentation/cubit/health_cubit.dart';
 import 'package:athar/features/health/presentation/widgets/add_vital_sheet.dart';
@@ -74,25 +75,9 @@ class _VitalsPageState extends State<VitalsPage> {
                   }).toList();
 
                   if (records.isEmpty) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.monitor_heart_outlined,
-                            size: 60.sp,
-                            color: colors.outlineVariant,
-                          ),
-                          AtharGap.md,
-                          Text(
-                            l10n.vitalsEmptyState,
-                            style: TextStyle(
-                              color: colors.onSurfaceVariant,
-                              fontSize: 14.sp,
-                            ),
-                          ),
-                        ],
-                      ),
+                    return AtharEmptyState(
+                      icon: Icons.monitor_heart_outlined,
+                      title: l10n.vitalsEmptyState,
                     );
                   }
 

@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 
 // ✅ NEW: Unified Design System Import
 import 'package:athar/core/design_system/tokens.dart';
+import 'package:athar/core/design_system/widgets/athar_display.dart';
 
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/features/health/presentation/cubit/health_cubit.dart';
@@ -140,29 +141,11 @@ class _AppointmentsPageState extends State<AppointmentsPage>
         );
 
         if (appointments.isEmpty) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  isUpcoming ? Icons.event_available : Icons.history,
-                  size: 60.sp,
-                  color: colorScheme.outlineVariant,
-                ),
-                AtharGap.lg,
-                Text(
-                  // ✅ l10n
-                  isUpcoming
-                      ? l10n.appointmentsEmptyUpcoming
-                      : l10n.appointmentsEmptyArchive,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    height: 1.6,
-                  ).copyWith(color: colorScheme.outline),
-                ),
-              ],
-            ),
+          return AtharEmptyState(
+            icon: isUpcoming ? Icons.event_available : Icons.history,
+            title: isUpcoming
+                ? l10n.appointmentsEmptyUpcoming
+                : l10n.appointmentsEmptyArchive,
           );
         }
 

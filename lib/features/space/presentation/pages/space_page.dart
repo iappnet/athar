@@ -25,6 +25,7 @@ import '../../data/models/space_model.dart';
 import '../../data/models/module_model.dart';
 import '../cubit/module_cubit.dart';
 import 'package:athar/core/design_system/tokens.dart';
+import 'package:athar/core/design_system/widgets/athar_display.dart';
 
 class SpacePage extends StatefulWidget {
   final SpaceModel space;
@@ -459,26 +460,10 @@ class _SpaceDetailsPageState extends State<SpacePage> {
   }
 
   Widget _buildEmptyState(AppLocalizations l10n, ColorScheme colorScheme) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.folder_open_rounded,
-            size: 60.sp,
-            color: colorScheme.outlineVariant,
-          ),
-          AtharGap.lg,
-          Text(
-            l10n.spaceEmptyTitle,
-            style: TextStyle(fontSize: 16.sp, color: colorScheme.outline),
-          ),
-          Text(
-            l10n.spaceEmptySubtitle,
-            style: TextStyle(fontSize: 12.sp, color: colorScheme.outline),
-          ),
-        ],
-      ),
+    return AtharEmptyState(
+      icon: Icons.folder_open_rounded,
+      title: l10n.spaceEmptyTitle,
+      message: l10n.spaceEmptySubtitle,
     );
   }
 

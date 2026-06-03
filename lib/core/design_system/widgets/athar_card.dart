@@ -283,6 +283,8 @@ class AtharListTile extends StatelessWidget {
                                   ? colorScheme.primary
                                   : colorScheme.onSurface)
                             : colorScheme.onSurface.withValues(alpha: 0.38),
+                        fontFamily: AtharTypography.fontFamily,
+                        fontFamilyFallback: AtharTypography.fontFallback,
                       ),
                     ),
                     if (subtitle != null) ...[
@@ -294,6 +296,8 @@ class AtharListTile extends StatelessWidget {
                           fontWeight: FontWeight.w400,
                           height: 1.6,
                           color: colorScheme.onSurfaceVariant,
+                          fontFamily: AtharTypography.fontFamily,
+                          fontFamilyFallback: AtharTypography.fontFallback,
                         ),
                       ),
                     ],

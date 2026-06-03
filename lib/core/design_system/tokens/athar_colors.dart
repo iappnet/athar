@@ -106,6 +106,7 @@ class AtharColors extends ThemeExtension<AtharColors> {
   final Color accentPink;
   final Color accentNeutral;
   final Color accentIndigo;
+  final Color accentAmber;
 
   // ─────────────────────────────────────────────────────────────────
   // GRADIENTS - التدرجات اللونية
@@ -213,6 +214,7 @@ class AtharColors extends ThemeExtension<AtharColors> {
     required this.accentPink,
     required this.accentNeutral,
     required this.accentIndigo,
+    required this.accentAmber,
     // Gradients
     required this.primaryGradient,
     required this.secondaryGradient,
@@ -300,6 +302,7 @@ class AtharColors extends ThemeExtension<AtharColors> {
     accentPink:    Color(0xFFB5557F),
     accentNeutral: Color(0xFF6B7280),
     accentIndigo:  Color(0xFF4754B5),
+    accentAmber:   Color(0xFFCA8A21),
 
     // Gradients
     primaryGradient: LinearGradient(
@@ -400,6 +403,7 @@ class AtharColors extends ThemeExtension<AtharColors> {
     accentPink:    Color(0xFFD68BAC),
     accentNeutral: Color(0xFF9AA2AE),
     accentIndigo:  Color(0xFF8A93DD),
+    accentAmber:   Color(0xFFE8B84B),
 
     // Gradients
     primaryGradient: LinearGradient(
@@ -489,6 +493,7 @@ class AtharColors extends ThemeExtension<AtharColors> {
     Color? accentPink,
     Color? accentNeutral,
     Color? accentIndigo,
+    Color? accentAmber,
     // Gradients
     LinearGradient? primaryGradient,
     LinearGradient? secondaryGradient,
@@ -560,6 +565,7 @@ class AtharColors extends ThemeExtension<AtharColors> {
       accentPink: accentPink ?? this.accentPink,
       accentNeutral: accentNeutral ?? this.accentNeutral,
       accentIndigo: accentIndigo ?? this.accentIndigo,
+      accentAmber: accentAmber ?? this.accentAmber,
       // Gradients
       primaryGradient: primaryGradient ?? this.primaryGradient,
       secondaryGradient: secondaryGradient ?? this.secondaryGradient,
@@ -661,6 +667,7 @@ class AtharColors extends ThemeExtension<AtharColors> {
       accentPink: Color.lerp(accentPink, other.accentPink, t)!,
       accentNeutral: Color.lerp(accentNeutral, other.accentNeutral, t)!,
       accentIndigo: Color.lerp(accentIndigo, other.accentIndigo, t)!,
+      accentAmber: Color.lerp(accentAmber, other.accentAmber, t)!,
       // Gradients - لا يمكن عمل lerp للـ gradients بشكل مباشر
       primaryGradient: t < 0.5 ? primaryGradient : other.primaryGradient,
       secondaryGradient: t < 0.5 ? secondaryGradient : other.secondaryGradient,

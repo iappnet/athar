@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:athar/core/design_system/tokens.dart';
+import 'package:athar/core/design_system/widgets/athar_display.dart';
 
 class NotificationCenterPage extends StatefulWidget {
   const NotificationCenterPage({super.key});
@@ -183,26 +184,9 @@ class _NotificationCenterPageState extends State<NotificationCenterPage> {
   }
 
   Widget _buildEmptyState(ColorScheme colorScheme, AppLocalizations l10n) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.notifications_none_rounded,
-            size: 80.sp,
-            color: colorScheme.outlineVariant,
-          ),
-          Text(
-            l10n.notificationsEmpty,
-            style: TextStyle(color: colorScheme.outline, fontSize: 16.sp),
-          ),
-          AtharGap.md,
-          Text(
-            'ستظهر هنا التنبيهات الجديدة عند وصولها.',
-            style: TextStyle(color: colorScheme.outlineVariant),
-          ),
-        ],
-      ),
+    return AtharEmptyState(
+      icon: Icons.notifications_none_rounded,
+      title: l10n.notificationsEmpty,
     );
   }
 }
