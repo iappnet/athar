@@ -15,7 +15,7 @@ CANONICAL-SINCE: 2026-06-01
 > **SINGLE SOURCE OF TRUTH** — roadmap + % live here ONLY. Other docs must not restate these numbers.
 
 **Last updated:** 2026-06-03
-**Updated by:** PR-SETTINGS-REFRESH (0cfd53e) + PR-PRAYER-DETAILS (e1962c2) complete — Settings + prayer detail views tokens + accentGreen/Indigo + Calibri + RTL chevrons
+**Updated by:** PR-SPLASH-ONBOARD-A (df5e268) complete — splash + all onboarding variants → tokens + cream + Calibri + named artistic consts. 8/8 UI Coverage Refresh PRs done.
 
 **Branch strategy:** `docs/status/MIGRATION_BRANCH_STRATEGY.md`  
 **Canonical handoff package:** `docs/design-specs/` (B2 mirror, read-only)  
@@ -67,7 +67,7 @@ CANONICAL-SINCE: 2026-06-01
 
 ## UI Coverage Refresh PRs — Required Before App Store Submission
 
-> **UI design-system coverage: ~63%+ (95+/151 surfaces) as of post-PR-PRAYER-DETAILS, 2026-06-03 — source: `design-context/_audit_ui_coverage.md` (2026-06-02, updated); exact re-count deferred to next audit session**
+> **UI design-system coverage: ~63%+ (95+/151 surfaces) — source: `design-context/_audit_ui_coverage.md` (2026-06-02); exact re-count deferred to next audit session. All 8/8 UI Coverage Refresh PRs now complete (2026-06-03).**
 >
 > These 8 PRs are additive to the 14-PR feature track above. They address the long tail of UI surfaces (dialogs, shared components, per-feature screens) not covered by any existing PR scope. All are **required before any App Store or external TestFlight submission** — see REL-1 in `docs/ai/KNOWN_PROBLEMS.md`.
 
@@ -80,7 +80,7 @@ CANONICAL-SINCE: 2026-06-01
 | 19 | **PR-SPACE-REFRESH** | Space feature UI design-system refresh | ✅ **Complete 2026-06-03** · `6d3b303` | — |
 | 20 | **PR-SETTINGS-REFRESH** | Settings feature UI design-system refresh | ✅ **Complete 2026-06-03** · `0cfd53e` | — |
 | 21 | **PR-PRAYER-DETAILS** | Prayer details screens UI design-system refresh | ✅ **Complete 2026-06-03** · `e1962c2` | — |
-| 22 | **PR-SPLASH-ONBOARD-A** | Splash + Onboarding Variant A UI design-system refresh | 🔲 Not started | PR-DS-ATOMS |
+| 22 | **PR-SPLASH-ONBOARD-A** | Splash + Onboarding Variant A UI design-system refresh | ✅ **Complete 2026-06-03** · `df5e268` | — |
 
 ---
 
@@ -144,7 +144,7 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Recommended Next PR
 
-**PR-SPACE-REFRESH ✅ complete.** `6d3b303` — module-type accent palette + semantic swaps + RTL fixes (DismissDirection.endToStart KEPT) + AtharShadows/Radii + ~2.7k dead lines stripped across 12 space-feature files. 5/8 UI Coverage Refresh PRs done (PR-DS-ATOMS + PR-TASK-REFRESH + PR-HABITS-REFRESH + PR-HEALTH-REFRESH + PR-SPACE-REFRESH).
+**PR-SPLASH-ONBOARD-A ✅ complete.** `df5e268` — splash + all 4 onboarding variants migrated: AtharColors.cream token added; §8.5 Artistic-surface exception governance rule added; splash night-sky named consts + colorScheme.primary progress; Variant A forest gradient + per-slide accent from context.colors; Variants B/C/D _kForest/Mid/Cream → AtharColors tokens; AtharRadii throughout. **8/8 UI Coverage Refresh PRs done.**
 
 **Remaining (feature track):**
 
@@ -153,17 +153,7 @@ CANONICAL-SINCE: 2026-06-01
 | **PR-ADHAN** | Not started | Audio asset delivery from designer (B4 open) |
 | **PR-CLEANUP** | Not started | Must run after all other PRs complete |
 
-**Remaining (UI coverage refresh):**
-
-| PR | Status | Blocker |
-|----|--------|---------|
-| **PR-HEALTH-REFRESH** | ✅ Complete `ef13a74` | — |
-| **PR-SPACE-REFRESH** | ✅ Complete `6d3b303` | — |
-| **PR-SETTINGS-REFRESH** | Not started | — |
-| **PR-PRAYER-DETAILS** | Not started | — |
-| **PR-SPLASH-ONBOARD-A** | Not started | — |
-
-**Next:** PR-SETTINGS-REFRESH. See `docs/status/NEXT_STEPS.md` for next-arc guidance.
+**Next:** PR-ADHAN (blocked on audio asset) or PR-CLEANUP (last pass). See `docs/status/NEXT_STEPS.md` for next-arc guidance.
 
 ---
 

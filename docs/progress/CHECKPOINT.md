@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-03 · PR-SETTINGS-REFRESH + PR-PRAYER-DETAILS complete · e1962c2
+LAST-UPDATED:  2026-06-03 · PR-SPLASH-ONBOARD-A complete · df5e268
 LOADS-AT:      Tier 0
 -->
 
@@ -13,19 +13,19 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-03 (PR-SETTINGS-REFRESH `0cfd53e` · PR-PRAYER-DETAILS `e1962c2`)
-**Commit:** `e1962c2` refactor(PR-PRAYER-DETAILS): prayer detail views → tokens + RTL chevrons + Calibri, dark-mode-correct
-**Prior:** `0cfd53e` refactor(PR-SETTINGS-REFRESH): Settings UI → tokens + accent palette (+accentGreen/Indigo) + Calibri, dark-mode-correct
-**Note:** Two UI Coverage Refresh PRs in one session. AtharColors: accentGreen + accentIndigo added. Settings group (6 files): Cairo×42→Calibri, icon colors→accent palette, frozen PR5 Accessibility icons untouched, AtharShadows.card, zone colors→accentBlue/Green/Purple/Teal/Indigo. Prayer group (4 files): RTL chevrons (locale-aware), no-font TS→Calibri. KNOWN_PROBLEMS: P5+P6 logged (prayer_month_view hardcoded strings + easternNumerals). flutter analyze: 0 issues. /drift-check PASS. 7/8 UI Coverage Refresh PRs done.
+**Timestamp:** 2026-06-03 (PR-SPLASH-ONBOARD-A `df5e268`)
+**Commit:** `df5e268` refactor(PR-SPLASH-ONBOARD-A): splash + all onboarding variants → tokens + cream + Calibri, on-brand forest; artistic colors named-consted
+**Prior:** `e1962c2` refactor(PR-PRAYER-DETAILS): prayer detail views → tokens + RTL chevrons + Calibri, dark-mode-correct
+**Note:** PR-SPLASH-ONBOARD-A complete — final UI Coverage Refresh PR. 8/8 done. Governance: §8.5 Artistic-surface exception added. AtharColors.cream added. splash: _kNightSky1/2/3/_kGlow/_kTagline/_kParticle named consts; progress → colorScheme.primary; Cairo×2→Calibri. Variant A: forest gradient all 4 slides; per-slide accent from context.colors; Cairo×6→Calibri; AtharRadii. Variants B/C/D: _kForest/Mid/Cream → AtharColors static consts; _kAccents cream entry → AtharColors.cream; AtharRadii throughout. flutter analyze: 0 issues. /drift-check PASS.
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** PR-PRAYER-DETAILS ✅ COMPLETE (PR-SETTINGS-REFRESH ✅ also complete this session)
-**Last committed:** PR-PRAYER-DETAILS · `e1962c2`
+**Active PR:** PR-SPLASH-ONBOARD-A ✅ COMPLETE
+**Last committed:** PR-SPLASH-ONBOARD-A · `df5e268`
 **Phase:** Complete. /drift-check PASS. Pushed to remote.
-**Next:** PR-SPLASH-ONBOARD-A (final UI Coverage Refresh PR — same canonical DS recipe).
+**Next:** All 8/8 UI Coverage Refresh PRs complete. Remaining: PR-ADHAN (blocked on audio asset B4) · PR-CLEANUP (blocked on all others).
 
 ---
 

@@ -2,7 +2,7 @@
 CANONICAL-FOR: Branch state, RULE 1/2 enforcement, Deferred QA bucket
 OWNER:         Claude Code
 PRECEDENCE:    4 (Tier 1 — loads after Tier-0 on any PR arc)
-LAST-UPDATED:  2026-06-03 · PR-SETTINGS-REFRESH 0cfd53e + PR-PRAYER-DETAILS e1962c2 logged
+LAST-UPDATED:  2026-06-03 · PR-SPLASH-ONBOARD-A df5e268 logged
 LOADS-AT:      Tier 1
 LEGACY-ALIASES: CURRENT_MIGRATION_STATE.md (root)
 CANONICAL-SINCE: 2026-06-01
@@ -52,6 +52,7 @@ CANONICAL-SINCE: 2026-06-01
 | **PR-SPACE-REFRESH** — Space feature UI DS refresh; module-type accent palette (project→accentBlue, list→accentOrange, health→accentRed, assets→accentTeal, personal→accentBlue, shared→accentPurple); semantic (Colors.green→success, error, onPrimary); reject SnackBar→theme default; RTL fixes (8 directional conversions; DismissDirection.endToStart KEPT); AtharShadows.card; AtharRadii.bottomSheet; ~2.7k dead lines stripped | `6d3b303` | (in branch) | ✅ `flutter analyze` 0 issues · 12 files changed · 5/8 UI Coverage Refresh PRs done | 2026-06-03 |
 | **PR-SETTINGS-REFRESH** — Settings UI DS refresh; AtharColors: accentGreen (#3C9A5F/#6FCB8E) + accentIndigo (#4754B5/#8A93DD) added; Cairo×42→Calibri; prayer/account icons→colorScheme.primary; athkar icons→AtharColors.athkar*; zone/smart icons→accent palette; frozen PR5 Accessibility icons untouched; Switch activeTrack→primary; dialog Colors.white→onPrimary; red.shade600→error; Colors.orange→warning; grey variants→outline/outlineVariant/surfaceContainerLow; smart_zones boxShadow→AtharShadows.card; zone colors→accentBlue/Green/Purple/Teal/Indigo; add_category Duration→AtharAnimations.normalFast; KNOWN_PROBLEMS P5+P6 logged | `0cfd53e` | (in branch) | ✅ `flutter analyze` 0 issues · 7 files changed · 6/8 UI Coverage Refresh PRs done | 2026-06-03 |
 | **PR-PRAYER-DETAILS** — Prayer detail views DS refresh; RTL chevrons (locale-aware via `Localizations.localeOf`) in prayer_month_view; no-font TS→Calibri across all 4 prayer views (prayer_details_page, prayer_day_view, prayer_week_view, prayer_month_view); AtharTypography import added; isPast dimming DEFERRED; P5+P6 logged in KNOWN_PROBLEMS | `e1962c2` | (in branch) | ✅ `flutter analyze` 0 issues · 4 files changed · 7/8 UI Coverage Refresh PRs done | 2026-06-03 |
+| **PR-SPLASH-ONBOARD-A** — Splash + all 4 onboarding variants DS refresh; docs/governance §8.5 Artistic-surface exception added; AtharColors.cream = Color(0xFFEDE6C8) added; splash: _kNightSky1/2/3/_kGlow/_kTagline/_kParticle named consts; progress → colorScheme.primary; Cairo×2→Calibri+fontFallback; AtharRadii.xxxs; Variant A: _visual→_buildSlides(context); forest gradient all 4 slides; per-slide accent context.colors.accentGreen/Blue/Purple/primary; icon uses accent; Cairo×6→Calibri; AtharRadii.xl/full/xxs; EdgeInsetsDirectional dots; Variants B/C/D: _kForest/Mid → AtharColors.prayerCardShadowDeep/Mid; _kCream → AtharColors.cream; _kAccents cream entry → AtharColors.cream; AtharRadii.full/lg/md/xl/xxs | `df5e268` | (in branch) | ✅ `flutter analyze` 0 issues · 7 files changed · **8/8 UI Coverage Refresh PRs done** | 2026-06-03 |
 
 ---
 
@@ -95,7 +96,7 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Active PR
 
-**PR-SPACE-REFRESH** — ✅ Complete (2026-06-03). 12 space-feature files migrated: module-type accent palette (project→accentBlue, list→accentOrange, health→accentRed, assets→accentTeal, default→accentNeutral, personal→accentBlue, shared→accentPurple); semantic swaps (Colors.green→success, Colors.red/orange in roles→accent, reject SnackBar→theme default); RTL fixes (8 directional conversions, DismissDirection.endToStart KEPT); AtharShadows.card; AtharRadii.bottomSheet; ~2.7k dead lines stripped. 5/8 UI Coverage Refresh PRs done. Next: PR-SETTINGS-REFRESH.
+**PR-SPLASH-ONBOARD-A** — ✅ Complete (2026-06-03) · `df5e268`. 7 files changed. 8/8 UI Coverage Refresh PRs done. All required refresh PRs shipped. Remaining: PR-ADHAN (blocked on audio asset B4) + PR-CLEANUP (final hardcoded-colour sweep).
 
 ---
 
