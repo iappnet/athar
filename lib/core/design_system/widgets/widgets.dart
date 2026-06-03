@@ -22,6 +22,8 @@ export 'athar_card.dart';
 
 // Dialogs & Sheets
 export 'athar_dialog.dart';
+export 'athar_bottom_sheet.dart';
+export '../molecules/sections/athar_accordion_section.dart';
 
 // Feedback (Snackbar, Loading, Shimmer)
 export 'athar_feedback.dart';
