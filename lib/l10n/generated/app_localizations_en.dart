@@ -908,6 +908,73 @@ class AppLocalizationsEn extends AppLocalizations {
   String get isha => 'Isha';
 
   @override
+  String get taskTimeLabel => 'Task time';
+
+  @override
+  String get taskTimeChoose => 'Choose task time';
+
+  @override
+  String get taskTimeTypeFixed => 'Fixed time';
+
+  @override
+  String get taskTimeTypeRelativePrayer => 'Relative to prayer';
+
+  @override
+  String get taskTimeTypePeriod => 'Time period';
+
+  @override
+  String get taskTimeUnspecified => 'Not set';
+
+  @override
+  String get taskTimePeriodBakur => 'Early morning';
+
+  @override
+  String get taskTimePeriodMorning => 'Morning';
+
+  @override
+  String get taskTimePeriodNoon => 'Noon';
+
+  @override
+  String get taskTimePeriodNight => 'Night';
+
+  @override
+  String get taskTimePeriodLastThird => 'Last third of night';
+
+  @override
+  String taskTimePeriodStart(String period) {
+    return 'Start of $period';
+  }
+
+  @override
+  String taskTimePeriodMiddle(String period) {
+    return 'Middle of $period';
+  }
+
+  @override
+  String taskTimePeriodEnd(String period) {
+    return 'End of $period';
+  }
+
+  @override
+  String taskTimePrayerBefore(String prayer, int minutes) {
+    return '$minutes min before $prayer';
+  }
+
+  @override
+  String taskTimePrayerAfter(String prayer, int minutes) {
+    return '$minutes min after $prayer';
+  }
+
+  @override
+  String get whenSection => 'When';
+
+  @override
+  String get detailsSection => 'Details';
+
+  @override
+  String get whenAndWhere => 'When & Where';
+
+  @override
   String get timeRemaining => 'Time Remaining';
 
   @override
@@ -926,6 +993,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enablePrayerReminder => 'Enable Prayer Reminder';
+
+  @override
+  String get calendarPrayerDots => 'Prayer Times on Calendar';
+
+  @override
+  String get calendarPrayerDotsSub =>
+      'Show prayer times as a dot on the monthly grid';
 
   @override
   String get reminderBefore => 'Reminder Before';
@@ -2361,6 +2435,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biometricVerificationFailed => 'Biometric verification failed';
+
+  @override
+  String get accessibilitySection => 'Accessibility';
+
+  @override
+  String get reduceMotion => 'Reduce Motion';
+
+  @override
+  String get reduceMotionDesc => 'Minimize animations across the app';
+
+  @override
+  String get disableGyroscope => 'Disable Motion Effects';
+
+  @override
+  String get disableGyroscopeDesc =>
+      'Stop tilt-reactive backgrounds from responding to device movement';
+
+  @override
+  String get easternNumerals => 'Arabic Numerals';
+
+  @override
+  String get easternNumeralsDesc => 'Show numbers as ٠١٢٣ instead of 0123';
 
   @override
   String get loginOrCreateAccount => 'Login / Create Account';
@@ -4095,6 +4191,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get focusReset => 'Reset';
 
   @override
+  String get focusStatusCompleted => 'Session complete ✓';
+
+  @override
+  String get focusNewSession => 'New session';
+
+  @override
+  String get focusExitDialogTitle => 'End session?';
+
+  @override
+  String get focusExitDialogBody => 'Progress for this session will be lost';
+
+  @override
+  String get focusExitDialogContinue => 'Continue';
+
+  @override
+  String get focusExitDialogEnd => 'End';
+
+  @override
+  String get focusDurationSheetTitle => 'Choose session duration';
+
+  @override
+  String get focusIntensitySection => 'Focus Intensity';
+
+  @override
+  String get focusIntensityCalm => 'Calm';
+
+  @override
+  String get focusIntensityStandard => 'Standard';
+
+  @override
+  String get focusIntensityIntense => 'Intense';
+
+  @override
+  String get focusIntensitySectionDesc =>
+      'Controls the intensity of the focus animation';
+
+  @override
   String get notificationsTitle => 'Notification Center';
 
   @override
@@ -4256,6 +4389,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statsCardSubtitle => 'View your performance and focus summary';
 
   @override
+  String get statsPeriodToday => 'Today';
+
+  @override
+  String get statsPeriodLast7Days => 'Last 7 Days';
+
+  @override
+  String get statsPeriodLast30Days => 'Last 30 Days';
+
+  @override
+  String get statsKpiTasksDone => 'Tasks Done';
+
+  @override
+  String get statsKpiHabitStreak => 'Streak';
+
+  @override
+  String get statsKpiUnitDays => 'days';
+
+  @override
+  String get statsKpiHabitRate => 'Habit Rate';
+
+  @override
+  String get statsKpiFocusMin => 'Focus';
+
+  @override
+  String get statsKpiUnitMin => 'min';
+
+  @override
+  String get statsEmptyPeriod => 'No activity in this period';
+
+  @override
+  String get statsEmptyPeriodSub =>
+      'Complete tasks, habits or focus sessions to see your stats';
+
+  @override
   String get reminderToggleLabel => 'Enable Reminder';
 
   @override
@@ -4322,6 +4489,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get prayerCardChangeLocation => 'Change Location';
+
+  @override
+  String get prayerCardNow => 'Now';
+
+  @override
+  String prayerCardStartedAt(String time) {
+    return 'Started at $time';
+  }
+
+  @override
+  String get prayerCardPostPrayerAthkar => 'Post-prayer athkar';
+
+  @override
+  String get prayerSunset => 'Sunset';
+
+  @override
+  String get prayerCardEnableLocation =>
+      'Enable location for accurate prayer times';
 
   @override
   String get prayerLabelUpcoming => 'Next Prayer';
@@ -4567,4 +4752,155 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get hideNavOnScrollDesc =>
       'Automatically hide bottom bar when scrolling down';
+
+  @override
+  String get athkarSetScreenTitle => 'Daily Athkar';
+
+  @override
+  String athkarDhikrCount(int count) {
+    return '$count dhikr';
+  }
+
+  @override
+  String athkarApproxMins(int min) {
+    return '~$min min';
+  }
+
+  @override
+  String get athkarCompletionTitle => 'Set Complete';
+
+  @override
+  String athkarCompletionCountAndTime(int count, int min) {
+    return '$count dhikr · $min min';
+  }
+
+  @override
+  String get athkarRemindersTitle => 'Athkar Reminders';
+
+  @override
+  String get athkarMorningTime => 'Morning Athkar Time';
+
+  @override
+  String get athkarEveningTime => 'Evening Athkar Time';
+
+  @override
+  String get athkarSleepTime => 'Sleep Athkar Time';
+
+  @override
+  String get onboardingShortWelcomeTitle => 'Welcome to Athar';
+
+  @override
+  String get onboardingShortWelcomeSubtitle =>
+      'Tasks, prayer, focus — in one place.';
+
+  @override
+  String get onboardingShortWelcomeFeatureTasks => 'Tasks';
+
+  @override
+  String get onboardingShortWelcomeFeaturePrayer => 'Prayer';
+
+  @override
+  String get onboardingShortWelcomeFeatureFocus => 'Focus';
+
+  @override
+  String get onboardingShortStartTitle => 'Let\'s begin';
+
+  @override
+  String get onboardingShortStartSubtitle => 'Your day, gently organized.';
+
+  @override
+  String get onboardingShortStartCta => 'Get Started';
+
+  @override
+  String get onboardingExpandedWelcomeTitle => 'Welcome to Athar';
+
+  @override
+  String get onboardingExpandedWelcomeSubtitle =>
+      'A moment to set things up, your way.';
+
+  @override
+  String get onboardingExpandedModulesTitle =>
+      'What would you like Athar to help with?';
+
+  @override
+  String get onboardingExpandedModulesSubtitle =>
+      'You can change these later in Settings.';
+
+  @override
+  String get onboardingExpandedModulesTasksLabel => 'Tasks';
+
+  @override
+  String get onboardingExpandedModulesHabitsLabel => 'Habits';
+
+  @override
+  String get onboardingExpandedModulesPrayerLabel => 'Prayer';
+
+  @override
+  String get onboardingExpandedModulesDhikrLabel => 'Dhikr & Athkar';
+
+  @override
+  String get onboardingExpandedLocationTitle => 'Set your location';
+
+  @override
+  String get onboardingExpandedLocationSubtitle => 'For accurate prayer times.';
+
+  @override
+  String get onboardingExpandedLocationUseCurrent => 'Use current location';
+
+  @override
+  String get onboardingExpandedLocationEnterManual => 'Enter manually';
+
+  @override
+  String get onboardingExpandedNotificationsTitle => 'Stay on track';
+
+  @override
+  String get onboardingExpandedNotificationsSubtitle =>
+      'Gentle reminders for prayer, tasks, and habits.';
+
+  @override
+  String get onboardingExpandedNotificationsAllow => 'Allow notifications';
+
+  @override
+  String get onboardingExpandedSpaceTitle => 'Where will you work?';
+
+  @override
+  String get onboardingExpandedSpaceSubtitle =>
+      'Personal by default. You can add spaces later.';
+
+  @override
+  String get onboardingExpandedSpaceJustForMe => 'Just for me';
+
+  @override
+  String get onboardingExpandedSpaceJoinCode => 'Have a code? Join a space';
+
+  @override
+  String get onboardingExpandedSpaceCodeHint => 'Enter invite code';
+
+  @override
+  String get onboardingExpandedSpaceJoin => 'Join';
+
+  @override
+  String get onboardingExpandedFinishTitle => 'You\'re all set';
+
+  @override
+  String get onboardingExpandedFinishSubtitle => 'Athar is ready for you.';
+
+  @override
+  String get onboardingExpandedFinishCta => 'Open Athar';
+
+  @override
+  String get onboardingExpandedFinishRecapPrayer => 'Prayer times enabled';
+
+  @override
+  String get onboardingExpandedFinishRecapDhikr => 'Dhikr & Athkar enabled';
+
+  @override
+  String get onboardingExpandedFinishRecapLocation => 'Location set';
+
+  @override
+  String get onboardingExpandedFinishRecapNotifications =>
+      'Notifications enabled';
+
+  @override
+  String get onboardingExpandedFinishRecapSpace => 'Personal space created';
 }

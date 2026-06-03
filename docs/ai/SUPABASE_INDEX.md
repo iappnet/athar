@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Supabase directory layout, remote sources, sync service, RLS notes
+OWNER:         Claude Code
+PRECEDENCE:    5 (Tier 2 — load for any Supabase-touching change)
+LAST-UPDATED:  2026-06-01 · Stage A
+LOADS-AT:      Tier 2 (any Supabase work)
+-->
+
 # Athar — Supabase Index
 
 ## Directory Layout

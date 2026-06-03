@@ -95,6 +95,20 @@ class AtharColors extends ThemeExtension<AtharColors> {
   final Color overlayLight;
 
   // ─────────────────────────────────────────────────────────────────
+  // CATEGORY ACCENT PALETTE — ألوان الفئات
+  // ─────────────────────────────────────────────────────────────────
+  final Color accentBlue;
+  final Color accentGreen;
+  final Color accentPurple;
+  final Color accentTeal;
+  final Color accentRed;
+  final Color accentOrange;
+  final Color accentPink;
+  final Color accentNeutral;
+  final Color accentIndigo;
+  final Color accentAmber;
+
+  // ─────────────────────────────────────────────────────────────────
   // GRADIENTS - التدرجات اللونية
   // ─────────────────────────────────────────────────────────────────
   final LinearGradient primaryGradient;
@@ -106,15 +120,30 @@ class AtharColors extends ThemeExtension<AtharColors> {
   // ثابتة دائماً (لا تتغير بين الوضع الفاتح والداكن)
   // ─────────────────────────────────────────────────────────────────
 
-  /// تدرج بطاقة الصلاة — سماء الليل الإسلامية
+  /// تدرج بطاقة الصلاة — forest brand gradient (PR3)
   static const LinearGradient prayerCardGradient = LinearGradient(
-    colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
+    colors: [Color(0xFF0F3D2E), Color(0xFF1A5A45)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
+    transform: GradientRotation(135 * 3.14159 / 180),
   );
 
-  /// ظل بطاقة الصلاة
-  static const Color prayerCardShadow = Color(0xFF0F172A);
+  /// ظل بطاقة الصلاة — forest palette
+  static const Color prayerCardShadowDeep = Color(0xFF0F3D2E);
+  static const Color prayerCardShadowMid = Color(0xFF1A5A45);
+
+  /// لون التمييز في بطاقة الصلاة (تيل) — نافل، تقدم
+  static const Color prayerCardAccent = Color(0xFF7FE3DA);
+
+  /// Brand cream — theme-invariant warm off-white (forest/dark brand surfaces)
+  static const Color cream = Color(0xFFEDE6C8);
+
+  // ATHKAR CATEGORY PALETTE — ألوان فئات الأذكار
+  // ثابتة دائماً (designer-approved, intentionally theme-invariant)
+  static const Color athkarMorning = Color(0xFFFF8F00);
+  static const Color athkarEvening = Color(0xFF3949AB);
+  static const Color athkarPrayer  = Color(0xFF2E7D32);
+  static const Color athkarSleep   = Color(0xFF6A1B9A);
 
   // ═══════════════════════════════════════════════════════════════════
   // CONSTRUCTOR
@@ -175,6 +204,17 @@ class AtharColors extends ThemeExtension<AtharColors> {
     // Overlay
     required this.overlay,
     required this.overlayLight,
+    // Category Accents
+    required this.accentBlue,
+    required this.accentGreen,
+    required this.accentPurple,
+    required this.accentTeal,
+    required this.accentRed,
+    required this.accentOrange,
+    required this.accentPink,
+    required this.accentNeutral,
+    required this.accentIndigo,
+    required this.accentAmber,
     // Gradients
     required this.primaryGradient,
     required this.secondaryGradient,
@@ -187,14 +227,14 @@ class AtharColors extends ThemeExtension<AtharColors> {
   static const AtharColors light = AtharColors(
     // Primary
     primary: Color(0xFF1A6B3C),
-    primaryLight: Color(0xFF2D8A54),
-    primaryDark: Color(0xFF0F4828),
+    primaryLight: Color(0xFF2E8B57),
+    primaryDark: Color(0xFF0F4A28),
     onPrimary: Color(0xFFFFFFFF),
 
     // Secondary
     secondary: Color(0xFF0D7377),
-    secondaryLight: Color(0xFF1A9EA3),
-    secondaryDark: Color(0xFF075258),
+    secondaryLight: Color(0xFF14A098),
+    secondaryDark: Color(0xFF0B5A5C),
     onSecondary: Color(0xFFFFFFFF),
 
     // Background
@@ -252,16 +292,28 @@ class AtharColors extends ThemeExtension<AtharColors> {
     overlay: Color(0x80000000),
     overlayLight: Color(0x40000000),
 
+    // Category Accents
+    accentBlue:    Color(0xFF2D6CB5),
+    accentGreen:   Color(0xFF3C9A5F),
+    accentPurple:  Color(0xFF6B4FA8),
+    accentTeal:    Color(0xFF1F8A7A),
+    accentRed:     Color(0xFFC0453B),
+    accentOrange:  Color(0xFFC77A2E),
+    accentPink:    Color(0xFFB5557F),
+    accentNeutral: Color(0xFF6B7280),
+    accentIndigo:  Color(0xFF4754B5),
+    accentAmber:   Color(0xFFCA8A21),
+
     // Gradients
     primaryGradient: LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [Color(0xFF1A6B3C), Color(0xFF0F4828)],
+      colors: [Color(0xFF1A6B3C), Color(0xFF0F4A28)],
     ),
     secondaryGradient: LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [Color(0xFF0D7377), Color(0xFF075258)],
+      colors: [Color(0xFF0D7377), Color(0xFF0B5A5C)],
     ),
     surfaceGradient: LinearGradient(
       begin: Alignment.topCenter,
@@ -275,8 +327,8 @@ class AtharColors extends ThemeExtension<AtharColors> {
   // ═══════════════════════════════════════════════════════════════════
   static const AtharColors dark = AtharColors(
     // Primary
-    primary: Color(0xFF4DA878),
-    primaryLight: Color(0xFF71C49A),
+    primary: Color(0xFF2E8B57),
+    primaryLight: Color(0xFF4DAD7A),
     primaryDark: Color(0xFF1A6B3C),
     onPrimary: Color(0xFF000000),
 
@@ -286,19 +338,19 @@ class AtharColors extends ThemeExtension<AtharColors> {
     secondaryDark: Color(0xFF0D7377),
     onSecondary: Color(0xFF000000),
 
-    // Background
-    background: Color(0xFF121212),
-    surface: Color(0xFF1E1E1E),
-    surfaceVariant: Color(0xFF2D2D2D),
-    surfaceContainer: Color(0xFF252525),
+    // Background — warm green-tinted dark (THEME_DARK_SPEC.md)
+    background: Color(0xFF0E1714),
+    surface: Color(0xFF1A2520),
+    surfaceVariant: Color(0xFF22302B),
+    surfaceContainer: Color(0xFF2A3833),
     surfaceContainerHigh: Color(0xFF353535),
     surfaceContainerLow: Color(0xFF1A1A1A),
-    scaffoldBackground: Color(0xFF121212),
+    scaffoldBackground: Color(0xFF0E1714),
 
-    // Text
-    textPrimary: Color(0xFFE4E4E4),
-    textSecondary: Color(0xFFB0B0B0),
-    textTertiary: Color(0xFF808080),
+    // Text — cream-tinted (THEME_DARK_SPEC.md)
+    textPrimary: Color(0xFFEDE6C8),
+    textSecondary: Color(0xFF9BA8A2),
+    textTertiary: Color(0xFF6B7771),
     textDisabled: Color(0xFF5C5C5C),
     textOnPrimary: Color(0xFF000000),
     textOnSecondary: Color(0xFF000000),
@@ -325,8 +377,8 @@ class AtharColors extends ThemeExtension<AtharColors> {
 
     // Border
     border: Color(0xFF404040),
-    borderLight: Color(0xFF333333),
-    borderFocused: Color(0xFF4DA878),
+    borderLight: Color(0xFF2A3833),
+    borderFocused: Color(0xFF2E8B57),
     divider: Color(0xFF333333),
 
     // Shadow
@@ -334,18 +386,30 @@ class AtharColors extends ThemeExtension<AtharColors> {
     shadowLight: Color(0x20000000),
 
     // Shimmer
-    shimmerBase: Color(0xFF2D2D2D),
-    shimmerHighlight: Color(0xFF404040),
+    shimmerBase: Color(0xFF22302B),
+    shimmerHighlight: Color(0xFF2A3833),
 
     // Overlay
     overlay: Color(0xCC000000),
     overlayLight: Color(0x80000000),
 
+    // Category Accents
+    accentBlue:    Color(0xFF6FA8E0),
+    accentGreen:   Color(0xFF6FCB8E),
+    accentPurple:  Color(0xFFA48BD6),
+    accentTeal:    Color(0xFF5FBCAD),
+    accentRed:     Color(0xFFE08379),
+    accentOrange:  Color(0xFFE0A867),
+    accentPink:    Color(0xFFD68BAC),
+    accentNeutral: Color(0xFF9AA2AE),
+    accentIndigo:  Color(0xFF8A93DD),
+    accentAmber:   Color(0xFFE8B84B),
+
     // Gradients
     primaryGradient: LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [Color(0xFF4DA878), Color(0xFF1A6B3C)],
+      colors: [Color(0xFF2E8B57), Color(0xFF1A6B3C)],
     ),
     secondaryGradient: LinearGradient(
       begin: Alignment.topLeft,
@@ -355,7 +419,7 @@ class AtharColors extends ThemeExtension<AtharColors> {
     surfaceGradient: LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
-      colors: [Color(0xFF1E1E1E), Color(0xFF121212)],
+      colors: [Color(0xFF1A2520), Color(0xFF0E1714)],
     ),
   );
 
@@ -419,6 +483,17 @@ class AtharColors extends ThemeExtension<AtharColors> {
     // Overlay
     Color? overlay,
     Color? overlayLight,
+    // Category Accents
+    Color? accentBlue,
+    Color? accentGreen,
+    Color? accentPurple,
+    Color? accentTeal,
+    Color? accentRed,
+    Color? accentOrange,
+    Color? accentPink,
+    Color? accentNeutral,
+    Color? accentIndigo,
+    Color? accentAmber,
     // Gradients
     LinearGradient? primaryGradient,
     LinearGradient? secondaryGradient,
@@ -480,6 +555,17 @@ class AtharColors extends ThemeExtension<AtharColors> {
       // Overlay
       overlay: overlay ?? this.overlay,
       overlayLight: overlayLight ?? this.overlayLight,
+      // Category Accents
+      accentBlue: accentBlue ?? this.accentBlue,
+      accentGreen: accentGreen ?? this.accentGreen,
+      accentPurple: accentPurple ?? this.accentPurple,
+      accentTeal: accentTeal ?? this.accentTeal,
+      accentRed: accentRed ?? this.accentRed,
+      accentOrange: accentOrange ?? this.accentOrange,
+      accentPink: accentPink ?? this.accentPink,
+      accentNeutral: accentNeutral ?? this.accentNeutral,
+      accentIndigo: accentIndigo ?? this.accentIndigo,
+      accentAmber: accentAmber ?? this.accentAmber,
       // Gradients
       primaryGradient: primaryGradient ?? this.primaryGradient,
       secondaryGradient: secondaryGradient ?? this.secondaryGradient,
@@ -571,6 +657,17 @@ class AtharColors extends ThemeExtension<AtharColors> {
       // Overlay
       overlay: Color.lerp(overlay, other.overlay, t)!,
       overlayLight: Color.lerp(overlayLight, other.overlayLight, t)!,
+      // Category Accents
+      accentBlue: Color.lerp(accentBlue, other.accentBlue, t)!,
+      accentGreen: Color.lerp(accentGreen, other.accentGreen, t)!,
+      accentPurple: Color.lerp(accentPurple, other.accentPurple, t)!,
+      accentTeal: Color.lerp(accentTeal, other.accentTeal, t)!,
+      accentRed: Color.lerp(accentRed, other.accentRed, t)!,
+      accentOrange: Color.lerp(accentOrange, other.accentOrange, t)!,
+      accentPink: Color.lerp(accentPink, other.accentPink, t)!,
+      accentNeutral: Color.lerp(accentNeutral, other.accentNeutral, t)!,
+      accentIndigo: Color.lerp(accentIndigo, other.accentIndigo, t)!,
+      accentAmber: Color.lerp(accentAmber, other.accentAmber, t)!,
       // Gradients - لا يمكن عمل lerp للـ gradients بشكل مباشر
       primaryGradient: t < 0.5 ? primaryGradient : other.primaryGradient,
       secondaryGradient: t < 0.5 ? secondaryGradient : other.secondaryGradient,

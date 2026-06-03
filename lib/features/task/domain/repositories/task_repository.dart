@@ -31,6 +31,10 @@ abstract class TaskRepository {
 
   /// جلب مهام يوم محدد
   Future<List<TaskModel>> getTasksForDay(DateTime date);
+
+  /// Fetch all non-deleted tasks whose date falls within [start]..[end].
+  /// Used by CalendarMonthCubit to build the month-level activity dot map.
+  Future<List<TaskModel>> getTasksInDateRange(DateTime start, DateTime end);
   // ✅✅ الإضافة الضرورية لحل الخطأ
   /// مراقبة مهام موديول معين (مشروع أو قائمة)
   Stream<List<TaskModel>> watchModuleTasks(String moduleId);

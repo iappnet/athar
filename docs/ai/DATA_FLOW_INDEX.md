@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Data flow traces per feature — add/edit/delete paths through cubits and repos
+OWNER:         Claude Code
+PRECEDENCE:    5 (Tier 2 — load when FEATURE_INDEX alone is insufficient)
+LAST-UPDATED:  2026-06-01 · Stage A
+LOADS-AT:      Tier 2 (any data-flow tracing)
+-->
+
 # Athar — Data Flow Index
 
 ## Task: Add Task

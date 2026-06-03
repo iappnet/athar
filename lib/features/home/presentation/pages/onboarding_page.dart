@@ -1,4 +1,7 @@
 import 'dart:math' as math;
+import 'package:athar/core/design_system/tokens/athar_colors.dart';
+import 'package:athar/core/design_system/tokens/athar_radii.dart';
+import 'package:athar/core/design_system/tokens/athar_typography.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,59 +28,61 @@ class _OnboardingPageState extends State<OnboardingPage> {
   final _ctrl = PageController();
   int _current = 0;
 
-  static const _visual = [
-    _SlideVisual(
-      icon: Icons.checklist_rounded,
-      gradientColors: [Color(0xFF0B4F2A), Color(0xFF1A6B3C), Color(0xFF2E8B5A)],
-      accentColor: Color(0xFF66BB6A),
-    ),
-    _SlideVisual(
-      icon: Icons.mosque_outlined,
-      gradientColors: [Color(0xFF0D47A1), Color(0xFF1565C0), Color(0xFF1976D2)],
-      accentColor: Color(0xFF64B5F6),
-    ),
-    _SlideVisual(
-      icon: Icons.timer_outlined,
-      gradientColors: [Color(0xFF4A148C), Color(0xFF6A1B9A), Color(0xFF7B1FA2)],
-      accentColor: Color(0xFFCE93D8),
-    ),
-    _SlideVisual(
-      icon: Icons.stars_rounded,
-      gradientColors: [Color(0xFF0D4A28), Color(0xFF1A6B3C), Color(0xFF22854C)],
-      accentColor: Color(0xFF81C784),
-    ),
+  // Forest gradient shared by all 4 slides — artistic surface (§8.5 exception).
+  static const _kForestGrad = [
+    AtharColors.prayerCardShadowDeep,
+    AtharColors.prayerCardShadowMid,
   ];
 
-  List<_SlideData> _buildSlides(AppLocalizations l10n) => [
-        _SlideData(
-          category: l10n.onboardingCategory1,
-          title: l10n.onboardingTitle1,
-          description: l10n.onboardingDesc1,
-          chips: [l10n.onboardingChip11, l10n.onboardingChip12, l10n.onboardingChip13],
-          visual: _visual[0],
+  List<_SlideData> _buildSlides(AppLocalizations l10n, BuildContext context) {
+    final c = context.colors;
+    return [
+      _SlideData(
+        category: l10n.onboardingCategory1,
+        title: l10n.onboardingTitle1,
+        description: l10n.onboardingDesc1,
+        chips: [l10n.onboardingChip11, l10n.onboardingChip12, l10n.onboardingChip13],
+        visual: _SlideVisual(
+          icon: Icons.checklist_rounded,
+          gradientColors: _kForestGrad,
+          accentColor: c.accentGreen,
         ),
-        _SlideData(
-          category: l10n.onboardingCategory2,
-          title: l10n.onboardingTitle2,
-          description: l10n.onboardingDesc2,
-          chips: [l10n.onboardingChip21, l10n.onboardingChip22, l10n.onboardingChip23],
-          visual: _visual[1],
+      ),
+      _SlideData(
+        category: l10n.onboardingCategory2,
+        title: l10n.onboardingTitle2,
+        description: l10n.onboardingDesc2,
+        chips: [l10n.onboardingChip21, l10n.onboardingChip22, l10n.onboardingChip23],
+        visual: _SlideVisual(
+          icon: Icons.mosque_outlined,
+          gradientColors: _kForestGrad,
+          accentColor: c.accentBlue,
         ),
-        _SlideData(
-          category: l10n.onboardingCategory3,
-          title: l10n.onboardingTitle3,
-          description: l10n.onboardingDesc3,
-          chips: [l10n.onboardingChip31, l10n.onboardingChip32, l10n.onboardingChip33],
-          visual: _visual[2],
+      ),
+      _SlideData(
+        category: l10n.onboardingCategory3,
+        title: l10n.onboardingTitle3,
+        description: l10n.onboardingDesc3,
+        chips: [l10n.onboardingChip31, l10n.onboardingChip32, l10n.onboardingChip33],
+        visual: _SlideVisual(
+          icon: Icons.timer_outlined,
+          gradientColors: _kForestGrad,
+          accentColor: c.accentPurple,
         ),
-        _SlideData(
-          category: l10n.onboardingCategory4,
-          title: l10n.onboardingTitle4,
-          description: l10n.onboardingDesc4,
-          chips: [l10n.onboardingChip41, l10n.onboardingChip42, l10n.onboardingChip43],
-          visual: _visual[3],
+      ),
+      _SlideData(
+        category: l10n.onboardingCategory4,
+        title: l10n.onboardingTitle4,
+        description: l10n.onboardingDesc4,
+        chips: [l10n.onboardingChip41, l10n.onboardingChip42, l10n.onboardingChip43],
+        visual: _SlideVisual(
+          icon: Icons.stars_rounded,
+          gradientColors: _kForestGrad,
+          accentColor: c.primary,
         ),
-      ];
+      ),
+    ];
+  }
 
   Future<void> _markSeen() async {
     final prefs = await SharedPreferences.getInstance();
@@ -124,7 +129,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final slides = _buildSlides(l10n);
+    final slides = _buildSlides(l10n, context);
     final isLast = _current == slides.length - 1;
     final bgColor = slides[_current].visual.gradientColors.last;
 
@@ -251,7 +256,11 @@ class _OnboardSlidePage extends StatelessWidget {
                       ),
                       child: Text(
                         l10n.skip,
-                        style: const TextStyle(fontFamily: 'Cairo', fontSize: 14),
+                        style: const TextStyle(
+                          fontFamily: AtharTypography.fontFamily,
+                          fontFamilyFallback: AtharTypography.fontFallback,
+                          fontSize: 14,
+                        ),
                       ),
                     ),
                   ),
@@ -276,7 +285,7 @@ class _OnboardSlidePage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Icon(data.visual.icon, size: 56, color: Colors.white),
+                  child: Icon(data.visual.icon, size: 56, color: data.visual.accentColor),
                 ),
                 const Spacer(flex: 2),
                 // Category badge
@@ -284,13 +293,14 @@ class _OnboardSlidePage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.18),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(AtharRadii.xl),
                     border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
                   ),
                   child: Text(
                     data.category,
                     style: const TextStyle(
-                      fontFamily: 'Cairo',
+                      fontFamily: AtharTypography.fontFamily,
+                      fontFamilyFallback: AtharTypography.fontFallback,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
@@ -305,7 +315,8 @@ class _OnboardSlidePage extends StatelessWidget {
                     data.title,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                      fontFamily: 'Cairo',
+                      fontFamily: AtharTypography.fontFamily,
+                      fontFamilyFallback: AtharTypography.fontFallback,
                       fontSize: 30,
                       fontWeight: FontWeight.w800,
                       color: Colors.white,
@@ -321,7 +332,8 @@ class _OnboardSlidePage extends StatelessWidget {
                     data.description,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontFamily: 'Cairo',
+                      fontFamily: AtharTypography.fontFamily,
+                      fontFamilyFallback: AtharTypography.fontFallback,
                       fontSize: 15,
                       color: Colors.white.withValues(alpha: 0.8),
                       height: 1.7,
@@ -360,13 +372,14 @@ class _FeatureChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(AtharRadii.xl),
         border: Border.all(color: Colors.white.withValues(alpha: 0.35)),
       ),
       child: Text(
         label,
         style: const TextStyle(
-          fontFamily: 'Cairo',
+          fontFamily: AtharTypography.fontFamily,
+          fontFamilyFallback: AtharTypography.fontFallback,
           fontSize: 13,
           fontWeight: FontWeight.w500,
           color: Colors.white,
@@ -410,14 +423,14 @@ class _BottomBar extends StatelessWidget {
                   final active = i == current;
                   return AnimatedContainer(
                     duration: const Duration(milliseconds: 280),
-                    margin: const EdgeInsets.only(left: 6),
+                    margin: const EdgeInsetsDirectional.only(start: 6),
                     width: active ? 22 : 7,
                     height: 7,
                     decoration: BoxDecoration(
                       color: active
                           ? Colors.white
                           : Colors.white.withValues(alpha: 0.35),
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: BorderRadius.circular(AtharRadii.xxs),
                     ),
                   );
                 }),
@@ -431,12 +444,13 @@ class _BottomBar extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(28),
+                    borderRadius: BorderRadius.circular(AtharRadii.full),
                   ),
                   child: Text(
                     isLast ? l10n.getStarted : l10n.next,
                     style: TextStyle(
-                      fontFamily: 'Cairo',
+                      fontFamily: AtharTypography.fontFamily,
+                      fontFamilyFallback: AtharTypography.fontFallback,
                       fontSize: 15,
                       fontWeight: FontWeight.w700,
                       color: bgColor,

@@ -84,6 +84,9 @@ class FocusCubit extends Cubit<FocusState> {
   /// الحصول على المدة الحالية بالدقائق
   int get currentDurationMinutes => _selectedDuration ~/ 60;
 
+  /// Total session duration in seconds (for fill level computation).
+  int get sessionDuration => _selectedDuration;
+
   // ═══════════════════════════════════════════════════════════════════
   // التحكم بالمؤقت
   // ═══════════════════════════════════════════════════════════════════

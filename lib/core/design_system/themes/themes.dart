@@ -11,6 +11,5 @@
 
 library;
 
-export 'athar_theme.dart';
 export 'athar_light_theme.dart';
 export 'athar_dark_theme.dart';

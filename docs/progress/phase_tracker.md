@@ -1,6 +1,14 @@
+<!--
+CANONICAL-FOR: Legacy Phase 0–5 track + v2 PR narrative history
+OWNER:         Claude Code
+PRECEDENCE:    6 (Tier 3 — NEVER auto-load; historical narrative)
+LAST-UPDATED:  2026-06-02 · B4 — mandatory header added; archived paths corrected
+LOADS-AT:      Tier 3 (never)
+-->
+
 # Athar Phase Tracker
 
-_Last updated: 2026-05-03_
+_Last updated: 2026-05-09 (PR-THEME-3MODE complete — theme architecture stabilized)_
 
 ---
 
@@ -124,6 +132,102 @@ Remaining:
 - Regression test: language switch (AR↔EN) while widget is on Home Screen → widget updates locale
 - Regression test: app kill immediately after widget tap → action replayed on next cold start
 - App Store / TestFlight submission checklist: entitlements, App Group provisioning, widget display names
+
+---
+
+---
+
+## v2 Design System PR Track
+
+_Authority: `docs/design-specs/CLAUDE_CODE_PROMPT.md` + `docs/design-specs/FINAL_PACKAGE_MANIFEST.md`_  
+_Branch: `feat/athar-v2-pr1-tokens-theme` (long-running migration branch — do NOT merge to `main` until complete)_  
+_Roadmap verified 2026-05-09 — see `docs/history/session-reports/MIGRATION_ROADMAP_VERIFICATION.md` (archived) for corrected canonical sequence_
+
+### PR1 — Tokens & Theme
+
+**Status: ✅ Complete — commit `61d741a` on `feat/athar-v2-pr1-tokens-theme`**
+
+Completed items:
+- `athar_colors.dart` — 6 light palette corrections + 16 dark palette corrections (green brand + THEME_DARK_SPEC.md warm dark surfaces)
+- `athar_typography.dart` — `fontFamilyAr/En` → `'Calibri'`; `numericMono` TextStyle added
+- `pubspec.yaml` — Calibri font family registered (weights 300/400/700)
+- `assets/fonts/` — `calibri-light.ttf`, `calibri-regular.ttf`, `calibri-bold.ttf` added
+- `flutter analyze`: 0 issues; `flutter test`: 29/29 passed
+
+Remaining:
+- B1: Calibri App Store licence confirmation (submission gate only — does not block development)
+
+### PR-THEME — Design System Theme Wiring (full arc)
+
+**Status: ✅ Complete 2026-06-01 — tag `athar-v2-prtheme-complete-final`**
+
+Full arc delivered across 4 commits:
+- `14c13d6` ThemeMode.system wiring (`athar-v2-prtheme-complete`)
+- `66bc884` ThemePreference enum + 3-mode picker (`athar-v2-prtheme-3mode-complete`)
+- `3872860` PR-FONT-FALLBACK — Cairo fallback on all 38 AtharTypography base styles
+- `bfaf863` Wire AtharLightTheme/AtharDarkTheme; 88 fontFamilyFallback; RTL DrawerTheme
+
+`flutter analyze`: 0 issues · `flutter test`: 45/45 · Verification: `docs/history/pr-reports/VERIFICATION_PR_THEME.md`
+
+### PR-THEME-3MODE — ThemePreference enum (3-option picker)
+
+**Status: ✅ Complete — `athar-v2-prtheme-3mode-complete`**
+
+- `ThemePreference` enum (`system` / `light` / `dark`) added to `UserSettings`
+- One-time migration: `isDarkMode=true` → `ThemePreference.dark`; `isDarkMode=false` → `ThemePreference.system`
+- `_ThemeTile` + bottom-sheet picker replaces Dark Mode toggle in Settings
+- `app.dart` uses exhaustive Dart 3 `switch` expression
+- `flutter analyze`: 0 issues | `flutter test`: 29/29
+- Theme architecture: **STABLE**
+- Full details: `docs/history/session-reports/ARCHITECTURE_STABILIZATION_REPORT.md` (archived)
+
+---
+
+### PR2 — AdaptiveShell
+
+**Status: ✅ Complete — tag `athar-v2-pr2-complete`**
+
+All spec files read: `IPAD_OPTIMIZATION.md` ✅ · `REDESIGN_AUDIT.md` ✅ · `INVESTIGATION_REPORT.md` ✅ · `preview/comp-nav.html` ✅
+
+CP1 ✅ `adaptive_shell.dart` created  
+CP2 ✅ `main_page.dart` + `liquid_glass_nav_bar.dart` updated  
+CP3 ✅ Responsive breakpoints — code-verified  
+CP4 ✅ Navigation persistence + routing — code-verified  
+CP5 ✅ Safe-area + RTL + keyboard — code-verified  
+CP6 ✅ Final validation — 0 issues · 29/29 · tag created
+
+Governance: `PR2_PROGRESS_REPORT.md` · `PR2_CHECKPOINTS.md`
+
+---
+
+### PR-FONT-FALLBACK
+
+**Status: ✅ Complete — commit `3872860`**
+
+Cairo fallback on all 38 `AtharTypography` `const TextStyle` definitions + 3 extension methods.
+Delivered as part of the PR-THEME arc.
+
+---
+
+### PR3 — Prayer Card Refresh
+
+**Status: ✅ Complete 2026-06-01 — commit `1cd4f80`**
+
+Forest gradient (`#0F3D2E → #1A5A45`), 44pt countdown (weight 300), calm active/post-prayer states.  
+16/16 golden tests pass (AR + EN × 8 scenarios). Shadow blurRadius 20/8 accepted (canonical).  
+`flutter analyze`: 0 issues · `flutter test`: 45/45 · Sign-off: `docs/history/pr-reports/PR3_SIGNOFF.md`
+
+---
+
+### PR4a through PR-CLEANUP
+
+**PR4a ✅ Complete** (`athar-v2-pr4a-complete`, 2026-06-01) — calendar visual refresh, RULE 1 fix, token migration, RTL. 2 device-QA gates in Deferred QA Bucket.
+
+AdaptiveShell Layer 1 foundation: ✅ Complete — verified `docs/history/session-reports/ADAPTIVESHELL_FOUNDATION_AUDIT.md` (archived) 2026-06-01.  
+PR-IPAD-LAYER2: umbrella tracker only — each screen's tablet layout ships in its owning feature PR (see `IPAD_LAYER2_OWNERSHIP_MAP.md`).  
+PR-IPAD-LAYER3: standalone deferred sweep — not before all Layer 2 screens are stable (see `IPAD_LAYER3_DEFERRED_AFFORDANCES.md`).
+
+> **PR ordering and status live in `docs/status/ROADMAP.md` (SINGLE SOURCE OF TRUTH). See `docs/status/NEXT_STEPS.md` for next-step guidance.**
 
 ---
 

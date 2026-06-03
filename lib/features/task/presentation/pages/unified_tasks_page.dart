@@ -73,6 +73,7 @@ class _UnifiedTasksViewState extends State<UnifiedTasksView> {
         messenger: messenger,
         message: l10n.deletedItem(item.title),
         colorScheme: colorScheme,
+        semanticColors: context.colors,
         variant: AtharSnackbarVariant.info,
         icon: Icons.delete_outline_rounded,
         actionLabel: l10n.undo,
@@ -331,7 +332,7 @@ class _UnifiedTasksViewState extends State<UnifiedTasksView> {
               AtharGap.hSm,
               Text(
                 title,
-                style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
               ),
               const Spacer(),
               Text(
@@ -340,6 +341,8 @@ class _UnifiedTasksViewState extends State<UnifiedTasksView> {
                   fontSize: 12.sp,
                   fontWeight: FontWeight.bold,
                   color: colorScheme.outline,
+                  fontFamily: AtharTypography.fontFamily,
+                  fontFamilyFallback: AtharTypography.fontFallback,
                 ),
               ),
             ],
@@ -406,6 +409,7 @@ class _UnifiedTasksViewState extends State<UnifiedTasksView> {
         context: context,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
+        barrierColor: Colors.black.withValues(alpha: 0.45),
         builder: (ctx) => MultiBlocProvider(
           providers: [
             BlocProvider.value(value: context.read<TaskCubit>()),
@@ -504,6 +508,8 @@ class _UnifiedTasksViewState extends State<UnifiedTasksView> {
                     color: info.color,
                     fontWeight: FontWeight.bold,
                     fontSize: 12.sp,
+                    fontFamily: AtharTypography.fontFamily,
+                    fontFamilyFallback: AtharTypography.fontFallback,
                   ),
                 ),
               ],
@@ -521,9 +527,9 @@ class _UnifiedTasksViewState extends State<UnifiedTasksView> {
 
     switch (zone) {
       case 'work':
-        return _ZoneInfo(l10n.workZone, Colors.blue, Icons.work_outline);
+        return _ZoneInfo(l10n.workZone, context.colors.info, Icons.work_outline);
       case 'home':
-        return _ZoneInfo(l10n.homeZone, Colors.orange, Icons.home_outlined);
+        return _ZoneInfo(l10n.homeZone, context.colors.warning, Icons.home_outlined);
       case 'quiet':
         return _ZoneInfo(l10n.quietZone, Colors.indigo, Icons.bedtime_outlined);
       default:
@@ -580,7 +586,7 @@ class _UnifiedTasksViewState extends State<UnifiedTasksView> {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: TextStyle(color: colorScheme.onSurfaceVariant),
+              style: TextStyle(color: colorScheme.onSurfaceVariant, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
             ),
             AtharGap.lg,
             AtharButton(

@@ -44,9 +44,13 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 .env
-# Claude Code worktrees
+# Claude Code — machine-local only (NOT the knowledge base)
+.claude/settings.local.json
+.claude/**/*.local.*
+.claude/cache/
+**/*.tmp.md
+# Everything under docs/ and .claude/commands/ stays TRACKED.
 .claude/worktrees/
-.claude/
 
 # Fastlane & Bundler
 ios/vendor/

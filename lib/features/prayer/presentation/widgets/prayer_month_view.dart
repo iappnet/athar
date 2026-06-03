@@ -3,6 +3,7 @@
 
 import 'package:athar/core/design_system/tokens/athar_radii.dart';
 import 'package:athar/core/design_system/tokens/athar_spacing.dart';
+import 'package:athar/core/design_system/tokens/athar_typography.dart';
 import 'package:athar/core/di/injection.dart';
 import 'package:athar/core/services/prayer_service.dart';
 import 'package:athar/features/prayer/domain/entities/prayer_time.dart';
@@ -91,7 +92,12 @@ class _PrayerMonthViewState extends State<PrayerMonthView> {
         children: [
           // زر الشهر السابق
           IconButton(
-            icon: Icon(Icons.chevron_right, color: colorScheme.primary),
+            icon: Icon(
+              Localizations.localeOf(context).languageCode == 'ar'
+                  ? Icons.chevron_right
+                  : Icons.chevron_left,
+              color: colorScheme.primary,
+            ),
             onPressed: () => _changeMonth(-1),
           ),
 
@@ -103,6 +109,8 @@ class _PrayerMonthViewState extends State<PrayerMonthView> {
                 Text(
                   hijri.toFormat("MMMM yyyy"),
                   style: TextStyle(
+                    fontFamily: AtharTypography.fontFamily,
+                    fontFamilyFallback: AtharTypography.fontFallback,
                     fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
                     color: colorScheme.primary,
@@ -112,7 +120,12 @@ class _PrayerMonthViewState extends State<PrayerMonthView> {
                 // الشهر الميلادي
                 Text(
                   DateFormat('MMMM yyyy', 'ar').format(_currentMonth),
-                  style: TextStyle(fontSize: 14.sp, color: colorScheme.outline),
+                  style: TextStyle(
+                    fontFamily: AtharTypography.fontFamily,
+                    fontFamilyFallback: AtharTypography.fontFallback,
+                    fontSize: 14.sp,
+                    color: colorScheme.outline,
+                  ),
                 ),
               ],
             ),
@@ -120,7 +133,12 @@ class _PrayerMonthViewState extends State<PrayerMonthView> {
 
           // زر الشهر التالي
           IconButton(
-            icon: Icon(Icons.chevron_left, color: colorScheme.primary),
+            icon: Icon(
+              Localizations.localeOf(context).languageCode == 'ar'
+                  ? Icons.chevron_left
+                  : Icons.chevron_right,
+              color: colorScheme.primary,
+            ),
             onPressed: () => _changeMonth(1),
           ),
         ],
@@ -146,6 +164,8 @@ class _PrayerMonthViewState extends State<PrayerMonthView> {
               child: Text(
                 day,
                 style: TextStyle(
+                  fontFamily: AtharTypography.fontFamily,
+                  fontFamilyFallback: AtharTypography.fontFallback,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.bold,
                   color: isWeekend ? colorScheme.primary : colorScheme.outline,
@@ -239,6 +259,8 @@ class _PrayerMonthViewState extends State<PrayerMonthView> {
             Text(
               _toArabicNumerals(date.day.toString()),
               style: TextStyle(
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
                 fontSize: 14.sp,
                 fontWeight: isToday || isSelected
                     ? FontWeight.bold
@@ -256,6 +278,8 @@ class _PrayerMonthViewState extends State<PrayerMonthView> {
             Text(
               _toArabicNumerals(hijri.hDay.toString()),
               style: TextStyle(
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
                 fontSize: 10.sp,
                 color: isSelected
                     ? colorScheme.onPrimary.withValues(alpha: 0.7)
@@ -323,6 +347,8 @@ class _PrayerMonthViewState extends State<PrayerMonthView> {
                   Text(
                     DateFormat('EEEE', 'ar').format(_selectedDay!),
                     style: TextStyle(
+                      fontFamily: AtharTypography.fontFamily,
+                      fontFamilyFallback: AtharTypography.fontFallback,
                       fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
                       color: colorScheme.primary,
@@ -331,6 +357,8 @@ class _PrayerMonthViewState extends State<PrayerMonthView> {
                   Text(
                     "${hijri.toFormat("dd MMMM")} - ${DateFormat('d MMMM', 'ar').format(_selectedDay!)}",
                     style: TextStyle(
+                      fontFamily: AtharTypography.fontFamily,
+                      fontFamilyFallback: AtharTypography.fontFallback,
                       fontSize: 12.sp,
                       color: colorScheme.outline,
                     ),
@@ -382,6 +410,8 @@ class _PrayerMonthViewState extends State<PrayerMonthView> {
                       Text(
                         _getPrayerShortName(prayer.type, l10n),
                         style: TextStyle(
+                          fontFamily: AtharTypography.fontFamily,
+                          fontFamilyFallback: AtharTypography.fontFallback,
                           fontSize: 11.sp,
                           fontWeight: FontWeight.bold,
                           color: isSunrise
@@ -394,6 +424,8 @@ class _PrayerMonthViewState extends State<PrayerMonthView> {
                       Text(
                         DateFormat('h:mm', 'ar').format(prayer.time),
                         style: TextStyle(
+                          fontFamily: AtharTypography.fontFamily,
+                          fontFamilyFallback: AtharTypography.fontFallback,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.bold,
                           color: colorScheme.onSurface,
@@ -402,6 +434,8 @@ class _PrayerMonthViewState extends State<PrayerMonthView> {
                       Text(
                         DateFormat('a', 'ar').format(prayer.time),
                         style: TextStyle(
+                          fontFamily: AtharTypography.fontFamily,
+                          fontFamilyFallback: AtharTypography.fontFallback,
                           fontSize: 10.sp,
                           color: colorScheme.outline,
                         ),

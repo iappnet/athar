@@ -15,11 +15,22 @@ enum AthkarSessionViewMode { list, focus }
 // ✅ 1. تعريف Enum لأماكن العرض
 enum PrayerCardDisplayMode { dashboardOnly, dashboardAndTasks, allPages }
 
+/// Theme mode preference — three explicit options.
+enum ThemePreference { system, light, dark }
+
+enum FocusIntensity { calm, standard, intense }
+
 @collection
 class UserSettings {
   Id id = Isar.autoIncrement;
   bool isDarkMode;
   bool isAutoModeEnabled;
+
+  @Enumerated(EnumType.name)
+  ThemePreference themePreference = ThemePreference.system;
+
+  /// Migration flag — set to true after one-time theme preference migration.
+  bool didMigrateThemePreference = false;
 
   // ── Prayer feature settings ────────────────────────────────────────────────
 
@@ -188,6 +199,25 @@ class UserSettings {
   bool hideNavOnScroll = false;
 
   // ═══════════════════════════════════════════════════════════════════════════
+  // ♿ ACCESSIBILITY
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  bool reduceMotion = false;
+  bool disableGyroscope = false;
+  bool easternNumerals = false;
+
+  @Enumerated(EnumType.name)
+  FocusIntensity focusIntensity = FocusIntensity.standard;
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 📅 CALENDAR
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /// Show prayer dots on the month calendar grid.
+  /// Sub-toggle under isPrayerEnabled; hidden when prayer is disabled.
+  bool showPrayerDotsOnCalendar = true;
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // 🔄 SYNC
   // ═══════════════════════════════════════════════════════════════════════════
 
@@ -200,6 +230,8 @@ class UserSettings {
   UserSettings({
     this.isDarkMode = false,
     this.isAutoModeEnabled = false,
+    this.themePreference = ThemePreference.system,
+    this.didMigrateThemePreference = false,
     this.isPrayerEnabled = false,
     this.isPrayerCardEnabled = false,
     this.isPrayerNotificationsEnabled = false,
@@ -259,6 +291,15 @@ class UserSettings {
     this.projectReminderHoursBefore = 24,
     this.projectDailyReminders = false,
     this.projectWeeklySummary = false,
+
+    // ♿ Accessibility
+    this.reduceMotion = false,
+    this.disableGyroscope = false,
+    this.easternNumerals = false,
+    this.focusIntensity = FocusIntensity.standard,
+
+    // 📅 Calendar
+    this.showPrayerDotsOnCalendar = true,
   });
 
   // ═══════════════════════════════════════════════════════════

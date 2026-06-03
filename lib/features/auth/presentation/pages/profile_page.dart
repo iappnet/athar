@@ -241,7 +241,7 @@ class _ProfilePageState extends State<ProfilePage> {
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: AtharRadii.bottomSheet,
       ),
       builder: (_) => _ChangePasswordSheet(
         cubit: context.read<AuthCubit>(),
@@ -374,7 +374,7 @@ class _ChangePasswordSheetState extends State<_ChangePasswordSheet> {
           _buildHeader(colorScheme),
           const SizedBox(height: 20),
           AnimatedSwitcher(
-            duration: const Duration(milliseconds: 250),
+            duration: AtharAnimations.normal,
             transitionBuilder: (child, animation) => FadeTransition(
               opacity: animation,
               child: SlideTransition(
@@ -416,7 +416,7 @@ class _ChangePasswordSheetState extends State<_ChangePasswordSheet> {
     };
 
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 200),
+      duration: AtharAnimations.normalFast,
       child: KeyedSubtree(
         key: ValueKey(_step),
         child: Column(
@@ -614,7 +614,7 @@ class _ChangeStepIndicator extends StatelessWidget {
           final isPast = stepIndex < currentStep;
           return Expanded(
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
+              duration: AtharAnimations.normalSlow,
               height: 2,
               color: isPast ? colorScheme.primary : colorScheme.outlineVariant,
             ),
@@ -624,7 +624,7 @@ class _ChangeStepIndicator extends StatelessWidget {
         final isActive = stepIndex == currentStep;
         final isPast = stepIndex < currentStep;
         return AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
+          duration: AtharAnimations.normalSlow,
           width: isActive ? 28 : 22,
           height: isActive ? 28 : 22,
           decoration: BoxDecoration(

@@ -2,8 +2,16 @@
 //  AtharPrayerWidget.swift
 //  AtharPrayerWidget
 //
-//  Created by iTech on 27/04/2026.
-//  Updated: AppIntentConfiguration — language & display mode configuration
+//  Updated PR9: forest v2 palette, Calibri font tokens, 40-min post-prayer
+//  window (OQ2), systemLarge (OQ1), widgetURL deep-link, isPrayerEnabled gate (Conflict A).
+//
+//  NOTE — Xcode manual steps required for Calibri (OQ3):
+//    1. For the AtharPrayerWidgetExtension target: Add Files → select
+//       calibri-light.ttf, calibri-regular.ttf, calibri-bold.ttf from
+//       assets/fonts/ → ensure only AtharPrayerWidgetExtension is checked.
+//    2. Open AtharPrayerWidgetExtension/Info.plist → add UIAppFonts array →
+//       three items: "calibri-light.ttf", "calibri-regular.ttf", "calibri-bold.ttf".
+//    3. Device validate: font renders without system fallback.
 //
 
 import AppIntents
@@ -13,29 +21,32 @@ import SwiftUI
 // MARK: – Shared App Group & Key constants
 // Keep in sync with WidgetKeys in lib/core/services/widget_data_service.dart
 
-private let kGroupId       = "group.com.iappsnet.athar"
-private let kNameAr        = "athar_next_prayer_name_ar"
-private let kNameEn        = "athar_next_prayer_name_en"
-private let kPrayerType    = "athar_next_prayer_type"      // "fajr" | "sunrise" | "dhuhr" | "asr" | "maghrib" | "isha"
-private let kPrayerTime    = "athar_next_prayer_time"      // ISO-8601 (Dart local time, no timezone)
-private let kTimestamp     = "athar_next_prayer_timestamp" // Unix epoch milliseconds (double) — more reliable
-private let kCity          = "athar_city_name"
-private let kAppLocale     = "athar_app_locale"            // "ar" | "en" | "system"
-private let kLastUpdated   = "athar_last_updated_at"       // ISO-8601
-private let kDateAr        = "athar_current_date_ar"       // full Arabic date (Hijri + Gregorian)
-private let kDateEn        = "athar_current_date_en"       // full English date
-private let kPrevTimestamp = "athar_prev_prayer_timestamp" // Unix epoch ms of previous prayer
-private let kIsDuhaTime    = "athar_is_duha_time"          // 1 when Duha window active, else 0
-private let kIsQiyamTime   = "athar_is_qiyam_time"         // 1 when Qiyam al-Layl window active, else 0
-private let kPrevNameAr    = "athar_prev_prayer_name_ar"   // Arabic name of prayer that just started
-private let kPrevNameEn    = "athar_prev_prayer_name_en"   // English name of prayer that just started
+private let kGroupId          = "group.com.iappsnet.athar"
+private let kNameAr           = "athar_next_prayer_name_ar"
+private let kNameEn           = "athar_next_prayer_name_en"
+private let kPrayerType       = "athar_next_prayer_type"      // "fajr" | "sunrise" | "dhuhr" | "asr" | "maghrib" | "isha"
+private let kPrayerTime       = "athar_next_prayer_time"      // ISO-8601
+private let kTimestamp        = "athar_next_prayer_timestamp" // Unix epoch milliseconds (double)
+private let kCity             = "athar_city_name"
+private let kAppLocale        = "athar_app_locale"            // "ar" | "en" | "system"
+private let kLastUpdated      = "athar_last_updated_at"
+private let kDateAr           = "athar_current_date_ar"
+private let kDateEn           = "athar_current_date_en"
+private let kPrevTimestamp    = "athar_prev_prayer_timestamp"
+private let kIsDuhaTime       = "athar_is_duha_time"
+private let kIsQiyamTime      = "athar_is_qiyam_time"
+private let kPrevNameAr       = "athar_prev_prayer_name_ar"
+private let kPrevNameEn       = "athar_prev_prayer_name_en"
+private let kIsPrayerEnabled  = "athar_is_prayer_enabled"     // v7: 1=enabled 0=disabled
+private let kSunriseTime      = "athar_sunrise_time"           // v8: ISO-8601 sunrise
+private let kSunsetTime       = "athar_sunset_time"            // v8: ISO-8601 sunset (maghrib proxy)
 
 // MARK: – Widget configuration intent
 
 enum WidgetLanguage: String, AppEnum {
-    case system   // follow device locale (existing behavior)
-    case arabic   // force Arabic regardless of device locale
-    case english  // force English regardless of device locale
+    case system
+    case arabic
+    case english
 
     static var typeDisplayRepresentation =
         TypeDisplayRepresentation(name: "Language")
@@ -48,8 +59,8 @@ enum WidgetLanguage: String, AppEnum {
 }
 
 enum WidgetDisplayMode: String, AppEnum {
-    case detailed  // full layout: name, time, countdown, city, date, progress bar
-    case compact   // minimal: name, time, countdown only
+    case detailed
+    case compact
 
     static var typeDisplayRepresentation =
         TypeDisplayRepresentation(name: "Display")
@@ -79,24 +90,29 @@ struct PrayerEntry: TimelineEntry {
     let date: Date
     let nameAr: String
     let nameEn: String
-    let prayerType: String    // raw type string for icon lookup
+    let prayerType: String
     let prayerTime: Date?
-    let prevPrayerTime: Date? // start of the current interval — for progress bar
-    let prevNameAr: String    // Arabic name of the prayer that most recently started
-    let prevNameEn: String    // English name of the prayer that most recently started
+    let prevPrayerTime: Date?
+    let prevNameAr: String
+    let prevNameEn: String
     let city: String
-    let appLocale: String     // Flutter-written locale ("ar" | "en" | "system")
+    let appLocale: String
     let dateAr: String
     let dateEn: String
-    let isStale: Bool         // true when Flutter hasn't pushed for > 2 h
+    let isStale: Bool
     let intentLanguage: WidgetLanguage
     let intentDisplayMode: WidgetDisplayMode
-    let isDuhaTime: Bool      // Duha nafl window is active
-    let isQiyamTime: Bool     // Qiyam al-Layl window is active
+    let isDuhaTime: Bool
+    let isQiyamTime: Bool
+    let isPrayerEnabled: Bool   // v7: false → show "Enable Prayer in Athar" prompt
+    let sunriseTimeStr: String  // v8: ISO-8601 sunrise time ("" when unavailable)
+    let sunsetTimeStr: String   // v8: ISO-8601 sunset time — maghrib proxy ("" when unavailable)
+
+    var sunriseDate: Date? { parseISOTime(sunriseTimeStr) }
+    var sunsetDate: Date?  { parseISOTime(sunsetTimeStr) }
 
     // ── Computed ──────────────────────────────────────────────────────────────
 
-    /// 0.0–1.0 fraction of the current prayer interval that has elapsed.
     var intervalProgress: Double {
         guard let prev = prevPrayerTime, let next = prayerTime else { return 0 }
         let total = next.timeIntervalSince(prev)
@@ -104,10 +120,6 @@ struct PrayerEntry: TimelineEntry {
         return min(max(Date().timeIntervalSince(prev) / total, 0), 1)
     }
 
-    /// Resolved language:
-    ///   1. intent arabic/english wins outright
-    ///   2. system intent → use device language code
-    ///   3. system intent + no device code → Flutter appLocale (ignore "system" sentinel → default "ar")
     var resolvedLocale: String {
         switch intentLanguage {
         case .arabic:  return "ar"
@@ -116,7 +128,6 @@ struct PrayerEntry: TimelineEntry {
             if let code = Locale.current.language.languageCode?.identifier {
                 return code
             }
-            // appLocale may be "system" when user hasn't chosen a language in-app
             return (appLocale == "system" || appLocale.isEmpty) ? "ar" : appLocale
         }
     }
@@ -124,21 +135,37 @@ struct PrayerEntry: TimelineEntry {
     var isArabic: Bool   { resolvedLocale == "ar" }
     var isDetailed: Bool { intentDisplayMode == .detailed }
 
-    /// True when we are within 30 minutes after the previous prayer began.
+    /// Dynamic post-prayer window — exact parity with prayer_timer_service.dart:50–58.
+    /// Formula: round(0.3 × minutesBetween(prev, next)), clamp(15,45),
+    /// then overrides AFTER clamp: Fajr=40 min, Maghrib=20 min. (P9-C resolved 2026-06-02)
+    var dynamicWindow: TimeInterval {
+        guard let prev = prevPrayerTime, let next = prayerTime else { return 2400 }
+        let timeBetween = next.timeIntervalSince(prev) / 60  // minutes
+        var w = (timeBetween * 0.3).rounded()
+        if w <= 0 { w = 30 }
+        w = min(45, max(15, w))
+        let prevType = inferTypeFromEnglishName(prevNameEn)
+        if prevType == "maghrib" { w = 20 }
+        if prevType == "fajr"    { w = 40 }
+        return w * 60  // back to seconds
+    }
+
     var isCurrentPrayerWindow: Bool {
         guard let prev = prevPrayerTime, !prevNameAr.isEmpty else { return false }
-        return Date().timeIntervalSince(prev) < 1800
+        return Date().timeIntervalSince(prev) < dynamicWindow
     }
 
     var localizedName: String     { isArabic ? nameAr : nameEn }
     var localizedPrevName: String { isArabic ? prevNameAr : prevNameEn }
+
     var headerLabel: String {
         if isCurrentPrayerWindow {
-            return isArabic ? "صلاة جارية" : "Prayer Time"
+            return isArabic ? "بعد \(localizedPrevName)" : "After \(localizedPrevName)"
         }
         return isArabic ? "الصلاة القادمة" : "Next Prayer"
     }
-    var localizedDate: String  { isArabic ? dateAr : dateEn }
+
+    var localizedDate: String { isArabic ? dateAr : dateEn }
 
     static let placeholder = PrayerEntry(
         date: .now,
@@ -154,7 +181,10 @@ struct PrayerEntry: TimelineEntry {
         intentLanguage: .system,
         intentDisplayMode: .detailed,
         isDuhaTime: false,
-        isQiyamTime: false
+        isQiyamTime: false,
+        isPrayerEnabled: true,
+        sunriseTimeStr: "",
+        sunsetTimeStr: ""
     )
 }
 
@@ -169,8 +199,6 @@ struct PrayerIntentProvider: AppIntentTimelineProvider {
 
     func timeline(for configuration: PrayerWidgetIntent, in context: Context) async -> Timeline<PrayerEntry> {
         let entry = readEntry(configuration: configuration)
-        // Refresh at prayer time +1 min so new prayer name appears promptly.
-        // Fall back to 30-min poll if prayer time is missing or already past.
         let refresh: Date
         if let t = entry.prayerTime, t > .now {
             refresh = Calendar.current.date(byAdding: .minute, value: 1, to: t)!
@@ -190,10 +218,6 @@ struct PrayerIntentProvider: AppIntentTimelineProvider {
         let dateAr    = d?.string(forKey: kDateAr)     ?? ""
         let dateEn    = d?.string(forKey: kDateEn)     ?? ""
 
-        // Parse prayer time — prefer the ms-epoch double (written by Flutter as
-        // time.millisecondsSinceEpoch.toDouble()), which needs no timezone parsing.
-        // Fall back to ISO-8601 with a permissive formatter for Dart's local-time
-        // format "yyyy-MM-dd'T'HH:mm:ss.SSSSSS" (no timezone designator).
         var prayerTime: Date?
         let tsMs = d?.double(forKey: kTimestamp) ?? 0
         if tsMs > 0 {
@@ -213,22 +237,22 @@ struct PrayerIntentProvider: AppIntentTimelineProvider {
             }
         }
 
-        // Previous prayer timestamp — present from v4 payload onward.
         var prevPrayerTime: Date?
         let prevTsMs = d?.double(forKey: kPrevTimestamp) ?? 0
         if prevTsMs > 0 {
             prevPrayerTime = Date(timeIntervalSince1970: prevTsMs / 1000.0)
         }
 
-        // Nafl windows — stored as int 0/1 (v5 payload onward).
-        let isDuhaTime  = (d?.integer(forKey: kIsDuhaTime) ?? 0) == 1
+        let isDuhaTime  = (d?.integer(forKey: kIsDuhaTime)  ?? 0) == 1
         let isQiyamTime = (d?.integer(forKey: kIsQiyamTime) ?? 0) == 1
+        let prevNameAr  = d?.string(forKey: kPrevNameAr) ?? ""
+        let prevNameEn  = d?.string(forKey: kPrevNameEn) ?? ""
+        // v7: default 1 (enabled) when key absent — backward compat with pre-PR9 pushes.
+        let isPrayerEnabled = (d?.integer(forKey: kIsPrayerEnabled) ?? 1) == 1
+        // v8: sunrise/sunset — empty string when not yet pushed (pre-PR9 installs).
+        let sunriseTimeStr = d?.string(forKey: kSunriseTime) ?? ""
+        let sunsetTimeStr  = d?.string(forKey: kSunsetTime)  ?? ""
 
-        // Previous prayer name — v6 payload onward (current-prayer state).
-        let prevNameAr = d?.string(forKey: kPrevNameAr) ?? ""
-        let prevNameEn = d?.string(forKey: kPrevNameEn) ?? ""
-
-        // Data is stale if Flutter hasn't written in > 2 hours.
         var isStale = nameAr.isEmpty
         if let lastStr = d?.string(forKey: kLastUpdated) {
             let df = DateFormatter()
@@ -261,19 +285,41 @@ struct PrayerIntentProvider: AppIntentTimelineProvider {
             intentLanguage: configuration.language,
             intentDisplayMode: configuration.displayMode,
             isDuhaTime: isDuhaTime,
-            isQiyamTime: isQiyamTime
+            isQiyamTime: isQiyamTime,
+            isPrayerEnabled: isPrayerEnabled,
+            sunriseTimeStr: sunriseTimeStr,
+            sunsetTimeStr: sunsetTimeStr
         )
     }
 }
 
-// MARK: – Design tokens (mirrors Athar Flutter palette)
+// MARK: – Design tokens — Athar v2 forest palette
+// OQ7 DEFERRED: WidgetTokens.swift pipeline → PR-CLEANUP.
+// Inline consts updated to v2 values; keep in sync with AtharColors.dart.
 
 private extension Color {
-    static let navyDeep = Color(red: 0.07, green: 0.09, blue: 0.15)  // #111827
-    static let navyMid  = Color(red: 0.12, green: 0.16, blue: 0.24)  // #1E293B
-    static let gold     = Color(red: 0.83, green: 0.68, blue: 0.21)  // #D4AE35
-    static let dimWhite = Color.white.opacity(0.55)
-    static let qiyamBlue = Color(red: 0.45, green: 0.65, blue: 0.95) // soft blue for qiyam badge
+    static let athaForest    = Color(red: 0.059, green: 0.239, blue: 0.180) // #0F3D2E
+    static let athaForestMid = Color(red: 0.102, green: 0.353, blue: 0.271) // #1A5A45
+    static let athaCream     = Color(red: 0.929, green: 0.902, blue: 0.784) // #EDE6C8
+    static let dimWhite      = Color.white.opacity(0.55)
+    static let qiyamBlue    = Color(red: 0.45, green: 0.65, blue: 0.95)
+}
+
+// MARK: – Calibri font helpers
+// OQ3: font is used in code; rendering requires Calibri .ttf bundled in this
+// extension target + UIAppFonts in Info.plist (manual Xcode step — see file header).
+// Falls back to system font silently if font files are not registered.
+
+private func calibri(_ size: CGFloat, _ weight: Font.Weight = .regular) -> Font {
+    switch weight {
+    case .light:  return Font.custom("Calibri-Light", size: size)
+    case .bold:   return Font.custom("Calibri-Bold",  size: size)
+    default:      return Font.custom("Calibri",       size: size)
+    }
+}
+
+private func calibriMono(_ size: CGFloat) -> Font {
+    Font.custom("Calibri-Light", size: size).monospacedDigit()
 }
 
 // MARK: – SF Symbol per prayer type
@@ -290,9 +336,23 @@ private func prayerIcon(_ type: String) -> String {
     }
 }
 
+// MARK: – ISO-8601 date parser (used for sunrise/sunset v8 keys)
+
+private func parseISOTime(_ iso: String) -> Date? {
+    guard !iso.isEmpty else { return nil }
+    let df = DateFormatter()
+    df.locale = Locale(identifier: "en_US_POSIX")
+    for fmt in ["yyyy-MM-dd'T'HH:mm:ss.SSSSSS",
+                "yyyy-MM-dd'T'HH:mm:ss.SSS",
+                "yyyy-MM-dd'T'HH:mm:ss"] {
+        df.dateFormat = fmt
+        if let d = df.date(from: iso) { return d }
+    }
+    return nil
+}
+
 // MARK: – Formatted time string (locale-aware)
 
-/// Returns a short time string formatted for the resolved widget language.
 private func formattedTime(_ date: Date?, lang: String) -> String {
     guard let date else { return "--:--" }
     let f = DateFormatter()
@@ -301,7 +361,57 @@ private func formattedTime(_ date: Date?, lang: String) -> String {
     return f.string(from: date)
 }
 
-// MARK: – Nafl badge (Duha / Qiyam)
+// MARK: – Prayer strip helpers (systemLarge)
+
+private let prayerOrder: [String] = ["fajr", "dhuhr", "asr", "maghrib", "isha"]
+
+private struct PrayerStripInfo {
+    let type: String
+    let nameAr: String
+    let nameEn: String
+}
+
+private let prayerStripInfos: [PrayerStripInfo] = [
+    PrayerStripInfo(type: "fajr",    nameAr: "الفجر",  nameEn: "Fajr"),
+    PrayerStripInfo(type: "dhuhr",   nameAr: "الظهر",  nameEn: "Dhuhr"),
+    PrayerStripInfo(type: "asr",     nameAr: "العصر",  nameEn: "Asr"),
+    PrayerStripInfo(type: "maghrib", nameAr: "المغرب", nameEn: "Maghrib"),
+    PrayerStripInfo(type: "isha",    nameAr: "العشاء", nameEn: "Isha"),
+]
+
+private enum StripCellState { case past, now, next, future }
+
+private func stripState(
+    idx: Int,
+    nowIdx: Int,
+    nextIdx: Int,
+    isCurrentWindow: Bool
+) -> StripCellState {
+    // Night wrap: Isha is now, Fajr is next day
+    if nextIdx == 0 && nowIdx == 4 {
+        if idx == 0 { return .next }
+        if idx == 4 { return isCurrentWindow ? .now : .past }
+        return .past
+    }
+    if idx < nowIdx { return .past }
+    if idx == nowIdx { return isCurrentWindow ? .now : .past }
+    if idx == nextIdx { return .next }
+    return .future
+}
+
+private func inferTypeFromEnglishName(_ name: String) -> String {
+    switch name.lowercased() {
+    case "fajr":    return "fajr"
+    case "sunrise": return "sunrise"
+    case "dhuhr":   return "dhuhr"
+    case "asr":     return "asr"
+    case "maghrib": return "maghrib"
+    case "isha":    return "isha"
+    default:        return ""
+    }
+}
+
+// MARK: – Nafl badge
 
 private struct NaflBadge: View {
     let isDuha: Bool
@@ -311,13 +421,13 @@ private struct NaflBadge: View {
     var body: some View {
         if isDuha || isQiyam {
             let label: String = {
-                if isDuha  { return isArabic ? "وقت الضحى"   : "Duha" }
-                             return isArabic ? "قيام الليل"  : "Qiyam"
+                if isDuha  { return isArabic ? "وقت الضحى"  : "Duha" }
+                             return isArabic ? "قيام الليل" : "Qiyam"
             }()
-            let color: Color = isDuha ? .gold : .qiyamBlue
+            let color: Color = isDuha ? .athaCream : .qiyamBlue
 
             Text(label)
-                .font(.system(size: 8, weight: .semibold))
+                .font(calibri(8, .bold))
                 .foregroundColor(color)
                 .padding(.horizontal, 6)
                 .padding(.vertical, 2)
@@ -334,17 +444,38 @@ struct PrayerWidgetView: View {
 
     var body: some View {
         Group {
-            switch family {
-            case .systemSmall:          smallBody
-            case .systemMedium:         mediumBody
-            case .accessoryCircular:    circularBody
-            case .accessoryRectangular: rectangularBody
-            default:                    smallBody
+            if !entry.isPrayerEnabled {
+                prayerDisabledView
+            } else {
+                switch family {
+                case .systemSmall:          smallBody
+                case .systemMedium:         mediumBody
+                case .systemLarge:          largeBody
+                case .accessoryCircular:    circularBody
+                case .accessoryRectangular: rectangularBody
+                default:                    smallBody
+                }
             }
         }
+        .widgetURL(URL(string: "athar://prayer"))
         .modifier(WidgetBackground(family: family))
-        // Apply RTL/LTR based on resolved language — fixes Arabic layout direction
         .environment(\.layoutDirection, entry.isArabic ? .rightToLeft : .leftToRight)
+    }
+
+    // ── Prayer disabled (Conflict A: gate) ─────────────────────────────────
+
+    private var prayerDisabledView: some View {
+        VStack(spacing: 8) {
+            Image(systemName: "moon.stars")
+                .font(.system(size: 26, weight: .light))
+                .foregroundColor(.athaCream.opacity(0.6))
+            Text(entry.isArabic ? "فعّل الصلاة في أثر" : "Enable Prayer in Athar")
+                .font(calibri(12))
+                .foregroundColor(.athaCream.opacity(0.75))
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+        }
+        .padding(16)
     }
 
     // ── systemSmall ──────────────────────────────────────────────────────────
@@ -352,65 +483,61 @@ struct PrayerWidgetView: View {
     private var smallBody: some View {
         VStack(alignment: .center, spacing: 0) {
 
-            // 1. Header: prayer icon + label
             HStack(spacing: 4) {
                 Image(systemName: prayerIcon(entry.prayerType))
                     .font(.system(size: 10, weight: .semibold))
-                    .foregroundColor(.gold)
+                    .foregroundColor(.athaCream)
                 Text(entry.headerLabel)
-                    .font(.system(size: 10, weight: .medium))
+                    .font(calibri(10))
                     .foregroundColor(.dimWhite)
                     .lineLimit(1)
             }
             .padding(.bottom, 2)
 
-            // 2. Nafl badge — detailed only (Duha / Qiyam)
             if entry.isDetailed {
                 NaflBadge(isDuha: entry.isDuhaTime, isQiyam: entry.isQiyamTime, isArabic: entry.isArabic)
                     .padding(.bottom, 2)
             }
 
-            // 3. Prayer name (large)
             Text(entry.localizedName)
-                .font(.system(size: 20, weight: .bold))
+                .font(calibri(20, .bold))
                 .foregroundColor(.white)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
 
-            // 4. Prayer time (gold, prominent)
             Text(formattedTime(entry.prayerTime, lang: entry.resolvedLocale))
-                .font(.system(size: 22, weight: .heavy, design: .rounded))
-                .foregroundColor(.gold)
+                .font(calibri(22, .bold))
+                .foregroundColor(.athaCream)
                 .lineLimit(1)
                 .padding(.top, 2)
 
-            // 5. Live countdown with "باقي/in" label
+            // Countdown — 32pt, Calibri-Light mono (OQ2 spec)
             if let t = entry.prayerTime, t > .now {
                 VStack(spacing: 1) {
                     Text(entry.isArabic ? "باقي" : "in")
-                        .font(.system(size: 8, weight: .medium))
+                        .font(calibri(8))
                         .foregroundColor(.dimWhite)
                     Text(t, style: .timer)
-                        .font(.system(size: 11, weight: .medium, design: .monospaced))
-                        .foregroundColor(.dimWhite)
+                        .font(calibriMono(32))
+                        .foregroundColor(.white)
                         .lineLimit(1)
+                        .minimumScaleFactor(0.6)
                 }
                 .padding(.top, 2)
             }
 
-            // 6. City + date — detailed only
             if entry.isDetailed {
                 Spacer(minLength: 4)
                 VStack(spacing: 1) {
                     if !entry.city.isEmpty {
                         Text(entry.city)
-                            .font(.system(size: 9))
+                            .font(calibri(9))
                             .foregroundColor(.dimWhite)
                             .lineLimit(1)
                     }
                     if !entry.localizedDate.isEmpty {
                         Text(entry.localizedDate)
-                            .font(.system(size: 8))
+                            .font(calibri(8))
                             .foregroundColor(.dimWhite)
                             .lineLimit(1)
                             .minimumScaleFactor(0.6)
@@ -435,25 +562,23 @@ struct PrayerWidgetView: View {
         VStack(spacing: 0) {
             HStack(alignment: .center, spacing: 0) {
 
-                // Left column: label + prayer name + nafl badge + optional city + date
                 VStack(alignment: .leading, spacing: 3) {
                     HStack(spacing: 4) {
                         Image(systemName: prayerIcon(entry.prayerType))
                             .font(.system(size: 11, weight: .semibold))
-                            .foregroundColor(.gold)
+                            .foregroundColor(.athaCream)
                         Text(entry.headerLabel)
-                            .font(.system(size: 11, weight: .medium))
+                            .font(calibri(11))
                             .foregroundColor(.dimWhite)
                     }
 
                     Text(entry.localizedName)
-                        .font(.system(size: 28, weight: .bold))
+                        .font(calibri(28, .bold))
                         .foregroundColor(.white)
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
 
                     if entry.isDetailed {
-                        // Nafl badge (Duha / Qiyam) — shown when active
                         NaflBadge(isDuha: entry.isDuhaTime, isQiyam: entry.isQiyamTime, isArabic: entry.isArabic)
 
                         if !entry.city.isEmpty {
@@ -462,14 +587,14 @@ struct PrayerWidgetView: View {
                                     .font(.system(size: 9))
                                     .foregroundColor(.dimWhite)
                                 Text(entry.city)
-                                    .font(.system(size: 11))
+                                    .font(calibri(11))
                                     .foregroundColor(.dimWhite)
                                     .lineLimit(1)
                             }
                         }
                         if !entry.localizedDate.isEmpty {
                             Text(entry.localizedDate)
-                                .font(.system(size: 10))
+                                .font(calibri(10))
                                 .foregroundColor(.dimWhite)
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.7)
@@ -479,21 +604,21 @@ struct PrayerWidgetView: View {
 
                 Spacer()
 
-                // Right column: time + live countdown
                 VStack(alignment: .trailing, spacing: 4) {
                     Text(formattedTime(entry.prayerTime, lang: entry.resolvedLocale))
-                        .font(.system(size: 26, weight: .heavy, design: .rounded))
-                        .foregroundColor(.gold)
+                        .font(calibri(26, .bold))
+                        .foregroundColor(.athaCream)
                         .lineLimit(1)
 
+                    // Countdown — 22pt Calibri-Light mono for medium
                     if let t = entry.prayerTime, t > .now {
                         VStack(alignment: .trailing, spacing: 1) {
                             Text(entry.isArabic ? "باقي" : "in")
-                                .font(.system(size: 9, weight: .medium))
+                                .font(calibri(9))
                                 .foregroundColor(.dimWhite)
                             Text(t, style: .timer)
-                                .font(.system(size: 13, weight: .medium, design: .monospaced))
-                                .foregroundColor(.dimWhite)
+                                .font(calibriMono(22))
+                                .foregroundColor(.white)
                                 .multilineTextAlignment(.trailing)
                         }
                     }
@@ -509,23 +634,225 @@ struct PrayerWidgetView: View {
             .padding(.top, 14)
             .padding(.bottom, entry.isDetailed ? 10 : 14)
 
-            // Progress bar — detailed only
             if entry.isDetailed, entry.prevPrayerTime != nil {
-                GeometryReader { geo in
-                    ZStack(alignment: .leading) {
-                        Capsule()
-                            .fill(Color.white.opacity(0.12))
-                            .frame(height: 3)
-                        Capsule()
-                            .fill(Color.gold.opacity(0.85))
-                            .frame(width: geo.size.width * entry.intervalProgress, height: 3)
-                    }
-                }
-                .frame(height: 3)
-                .padding(.horizontal, 16)
-                .padding(.bottom, 10)
+                progressBar
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 10)
             }
         }
+    }
+
+    // ── systemLarge (OQ1) ────────────────────────────────────────────────────
+
+    private var largeBody: some View {
+        VStack(alignment: .leading, spacing: 0) {
+
+            // Dual date header
+            VStack(alignment: .leading, spacing: 2) {
+                Text(entry.dateAr.isEmpty ? entry.localizedDate : entry.dateAr)
+                    .font(calibri(13, .bold))
+                    .foregroundColor(.athaCream)
+                    .lineLimit(1)
+                if !entry.dateEn.isEmpty && entry.isArabic {
+                    Text(entry.dateEn)
+                        .font(calibri(11))
+                        .foregroundColor(.dimWhite)
+                        .lineLimit(1)
+                } else if !entry.dateAr.isEmpty && !entry.isArabic {
+                    Text(entry.dateAr)
+                        .font(calibri(11))
+                        .foregroundColor(.dimWhite)
+                        .lineLimit(1)
+                }
+            }
+            .padding(.bottom, 10)
+
+            Rectangle()
+                .fill(Color.white.opacity(0.12))
+                .frame(height: 1)
+                .padding(.bottom, 12)
+
+            // Prayer name + header label
+            HStack(spacing: 6) {
+                Image(systemName: prayerIcon(entry.prayerType))
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(.athaCream)
+                Text(entry.headerLabel)
+                    .font(calibri(13))
+                    .foregroundColor(.dimWhite)
+            }
+            .padding(.bottom, 4)
+
+            Text(entry.localizedName)
+                .font(calibri(36, .bold))
+                .foregroundColor(.white)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+                .padding(.bottom, 2)
+
+            // Nafl badge
+            NaflBadge(isDuha: entry.isDuhaTime, isQiyam: entry.isQiyamTime, isArabic: entry.isArabic)
+                .padding(.bottom, 4)
+
+            // Countdown — 40pt, Calibri-Light mono (OQ1 spec)
+            if let t = entry.prayerTime, t > .now {
+                HStack(alignment: .firstTextBaseline, spacing: 6) {
+                    Text(t, style: .timer)
+                        .font(calibriMono(40))
+                        .foregroundColor(.white)
+                        .lineLimit(1)
+                    Text(entry.isArabic ? "باقي" : "remaining")
+                        .font(calibri(13))
+                        .foregroundColor(.dimWhite)
+                }
+                .padding(.bottom, 8)
+            }
+
+            Spacer(minLength: 8)
+
+            // Progress bar
+            if entry.prevPrayerTime != nil {
+                progressBar
+                    .padding(.bottom, 10)
+            }
+
+            // Sunrise/sunset time markers (P9-A — v8 keys)
+            sunriseSunsetRow
+                .padding(.bottom, 6)
+
+            // 5-prayer strip
+            prayerStripView
+                .padding(.bottom, 4)
+
+            // City + stale
+            HStack {
+                if !entry.city.isEmpty {
+                    HStack(spacing: 3) {
+                        Image(systemName: "location.fill")
+                            .font(.system(size: 9))
+                            .foregroundColor(.dimWhite)
+                        Text(entry.city)
+                            .font(calibri(11))
+                            .foregroundColor(.dimWhite)
+                    }
+                }
+                Spacer()
+                if entry.isStale {
+                    Image(systemName: "exclamationmark.circle")
+                        .font(.system(size: 10))
+                        .foregroundColor(.dimWhite)
+                }
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 14)
+    }
+
+    // ── 5-prayer strip (large only) ───────────────────────────────────────────
+
+    private var prayerStripView: some View {
+        let nextIdx  = prayerOrder.firstIndex(of: entry.prayerType) ?? 0
+        let prevType = inferTypeFromEnglishName(entry.prevNameEn)
+        let nowIdx   = prayerOrder.firstIndex(of: prevType) ?? -1
+
+        return HStack(spacing: 0) {
+            ForEach(Array(prayerStripInfos.enumerated()), id: \.0) { idx, info in
+                let state = nowIdx >= 0
+                    ? stripState(idx: idx, nowIdx: nowIdx, nextIdx: nextIdx,
+                                 isCurrentWindow: entry.isCurrentPrayerWindow)
+                    : (idx == nextIdx ? .next : .future)
+
+                prayerStripCell(info: info, state: state)
+
+                if idx < prayerStripInfos.count - 1 {
+                    Rectangle()
+                        .fill(Color.white.opacity(0.15))
+                        .frame(width: 1, height: 28)
+                }
+            }
+        }
+        .background(Color.white.opacity(0.06))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+
+    @ViewBuilder
+    private func prayerStripCell(info: PrayerStripInfo, state: StripCellState) -> some View {
+        let name          = entry.isArabic ? info.nameAr : info.nameEn
+        let isHighlighted = state == .now || state == .next
+        let opacity       = state == .past ? 0.35 : (state == .future ? 0.45 : 1.0)
+        let accent: Color = isHighlighted ? .athaCream : .dimWhite
+        let iconPt: CGFloat = isHighlighted ? 13 : 11
+        let namePt: CGFloat = isHighlighted ? 11 : 10
+
+        VStack(spacing: 3) {
+            Image(systemName: prayerIcon(info.type))
+                .font(.system(size: iconPt, weight: .semibold))
+                .foregroundColor(accent)
+            Text(name)
+                .font(calibri(namePt))
+                .foregroundColor(.white.opacity(opacity))
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
+            if state == .now {
+                Circle().fill(Color.athaCream).frame(width: 4, height: 4)
+            } else if state == .next {
+                Circle().fill(Color.white.opacity(0.4)).frame(width: 4, height: 4)
+            } else {
+                Spacer().frame(height: 4)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 8)
+        .opacity(opacity)
+    }
+
+    // ── Sunrise/sunset row (systemLarge, P9-A) ────────────────────────────────
+
+    @ViewBuilder
+    private var sunriseSunsetRow: some View {
+        let sr = entry.sunriseDate
+        let ss = entry.sunsetDate
+        if sr != nil || ss != nil {
+            HStack {
+                if let sr {
+                    HStack(spacing: 4) {
+                        Image(systemName: "sunrise.fill")
+                            .font(.system(size: 10, weight: .semibold))
+                            .foregroundColor(.athaCream.opacity(0.7))
+                        Text(formattedTime(sr, lang: entry.resolvedLocale))
+                            .font(calibri(11))
+                            .foregroundColor(.dimWhite)
+                    }
+                }
+                Spacer()
+                if let ss {
+                    HStack(spacing: 4) {
+                        Text(formattedTime(ss, lang: entry.resolvedLocale))
+                            .font(calibri(11))
+                            .foregroundColor(.dimWhite)
+                        Image(systemName: "sunset.fill")
+                            .font(.system(size: 10, weight: .semibold))
+                            .foregroundColor(.athaCream.opacity(0.7))
+                    }
+                }
+            }
+        }
+    }
+
+    // ── Progress bar (shared) ─────────────────────────────────────────────────
+
+    private var progressBar: some View {
+        GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                Capsule()
+                    .fill(Color.white.opacity(0.12))
+                    .frame(height: 3)
+                Capsule()
+                    .fill(Color.athaCream.opacity(0.85))
+                    .frame(width: geo.size.width * entry.intervalProgress, height: 3)
+            }
+        }
+        .frame(height: 3)
     }
 
     // ── accessoryCircular ────────────────────────────────────────────────────
@@ -537,7 +864,7 @@ struct PrayerWidgetView: View {
                 Image(systemName: prayerIcon(entry.prayerType))
                     .font(.system(size: 13, weight: .semibold))
                 Text(entry.localizedName)
-                    .font(.system(size: 10, weight: .bold))
+                    .font(calibri(10, .bold))
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
             }
@@ -552,24 +879,24 @@ struct PrayerWidgetView: View {
                 Image(systemName: prayerIcon(entry.prayerType))
                     .font(.system(size: 9, weight: .semibold))
                 Text(entry.headerLabel)
-                    .font(.system(size: 9, weight: .medium))
+                    .font(calibri(9))
                     .foregroundColor(.secondary)
             }
             HStack(alignment: .firstTextBaseline) {
                 Text(entry.localizedName)
-                    .font(.system(size: 15, weight: .bold))
+                    .font(calibri(15, .bold))
                     .lineLimit(1)
                 Spacer()
                 Text(formattedTime(entry.prayerTime, lang: entry.resolvedLocale))
-                    .font(.system(size: 15, weight: .semibold, design: .rounded))
-                    .foregroundColor(.gold)
+                    .font(calibri(15, .bold))
+                    .foregroundColor(.athaCream)
             }
         }
         .padding(.horizontal, 2)
     }
 }
 
-// MARK: – Background (iOS 17+ only — no availability shim needed)
+// MARK: – Background
 
 private struct WidgetBackground: ViewModifier {
     let family: WidgetFamily
@@ -579,11 +906,14 @@ private struct WidgetBackground: ViewModifier {
             content.containerBackground(.clear, for: .widget)
         } else {
             content.containerBackground(for: .widget) {
-                LinearGradient(
-                    colors: [.navyMid, .navyDeep],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
+                ZStack {
+                    LinearGradient(
+                        colors: [.athaForest, .athaForestMid],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                    Color.white.opacity(0.03) // subtle glass sheen
+                }
             }
         }
     }
@@ -605,7 +935,7 @@ struct AtharPrayerWidget: Widget {
         }
         .configurationDisplayName("الصلاة القادمة · Next Prayer")
         .description("وقت الصلاة القادمة والعداد التنازلي · Next prayer time and countdown")
-        .supportedFamilies([.systemSmall, .systemMedium,
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge,
                             .accessoryCircular, .accessoryRectangular])
     }
 }

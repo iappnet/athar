@@ -79,243 +79,280 @@ const UserSettingsSchema = CollectionSchema(
       name: r'didMigratePrayerFeatureSettings',
       type: IsarType.bool,
     ),
-    r'enablePrayerReminders': PropertySchema(
+    r'didMigrateThemePreference': PropertySchema(
       id: 12,
+      name: r'didMigrateThemePreference',
+      type: IsarType.bool,
+    ),
+    r'disableGyroscope': PropertySchema(
+      id: 13,
+      name: r'disableGyroscope',
+      type: IsarType.bool,
+    ),
+    r'easternNumerals': PropertySchema(
+      id: 14,
+      name: r'easternNumerals',
+      type: IsarType.bool,
+    ),
+    r'enablePrayerReminders': PropertySchema(
+      id: 15,
       name: r'enablePrayerReminders',
       type: IsarType.bool,
     ),
     r'eveningAthkarTime': PropertySchema(
-      id: 13,
+      id: 16,
       name: r'eveningAthkarTime',
       type: IsarType.string,
     ),
     r'familyCategoryId': PropertySchema(
-      id: 14,
+      id: 17,
       name: r'familyCategoryId',
       type: IsarType.long,
     ),
     r'familyPeriods': PropertySchema(
-      id: 15,
+      id: 18,
       name: r'familyPeriods',
       type: IsarType.objectList,
       target: r'TimeRange',
     ),
+    r'focusIntensity': PropertySchema(
+      id: 19,
+      name: r'focusIntensity',
+      type: IsarType.string,
+      enumMap: _UserSettingsfocusIntensityEnumValueMap,
+    ),
     r'freeCategoryId': PropertySchema(
-      id: 16,
+      id: 20,
       name: r'freeCategoryId',
       type: IsarType.long,
     ),
     r'freePeriods': PropertySchema(
-      id: 17,
+      id: 21,
       name: r'freePeriods',
       type: IsarType.objectList,
       target: r'TimeRange',
     ),
     r'hideNavOnScroll': PropertySchema(
-      id: 18,
+      id: 22,
       name: r'hideNavOnScroll',
       type: IsarType.bool,
     ),
     r'isAppointmentRemindersEnabled': PropertySchema(
-      id: 19,
+      id: 23,
       name: r'isAppointmentRemindersEnabled',
       type: IsarType.bool,
     ),
     r'isAssetRemindersEnabled': PropertySchema(
-      id: 20,
+      id: 24,
       name: r'isAssetRemindersEnabled',
       type: IsarType.bool,
     ),
     r'isAthkarEnabled': PropertySchema(
-      id: 21,
+      id: 25,
       name: r'isAthkarEnabled',
       type: IsarType.bool,
     ),
     r'isAthkarRemindersEnabled': PropertySchema(
-      id: 22,
+      id: 26,
       name: r'isAthkarRemindersEnabled',
       type: IsarType.bool,
     ),
     r'isAutoModeEnabled': PropertySchema(
-      id: 23,
+      id: 27,
       name: r'isAutoModeEnabled',
       type: IsarType.bool,
     ),
     r'isAutoSyncEnabled': PropertySchema(
-      id: 24,
+      id: 28,
       name: r'isAutoSyncEnabled',
       type: IsarType.bool,
     ),
     r'isBiometricEnabled': PropertySchema(
-      id: 25,
+      id: 29,
       name: r'isBiometricEnabled',
       type: IsarType.bool,
     ),
     r'isDarkMode': PropertySchema(
-      id: 26,
+      id: 30,
       name: r'isDarkMode',
       type: IsarType.bool,
     ),
     r'isHabitRemindersEnabled': PropertySchema(
-      id: 27,
+      id: 31,
       name: r'isHabitRemindersEnabled',
       type: IsarType.bool,
     ),
     r'isHijriMode': PropertySchema(
-      id: 28,
+      id: 32,
       name: r'isHijriMode',
       type: IsarType.bool,
     ),
     r'isMedicationNotificationsEnabled': PropertySchema(
-      id: 29,
+      id: 33,
       name: r'isMedicationNotificationsEnabled',
       type: IsarType.bool,
     ),
     r'isPrayerCardEnabled': PropertySchema(
-      id: 30,
+      id: 34,
       name: r'isPrayerCardEnabled',
       type: IsarType.bool,
     ),
     r'isPrayerEnabled': PropertySchema(
-      id: 31,
+      id: 35,
       name: r'isPrayerEnabled',
       type: IsarType.bool,
     ),
     r'isPrayerNotificationsEnabled': PropertySchema(
-      id: 32,
+      id: 36,
       name: r'isPrayerNotificationsEnabled',
       type: IsarType.bool,
     ),
     r'isProjectRemindersEnabled': PropertySchema(
-      id: 33,
+      id: 37,
       name: r'isProjectRemindersEnabled',
       type: IsarType.bool,
     ),
     r'isTaskRemindersEnabled': PropertySchema(
-      id: 34,
+      id: 38,
       name: r'isTaskRemindersEnabled',
       type: IsarType.bool,
     ),
     r'isTasksKanbanView': PropertySchema(
-      id: 35,
+      id: 39,
       name: r'isTasksKanbanView',
       type: IsarType.bool,
     ),
     r'lastSyncAt': PropertySchema(
-      id: 36,
+      id: 40,
       name: r'lastSyncAt',
       type: IsarType.dateTime,
     ),
     r'lastSyncError': PropertySchema(
-      id: 37,
+      id: 41,
       name: r'lastSyncError',
       type: IsarType.string,
     ),
     r'latitude': PropertySchema(
-      id: 38,
+      id: 42,
       name: r'latitude',
       type: IsarType.double,
     ),
     r'longitude': PropertySchema(
-      id: 39,
+      id: 43,
       name: r'longitude',
       type: IsarType.double,
     ),
     r'morningAthkarTime': PropertySchema(
-      id: 40,
+      id: 44,
       name: r'morningAthkarTime',
       type: IsarType.string,
     ),
     r'prayerCardDisplayMode': PropertySchema(
-      id: 41,
+      id: 45,
       name: r'prayerCardDisplayMode',
       type: IsarType.string,
       enumMap: _UserSettingsprayerCardDisplayModeEnumValueMap,
     ),
     r'prayerTimeAdjustmentMinutes': PropertySchema(
-      id: 42,
+      id: 46,
       name: r'prayerTimeAdjustmentMinutes',
       type: IsarType.long,
     ),
     r'projectDailyReminders': PropertySchema(
-      id: 43,
+      id: 47,
       name: r'projectDailyReminders',
       type: IsarType.bool,
     ),
     r'projectReminderDaysBefore': PropertySchema(
-      id: 44,
+      id: 48,
       name: r'projectReminderDaysBefore',
       type: IsarType.long,
     ),
     r'projectReminderHoursBefore': PropertySchema(
-      id: 45,
+      id: 49,
       name: r'projectReminderHoursBefore',
       type: IsarType.long,
     ),
     r'projectWeeklySummary': PropertySchema(
-      id: 46,
+      id: 50,
       name: r'projectWeeklySummary',
       type: IsarType.bool,
     ),
     r'quietCategoryId': PropertySchema(
-      id: 47,
+      id: 51,
       name: r'quietCategoryId',
       type: IsarType.long,
     ),
     r'quietPeriods': PropertySchema(
-      id: 48,
+      id: 52,
       name: r'quietPeriods',
       type: IsarType.objectList,
       target: r'TimeRange',
     ),
+    r'reduceMotion': PropertySchema(
+      id: 53,
+      name: r'reduceMotion',
+      type: IsarType.bool,
+    ),
     r'respectQuietPeriodsForTasks': PropertySchema(
-      id: 49,
+      id: 54,
       name: r'respectQuietPeriodsForTasks',
       type: IsarType.bool,
     ),
     r'sampleDataDismissed': PropertySchema(
-      id: 50,
+      id: 55,
       name: r'sampleDataDismissed',
       type: IsarType.bool,
     ),
     r'sampleDataShown': PropertySchema(
-      id: 51,
+      id: 56,
       name: r'sampleDataShown',
       type: IsarType.bool,
     ),
+    r'showPrayerDotsOnCalendar': PropertySchema(
+      id: 57,
+      name: r'showPrayerDotsOnCalendar',
+      type: IsarType.bool,
+    ),
     r'sleepAthkarTime': PropertySchema(
-      id: 52,
+      id: 58,
       name: r'sleepAthkarTime',
       type: IsarType.string,
     ),
     r'sleepCategoryId': PropertySchema(
-      id: 53,
+      id: 59,
       name: r'sleepCategoryId',
       type: IsarType.long,
     ),
     r'sleepPeriods': PropertySchema(
-      id: 54,
+      id: 60,
       name: r'sleepPeriods',
       type: IsarType.objectList,
       target: r'TimeRange',
     ),
     r'taskReminderMinutesBefore': PropertySchema(
-      id: 55,
+      id: 61,
       name: r'taskReminderMinutesBefore',
       type: IsarType.long,
     ),
+    r'themePreference': PropertySchema(
+      id: 62,
+      name: r'themePreference',
+      type: IsarType.string,
+      enumMap: _UserSettingsthemePreferenceEnumValueMap,
+    ),
     r'workCategoryId': PropertySchema(
-      id: 56,
+      id: 63,
       name: r'workCategoryId',
       type: IsarType.long,
     ),
     r'workDays': PropertySchema(
-      id: 57,
+      id: 64,
       name: r'workDays',
       type: IsarType.longList,
     ),
     r'workPeriods': PropertySchema(
-      id: 58,
+      id: 65,
       name: r'workPeriods',
       type: IsarType.objectList,
       target: r'TimeRange',
@@ -364,6 +401,7 @@ int _userSettingsEstimateSize(
       }
     }
   }
+  bytesCount += 3 + object.focusIntensity.name.length * 3;
   {
     final list = object.freePeriods;
     if (list != null) {
@@ -415,6 +453,7 @@ int _userSettingsEstimateSize(
       }
     }
   }
+  bytesCount += 3 + object.themePreference.name.length * 3;
   {
     final value = object.workDays;
     if (value != null) {
@@ -456,74 +495,81 @@ void _userSettingsSerialize(
   writer.writeLong(offsets[9], object.defaultAppointmentReminderMinutes);
   writer.writeDateTime(offsets[10], object.defaultHabitReminderTime);
   writer.writeBool(offsets[11], object.didMigratePrayerFeatureSettings);
-  writer.writeBool(offsets[12], object.enablePrayerReminders);
-  writer.writeString(offsets[13], object.eveningAthkarTime);
-  writer.writeLong(offsets[14], object.familyCategoryId);
+  writer.writeBool(offsets[12], object.didMigrateThemePreference);
+  writer.writeBool(offsets[13], object.disableGyroscope);
+  writer.writeBool(offsets[14], object.easternNumerals);
+  writer.writeBool(offsets[15], object.enablePrayerReminders);
+  writer.writeString(offsets[16], object.eveningAthkarTime);
+  writer.writeLong(offsets[17], object.familyCategoryId);
   writer.writeObjectList<TimeRange>(
-    offsets[15],
+    offsets[18],
     allOffsets,
     TimeRangeSchema.serialize,
     object.familyPeriods,
   );
-  writer.writeLong(offsets[16], object.freeCategoryId);
+  writer.writeString(offsets[19], object.focusIntensity.name);
+  writer.writeLong(offsets[20], object.freeCategoryId);
   writer.writeObjectList<TimeRange>(
-    offsets[17],
+    offsets[21],
     allOffsets,
     TimeRangeSchema.serialize,
     object.freePeriods,
   );
-  writer.writeBool(offsets[18], object.hideNavOnScroll);
-  writer.writeBool(offsets[19], object.isAppointmentRemindersEnabled);
-  writer.writeBool(offsets[20], object.isAssetRemindersEnabled);
-  writer.writeBool(offsets[21], object.isAthkarEnabled);
-  writer.writeBool(offsets[22], object.isAthkarRemindersEnabled);
-  writer.writeBool(offsets[23], object.isAutoModeEnabled);
-  writer.writeBool(offsets[24], object.isAutoSyncEnabled);
-  writer.writeBool(offsets[25], object.isBiometricEnabled);
-  writer.writeBool(offsets[26], object.isDarkMode);
-  writer.writeBool(offsets[27], object.isHabitRemindersEnabled);
-  writer.writeBool(offsets[28], object.isHijriMode);
-  writer.writeBool(offsets[29], object.isMedicationNotificationsEnabled);
-  writer.writeBool(offsets[30], object.isPrayerCardEnabled);
-  writer.writeBool(offsets[31], object.isPrayerEnabled);
-  writer.writeBool(offsets[32], object.isPrayerNotificationsEnabled);
-  writer.writeBool(offsets[33], object.isProjectRemindersEnabled);
-  writer.writeBool(offsets[34], object.isTaskRemindersEnabled);
-  writer.writeBool(offsets[35], object.isTasksKanbanView);
-  writer.writeDateTime(offsets[36], object.lastSyncAt);
-  writer.writeString(offsets[37], object.lastSyncError);
-  writer.writeDouble(offsets[38], object.latitude);
-  writer.writeDouble(offsets[39], object.longitude);
-  writer.writeString(offsets[40], object.morningAthkarTime);
-  writer.writeString(offsets[41], object.prayerCardDisplayMode.name);
-  writer.writeLong(offsets[42], object.prayerTimeAdjustmentMinutes);
-  writer.writeBool(offsets[43], object.projectDailyReminders);
-  writer.writeLong(offsets[44], object.projectReminderDaysBefore);
-  writer.writeLong(offsets[45], object.projectReminderHoursBefore);
-  writer.writeBool(offsets[46], object.projectWeeklySummary);
-  writer.writeLong(offsets[47], object.quietCategoryId);
+  writer.writeBool(offsets[22], object.hideNavOnScroll);
+  writer.writeBool(offsets[23], object.isAppointmentRemindersEnabled);
+  writer.writeBool(offsets[24], object.isAssetRemindersEnabled);
+  writer.writeBool(offsets[25], object.isAthkarEnabled);
+  writer.writeBool(offsets[26], object.isAthkarRemindersEnabled);
+  writer.writeBool(offsets[27], object.isAutoModeEnabled);
+  writer.writeBool(offsets[28], object.isAutoSyncEnabled);
+  writer.writeBool(offsets[29], object.isBiometricEnabled);
+  writer.writeBool(offsets[30], object.isDarkMode);
+  writer.writeBool(offsets[31], object.isHabitRemindersEnabled);
+  writer.writeBool(offsets[32], object.isHijriMode);
+  writer.writeBool(offsets[33], object.isMedicationNotificationsEnabled);
+  writer.writeBool(offsets[34], object.isPrayerCardEnabled);
+  writer.writeBool(offsets[35], object.isPrayerEnabled);
+  writer.writeBool(offsets[36], object.isPrayerNotificationsEnabled);
+  writer.writeBool(offsets[37], object.isProjectRemindersEnabled);
+  writer.writeBool(offsets[38], object.isTaskRemindersEnabled);
+  writer.writeBool(offsets[39], object.isTasksKanbanView);
+  writer.writeDateTime(offsets[40], object.lastSyncAt);
+  writer.writeString(offsets[41], object.lastSyncError);
+  writer.writeDouble(offsets[42], object.latitude);
+  writer.writeDouble(offsets[43], object.longitude);
+  writer.writeString(offsets[44], object.morningAthkarTime);
+  writer.writeString(offsets[45], object.prayerCardDisplayMode.name);
+  writer.writeLong(offsets[46], object.prayerTimeAdjustmentMinutes);
+  writer.writeBool(offsets[47], object.projectDailyReminders);
+  writer.writeLong(offsets[48], object.projectReminderDaysBefore);
+  writer.writeLong(offsets[49], object.projectReminderHoursBefore);
+  writer.writeBool(offsets[50], object.projectWeeklySummary);
+  writer.writeLong(offsets[51], object.quietCategoryId);
   writer.writeObjectList<TimeRange>(
-    offsets[48],
+    offsets[52],
     allOffsets,
     TimeRangeSchema.serialize,
     object.quietPeriods,
   );
-  writer.writeBool(offsets[49], object.respectQuietPeriodsForTasks);
-  writer.writeBool(offsets[50], object.sampleDataDismissed);
-  writer.writeBool(offsets[51], object.sampleDataShown);
-  writer.writeString(offsets[52], object.sleepAthkarTime);
-  writer.writeLong(offsets[53], object.sleepCategoryId);
+  writer.writeBool(offsets[53], object.reduceMotion);
+  writer.writeBool(offsets[54], object.respectQuietPeriodsForTasks);
+  writer.writeBool(offsets[55], object.sampleDataDismissed);
+  writer.writeBool(offsets[56], object.sampleDataShown);
+  writer.writeBool(offsets[57], object.showPrayerDotsOnCalendar);
+  writer.writeString(offsets[58], object.sleepAthkarTime);
+  writer.writeLong(offsets[59], object.sleepCategoryId);
   writer.writeObjectList<TimeRange>(
-    offsets[54],
+    offsets[60],
     allOffsets,
     TimeRangeSchema.serialize,
     object.sleepPeriods,
   );
-  writer.writeLong(offsets[55], object.taskReminderMinutesBefore);
-  writer.writeLong(offsets[56], object.workCategoryId);
-  writer.writeLongList(offsets[57], object.workDays);
+  writer.writeLong(offsets[61], object.taskReminderMinutesBefore);
+  writer.writeString(offsets[62], object.themePreference.name);
+  writer.writeLong(offsets[63], object.workCategoryId);
+  writer.writeLongList(offsets[64], object.workDays);
   writer.writeObjectList<TimeRange>(
-    offsets[58],
+    offsets[65],
     allOffsets,
     TimeRangeSchema.serialize,
     object.workPeriods,
@@ -554,83 +600,94 @@ UserSettings _userSettingsDeserialize(
     defaultHabitReminderTime: reader.readDateTimeOrNull(offsets[10]),
     didMigratePrayerFeatureSettings:
         reader.readBoolOrNull(offsets[11]) ?? false,
-    enablePrayerReminders: reader.readBoolOrNull(offsets[12]) ?? true,
-    eveningAthkarTime: reader.readStringOrNull(offsets[13]) ?? '17:00',
+    didMigrateThemePreference: reader.readBoolOrNull(offsets[12]) ?? false,
+    disableGyroscope: reader.readBoolOrNull(offsets[13]) ?? false,
+    easternNumerals: reader.readBoolOrNull(offsets[14]) ?? false,
+    enablePrayerReminders: reader.readBoolOrNull(offsets[15]) ?? true,
+    eveningAthkarTime: reader.readStringOrNull(offsets[16]) ?? '17:00',
     familyPeriods: reader.readObjectList<TimeRange>(
-      offsets[15],
+      offsets[18],
       TimeRangeSchema.deserialize,
       allOffsets,
       TimeRange(),
     ),
+    focusIntensity: _UserSettingsfocusIntensityValueEnumMap[
+            reader.readStringOrNull(offsets[19])] ??
+        FocusIntensity.standard,
     freePeriods: reader.readObjectList<TimeRange>(
-      offsets[17],
+      offsets[21],
       TimeRangeSchema.deserialize,
       allOffsets,
       TimeRange(),
     ),
-    hideNavOnScroll: reader.readBoolOrNull(offsets[18]) ?? false,
-    isAppointmentRemindersEnabled: reader.readBoolOrNull(offsets[19]) ?? true,
-    isAssetRemindersEnabled: reader.readBoolOrNull(offsets[20]) ?? true,
-    isAthkarEnabled: reader.readBoolOrNull(offsets[21]) ?? true,
-    isAthkarRemindersEnabled: reader.readBoolOrNull(offsets[22]) ?? true,
-    isAutoModeEnabled: reader.readBoolOrNull(offsets[23]) ?? false,
-    isAutoSyncEnabled: reader.readBoolOrNull(offsets[24]) ?? false,
-    isBiometricEnabled: reader.readBoolOrNull(offsets[25]) ?? false,
-    isDarkMode: reader.readBoolOrNull(offsets[26]) ?? false,
-    isHabitRemindersEnabled: reader.readBoolOrNull(offsets[27]) ?? true,
-    isHijriMode: reader.readBoolOrNull(offsets[28]) ?? false,
+    hideNavOnScroll: reader.readBoolOrNull(offsets[22]) ?? false,
+    isAppointmentRemindersEnabled: reader.readBoolOrNull(offsets[23]) ?? true,
+    isAssetRemindersEnabled: reader.readBoolOrNull(offsets[24]) ?? true,
+    isAthkarEnabled: reader.readBoolOrNull(offsets[25]) ?? true,
+    isAthkarRemindersEnabled: reader.readBoolOrNull(offsets[26]) ?? true,
+    isAutoModeEnabled: reader.readBoolOrNull(offsets[27]) ?? false,
+    isAutoSyncEnabled: reader.readBoolOrNull(offsets[28]) ?? false,
+    isBiometricEnabled: reader.readBoolOrNull(offsets[29]) ?? false,
+    isDarkMode: reader.readBoolOrNull(offsets[30]) ?? false,
+    isHabitRemindersEnabled: reader.readBoolOrNull(offsets[31]) ?? true,
+    isHijriMode: reader.readBoolOrNull(offsets[32]) ?? false,
     isMedicationNotificationsEnabled:
-        reader.readBoolOrNull(offsets[29]) ?? true,
-    isPrayerCardEnabled: reader.readBoolOrNull(offsets[30]) ?? false,
-    isPrayerEnabled: reader.readBoolOrNull(offsets[31]) ?? false,
-    isPrayerNotificationsEnabled: reader.readBoolOrNull(offsets[32]) ?? false,
-    isProjectRemindersEnabled: reader.readBoolOrNull(offsets[33]) ?? true,
-    isTaskRemindersEnabled: reader.readBoolOrNull(offsets[34]) ?? true,
-    isTasksKanbanView: reader.readBoolOrNull(offsets[35]) ?? false,
-    latitude: reader.readDoubleOrNull(offsets[38]),
-    longitude: reader.readDoubleOrNull(offsets[39]),
-    morningAthkarTime: reader.readStringOrNull(offsets[40]) ?? '06:00',
+        reader.readBoolOrNull(offsets[33]) ?? true,
+    isPrayerCardEnabled: reader.readBoolOrNull(offsets[34]) ?? false,
+    isPrayerEnabled: reader.readBoolOrNull(offsets[35]) ?? false,
+    isPrayerNotificationsEnabled: reader.readBoolOrNull(offsets[36]) ?? false,
+    isProjectRemindersEnabled: reader.readBoolOrNull(offsets[37]) ?? true,
+    isTaskRemindersEnabled: reader.readBoolOrNull(offsets[38]) ?? true,
+    isTasksKanbanView: reader.readBoolOrNull(offsets[39]) ?? false,
+    latitude: reader.readDoubleOrNull(offsets[42]),
+    longitude: reader.readDoubleOrNull(offsets[43]),
+    morningAthkarTime: reader.readStringOrNull(offsets[44]) ?? '06:00',
     prayerCardDisplayMode: _UserSettingsprayerCardDisplayModeValueEnumMap[
-            reader.readStringOrNull(offsets[41])] ??
+            reader.readStringOrNull(offsets[45])] ??
         PrayerCardDisplayMode.dashboardOnly,
-    prayerTimeAdjustmentMinutes: reader.readLongOrNull(offsets[42]) ?? 0,
-    projectDailyReminders: reader.readBoolOrNull(offsets[43]) ?? false,
-    projectReminderDaysBefore: reader.readLongOrNull(offsets[44]) ?? 7,
-    projectReminderHoursBefore: reader.readLongOrNull(offsets[45]) ?? 24,
-    projectWeeklySummary: reader.readBoolOrNull(offsets[46]) ?? false,
+    prayerTimeAdjustmentMinutes: reader.readLongOrNull(offsets[46]) ?? 0,
+    projectDailyReminders: reader.readBoolOrNull(offsets[47]) ?? false,
+    projectReminderDaysBefore: reader.readLongOrNull(offsets[48]) ?? 7,
+    projectReminderHoursBefore: reader.readLongOrNull(offsets[49]) ?? 24,
+    projectWeeklySummary: reader.readBoolOrNull(offsets[50]) ?? false,
     quietPeriods: reader.readObjectList<TimeRange>(
-      offsets[48],
+      offsets[52],
       TimeRangeSchema.deserialize,
       allOffsets,
       TimeRange(),
     ),
-    respectQuietPeriodsForTasks: reader.readBoolOrNull(offsets[49]) ?? true,
-    sampleDataDismissed: reader.readBoolOrNull(offsets[50]) ?? false,
-    sampleDataShown: reader.readBoolOrNull(offsets[51]) ?? false,
-    sleepAthkarTime: reader.readStringOrNull(offsets[52]) ?? '22:00',
+    reduceMotion: reader.readBoolOrNull(offsets[53]) ?? false,
+    respectQuietPeriodsForTasks: reader.readBoolOrNull(offsets[54]) ?? true,
+    sampleDataDismissed: reader.readBoolOrNull(offsets[55]) ?? false,
+    sampleDataShown: reader.readBoolOrNull(offsets[56]) ?? false,
+    showPrayerDotsOnCalendar: reader.readBoolOrNull(offsets[57]) ?? true,
+    sleepAthkarTime: reader.readStringOrNull(offsets[58]) ?? '22:00',
     sleepPeriods: reader.readObjectList<TimeRange>(
-      offsets[54],
+      offsets[60],
       TimeRangeSchema.deserialize,
       allOffsets,
       TimeRange(),
     ),
-    taskReminderMinutesBefore: reader.readLongOrNull(offsets[55]) ?? 30,
-    workDays: reader.readLongList(offsets[57]),
+    taskReminderMinutesBefore: reader.readLongOrNull(offsets[61]) ?? 30,
+    themePreference: _UserSettingsthemePreferenceValueEnumMap[
+            reader.readStringOrNull(offsets[62])] ??
+        ThemePreference.system,
+    workDays: reader.readLongList(offsets[64]),
     workPeriods: reader.readObjectList<TimeRange>(
-      offsets[58],
+      offsets[65],
       TimeRangeSchema.deserialize,
       allOffsets,
       TimeRange(),
     ),
   );
-  object.familyCategoryId = reader.readLongOrNull(offsets[14]);
-  object.freeCategoryId = reader.readLongOrNull(offsets[16]);
+  object.familyCategoryId = reader.readLongOrNull(offsets[17]);
+  object.freeCategoryId = reader.readLongOrNull(offsets[20]);
   object.id = id;
-  object.lastSyncAt = reader.readDateTimeOrNull(offsets[36]);
-  object.lastSyncError = reader.readStringOrNull(offsets[37]);
-  object.quietCategoryId = reader.readLongOrNull(offsets[47]);
-  object.sleepCategoryId = reader.readLongOrNull(offsets[53]);
-  object.workCategoryId = reader.readLongOrNull(offsets[56]);
+  object.lastSyncAt = reader.readDateTimeOrNull(offsets[40]);
+  object.lastSyncError = reader.readStringOrNull(offsets[41]);
+  object.quietCategoryId = reader.readLongOrNull(offsets[51]);
+  object.sleepCategoryId = reader.readLongOrNull(offsets[59]);
+  object.workCategoryId = reader.readLongOrNull(offsets[63]);
   return object;
 }
 
@@ -670,120 +727,138 @@ P _userSettingsDeserializeProp<P>(
     case 11:
       return (reader.readBoolOrNull(offset) ?? false) as P;
     case 12:
-      return (reader.readBoolOrNull(offset) ?? true) as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 13:
-      return (reader.readStringOrNull(offset) ?? '17:00') as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 14:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 15:
-      return (reader.readObjectList<TimeRange>(
-        offset,
-        TimeRangeSchema.deserialize,
-        allOffsets,
-        TimeRange(),
-      )) as P;
+      return (reader.readBoolOrNull(offset) ?? true) as P;
     case 16:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset) ?? '17:00') as P;
     case 17:
+      return (reader.readLongOrNull(offset)) as P;
+    case 18:
       return (reader.readObjectList<TimeRange>(
         offset,
         TimeRangeSchema.deserialize,
         allOffsets,
         TimeRange(),
       )) as P;
-    case 18:
-      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 19:
-      return (reader.readBoolOrNull(offset) ?? true) as P;
+      return (_UserSettingsfocusIntensityValueEnumMap[
+              reader.readStringOrNull(offset)] ??
+          FocusIntensity.standard) as P;
     case 20:
-      return (reader.readBoolOrNull(offset) ?? true) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 21:
-      return (reader.readBoolOrNull(offset) ?? true) as P;
+      return (reader.readObjectList<TimeRange>(
+        offset,
+        TimeRangeSchema.deserialize,
+        allOffsets,
+        TimeRange(),
+      )) as P;
     case 22:
-      return (reader.readBoolOrNull(offset) ?? true) as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 23:
-      return (reader.readBoolOrNull(offset) ?? false) as P;
-    case 24:
-      return (reader.readBoolOrNull(offset) ?? false) as P;
-    case 25:
-      return (reader.readBoolOrNull(offset) ?? false) as P;
-    case 26:
-      return (reader.readBoolOrNull(offset) ?? false) as P;
-    case 27:
       return (reader.readBoolOrNull(offset) ?? true) as P;
+    case 24:
+      return (reader.readBoolOrNull(offset) ?? true) as P;
+    case 25:
+      return (reader.readBoolOrNull(offset) ?? true) as P;
+    case 26:
+      return (reader.readBoolOrNull(offset) ?? true) as P;
+    case 27:
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 28:
       return (reader.readBoolOrNull(offset) ?? false) as P;
     case 29:
-      return (reader.readBoolOrNull(offset) ?? true) as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 30:
       return (reader.readBoolOrNull(offset) ?? false) as P;
     case 31:
-      return (reader.readBoolOrNull(offset) ?? false) as P;
+      return (reader.readBoolOrNull(offset) ?? true) as P;
     case 32:
       return (reader.readBoolOrNull(offset) ?? false) as P;
     case 33:
       return (reader.readBoolOrNull(offset) ?? true) as P;
     case 34:
-      return (reader.readBoolOrNull(offset) ?? true) as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 35:
       return (reader.readBoolOrNull(offset) ?? false) as P;
     case 36:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 37:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset) ?? true) as P;
     case 38:
-      return (reader.readDoubleOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset) ?? true) as P;
     case 39:
-      return (reader.readDoubleOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 40:
-      return (reader.readStringOrNull(offset) ?? '06:00') as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 41:
+      return (reader.readStringOrNull(offset)) as P;
+    case 42:
+      return (reader.readDoubleOrNull(offset)) as P;
+    case 43:
+      return (reader.readDoubleOrNull(offset)) as P;
+    case 44:
+      return (reader.readStringOrNull(offset) ?? '06:00') as P;
+    case 45:
       return (_UserSettingsprayerCardDisplayModeValueEnumMap[
               reader.readStringOrNull(offset)] ??
           PrayerCardDisplayMode.dashboardOnly) as P;
-    case 42:
-      return (reader.readLongOrNull(offset) ?? 0) as P;
-    case 43:
-      return (reader.readBoolOrNull(offset) ?? false) as P;
-    case 44:
-      return (reader.readLongOrNull(offset) ?? 7) as P;
-    case 45:
-      return (reader.readLongOrNull(offset) ?? 24) as P;
     case 46:
-      return (reader.readBoolOrNull(offset) ?? false) as P;
+      return (reader.readLongOrNull(offset) ?? 0) as P;
     case 47:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 48:
-      return (reader.readObjectList<TimeRange>(
-        offset,
-        TimeRangeSchema.deserialize,
-        allOffsets,
-        TimeRange(),
-      )) as P;
+      return (reader.readLongOrNull(offset) ?? 7) as P;
     case 49:
-      return (reader.readBoolOrNull(offset) ?? true) as P;
+      return (reader.readLongOrNull(offset) ?? 24) as P;
     case 50:
       return (reader.readBoolOrNull(offset) ?? false) as P;
     case 51:
-      return (reader.readBoolOrNull(offset) ?? false) as P;
-    case 52:
-      return (reader.readStringOrNull(offset) ?? '22:00') as P;
-    case 53:
       return (reader.readLongOrNull(offset)) as P;
-    case 54:
+    case 52:
       return (reader.readObjectList<TimeRange>(
         offset,
         TimeRangeSchema.deserialize,
         allOffsets,
         TimeRange(),
       )) as P;
+    case 53:
+      return (reader.readBoolOrNull(offset) ?? false) as P;
+    case 54:
+      return (reader.readBoolOrNull(offset) ?? true) as P;
     case 55:
-      return (reader.readLongOrNull(offset) ?? 30) as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 56:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 57:
-      return (reader.readLongList(offset)) as P;
+      return (reader.readBoolOrNull(offset) ?? true) as P;
     case 58:
+      return (reader.readStringOrNull(offset) ?? '22:00') as P;
+    case 59:
+      return (reader.readLongOrNull(offset)) as P;
+    case 60:
+      return (reader.readObjectList<TimeRange>(
+        offset,
+        TimeRangeSchema.deserialize,
+        allOffsets,
+        TimeRange(),
+      )) as P;
+    case 61:
+      return (reader.readLongOrNull(offset) ?? 30) as P;
+    case 62:
+      return (_UserSettingsthemePreferenceValueEnumMap[
+              reader.readStringOrNull(offset)] ??
+          ThemePreference.system) as P;
+    case 63:
+      return (reader.readLongOrNull(offset)) as P;
+    case 64:
+      return (reader.readLongList(offset)) as P;
+    case 65:
       return (reader.readObjectList<TimeRange>(
         offset,
         TimeRangeSchema.deserialize,
@@ -811,6 +886,16 @@ const _UserSettingsathkarSessionViewModeValueEnumMap = {
   r'list': AthkarSessionViewMode.list,
   r'focus': AthkarSessionViewMode.focus,
 };
+const _UserSettingsfocusIntensityEnumValueMap = {
+  r'calm': r'calm',
+  r'standard': r'standard',
+  r'intense': r'intense',
+};
+const _UserSettingsfocusIntensityValueEnumMap = {
+  r'calm': FocusIntensity.calm,
+  r'standard': FocusIntensity.standard,
+  r'intense': FocusIntensity.intense,
+};
 const _UserSettingsprayerCardDisplayModeEnumValueMap = {
   r'dashboardOnly': r'dashboardOnly',
   r'dashboardAndTasks': r'dashboardAndTasks',
@@ -820,6 +905,16 @@ const _UserSettingsprayerCardDisplayModeValueEnumMap = {
   r'dashboardOnly': PrayerCardDisplayMode.dashboardOnly,
   r'dashboardAndTasks': PrayerCardDisplayMode.dashboardAndTasks,
   r'allPages': PrayerCardDisplayMode.allPages,
+};
+const _UserSettingsthemePreferenceEnumValueMap = {
+  r'system': r'system',
+  r'light': r'light',
+  r'dark': r'dark',
+};
+const _UserSettingsthemePreferenceValueEnumMap = {
+  r'system': ThemePreference.system,
+  r'light': ThemePreference.light,
+  r'dark': ThemePreference.dark,
 };
 
 Id _userSettingsGetId(UserSettings object) {
@@ -1590,6 +1685,36 @@ extension UserSettingsQueryFilter
   }
 
   QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      didMigrateThemePreferenceEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'didMigrateThemePreference',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      disableGyroscopeEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'disableGyroscope',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      easternNumeralsEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'easternNumerals',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
       enablePrayerRemindersEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -1913,6 +2038,142 @@ extension UserSettingsQueryFilter
         upper,
         includeUpper,
       );
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      focusIntensityEqualTo(
+    FocusIntensity value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'focusIntensity',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      focusIntensityGreaterThan(
+    FocusIntensity value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'focusIntensity',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      focusIntensityLessThan(
+    FocusIntensity value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'focusIntensity',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      focusIntensityBetween(
+    FocusIntensity lower,
+    FocusIntensity upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'focusIntensity',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      focusIntensityStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'focusIntensity',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      focusIntensityEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'focusIntensity',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      focusIntensityContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'focusIntensity',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      focusIntensityMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'focusIntensity',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      focusIntensityIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'focusIntensity',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      focusIntensityIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'focusIntensity',
+        value: '',
+      ));
     });
   }
 
@@ -3369,6 +3630,16 @@ extension UserSettingsQueryFilter
   }
 
   QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      reduceMotionEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'reduceMotion',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
       respectQuietPeriodsForTasksEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -3393,6 +3664,16 @@ extension UserSettingsQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'sampleDataShown',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      showPrayerDotsOnCalendarEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'showPrayerDotsOnCalendar',
         value: value,
       ));
     });
@@ -3767,6 +4048,142 @@ extension UserSettingsQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      themePreferenceEqualTo(
+    ThemePreference value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'themePreference',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      themePreferenceGreaterThan(
+    ThemePreference value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'themePreference',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      themePreferenceLessThan(
+    ThemePreference value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'themePreference',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      themePreferenceBetween(
+    ThemePreference lower,
+    ThemePreference upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'themePreference',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      themePreferenceStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'themePreference',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      themePreferenceEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'themePreference',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      themePreferenceContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'themePreference',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      themePreferenceMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'themePreference',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      themePreferenceIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'themePreference',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      themePreferenceIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'themePreference',
+        value: '',
       ));
     });
   }
@@ -4326,6 +4743,48 @@ extension UserSettingsQuerySortBy
   }
 
   QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByDidMigrateThemePreference() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'didMigrateThemePreference', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByDidMigrateThemePreferenceDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'didMigrateThemePreference', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByDisableGyroscope() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'disableGyroscope', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByDisableGyroscopeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'disableGyroscope', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByEasternNumerals() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'easternNumerals', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByEasternNumeralsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'easternNumerals', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
       sortByEnablePrayerReminders() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'enablePrayerReminders', Sort.asc);
@@ -4364,6 +4823,20 @@ extension UserSettingsQuerySortBy
       sortByFamilyCategoryIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'familyCategoryId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByFocusIntensity() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'focusIntensity', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByFocusIntensityDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'focusIntensity', Sort.desc);
     });
   }
 
@@ -4793,6 +5266,19 @@ extension UserSettingsQuerySortBy
     });
   }
 
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy> sortByReduceMotion() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'reduceMotion', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByReduceMotionDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'reduceMotion', Sort.desc);
+    });
+  }
+
   QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
       sortByRespectQuietPeriodsForTasks() {
     return QueryBuilder.apply(this, (query) {
@@ -4836,6 +5322,20 @@ extension UserSettingsQuerySortBy
   }
 
   QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByShowPrayerDotsOnCalendar() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'showPrayerDotsOnCalendar', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByShowPrayerDotsOnCalendarDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'showPrayerDotsOnCalendar', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
       sortBySleepAthkarTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'sleepAthkarTime', Sort.asc);
@@ -4874,6 +5374,20 @@ extension UserSettingsQuerySortBy
       sortByTaskReminderMinutesBeforeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'taskReminderMinutesBefore', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByThemePreference() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'themePreference', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByThemePreferenceDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'themePreference', Sort.desc);
     });
   }
 
@@ -5061,6 +5575,48 @@ extension UserSettingsQuerySortThenBy
   }
 
   QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByDidMigrateThemePreference() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'didMigrateThemePreference', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByDidMigrateThemePreferenceDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'didMigrateThemePreference', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByDisableGyroscope() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'disableGyroscope', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByDisableGyroscopeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'disableGyroscope', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByEasternNumerals() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'easternNumerals', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByEasternNumeralsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'easternNumerals', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
       thenByEnablePrayerReminders() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'enablePrayerReminders', Sort.asc);
@@ -5099,6 +5655,20 @@ extension UserSettingsQuerySortThenBy
       thenByFamilyCategoryIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'familyCategoryId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByFocusIntensity() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'focusIntensity', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByFocusIntensityDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'focusIntensity', Sort.desc);
     });
   }
 
@@ -5540,6 +6110,19 @@ extension UserSettingsQuerySortThenBy
     });
   }
 
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy> thenByReduceMotion() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'reduceMotion', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByReduceMotionDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'reduceMotion', Sort.desc);
+    });
+  }
+
   QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
       thenByRespectQuietPeriodsForTasks() {
     return QueryBuilder.apply(this, (query) {
@@ -5583,6 +6166,20 @@ extension UserSettingsQuerySortThenBy
   }
 
   QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByShowPrayerDotsOnCalendar() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'showPrayerDotsOnCalendar', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByShowPrayerDotsOnCalendarDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'showPrayerDotsOnCalendar', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
       thenBySleepAthkarTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'sleepAthkarTime', Sort.asc);
@@ -5621,6 +6218,20 @@ extension UserSettingsQuerySortThenBy
       thenByTaskReminderMinutesBeforeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'taskReminderMinutesBefore', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByThemePreference() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'themePreference', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByThemePreferenceDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'themePreference', Sort.desc);
     });
   }
 
@@ -5728,6 +6339,27 @@ extension UserSettingsQueryWhereDistinct
   }
 
   QueryBuilder<UserSettings, UserSettings, QDistinct>
+      distinctByDidMigrateThemePreference() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'didMigrateThemePreference');
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QDistinct>
+      distinctByDisableGyroscope() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'disableGyroscope');
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QDistinct>
+      distinctByEasternNumerals() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'easternNumerals');
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QDistinct>
       distinctByEnablePrayerReminders() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'enablePrayerReminders');
@@ -5746,6 +6378,14 @@ extension UserSettingsQueryWhereDistinct
       distinctByFamilyCategoryId() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'familyCategoryId');
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QDistinct> distinctByFocusIntensity(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'focusIntensity',
+          caseSensitive: caseSensitive);
     });
   }
 
@@ -5964,6 +6604,12 @@ extension UserSettingsQueryWhereDistinct
     });
   }
 
+  QueryBuilder<UserSettings, UserSettings, QDistinct> distinctByReduceMotion() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'reduceMotion');
+    });
+  }
+
   QueryBuilder<UserSettings, UserSettings, QDistinct>
       distinctByRespectQuietPeriodsForTasks() {
     return QueryBuilder.apply(this, (query) {
@@ -5982,6 +6628,13 @@ extension UserSettingsQueryWhereDistinct
       distinctBySampleDataShown() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'sampleDataShown');
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QDistinct>
+      distinctByShowPrayerDotsOnCalendar() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'showPrayerDotsOnCalendar');
     });
   }
 
@@ -6004,6 +6657,14 @@ extension UserSettingsQueryWhereDistinct
       distinctByTaskReminderMinutesBefore() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'taskReminderMinutesBefore');
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QDistinct> distinctByThemePreference(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'themePreference',
+          caseSensitive: caseSensitive);
     });
   }
 
@@ -6113,6 +6774,26 @@ extension UserSettingsQueryProperty
   }
 
   QueryBuilder<UserSettings, bool, QQueryOperations>
+      didMigrateThemePreferenceProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'didMigrateThemePreference');
+    });
+  }
+
+  QueryBuilder<UserSettings, bool, QQueryOperations>
+      disableGyroscopeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'disableGyroscope');
+    });
+  }
+
+  QueryBuilder<UserSettings, bool, QQueryOperations> easternNumeralsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'easternNumerals');
+    });
+  }
+
+  QueryBuilder<UserSettings, bool, QQueryOperations>
       enablePrayerRemindersProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'enablePrayerReminders');
@@ -6137,6 +6818,13 @@ extension UserSettingsQueryProperty
       familyPeriodsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'familyPeriods');
+    });
+  }
+
+  QueryBuilder<UserSettings, FocusIntensity, QQueryOperations>
+      focusIntensityProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'focusIntensity');
     });
   }
 
@@ -6361,6 +7049,12 @@ extension UserSettingsQueryProperty
     });
   }
 
+  QueryBuilder<UserSettings, bool, QQueryOperations> reduceMotionProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'reduceMotion');
+    });
+  }
+
   QueryBuilder<UserSettings, bool, QQueryOperations>
       respectQuietPeriodsForTasksProperty() {
     return QueryBuilder.apply(this, (query) {
@@ -6378,6 +7072,13 @@ extension UserSettingsQueryProperty
   QueryBuilder<UserSettings, bool, QQueryOperations> sampleDataShownProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'sampleDataShown');
+    });
+  }
+
+  QueryBuilder<UserSettings, bool, QQueryOperations>
+      showPrayerDotsOnCalendarProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'showPrayerDotsOnCalendar');
     });
   }
 
@@ -6405,6 +7106,13 @@ extension UserSettingsQueryProperty
       taskReminderMinutesBeforeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'taskReminderMinutesBefore');
+    });
+  }
+
+  QueryBuilder<UserSettings, ThemePreference, QQueryOperations>
+      themePreferenceProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'themePreference');
     });
   }
 

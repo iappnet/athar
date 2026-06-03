@@ -17,11 +17,17 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'core/design_system/themes/app_theme.dart';
+import 'core/design_system/themes/athar_light_theme.dart';
+import 'core/design_system/themes/athar_dark_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'features/home/presentation/pages/onboarding_page.dart';
+import 'features/home/presentation/pages/onboarding_restyled_page.dart';
+import 'features/home/presentation/pages/onboarding_short_page.dart';
+import 'features/home/presentation/pages/onboarding_expanded_page.dart';
+import 'package:athar/core/services/onboarding_variant_service.dart';
 import 'features/home/presentation/pages/splash_page.dart';
 import 'features/settings/presentation/cubit/settings_state.dart';
+import 'features/settings/data/models/user_settings.dart';
 import 'core/di/injection.dart';
 import 'dart:math';
 import 'package:athar/features/auth/presentation/cubit/auth_cubit.dart';
@@ -36,10 +42,18 @@ import 'features/auth/presentation/pages/login_page.dart';
 import 'package:athar/core/services/deep_link_service.dart';
 import 'package:athar/core/services/widget_data_service.dart';
 import 'package:athar/features/calendar/presentation/cubit/calendar_cubit.dart';
+import 'package:athar/features/calendar/presentation/cubit/calendar_month_cubit.dart';
+import 'package:athar/features/dhikr/presentation/cubit/dhikr_cubit.dart';
+import 'package:athar/features/dhikr/presentation/pages/athkar_set_screen.dart';
 
 class AtharApp extends StatefulWidget {
-  const AtharApp({super.key, required this.hasSeenOnboarding});
+  const AtharApp({
+    super.key,
+    required this.hasSeenOnboarding,
+    required this.onboardingVariant,
+  });
   final bool hasSeenOnboarding;
+  final OnboardingVariant onboardingVariant;
 
   @override
   State<AtharApp> createState() => _AtharAppState();
@@ -120,6 +134,7 @@ class _AtharAppState extends State<AtharApp> {
         // 2. الميزات الرئيسية (إسلاميات، عادات)
         BlocProvider(create: (_) => getIt<PrayerCubit>()..loadPrayerTimes()..startAutoRefresh()),
         BlocProvider(create: (_) => getIt<HabitCubit>()..loadHabits()),
+        BlocProvider(create: (_) => getIt<DhikrCubit>()),
         BlocProvider(create: (_) => getIt<CategoryCubit>()),
 
         // 3. إدارة المساحات والمشاريع
@@ -134,6 +149,9 @@ class _AtharAppState extends State<AtharApp> {
         // 5. الميزات الجديدة (الأصول والقوائم)
         BlocProvider(
           create: (_) => getIt<CalendarCubit>()..selectDate(DateTime.now()),
+        ),
+        BlocProvider(
+          create: (_) => getIt<CalendarMonthCubit>(),
         ),
         BlocProvider(create: (context) => getIt<AssetsCubit>()), // ✅ الأصول
         BlocProvider(
@@ -160,16 +178,20 @@ class _AtharAppState extends State<AtharApp> {
         builder: (context, child) {
           final locale = context.watch<LocaleCubit>().state.locale;
           final settingsState = context.watch<SettingsCubit>().state;
-          final isDark = settingsState is SettingsLoaded
-              ? settingsState.settings.isDarkMode
-              : false;
+          final themePreference = settingsState is SettingsLoaded
+              ? settingsState.settings.themePreference
+              : ThemePreference.system;
           return MaterialApp(
             navigatorKey: DeepLinkService.navigatorKey,
             debugShowCheckedModeBanner: false,
             title: 'Athar | أثر',
-            theme: AppTheme.lightTheme,
-            darkTheme: AppTheme.darkTheme,
-            themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+            theme: AtharLightTheme.theme,
+            darkTheme: AtharDarkTheme.theme,
+            themeMode: switch (themePreference) {
+              ThemePreference.light  => ThemeMode.light,
+              ThemePreference.dark   => ThemeMode.dark,
+              ThemePreference.system => ThemeMode.system,
+            },
             locale: locale,
             supportedLocales: const [Locale('ar', 'SA'), Locale('en', 'US')],
             localeResolutionCallback: (deviceLocale, supportedLocales) {
@@ -186,7 +208,12 @@ class _AtharAppState extends State<AtharApp> {
             ],
             home: widget.hasSeenOnboarding
                 ? const SplashPage()
-                : const OnboardingPage(),
+                : switch (widget.onboardingVariant) {
+                    OnboardingVariant.existing         => const OnboardingPage(),
+                    OnboardingVariant.existingRestyled => const OnboardingRestyledPage(),
+                    OnboardingVariant.short            => const OnboardingShortPage(),
+                    OnboardingVariant.expanded         => const OnboardingExpandedPage(),
+                  },
             routes: {
               '/join-space': (context) {
                 final token =
@@ -196,6 +223,7 @@ class _AtharAppState extends State<AtharApp> {
               '/home': (context) => const MainPage(),
               '/login': (context) => const LoginPage(),
               '/complete_profile': (context) => const CompleteProfilePage(),
+              '/athkar': (context) => const AthkarSetScreen(),
             },
             builder: (context, widget) {
               return Stack(

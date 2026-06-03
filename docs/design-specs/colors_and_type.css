@@ -1,0 +1,253 @@
+/* ===================================================================
+   ATHAR DESIGN SYSTEM — COLORS & TYPE
+   Sourced from iappnet/athar Flutter codebase (design_system/tokens/)
+   =================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ─────────────────────────────────────────────────────────────────
+   CANONICAL TYPOGRAPHY AUTHORITY — Calibri
+   ─────────────────────────────────────────────────────────────────
+   Calibri is the ONLY canonical font for the Athar brand, across
+   BOTH Arabic and English, and across UI, headings, body text,
+   onboarding, widgets, showcase, and specs.
+
+   Weights: Light 300 / Regular 400 / Bold 700 (locally hosted TTFs).
+
+   Cairo and Inter are NOT design-authority fonts. They are listed
+   only as last-resort emergency technical fallbacks for the rare
+   case where a glyph fails to render (e.g. a Calibri TTF that lacks
+   coverage for a given codepoint). They MUST NOT be referenced as
+   the primary, canonical, or effective Arabic/English font in any
+   design surface.
+
+   Known font-asset limitation (not a typography-authority limitation):
+   the bundled Calibri TTFs in `fonts/` may have limited Arabic glyph
+   coverage. This is an asset-supply gap to resolve by sourcing a
+   Calibri build with full Arabic coverage — NOT a reason to demote
+   Calibri or promote Cairo. ───────────────────────────────────── */
+@font-face{
+  font-family:'Calibri';
+  font-weight:300;
+  font-style:normal;
+  font-display:swap;
+  src:url('fonts/calibri-light.ttf') format('truetype');
+}
+@font-face{
+  font-family:'Calibri';
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+  src:url('fonts/calibri-regular.ttf') format('truetype');
+}
+@font-face{
+  font-family:'Calibri';
+  font-weight:700;
+  font-style:normal;
+  font-display:swap;
+  src:url('fonts/calibri-bold.ttf') format('truetype');
+}
+
+:root {
+  /* ── PRIMARY (light) ──────────────────────────────────────────── */
+  --primary: #1A6B3C;
+  --primary-light: #2E8B57;
+  --primary-dark: #0F4A28;
+  --on-primary: #FFFFFF;
+
+  /* ── SECONDARY (teal) ─────────────────────────────────────────── */
+  --secondary: #0D7377;
+  --secondary-light: #14A098;
+  --secondary-dark: #0B5A5C;
+  --on-secondary: #000000;
+
+  /* ── SURFACES ─────────────────────────────────────────────────── */
+  --background: #F8F9FA;
+  --surface: #FFFFFF;
+  --surface-variant: #F5F5F5;
+  --surface-container: #EEEEEE;
+  --surface-container-high: #E0E0E0;
+  --surface-container-low: #FAFAFA;
+  --scaffold-background: #F8F9FA;
+
+  /* ── TEXT ─────────────────────────────────────────────────────── */
+  --text-primary: #2D3436;
+  --text-secondary: #636E72;
+  --text-tertiary: #95A5A6;
+  --text-disabled: #BDC3C7;
+  --text-on-primary: #FFFFFF;
+  --text-on-secondary: #000000;
+
+  /* ── STATUS ───────────────────────────────────────────────────── */
+  --success: #00B894;
+  --success-light: #E8F8F5;
+  --warning: #FDCB6E;
+  --warning-light: #FEF9E7;
+  --error: #FF7675;
+  --error-light: #FDEDED;
+  --info: #74B9FF;
+  --info-light: #EBF5FB;
+
+  /* ── BORDERS ──────────────────────────────────────────────────── */
+  --border: #DFE6E9;
+  --border-light: #ECF0F1;
+  --border-focused: #1A6B3C;
+  --divider: #ECF0F1;
+
+  /* ── SHADOW TOKENS ────────────────────────────────────────────── */
+  --shadow-xs:  0 1px 2px rgba(0,0,0,.04);
+  --shadow-sm:  0 2px 4px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.02);
+  --shadow-md:  0 4px 8px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.03);
+  --shadow-lg:  0 8px 16px rgba(0,0,0,.10), 0 4px 6px rgba(0,0,0,.04);
+  --shadow-xl:  0 12px 24px rgba(0,0,0,.12), 0 6px 10px rgba(0,0,0,.06);
+  --shadow-xxl: 0 16px 32px rgba(0,0,0,.16), 0 8px 14px rgba(0,0,0,.08);
+
+  /* ── GRADIENTS ────────────────────────────────────────────────── */
+  --gradient-primary: linear-gradient(135deg, #1A6B3C 0%, #0F4A28 100%);
+  --gradient-secondary: linear-gradient(135deg, #0D7377 0%, #0B5A5C 100%);
+  --gradient-prayer: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+  --gradient-surface: linear-gradient(180deg, #FFFFFF 0%, #F8F9FA 100%);
+
+  /* ── RADII ────────────────────────────────────────────────────── */
+  --radius-xxs: 4px;
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-xxl: 24px;
+  --radius-xxxl: 32px;
+  --radius-full: 999px;
+
+  /* ── SPACING ──────────────────────────────────────────────────── */
+  --space-xxxs: 2px;
+  --space-xxs: 4px;
+  --space-xs: 6px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 20px;
+  --space-xxl: 24px;
+  --space-xxxl: 32px;
+  --space-huge: 40px;
+  --space-massive: 48px;
+  --space-section: 64px;
+
+  /* ── TYPE FAMILIES ────────────────────────────────────────────── */
+  /* Calibri is the SOLE canonical brand font for Arabic + English.   */
+  /* `system-ui` / `sans-serif` are emergency technical fallbacks     */
+  /* only — they kick in if Calibri fails to load entirely.           */
+  --font-ar: 'Calibri', system-ui, sans-serif;
+  --font-en: 'Calibri', system-ui, sans-serif;
+  --font-ui: 'Calibri', system-ui, sans-serif;
+  --font-heading: 'Calibri', system-ui, sans-serif;
+  --font-body: 'Calibri', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  --font-default: var(--font-ar);
+
+  /* ── TYPE WEIGHTS ─────────────────────────────────────────────── */
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+  --fw-black: 900;
+
+  /* ── TYPE SCALE ───────────────────────────────────────────────── */
+  --text-xxs: 10px;
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-md: 16px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  --text-xxl: 24px;
+  --text-xxxl: 28px;
+  --text-display-sm: 32px;
+  --text-display-md: 40px;
+  --text-display-lg: 48px;
+  --text-display-xl: 56px;
+
+  /* ── LINE HEIGHTS ─────────────────────────────────────────────── */
+  --lh-tight: 1.2;
+  --lh-snug: 1.3;
+  --lh-normal: 1.4;
+  --lh-base: 1.5;
+  --lh-relaxed: 1.6;
+  --lh-loose: 1.75;
+
+  /* ── MOTION ───────────────────────────────────────────────────── */
+  --dur-fast: 150ms;
+  --dur-base: 200ms;
+  --dur-slow: 300ms;
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --ease-in-out: cubic-bezier(.4,0,.2,1);
+}
+
+/* ── DARK THEME ─────────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --primary: #2E8B57;
+  --primary-light: #4DAD7A;
+  --primary-dark: #1A6B3C;
+  --on-primary: #000000;
+  --background: #121212;
+  --surface: #1E1E1E;
+  --surface-variant: #2D2D2D;
+  --surface-container: #252525;
+  --surface-container-high: #353535;
+  --surface-container-low: #1A1A1A;
+  --scaffold-background: #121212;
+  --text-primary: #E4E4E4;
+  --text-secondary: #B0B0B0;
+  --text-tertiary: #808080;
+  --text-disabled: #5C5C5C;
+  --success: #00D9A5;
+  --success-light: #1A3D34;
+  --warning: #FFD93D;
+  --warning-light: #3D3A1A;
+  --error: #FF8A80;
+  --error-light: #3D1A1A;
+  --info: #82B1FF;
+  --info-light: #1A2D3D;
+  --border: #404040;
+  --border-light: #333333;
+  --border-focused: #2E8B57;
+  --divider: #333333;
+  --gradient-primary: linear-gradient(135deg, #2E8B57 0%, #1A6B3C 100%);
+  --gradient-surface: linear-gradient(180deg, #1E1E1E 0%, #121212 100%);
+}
+
+/* ── SEMANTIC TYPE RESET ─────────────────────────────────────────── */
+html { font-family: var(--font-default); color: var(--text-primary); background: var(--background); }
+body { margin: 0; font-family: var(--font-default); font-size: var(--text-md); line-height: var(--lh-base); color: var(--text-primary); -webkit-font-smoothing: antialiased; }
+
+/* Display */
+.display-lg { font-size: var(--text-display-lg); font-weight: var(--fw-bold); line-height: var(--lh-tight); letter-spacing: -0.02em; }
+.display-md { font-size: var(--text-display-md); font-weight: var(--fw-bold); line-height: var(--lh-tight); letter-spacing: -0.02em; }
+.display-sm { font-size: var(--text-display-sm); font-weight: var(--fw-bold); line-height: var(--lh-tight); letter-spacing: -0.01em; }
+
+/* Headlines */
+h1, .h1, .headline-lg { font-size: var(--text-xxxl); font-weight: var(--fw-semibold); line-height: var(--lh-snug); margin: 0; }
+h2, .h2, .headline-md { font-size: var(--text-xxl); font-weight: var(--fw-semibold); line-height: var(--lh-snug); margin: 0; }
+h3, .h3, .headline-sm { font-size: var(--text-xl); font-weight: var(--fw-semibold); line-height: var(--lh-normal); margin: 0; }
+
+/* Titles */
+.title-lg { font-size: var(--text-lg); font-weight: var(--fw-semibold); line-height: var(--lh-normal); }
+.title-md { font-size: var(--text-md); font-weight: var(--fw-semibold); line-height: var(--lh-normal); }
+.title-sm { font-size: var(--text-sm); font-weight: var(--fw-semibold); line-height: var(--lh-normal); }
+
+/* Body */
+p, .body-md { font-size: var(--text-sm); font-weight: var(--fw-regular); line-height: var(--lh-relaxed); margin: 0; }
+.body-lg { font-size: var(--text-md); font-weight: var(--fw-regular); line-height: var(--lh-relaxed); }
+.body-sm { font-size: var(--text-xs); font-weight: var(--fw-regular); line-height: var(--lh-relaxed); }
+
+/* Labels */
+.label-lg { font-size: var(--text-sm); font-weight: var(--fw-medium); letter-spacing: 0.25px; }
+.label-md { font-size: var(--text-xs); font-weight: var(--fw-medium); letter-spacing: 0.25px; }
+.label-sm { font-size: var(--text-xxs); font-weight: var(--fw-medium); letter-spacing: 0.5px; text-transform: uppercase; }
+
+/* Mono */
+code, .code { font-family: var(--font-mono); font-size: var(--text-sm); }
+
+/* Numbers — tabular */
+.num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }

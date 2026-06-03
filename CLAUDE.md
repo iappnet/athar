@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Session behavior, non-negotiable rules, execution caps, design system implementation rules
+OWNER:         Product Owner (Claude Code drafts)
+PRECEDENCE:    1 (highest — overrides all other files)
+LAST-UPDATED:  2026-06-01 · Stage A governance install
+LOADS-AT:      Tier 0
+-->
+
 # CLAUDE.md
 
 **Athar (أثر)** — Islamic productivity Flutter app. iOS + Android. Arabic-first.
@@ -106,16 +114,33 @@ Full tree + all cubits: `docs/ai/STATE_MANAGEMENT_INDEX.md`.
 ## Design System
 
 Token barrel: `import 'package:athar/core/design_system/tokens/tokens.dart'`
-Design size: 375×812 (`ScreenUtilInit`). Font: **Cairo**.
+Design size: 375×812 (`ScreenUtilInit`). Font: **Calibri** (canonical brand font as of PR1).
+
+**PR1 complete (2026-05-09, commit `61d741a`):**
+- Color tokens: green brand palette (light) + warm green-tinted dark surfaces (`THEME_DARK_SPEC.md`)
+- Typography: `fontFamilyAr/En = 'Calibri'`; `numericMono` TextStyle added
+- Font assets: `calibri-light.ttf`, `calibri-regular.ttf`, `calibri-bold.ttf` in `assets/fonts/`
+- Dark mode `ThemeMode` wiring: **NOT YET** — target PR-THEME
+
+**Token authority:**
+- Light tokens: `docs/design-specs/colors_and_type.css`
+- Dark surfaces/text: `docs/design-specs/THEME_DARK_SPEC.md` (overrides CSS)
+- Implementation: `lib/core/design_system/tokens/athar_colors.dart` + `athar_typography.dart`
+
+**v2 implementation status:** See `docs/status/ROADMAP.md` for full PR sequence (14 PRs, PR1 complete).
 
 ---
 
 ## Known Open Bugs
 
-See `docs/ai/KNOWN_PROBLEMS.md` for current Phase 5 issues:
-- P1: Widget locale not updated on language change
-- P2: `toggleTaskCompletionByUuid` cache miss drops widget action
-- P3: `completeHabitByUuid`/`incrementHabitProgressByUuid` cache miss
+See `docs/ai/KNOWN_PROBLEMS.md` for full issue list.
+
+Active open items:
+- B1: Calibri App Store licence unconfirmed (submission gate — not a dev/build blocker)
+- B2: `isAutoModeEnabled` → `ThemeMode` not wired (target: PR-THEME)
+- P4: Task/Habit added via NavBar may not appear (unconfirmed; see KNOWN_PROBLEMS.md)
+
+Previously fixed: P1 (widget locale), P2 (task UUID cache miss), P3 (habit UUID cache miss)
 
 ---
 
@@ -290,3 +315,55 @@ Key routing rules:
 - If a file was not read, classify as "Unclear" not "Covered"
 - If a screen cannot be found, say "not found" clearly
 - Every claim in an audit doc must cite the evidence file
+
+---
+
+## Context Loading Directive
+
+Read files in this order at the start of every session. Stop at the first tier that answers your question.
+
+### Tier 0 — ALWAYS (every session, in order)
+
+1. `CLAUDE.md` ← this file
+2. `docs/progress/CHECKPOINT.md` — current PR + last commit SHA
+3. `docs/ai/KNOWN_PROBLEMS.md` — open bugs + fragile areas
+4. `docs/status/ROADMAP.md` — PR sequence + % (SSOT)
+
+**After reading CHECKPOINT.md:** trust it over all lower-tier "current state" claims.
+
+### Tier 1 — Active PR arc (load once per PR, refresh on resume)
+
+| File | Load when |
+|------|-----------|
+| `docs/status/MIGRATION_STATE.md` | Any PR — branch state, RULE 1/2, Deferred QA |
+| `docs/status/NEXT_STEPS.md` | Any PR — next-arc guidance |
+| `design-context/_audit_<feature>.md` | The audit for the current PR |
+| `docs/ai/AI_WORKFLOW.md` | Execution rules refresher |
+| `docs/design-specs/INVESTIGATION_RECONCILIATION.md` | Any design PR — 5 locked decisions |
+| `docs/design-specs/PACKAGE_A_DECISIONS.md` | PRs touching Calibri / isHijriMode / AdaptiveShell / Stats |
+| `docs/design-specs/PACKAGE_C_DECISIONS.md` | PRs touching dark mode / 4-tab / calendar / Athkar / bottom-nav |
+
+### Tier 2 — Feature-specific (current PR only)
+
+| PR | Load |
+|----|------|
+| Any screen PR | `docs/ai/FEATURE_INDEX.md`, `docs/design-specs/REDESIGN_AUDIT.md` |
+| PR4b — Calendar | `docs/design-specs/CALENDAR_CELL_SPEC.md`, `docs/design-specs/CALENDAR_FOCUS_REDESIGN.md`, `docs/design-specs/DUAL_DATE_SPEC.md`, `design-context/_audit_calendar_dual.md` |
+| PR7 — Athkar | `docs/design-specs/ATHKAR_SPEC.md` |
+| PR8 — Focus | `docs/design-specs/FOCUS_OIL_SPEC.md` |
+| PR9 — iOS Widgets | `docs/design-specs/IOS_WIDGETS_SPEC.md`, `docs/ai/WIDGET_INDEX.md` |
+| PR-ONBOARD-AB | `docs/design-specs/ONBOARDING_AB_SPEC.md` |
+| Any cubit change | `docs/ai/STATE_MANAGEMENT_INDEX.md` |
+| Any dark-mode work | `docs/design-specs/THEME_DARK_SPEC.md` |
+| Any iPad layout | `docs/design-specs/IPAD_OPTIMIZATION.md`, `docs/ai/IPAD_LAYER2_OWNERSHIP_MAP.md` |
+| Any typography | `docs/design-specs/DESIGN_SYSTEM_GAP_VALIDATION.md` |
+| Any data-flow | `docs/ai/DATA_FLOW_INDEX.md` |
+| Any Supabase | `docs/ai/SUPABASE_INDEX.md` |
+| Component additions | `docs/design-specs/COMPONENT_SPECS.md` |
+
+### Tier 3 — NEVER auto-load
+
+`docs/ai/change-logs/` · all `PR*_*.md` root files · `docs/progress/phase_tracker.md` · `docs/progress/BUGFIX_PHASE_STATUS.md` · `docs/progress/prayer_widget_fix_checkpoint.md` · `docs/progress/phase_checkpoint.md` · `design-context/_audit_current_flutter_ui.md` · `design-context/_audit_design_system.md` · `design-context/_design_gap_analysis.md` · `design-context/_handoff_to_design_tool.md` · `design-context/_implementation_strategy.md` · `design-context/_pre_implementation_ui_audit.md` · `design-context/_project_design_context.md` · `INVESTIGATION_REPORT.md` (root) · `FINAL_PACKAGE_MANIFEST.md` (root) · `CLAUDE_CODE_PROMPT.md` (root) · `docs/ai/reports/` · `GIT_CHECKPOINT_REPORT.md` · `SESSION_RECOVERY_REPORT.md` · `IMPLEMENTATION_SESSION_STATE.md`
+
+**Authoritative reasoning:** `docs/governance/ATHAR_AI_CONTEXT_STRATEGY.md`  
+**Terse operational copy:** `.claude/CONTEXT_TIERS.md` (local-only, gitignored)

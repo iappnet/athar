@@ -221,6 +221,17 @@ class HabitRepositoryImpl implements HabitRepository {
         .findFirst();
   }
 
+  @override
+  Future<bool> hasActiveRegularHabits() async {
+    final count = await _isar.habitModels
+        .filter()
+        .typeEqualTo(HabitType.regular)
+        .and()
+        .deletedAtIsNull()
+        .count();
+    return count > 0;
+  }
+
   // ---------------------------------------------------------------------------
   // 🛠️ دوال مساعدة خاصة (Private Helpers)
   // ---------------------------------------------------------------------------

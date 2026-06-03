@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Clean architecture layer map, DI wiring, Isar + Supabase separation
+OWNER:         Claude Code
+PRECEDENCE:    5 (Tier 2 — load for architectural questions)
+LAST-UPDATED:  2026-06-01 · Stage A
+LOADS-AT:      Tier 2 (any screen PR)
+-->
+
 # Athar — Architecture Index
 
 ## Architectural Style

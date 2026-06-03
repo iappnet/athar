@@ -137,6 +137,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
     return ReorderableListView.builder(
       padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 80.h),
       itemCount: tasks.length,
+      // ignore: deprecated_member_use
       onReorder: (oldIndex, newIndex) {
         setState(() => _sortMode = TaskSortMode.manual);
         context.read<TaskCubit>().reorderTasks(oldIndex, newIndex);
@@ -467,7 +468,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
             ),
             decoration: BoxDecoration(
               color: colorScheme.surface,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+              borderRadius: AtharRadii.bottomSheet,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -746,6 +747,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
+      barrierColor: Colors.black.withValues(alpha: 0.45),
       builder: (ctx) => AddTaskSheet(
         targetModuleId: _module.uuid,
         targetSpaceId: _module.spaceId,
@@ -758,6 +760,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
+      barrierColor: Colors.black.withValues(alpha: 0.45),
       builder: (ctx) => AddTaskSheet(
         taskToEdit: task,
         targetModuleId: _module.uuid,

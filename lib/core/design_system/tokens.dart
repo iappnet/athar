@@ -18,3 +18,4 @@ export 'tokens/athar_shadows.dart';
 export 'tokens/athar_animations.dart';
 export 'tokens/athar_typography.dart';
 export 'themes/app_colors.dart';
+export 'molecules/skeletons/athar_skeleton.dart';

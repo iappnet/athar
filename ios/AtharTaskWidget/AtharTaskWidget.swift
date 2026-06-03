@@ -79,15 +79,25 @@ private func resolvedLang(intent: WidgetLanguage, stored: String?) -> String {
     }
 }
 
-// MARK: – Athar colour palette
+// MARK: – Athar v2 colour palette (PR9 token refresh)
+// OQ7 DEFERRED: inline consts; keep in sync with AtharColors.dart.
 
 private extension Color {
-    static let navyDeep       = Color(red: 0.07, green: 0.09, blue: 0.15)
-    static let navyMid        = Color(red: 0.12, green: 0.16, blue: 0.24)
-    static let gold           = Color(red: 0.83, green: 0.68, blue: 0.21)
+    static let athaForest    = Color(red: 0.059, green: 0.239, blue: 0.180) // #0F3D2E
+    static let athaForestMid = Color(red: 0.102, green: 0.353, blue: 0.271) // #1A5A45
+    static let athaCream     = Color(red: 0.929, green: 0.902, blue: 0.784) // #EDE6C8
     static let priorityHigh   = Color(red: 0.90, green: 0.35, blue: 0.25)
     static let priorityMedium = Color(red: 0.93, green: 0.72, blue: 0.18)
     static let priorityLow    = Color(red: 0.35, green: 0.72, blue: 0.82)
+}
+
+// MARK: – Calibri font helpers (OQ3: requires bundle in this extension target)
+
+private func calibri(_ size: CGFloat, _ weight: Font.Weight = .regular) -> Font {
+    switch weight {
+    case .bold: return Font.custom("Calibri-Bold", size: size)
+    default:    return Font.custom("Calibri",      size: size)
+    }
 }
 
 private func priorityColor(_ p: Int) -> Color {
@@ -242,17 +252,20 @@ private extension WTask {
     }
 }
 
-// MARK: – Background modifier (iOS 17+ containerBackground)
+// MARK: – Background modifier
 
 private struct TaskWidgetBackground: ViewModifier {
     func body(content: Content) -> some View {
         content
             .containerBackground(for: .widget) {
-                LinearGradient(
-                    colors: [.navyDeep, .navyMid],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
+                ZStack {
+                    LinearGradient(
+                        colors: [.athaForest, .athaForestMid],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                    Color.white.opacity(0.03)
+                }
             }
     }
 }
@@ -312,23 +325,20 @@ struct TaskWidgetView: View {
 
     private func header(compact: Bool) -> some View {
         let sz: CGFloat = compact ? 11 : 13
-        // Compact (small widget): use short labels so badge never clips title.
-        // "3/25" badge + icon leaves ~71pt for title — short label is ~36pt, safe.
-        let titleAr = compact ? "المهام"     : "مهام اليوم"
-        let titleEn = compact ? "Tasks"      : "Today's Tasks"
+        let titleAr = compact ? "المهام"  : "مهام اليوم"
+        let titleEn = compact ? "Tasks"   : "Today's Tasks"
         return HStack(alignment: .center) {
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: sz, weight: .semibold))
-                .foregroundColor(.gold)
+                .foregroundColor(.athaCream)
             Text(entry.isArabic ? titleAr : titleEn)
-                .font(.system(size: sz, weight: .bold))
+                .font(calibri(sz, .bold))
                 .foregroundColor(.white)
                 .lineLimit(1)
             Spacer()
-            // done / total badge
             Text("\(entry.done)/\(entry.total)")
-                .font(.system(size: sz - 1, weight: .semibold, design: .rounded))
-                .foregroundColor(.gold)
+                .font(calibri(sz - 1, .bold))
+                .foregroundColor(.athaCream)
         }
     }
 

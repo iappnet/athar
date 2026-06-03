@@ -34,4 +34,9 @@ abstract class HealthRepository {
   Future<List<AppointmentModel>> getUpcomingAppointments();
   Future<List<AppointmentModel>> getAppointmentsWithReminders();
   Future<List<AppointmentModel>> getAppointmentsForDay(DateTime date);
+
+  /// Fetch appointments within [start]..[end] inclusive.
+  /// Used by CalendarMonthCubit for the appointment activity dot map.
+  Future<List<AppointmentModel>> getAppointmentsInDateRange(
+      DateTime start, DateTime end);
 }

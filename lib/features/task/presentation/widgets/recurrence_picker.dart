@@ -77,12 +77,12 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
         leading: Icon(Icons.repeat, color: colorScheme.primary),
         title: Text(
           l10n.recurrence,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
         ),
         subtitle: _isEnabled
             ? Text(
                 _getPatternDescription(),
-                style: TextStyle(fontSize: 11.sp, color: colorScheme.primary),
+                style: TextStyle(fontSize: 11.sp, color: colorScheme.primary, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
               )
             : null,
         children: [
@@ -146,6 +146,8 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
             fontSize: 12.sp,
             fontWeight: FontWeight.bold,
             color: colorScheme.onSurfaceVariant,
+            fontFamily: AtharTypography.fontFamily,
+            fontFamilyFallback: AtharTypography.fontFallback,
           ),
         ),
         AtharGap.sm,
@@ -194,6 +196,8 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
       selectedColor: colorScheme.primary,
       labelStyle: TextStyle(
         color: isSelected ? colorScheme.onPrimary : colorScheme.onSurface,
+        fontFamily: AtharTypography.fontFamily,
+        fontFamilyFallback: AtharTypography.fontFallback,
       ),
       onSelected: (val) {
         setState(() => _type = type);
@@ -221,7 +225,7 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
 
     return Row(
       children: [
-        Text(l10n.everyInterval, style: TextStyle(fontSize: 14.sp)),
+        Text(l10n.everyInterval, style: TextStyle(fontSize: 14.sp, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback)),
         AtharGap.hMd,
         SizedBox(
           width: 75.w,
@@ -241,7 +245,7 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
           ),
         ),
         AtharGap.hMd,
-        Text(unit, style: TextStyle(fontSize: 14.sp)),
+        Text(unit, style: TextStyle(fontSize: 14.sp, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback)),
       ],
     );
   }
@@ -268,6 +272,8 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
             fontSize: 12.sp,
             fontWeight: FontWeight.bold,
             color: colorScheme.onSurfaceVariant,
+            fontFamily: AtharTypography.fontFamily,
+            fontFamilyFallback: AtharTypography.fontFallback,
           ),
         ),
         AtharGap.sm,
@@ -322,6 +328,8 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
             fontSize: 12.sp,
             fontWeight: FontWeight.bold,
             color: colorScheme.onSurfaceVariant,
+            fontFamily: AtharTypography.fontFamily,
+            fontFamilyFallback: AtharTypography.fontFallback,
           ),
         ),
         AtharGap.sm,
@@ -463,450 +471,3 @@ class _RecurrencePickerState extends State<RecurrencePicker> {
     return desc;
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:athar/core/design_system/themes/app_colors.dart';
-// import 'package:athar/features/task/data/models/recurrence_pattern.dart';
-
-// class RecurrencePicker extends StatefulWidget {
-//   final RecurrencePattern? initialPattern;
-//   final Function(RecurrencePattern?) onChanged;
-
-//   const RecurrencePicker({
-//     super.key,
-//     this.initialPattern,
-//     required this.onChanged,
-//   });
-
-//   @override
-//   State<RecurrencePicker> createState() => _RecurrencePickerState();
-// }
-
-// class _RecurrencePickerState extends State<RecurrencePicker> {
-//   bool _isEnabled = false;
-//   RecurrenceType _type = RecurrenceType.daily;
-//   int _interval = 1;
-//   List<int> _selectedWeekDays = [];
-//   RecurrenceEndType _endType = RecurrenceEndType.never;
-//   int _occurrences = 10;
-//   DateTime? _endDate;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     if (widget.initialPattern != null) {
-//       final p = widget.initialPattern!;
-//       _isEnabled = p.type != RecurrenceType.none;
-//       _type = p.type;
-//       _interval = p.interval;
-//       _selectedWeekDays = p.weekDays;
-//       _endType = p.endType;
-//       _occurrences = p.occurrences ?? 10;
-//       _endDate = p.endDate;
-//     }
-//   }
-
-//   void _notifyChange() {
-//     if (!_isEnabled) {
-//       widget.onChanged(null);
-//       return;
-//     }
-
-//     final pattern = RecurrencePattern()
-//       ..type = _type
-//       ..interval = _interval
-//       ..weekDays = _selectedWeekDays
-//       ..endType = _endType
-//       ..occurrences = _endType == RecurrenceEndType.afterOccurrences
-//           ? _occurrences
-//           : null
-//       ..endDate = _endType == RecurrenceEndType.onDate ? _endDate : null
-//       ..startDate = DateTime.now();
-
-//     widget.onChanged(pattern);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       decoration: BoxDecoration(
-//         color: Colors.purple.shade50,
-//         borderRadius: BorderRadius.circular(12.r),
-//         border: Border.all(color: Colors.purple.shade100),
-//       ),
-//       child: ExpansionTile(
-//         leading: const Icon(Icons.repeat, color: Colors.purple),
-//         title: const Text(
-//           "التكرار",
-//           style: TextStyle(fontWeight: FontWeight.bold),
-//         ),
-//         subtitle: _isEnabled
-//             ? Text(
-//                 _getPatternDescription(),
-//                 style: TextStyle(fontSize: 11.sp, color: Colors.purple),
-//               )
-//             : null,
-//         children: [
-//           Padding(
-//             padding: EdgeInsets.all(12.w),
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 SwitchListTile(
-//                   title: const Text("تفعيل التكرار"),
-//                   value: _isEnabled,
-//                   activeThumbColor: AppColors.primary,
-//                   onChanged: (val) {
-//                     setState(() => _isEnabled = val);
-//                     _notifyChange();
-//                   },
-//                 ),
-
-//                 if (_isEnabled) ...[
-//                   SizedBox(height: 16.h),
-
-//                   // نوع التكرار
-//                   _buildTypeSelector(),
-
-//                   SizedBox(height: 12.h),
-
-//                   // الفترة الزمنية
-//                   _buildIntervalSelector(),
-
-//                   // اختيار الأيام (للتكرار الأسبوعي)
-//                   if (_type == RecurrenceType.weekly) ...[
-//                     SizedBox(height: 12.h),
-//                     _buildWeekDaysSelector(),
-//                   ],
-
-//                   SizedBox(height: 16.h),
-//                   const Divider(),
-//                   SizedBox(height: 8.h),
-
-//                   // متى ينتهي التكرار
-//                   _buildEndTypeSelector(),
-//                 ],
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   Widget _buildTypeSelector() {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Text(
-//           "التكرار:",
-//           style: TextStyle(
-//             fontSize: 12.sp,
-//             fontWeight: FontWeight.bold,
-//             color: Colors.grey.shade700,
-//           ),
-//         ),
-//         SizedBox(height: 8.h),
-//         Wrap(
-//           spacing: 8.w,
-//           runSpacing: 8.h,
-//           children: [
-//             _buildTypeChip(RecurrenceType.daily, "يومي", Icons.today),
-//             _buildTypeChip(RecurrenceType.weekly, "أسبوعي", Icons.view_week),
-//             _buildTypeChip(
-//               RecurrenceType.monthly,
-//               "شهري",
-//               Icons.calendar_month,
-//             ),
-//           ],
-//         ),
-//       ],
-//     );
-//   }
-
-//   Widget _buildTypeChip(RecurrenceType type, String label, IconData icon) {
-//     final isSelected = _type == type;
-//     return ChoiceChip(
-//       label: Row(
-//         mainAxisSize: MainAxisSize.min,
-//         children: [
-//           Icon(
-//             icon,
-//             size: 16,
-//             color: isSelected ? Colors.white : Colors.purple,
-//           ),
-//           SizedBox(width: 4.w),
-//           Text(label),
-//         ],
-//       ),
-//       selected: isSelected,
-//       selectedColor: AppColors.primary,
-//       labelStyle: TextStyle(
-//         color: isSelected ? Colors.white : Colors.black,
-//         fontFamily: 'Tajawal',
-//       ),
-//       onSelected: (val) {
-//         setState(() => _type = type);
-//         _notifyChange();
-//       },
-//     );
-//   }
-
-//   Widget _buildIntervalSelector() {
-//     String unit = 'يوم';
-//     switch (_type) {
-//       case RecurrenceType.daily:
-//         unit = 'يوم';
-//         break;
-//       case RecurrenceType.weekly:
-//         unit = 'أسبوع';
-//         break;
-//       case RecurrenceType.monthly:
-//         unit = 'شهر';
-//         break;
-//       default:
-//         unit = 'فترة';
-//     }
-
-//     return Row(
-//       children: [
-//         Text("كل", style: TextStyle(fontSize: 14.sp)),
-//         SizedBox(width: 12.w),
-//         SizedBox(
-//           width: 60.w,
-//           child: DropdownButtonFormField<int>(
-//             initialValue: _interval,
-//             items: List.generate(30, (i) => i + 1)
-//                 .map((n) => DropdownMenuItem(value: n, child: Text('$n')))
-//                 .toList(),
-//             onChanged: (val) {
-//               setState(() => _interval = val!);
-//               _notifyChange();
-//             },
-//             decoration: InputDecoration(
-//               contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
-//               border: OutlineInputBorder(
-//                 borderRadius: BorderRadius.circular(8.r),
-//               ),
-//             ),
-//           ),
-//         ),
-//         SizedBox(width: 12.w),
-//         Text(unit, style: TextStyle(fontSize: 14.sp)),
-//       ],
-//     );
-//   }
-
-//   Widget _buildWeekDaysSelector() {
-//     const days = [
-//       (1, 'الإثنين'),
-//       (2, 'الثلاثاء'),
-//       (3, 'الأربعاء'),
-//       (4, 'الخميس'),
-//       (5, 'الجمعة'),
-//       (6, 'السبت'),
-//       (7, 'الأحد'),
-//     ];
-
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Text(
-//           "الأيام:",
-//           style: TextStyle(
-//             fontSize: 12.sp,
-//             fontWeight: FontWeight.bold,
-//             color: Colors.grey.shade700,
-//           ),
-//         ),
-//         SizedBox(height: 8.h),
-//         Wrap(
-//           spacing: 8.w,
-//           runSpacing: 8.h,
-//           children: days.map((day) {
-//             final isSelected = _selectedWeekDays.contains(day.$1);
-//             return FilterChip(
-//               label: Text(day.$2),
-//               selected: isSelected,
-//               selectedColor: AppColors.primary.withValues(alpha: 0.2),
-//               checkmarkColor: AppColors.primary,
-//               onSelected: (val) {
-//                 setState(() {
-//                   if (val) {
-//                     _selectedWeekDays.add(day.$1);
-//                   } else {
-//                     _selectedWeekDays.remove(day.$1);
-//                   }
-//                   _selectedWeekDays.sort();
-//                 });
-//                 _notifyChange();
-//               },
-//             );
-//           }).toList(),
-//         ),
-//       ],
-//     );
-//   }
-
-//   Widget _buildEndTypeSelector() {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Text(
-//           "ينتهي:",
-//           style: TextStyle(
-//             fontSize: 12.sp,
-//             fontWeight: FontWeight.bold,
-//             color: Colors.grey.shade700,
-//           ),
-//         ),
-//         SizedBox(height: 8.h),
-
-//         RadioListTile<RecurrenceEndType>(
-//           title: const Text("أبداً"),
-//           value: RecurrenceEndType.never,
-//           groupValue: _endType,
-//           activeColor: AppColors.primary,
-//           onChanged: (val) {
-//             setState(() => _endType = val!);
-//             _notifyChange();
-//           },
-//         ),
-
-//         RadioListTile<RecurrenceEndType>(
-//           title: Row(
-//             children: [
-//               const Text("بعد"),
-//               SizedBox(width: 8.w),
-//               SizedBox(
-//                 width: 60.w,
-//                 child: TextField(
-//                   enabled: _endType == RecurrenceEndType.afterOccurrences,
-//                   keyboardType: TextInputType.number,
-//                   decoration: const InputDecoration(
-//                     contentPadding: EdgeInsets.symmetric(horizontal: 8),
-//                     border: OutlineInputBorder(),
-//                   ),
-//                   controller: TextEditingController(text: '$_occurrences')
-//                     ..selection = TextSelection.fromPosition(
-//                       TextPosition(offset: '$_occurrences'.length),
-//                     ),
-//                   onChanged: (val) {
-//                     _occurrences = int.tryParse(val) ?? 10;
-//                     _notifyChange();
-//                   },
-//                 ),
-//               ),
-//               SizedBox(width: 8.w),
-//               const Text("مرة"),
-//             ],
-//           ),
-//           value: RecurrenceEndType.afterOccurrences,
-//           groupValue: _endType,
-//           activeColor: AppColors.primary,
-//           onChanged: (val) {
-//             setState(() => _endType = val!);
-//             _notifyChange();
-//           },
-//         ),
-
-//         RadioListTile<RecurrenceEndType>(
-//           title: Row(
-//             children: [
-//               const Text("في"),
-//               SizedBox(width: 8.w),
-//               TextButton.icon(
-//                 icon: const Icon(Icons.calendar_today, size: 16),
-//                 label: Text(
-//                   _endDate != null
-//                       ? '${_endDate!.year}-${_endDate!.month}-${_endDate!.day}'
-//                       : 'اختر تاريخ',
-//                 ),
-//                 onPressed: _endType == RecurrenceEndType.onDate
-//                     ? _pickEndDate
-//                     : null,
-//               ),
-//             ],
-//           ),
-//           value: RecurrenceEndType.onDate,
-//           groupValue: _endType,
-//           activeColor: AppColors.primary,
-//           onChanged: (val) {
-//             setState(() => _endType = val!);
-//             if (_endDate == null) _pickEndDate();
-//             _notifyChange();
-//           },
-//         ),
-//       ],
-//     );
-//   }
-
-//   Future<void> _pickEndDate() async {
-//     final date = await showDatePicker(
-//       context: context,
-//       initialDate: _endDate ?? DateTime.now().add(const Duration(days: 30)),
-//       firstDate: DateTime.now(),
-//       lastDate: DateTime.now().add(const Duration(days: 365 * 2)),
-//     );
-//     if (date != null) {
-//       setState(() => _endDate = date);
-//       _notifyChange();
-//     }
-//   }
-
-//   String _getPatternDescription() {
-//     if (!_isEnabled) return '';
-
-//     String desc = '';
-//     switch (_type) {
-//       case RecurrenceType.daily:
-//         desc = _interval == 1 ? 'يومياً' : 'كل $_interval أيام';
-//         break;
-//       case RecurrenceType.weekly:
-//         if (_selectedWeekDays.isEmpty) {
-//           desc = _interval == 1 ? 'أسبوعياً' : 'كل $_interval أسابيع';
-//         } else {
-//           final dayNames = _selectedWeekDays
-//               .map((d) {
-//                 const names = [
-//                   '',
-//                   'الإثنين',
-//                   'الثلاثاء',
-//                   'الأربعاء',
-//                   'الخميس',
-//                   'الجمعة',
-//                   'السبت',
-//                   'الأحد',
-//                 ];
-//                 return names[d];
-//               })
-//               .join(', ');
-//           desc = 'كل $dayNames';
-//         }
-//         break;
-//       case RecurrenceType.monthly:
-//         desc = _interval == 1 ? 'شهرياً' : 'كل $_interval أشهر';
-//         break;
-//       default:
-//         desc = 'مخصص';
-//     }
-
-//     switch (_endType) {
-//       case RecurrenceEndType.afterOccurrences:
-//         desc += ' ($_occurrences مرة)';
-//         break;
-//       case RecurrenceEndType.onDate:
-//         if (_endDate != null) {
-//           desc +=
-//               ' (حتى ${_endDate!.year}/${_endDate!.month}/${_endDate!.day})';
-//         }
-//         break;
-//       case RecurrenceEndType.never:
-//         desc += ' (إلى الأبد)';
-//         break;
-//     }
-
-//     return desc;
-//   }
-// }

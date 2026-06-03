@@ -16,9 +16,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-/// Semantic colors (not in ColorScheme)
-const _warningColor = AppColors.warning;
-const _successColor = AppColors.success;
 
 class TaskDetailsPage extends StatefulWidget {
   final TaskModel task;
@@ -131,7 +128,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             ),
             title: Text(
               l10n.taskDetails,
-              style: TextStyle(color: colorScheme.onSurface),
+              style: TextStyle(color: colorScheme.onSurface, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
             ),
             centerTitle: true,
             actions: [
@@ -151,6 +148,8 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
               labelStyle: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14.sp,
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
               ),
               tabs: [
                 Tab(text: l10n.details),
@@ -180,7 +179,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
         AtharTextField.borderless(
           controller: _titleController,
           hint: l10n.taskTitleHint,
-          textStyle: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold),
+          textStyle: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
           maxLines: null,
         ),
         AtharGap.xl,
@@ -204,13 +203,13 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 TaskStatus.inProgress,
                 l10n.statusInProgress,
                 Icons.hourglass_top,
-                Colors.blue,
+                context.colors.info,
               ),
               _buildStatusOption(
                 TaskStatus.done,
                 l10n.statusCompleted,
                 Icons.check_circle,
-                _successColor,
+                context.colors.success,
               ),
             ],
           ),
@@ -224,7 +223,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
         // 4. الوصف
         Text(
           l10n.descriptionAndNotes,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
         ),
         AtharGap.sm,
         Container(
@@ -239,7 +238,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             hint: l10n.addDetailsHint,
             maxLines: 8,
             customStyle: AtharTextFieldStyle(
-              textStyle: TextStyle(height: 1.5, fontSize: 14.sp),
+              textStyle: TextStyle(height: 1.5, fontSize: 14.sp, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
               contentPadding: EdgeInsets.zero,
             ),
           ),
@@ -281,7 +280,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
           child: _buildToggleChip(
             label: l10n.urgent,
             icon: Icons.priority_high_rounded,
-            activeColor: Colors.red,
+            activeColor: Theme.of(context).colorScheme.error,
             isActive: _isUrgent,
             onTap: () => setState(() => _isUrgent = !_isUrgent),
           ),
@@ -291,7 +290,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
           child: _buildToggleChip(
             label: l10n.important,
             icon: Icons.star_rounded,
-            activeColor: Colors.orange,
+            activeColor: context.colors.warning,
             isActive: _isImportant,
             onTap: () => setState(() => _isImportant = !_isImportant),
           ),
@@ -311,7 +310,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
+        duration: AtharAnimations.normalFast,
         padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 12.w),
         decoration: BoxDecoration(
           color: isActive
@@ -338,6 +337,8 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 fontWeight:
                     isActive ? FontWeight.bold : FontWeight.normal,
                 color: isActive ? activeColor : colorScheme.outline,
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
               ),
             ),
           ],
@@ -383,6 +384,8 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
               fontSize: 13.sp,
               color: colorScheme.primary,
               fontWeight: FontWeight.w600,
+              fontFamily: AtharTypography.fontFamily,
+              fontFamilyFallback: AtharTypography.fontFallback,
             ),
           ),
         ],
@@ -395,10 +398,10 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
       width: double.infinity,
       padding: AtharSpacing.allLg,
       decoration: BoxDecoration(
-        color: _successColor.withValues(alpha: 0.08),
+        color: context.colors.success.withValues(alpha: 0.08),
         borderRadius: AtharRadii.radiusMd,
         border:
-            Border.all(color: _successColor.withValues(alpha: 0.3)),
+            Border.all(color: context.colors.success.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -406,14 +409,16 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
           Row(
             children: [
               Icon(Icons.check_circle_outline_rounded,
-                  size: 18.sp, color: _successColor),
+                  size: 18.sp, color: context.colors.success),
               AtharGap.hSm,
               Text(
                 'ملاحظة الإكمال',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 13.sp,
-                  color: _successColor,
+                  color: context.colors.success,
+                  fontFamily: AtharTypography.fontFamily,
+                  fontFamilyFallback: AtharTypography.fontFallback,
                 ),
               ),
             ],
@@ -422,7 +427,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
           Text(
             widget.task.completionNote!,
             style:
-                TextStyle(fontSize: 13.sp, height: 1.5),
+                TextStyle(fontSize: 13.sp, height: 1.5, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
           ),
         ],
       ),
@@ -448,7 +453,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             color: isSelected ? colorScheme.surface : Colors.transparent,
             borderRadius: AtharRadii.radiusMd,
             boxShadow: isSelected
-                ? [const BoxShadow(color: Colors.black12, blurRadius: 4)]
+                ? [BoxShadow(color: colorScheme.shadow.withValues(alpha: 0.12), blurRadius: 4)]
                 : [],
           ),
           child: Column(
@@ -465,6 +470,8 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                   fontSize: 10.sp,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                   color: isSelected ? color : colorScheme.outline,
+                  fontFamily: AtharTypography.fontFamily,
+                  fontFamilyFallback: AtharTypography.fontFallback,
                 ),
               ),
             ],
@@ -507,12 +514,12 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
       padding: AtharSpacing.allLg,
       decoration: BoxDecoration(
         color: _isReminderEnabled
-            ? _warningColor.withValues(alpha: 0.08)
+            ? context.colors.warning.withValues(alpha: 0.08)
             : colorScheme.surfaceContainerLowest,
         borderRadius: AtharRadii.radiusMd,
         border: Border.all(
           color: _isReminderEnabled
-              ? _warningColor.withValues(alpha: 0.3)
+              ? context.colors.warning.withValues(alpha: 0.3)
               : colorScheme.outline.withValues(alpha: 0.2),
         ),
       ),
@@ -526,7 +533,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 _isReminderEnabled
                     ? Icons.notifications_active_rounded
                     : Icons.notifications_off_outlined,
-                color: _isReminderEnabled ? _warningColor : colorScheme.outline,
+                color: _isReminderEnabled ? context.colors.warning : colorScheme.outline,
                 size: 22.sp,
               ),
               SizedBox(width: 10.w),
@@ -539,6 +546,8 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14.sp,
+                        fontFamily: AtharTypography.fontFamily,
+                        fontFamilyFallback: AtharTypography.fontFallback,
                       ),
                     ),
                     Text(
@@ -548,6 +557,8 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                       style: TextStyle(
                         color: colorScheme.onSurfaceVariant,
                         fontSize: 11.sp,
+                        fontFamily: AtharTypography.fontFamily,
+                        fontFamilyFallback: AtharTypography.fontFallback,
                       ),
                     ),
                   ],
@@ -563,7 +574,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                     }
                   });
                 },
-                activeThumbColor: _warningColor,
+                activeThumbColor: context.colors.warning,
               ),
             ],
           ),
@@ -571,7 +582,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
           // وقت التذكير (إذا مفعل)
           if (_isReminderEnabled) ...[
             AtharGap.md,
-            Divider(color: _warningColor.withValues(alpha: 0.2), height: 1),
+            Divider(color: context.colors.warning.withValues(alpha: 0.2), height: 1),
             AtharGap.md,
 
             InkWell(
@@ -583,7 +594,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                   color: colorScheme.surface,
                   borderRadius: AtharRadii.radiusSm,
                   border: Border.all(
-                    color: _warningColor.withValues(alpha: 0.3),
+                    color: context.colors.warning.withValues(alpha: 0.3),
                   ),
                 ),
                 child: Row(
@@ -591,7 +602,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                     Icon(
                       Icons.access_time_rounded,
                       size: 18.sp,
-                      color: _warningColor,
+                      color: context.colors.warning,
                     ),
                     SizedBox(width: 10.w),
                     Expanded(
@@ -605,8 +616,10 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                         style: TextStyle(
                           fontSize: 13.sp,
                           color: _reminderTime != null
-                              ? _warningColor
+                              ? context.colors.warning
                               : colorScheme.outline,
+                          fontFamily: AtharTypography.fontFamily,
+                          fontFamilyFallback: AtharTypography.fontFallback,
                         ),
                       ),
                     ),
@@ -627,6 +640,8 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
               style: TextStyle(
                 fontSize: 11.sp,
                 color: colorScheme.onSurfaceVariant,
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
               ),
             ),
             AtharGap.sm,
@@ -677,11 +692,11 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
           color: !isValidTime
               ? colorScheme.outline.withValues(alpha: 0.2)
               : isSelected
-              ? _warningColor.withValues(alpha: 0.4)
-              : _warningColor.withValues(alpha: 0.15),
+              ? context.colors.warning.withValues(alpha: 0.4)
+              : context.colors.warning.withValues(alpha: 0.15),
           borderRadius: AtharRadii.radiusLg,
           border: isSelected
-              ? Border.all(color: _warningColor, width: 2)
+              ? Border.all(color: context.colors.warning, width: 2)
               : null,
         ),
         child: Row(
@@ -693,16 +708,18 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 child: Icon(
                   Icons.check_circle,
                   size: 14.sp,
-                  color: _warningColor,
+                  color: context.colors.warning,
                 ),
               ),
             Text(
               l10n.beforeDuration(label),
               style: TextStyle(
                 fontSize: 11.sp,
-                color: !isValidTime ? colorScheme.outline : _warningColor,
+                color: !isValidTime ? colorScheme.outline : context.colors.warning,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 decoration: !isValidTime ? TextDecoration.lineThrough : null,
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
               ),
             ),
           ],
@@ -807,11 +824,11 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             children: [
               Text(
                 label,
-                style: TextStyle(fontSize: 10.sp, color: colorScheme.outline),
+                style: TextStyle(fontSize: 10.sp, color: colorScheme.outline, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
               ),
               Text(
                 value,
-                style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500, fontFamily: AtharTypography.fontFamily, fontFamilyFallback: AtharTypography.fontFallback),
               ),
             ],
           ),

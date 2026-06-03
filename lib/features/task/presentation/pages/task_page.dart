@@ -7,7 +7,6 @@ import 'package:athar/core/utils/responsive_helper.dart';
 import 'package:athar/core/design_system/widgets/athar_feedback.dart';
 import 'package:athar/l10n/generated/app_localizations.dart';
 import 'package:athar/core/design_system/molecules/cards/smart_prayer_wrapper.dart';
-import 'package:athar/core/design_system/molecules/skeletons/athar_skeleton.dart';
 import 'package:athar/core/design_system/organisms/app_bar/athar_app_bar.dart';
 import 'package:athar/features/calendar/presentation/pages/calendar_page.dart';
 import 'package:athar/features/task/domain/models/filter_item.dart';
@@ -25,8 +24,6 @@ import '../../../../core/presentation/cubit/celebration_cubit.dart';
 import '../../../../core/design_system/molecules/bars/filter_bar.dart';
 import '../../data/models/task_model.dart';
 
-/// Semantic colors (not in ColorScheme)
-const _successColor = AppColors.success;
 
 class TasksPage extends StatelessWidget {
   const TasksPage({super.key});
@@ -70,6 +67,7 @@ class _TasksPageViewState extends State<TasksPageView> {
       messenger: messenger,
       message: l10n.itemDeleted,
       colorScheme: colorScheme,
+      semanticColors: context.colors,
       variant: AtharSnackbarVariant.info,
       icon: Icons.delete_outline_rounded,
       actionLabel: l10n.undo,
@@ -173,11 +171,11 @@ class _TasksPageViewState extends State<TasksPageView> {
                                 }
                               } else if (filter is CategoryFilter) {
                                 try {
-                                  return IconData(
-                                    filter.category.iconCode ??
-                                        Icons.label_outline.codePoint,
-                                    fontFamily: 'MaterialIcons',
-                                  );
+                                  final code = filter.category.iconCode;
+                                  return code != null
+                                      // ignore: non_const_argument_for_const_parameter
+                                      ? IconData(code, fontFamily: 'MaterialIcons')
+                                      : Icons.label_outline;
                                 } catch (_) {
                                   return Icons.label_outline;
                                 }
@@ -306,16 +304,12 @@ class _TasksPageViewState extends State<TasksPageView> {
                               showModalBottomSheet(
                                 context: context,
                                 isScrollControlled: true,
-                                backgroundColor:
-                                    Colors.transparent, // مهم للزوايا الدائرية
+                                backgroundColor: Colors.transparent,
+                                barrierColor: Colors.black.withValues(alpha: 0.45),
                                 builder: (context) {
-                                  // نمرر نفس الكيوبت للنافذة الجديدة
                                   return BlocProvider.value(
                                     value: taskCubit,
-                                    child: AddTaskSheet(
-                                      // ✅ نستخدم الشيت المتطور، ونمرر المهمة للتعديل
-                                      taskToEdit: task,
-                                    ),
+                                    child: AddTaskSheet(taskToEdit: task),
                                   );
                                 },
                               );
@@ -340,6 +334,7 @@ class _TasksPageViewState extends State<TasksPageView> {
   Widget _buildKanbanView(BuildContext context, List<TaskModel> tasks) {
     final colorScheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context);
+    final colors = context.colors;
     final todoTasks = tasks.where((t) => t.status == TaskStatus.todo).toList();
     final inProgressTasks = tasks
         .where((t) => t.status == TaskStatus.inProgress)
@@ -358,14 +353,14 @@ class _TasksPageViewState extends State<TasksPageView> {
         ),
         _buildKanbanColumn(
           l10n.inProgress,
-          Colors.blue,
+          colors.info,
           inProgressTasks,
           TaskStatus.inProgress,
           context,
         ),
         _buildKanbanColumn(
           l10n.completed,
-          _successColor,
+          colors.success,
           doneTasks,
           TaskStatus.done,
           context,
@@ -421,6 +416,8 @@ class _TasksPageViewState extends State<TasksPageView> {
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
+                      fontFamily: AtharTypography.fontFamily,
+                      fontFamilyFallback: AtharTypography.fontFallback,
                     ),
                   ),
                   const Spacer(),
@@ -438,6 +435,8 @@ class _TasksPageViewState extends State<TasksPageView> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 12.sp,
+                        fontFamily: AtharTypography.fontFamily,
+                        fontFamilyFallback: AtharTypography.fontFallback,
                       ),
                     ),
                   ),
@@ -517,7 +516,8 @@ class _TasksPageViewState extends State<TasksPageView> {
           Text(
             l10n.dayClear,
             style: TextStyle(
-              fontFamily: 'Cairo',
+              fontFamily: AtharTypography.fontFamily,
+              fontFamilyFallback: AtharTypography.fontFallback,
               fontSize: 18,
               fontWeight: FontWeight.w700,
               color: colorScheme.onSurface,
@@ -528,7 +528,8 @@ class _TasksPageViewState extends State<TasksPageView> {
             l10n.addTasksToStart,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: 'Cairo',
+              fontFamily: AtharTypography.fontFamily,
+              fontFamilyFallback: AtharTypography.fontFallback,
               fontSize: 14,
               color: colorScheme.outline,
               height: 1.6,

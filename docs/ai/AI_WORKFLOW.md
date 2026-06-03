@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Claude Code execution rules, entry funnel, search/read caps
+OWNER:         Claude Code
+PRECEDENCE:    4 (Tier 1 — loads after Tier-0 on any session)
+LAST-UPDATED:  2026-06-01 · Stage A
+LOADS-AT:      Tier 1
+-->
+
 # AI Workflow — Rules for Claude Code on Athar
 
 ## EXECUTION RULES (MANDATORY)
@@ -101,6 +109,30 @@ The central NavBar `+` button is the only add entry point. Duplicate FABs are a 
 2. `MaterialApp.localeResolutionCallback` in `app.dart` — locale-to-supported-locale mapping
 3. `lib/l10n/app_ar.arb` + `app_en.arb` — string content; run `flutter gen-l10n` after edits
 4. Widget locale: `athar_app_locale` in UserDefaults; `WidgetDataService._readLocale()` reads from `FlutterSecureStorage`
+
+---
+
+## Design System Workflow (v2 — active from PR1 onwards)
+
+### Token authority (post-PR1)
+- Light tokens → `docs/design-specs/colors_and_type.css` (canonical)
+- Dark surfaces/text → `docs/design-specs/THEME_DARK_SPEC.md` (overrides CSS — DRIFT-2)
+- Typography → `docs/design-specs/DESIGN_SYSTEM_GAP_VALIDATION.md` (Calibri sole canonical)
+- Implementation token source → `lib/core/design_system/tokens/athar_colors.dart` + `athar_typography.dart`
+
+### Before any design-system PR
+1. Read `docs/status/ROADMAP.md` — check PR sequence and blockers
+2. Read the relevant spec doc from `docs/design-specs/` (listed in master status)
+3. Write audit doc in `design-context/_audit_<feature>.md` BEFORE touching Dart
+4. No Dart edits without audit sign-off
+
+### After any design-system PR
+1. Run `flutter pub get` + `flutter analyze` + `flutter test`
+2. Update `docs/status/ROADMAP.md` — mark PR complete, unblock next
+3. Update `docs/progress/phase_tracker.md` + `current_project_status.md`
+4. Add checkpoint to `docs/progress/phase_checkpoint.md`
+5. Create change log in `docs/ai/change-logs/`
+6. Re-index SocratiCode: `codebase_update`
 
 ---
 

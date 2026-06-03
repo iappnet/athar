@@ -907,6 +907,73 @@ class AppLocalizationsAr extends AppLocalizations {
   String get isha => 'العشاء';
 
   @override
+  String get taskTimeLabel => 'وقت المهمة';
+
+  @override
+  String get taskTimeChoose => 'اختر وقت المهمة';
+
+  @override
+  String get taskTimeTypeFixed => 'وقت محدد';
+
+  @override
+  String get taskTimeTypeRelativePrayer => 'نسبي للصلاة';
+
+  @override
+  String get taskTimeTypePeriod => 'فترة زمنية';
+
+  @override
+  String get taskTimeUnspecified => 'غير محدد';
+
+  @override
+  String get taskTimePeriodBakur => 'البكور';
+
+  @override
+  String get taskTimePeriodMorning => 'الصباح';
+
+  @override
+  String get taskTimePeriodNoon => 'الظهيرة';
+
+  @override
+  String get taskTimePeriodNight => 'الليل';
+
+  @override
+  String get taskTimePeriodLastThird => 'الثلث الأخير';
+
+  @override
+  String taskTimePeriodStart(String period) {
+    return 'بداية $period';
+  }
+
+  @override
+  String taskTimePeriodMiddle(String period) {
+    return 'منتصف $period';
+  }
+
+  @override
+  String taskTimePeriodEnd(String period) {
+    return 'نهاية $period';
+  }
+
+  @override
+  String taskTimePrayerBefore(String prayer, int minutes) {
+    return '$minutes د قبل $prayer';
+  }
+
+  @override
+  String taskTimePrayerAfter(String prayer, int minutes) {
+    return '$minutes د بعد $prayer';
+  }
+
+  @override
+  String get whenSection => 'متى';
+
+  @override
+  String get detailsSection => 'التفاصيل';
+
+  @override
+  String get whenAndWhere => 'متى وأين';
+
+  @override
   String get timeRemaining => 'الوقت المتبقي';
 
   @override
@@ -925,6 +992,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get enablePrayerReminder => 'تفعيل تذكير الصلاة';
+
+  @override
+  String get calendarPrayerDots => 'مواقيت الصلاة في التقويم';
+
+  @override
+  String get calendarPrayerDotsSub =>
+      'إظهار مواقيت الصلاة كنقطة على التقويم الشهري';
 
   @override
   String get reminderBefore => 'التذكير قبل';
@@ -2354,6 +2428,27 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get biometricVerificationFailed => 'فشل التحقق من البصمة';
+
+  @override
+  String get accessibilitySection => 'إمكانية الوصول';
+
+  @override
+  String get reduceMotion => 'تقليل الحركة';
+
+  @override
+  String get reduceMotionDesc => 'تقليل الرسوم المتحركة في التطبيق';
+
+  @override
+  String get disableGyroscope => 'إيقاف المؤثرات الحركية';
+
+  @override
+  String get disableGyroscopeDesc => 'إيقاف تفاعل الخلفيات مع حركة الجهاز';
+
+  @override
+  String get easternNumerals => 'الأرقام العربية';
+
+  @override
+  String get easternNumeralsDesc => 'إظهار الأرقام بصيغة ٠١٢٣ بدلاً من 0123';
 
   @override
   String get loginOrCreateAccount => 'تسجيل الدخول / إنشاء حساب';
@@ -4080,6 +4175,42 @@ class AppLocalizationsAr extends AppLocalizations {
   String get focusReset => 'إعادة';
 
   @override
+  String get focusStatusCompleted => 'اكتملت الجلسة ✓';
+
+  @override
+  String get focusNewSession => 'جلسة جديدة';
+
+  @override
+  String get focusExitDialogTitle => 'إنهاء الجلسة؟';
+
+  @override
+  String get focusExitDialogBody => 'سيُفقد تقدم هذه الجلسة';
+
+  @override
+  String get focusExitDialogContinue => 'متابعة';
+
+  @override
+  String get focusExitDialogEnd => 'إنهاء';
+
+  @override
+  String get focusDurationSheetTitle => 'اختر مدة الجلسة';
+
+  @override
+  String get focusIntensitySection => 'شدة التركيز';
+
+  @override
+  String get focusIntensityCalm => 'هادئ';
+
+  @override
+  String get focusIntensityStandard => 'معتدل';
+
+  @override
+  String get focusIntensityIntense => 'مكثف';
+
+  @override
+  String get focusIntensitySectionDesc => 'تتحكم في شدة حركة شاشة التركيز';
+
+  @override
   String get notificationsTitle => 'مركز التنبيهات';
 
   @override
@@ -4241,6 +4372,40 @@ class AppLocalizationsAr extends AppLocalizations {
   String get statsCardSubtitle => 'شاهد ملخص أدائك وتركيزك';
 
   @override
+  String get statsPeriodToday => 'اليوم';
+
+  @override
+  String get statsPeriodLast7Days => 'آخر ٧ أيام';
+
+  @override
+  String get statsPeriodLast30Days => 'آخر ٣٠ يومًا';
+
+  @override
+  String get statsKpiTasksDone => 'المهام المنجزة';
+
+  @override
+  String get statsKpiHabitStreak => 'السلسلة';
+
+  @override
+  String get statsKpiUnitDays => 'يوم';
+
+  @override
+  String get statsKpiHabitRate => 'معدل العادات';
+
+  @override
+  String get statsKpiFocusMin => 'التركيز';
+
+  @override
+  String get statsKpiUnitMin => 'د';
+
+  @override
+  String get statsEmptyPeriod => 'لا نشاط في هذه الفترة';
+
+  @override
+  String get statsEmptyPeriodSub =>
+      'أكمل مهامًا أو عادات أو جلسات تركيز لرؤية إحصائياتك';
+
+  @override
   String get reminderToggleLabel => 'تفعيل التذكير';
 
   @override
@@ -4307,6 +4472,23 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get prayerCardChangeLocation => 'تغيير الموقع';
+
+  @override
+  String get prayerCardNow => 'الآن';
+
+  @override
+  String prayerCardStartedAt(String time) {
+    return 'بدأت $time';
+  }
+
+  @override
+  String get prayerCardPostPrayerAthkar => 'أذكار ما بعد الصلاة';
+
+  @override
+  String get prayerSunset => 'الغروب';
+
+  @override
+  String get prayerCardEnableLocation => 'فعّل الموقع لأوقات صلاة دقيقة';
 
   @override
   String get prayerLabelUpcoming => 'الصلاة القادمة';
@@ -4551,4 +4733,152 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get hideNavOnScrollDesc =>
       'إخفاء الشريط السفلي تلقائياً عند التمرير للأسفل';
+
+  @override
+  String get athkarSetScreenTitle => 'الأذكار اليومية';
+
+  @override
+  String athkarDhikrCount(int count) {
+    return '$count ذكر';
+  }
+
+  @override
+  String athkarApproxMins(int min) {
+    return '~$min دقيقة';
+  }
+
+  @override
+  String get athkarCompletionTitle => 'أتممت الورد';
+
+  @override
+  String athkarCompletionCountAndTime(int count, int min) {
+    return '$count ذكر · $min دقيقة';
+  }
+
+  @override
+  String get athkarRemindersTitle => 'تذكيرات الأذكار';
+
+  @override
+  String get athkarMorningTime => 'وقت أذكار الصباح';
+
+  @override
+  String get athkarEveningTime => 'وقت أذكار المساء';
+
+  @override
+  String get athkarSleepTime => 'وقت أذكار النوم';
+
+  @override
+  String get onboardingShortWelcomeTitle => 'أهلاً بك في أثر';
+
+  @override
+  String get onboardingShortWelcomeSubtitle =>
+      'المهام والصلاة والتركيز — في مكان واحد.';
+
+  @override
+  String get onboardingShortWelcomeFeatureTasks => 'المهام';
+
+  @override
+  String get onboardingShortWelcomeFeaturePrayer => 'الصلاة';
+
+  @override
+  String get onboardingShortWelcomeFeatureFocus => 'التركيز';
+
+  @override
+  String get onboardingShortStartTitle => 'لنبدأ';
+
+  @override
+  String get onboardingShortStartSubtitle => 'يومك، مُنظَّم بهدوء.';
+
+  @override
+  String get onboardingShortStartCta => 'ابدأ الآن';
+
+  @override
+  String get onboardingExpandedWelcomeTitle => 'أهلاً بك في أثر';
+
+  @override
+  String get onboardingExpandedWelcomeSubtitle => 'لحظة لإعداد كل شيء بطريقتك.';
+
+  @override
+  String get onboardingExpandedModulesTitle => 'فيم تريد أن يساعدك أثر؟';
+
+  @override
+  String get onboardingExpandedModulesSubtitle =>
+      'يمكنك تغيير هذا لاحقًا من الإعدادات.';
+
+  @override
+  String get onboardingExpandedModulesTasksLabel => 'المهام';
+
+  @override
+  String get onboardingExpandedModulesHabitsLabel => 'العادات';
+
+  @override
+  String get onboardingExpandedModulesPrayerLabel => 'الصلاة';
+
+  @override
+  String get onboardingExpandedModulesDhikrLabel => 'الذكر والأذكار';
+
+  @override
+  String get onboardingExpandedLocationTitle => 'حدّد موقعك';
+
+  @override
+  String get onboardingExpandedLocationSubtitle => 'لأوقات صلاة دقيقة.';
+
+  @override
+  String get onboardingExpandedLocationUseCurrent => 'استخدم موقعي الحالي';
+
+  @override
+  String get onboardingExpandedLocationEnterManual => 'إدخال يدوي';
+
+  @override
+  String get onboardingExpandedNotificationsTitle => 'لا تفوّت شيئًا';
+
+  @override
+  String get onboardingExpandedNotificationsSubtitle =>
+      'تذكيرات لطيفة للصلاة والمهام والعادات.';
+
+  @override
+  String get onboardingExpandedNotificationsAllow => 'السماح بالإشعارات';
+
+  @override
+  String get onboardingExpandedSpaceTitle => 'أين ستعمل؟';
+
+  @override
+  String get onboardingExpandedSpaceSubtitle =>
+      'شخصية بشكل افتراضي. يمكنك إضافة مساحات لاحقًا.';
+
+  @override
+  String get onboardingExpandedSpaceJustForMe => 'لي وحدي';
+
+  @override
+  String get onboardingExpandedSpaceJoinCode => 'لديك رمز؟ انضم إلى مساحة';
+
+  @override
+  String get onboardingExpandedSpaceCodeHint => 'أدخل رمز الدعوة';
+
+  @override
+  String get onboardingExpandedSpaceJoin => 'انضمام';
+
+  @override
+  String get onboardingExpandedFinishTitle => 'كل شيء جاهز';
+
+  @override
+  String get onboardingExpandedFinishSubtitle => 'أثر بانتظارك.';
+
+  @override
+  String get onboardingExpandedFinishCta => 'افتح أثر';
+
+  @override
+  String get onboardingExpandedFinishRecapPrayer => 'تم تفعيل أوقات الصلاة';
+
+  @override
+  String get onboardingExpandedFinishRecapDhikr => 'تم تفعيل الذكر والأذكار';
+
+  @override
+  String get onboardingExpandedFinishRecapLocation => 'تم تحديد الموقع';
+
+  @override
+  String get onboardingExpandedFinishRecapNotifications => 'تم تفعيل الإشعارات';
+
+  @override
+  String get onboardingExpandedFinishRecapSpace => 'تم إنشاء مساحتك الشخصية';
 }

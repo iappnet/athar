@@ -132,7 +132,11 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
       appBar: AppBar(
         title: Text(
           l10n.prayerTimesLocation,
-          style: TextStyle(color: colorScheme.onSurface),
+          style: TextStyle(
+            fontFamily: AtharTypography.fontFamily,
+            fontFamilyFallback: AtharTypography.fontFallback,
+            color: colorScheme.onSurface,
+          ),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -149,7 +153,7 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
               label: Text(l10n.useCurrentLocationGPS),
               style: ElevatedButton.styleFrom(
                 backgroundColor: colorScheme.primary,
-                foregroundColor: colorScheme.surface,
+                foregroundColor: colorScheme.onPrimary,
                 minimumSize: Size(double.infinity, 50.h),
                 shape: RoundedRectangleBorder(
                   borderRadius: AtharRadii.radiusMd,
@@ -189,6 +193,8 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
               Text(
                 _statusMessage,
                 style: TextStyle(
+                  fontFamily: AtharTypography.fontFamily,
+                  fontFamilyFallback: AtharTypography.fontFallback,
                   color: _statusMessage.contains("✅")
                       ? _successColor
                       : colorScheme.error,

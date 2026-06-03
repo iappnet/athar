@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Top-level directory layout, native extensions, asset locations
+OWNER:         Claude Code
+PRECEDENCE:    5 (Tier 2 — load for orientation or when file location is unknown)
+LAST-UPDATED:  2026-06-01 · Stage A
+LOADS-AT:      Tier 2 (orientation / file-location queries)
+-->
+
 # Athar — Project Map
 
 ## Top-Level Layout

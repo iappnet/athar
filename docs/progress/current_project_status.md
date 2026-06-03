@@ -1,5 +1,13 @@
+<!--
+CANONICAL-FOR: Narrative progress log — completed PRs with evidence
+OWNER:         Claude Code
+PRECEDENCE:    6 (Tier 3 — NEVER auto-load; historical narrative)
+LAST-UPDATED:  2026-06-02 · B4 — mandatory header added; archived paths corrected
+LOADS-AT:      Tier 3 (never)
+-->
+
 # Athar — Current Project Status
-_Last updated: 2026-05-03 (Phase 4 hardening + prayer widget polish complete)_
+_Last updated: 2026-06-01 (PR-THEME FINAL complete — AtharLightTheme/AtharDarkTheme wired, 88 fontFamilyFallback, RTL drawer, 0 analyzer issues, 45/45 tests)_
 
 ## Completed Work
 
@@ -66,6 +74,86 @@ _Last updated: 2026-05-03 (Phase 4 hardening + prayer widget polish complete)_
   - `app.dart` `onResume` calls `HabitCubit.processWidgetPendingActions()`
   - `WidgetKeys.pendingHabitActions` + `consumePendingHabitActions()` added to `WidgetDataService`
   - flutter analyze clean; AtharHabitWidgetExtension BUILD SUCCEEDED
+
+---
+
+## v2 Design System Status
+
+### PR1 — Complete (`61d741a` on `feat/athar-v2-pr1-tokens-theme`)
+
+- **`athar_colors.dart`** — 22 token corrections: green brand palette (light) + warm green-tinted dark surfaces/cream text (THEME_DARK_SPEC.md)
+- **`athar_typography.dart`** — `fontFamilyAr/En` → `'Calibri'`; `numericMono` (JetBrains Mono + tabularFigures) added
+- **`pubspec.yaml`** — Calibri font family: Light 300 / Regular 400 / Bold 700
+- **Font assets** — `calibri-light.ttf`, `calibri-regular.ttf`, `calibri-bold.ttf` added to `assets/fonts/`
+- `flutter analyze`: 0 issues | `flutter test`: 29/29 passed
+- **Blocker B1 open:** Calibri App Store licence — designer confirmation required before TestFlight submission
+
+### PR-THEME — Complete ✅ (superseded by PR-THEME-3MODE)
+
+`ThemeMode.system` wired when `isDarkMode=false`. Superseded by PR-THEME-3MODE.
+
+### PR-THEME-3MODE — Complete ✅
+
+- `ThemePreference` enum (`system` / `light` / `dark`) added to `UserSettings` with `@Enumerated(EnumType.name)`
+- One-time migration: `isDarkMode=true` → `ThemePreference.dark`; `isDarkMode=false` → `ThemePreference.system`
+- Dark Mode toggle replaced by 3-option picker tile in Settings → Appearance
+- `app.dart` uses exhaustive Dart 3 `switch` expression
+- `build_runner` + `gen-l10n` run; `darkModeDesc` removed from ARBs
+- `flutter analyze`: 0 issues | `flutter test`: 29/29
+- Theme architecture: **STABLE** — see `docs/history/session-reports/ARCHITECTURE_STABILIZATION_REPORT.md` (archived)
+- Tag: `athar-v2-prtheme-3mode-complete`
+
+### PR2 — AdaptiveShell — COMPLETE ✅
+
+**Tag: `athar-v2-pr2-complete` — all 6 checkpoints verified**
+
+Files created/modified:
+- `lib/core/design_system/widgets/adaptive_shell.dart` — **new** (`ShellBreakpoint` enum + `AdaptiveShell` LayoutBuilder)
+- `lib/features/home/presentation/pages/main_page.dart` — Scaffold wrapped in `AdaptiveShell`; `effectivelyExpanded`; compact-rail guard; RTL Row
+- `lib/core/design_system/widgets/liquid_glass_nav_bar.dart` — FAB shape: circle → 22px pill; gradient: `#2F7A5E→#0F3D2E`
+
+Governance: `PR2_PROGRESS_REPORT.md` · `PR2_CHECKPOINTS.md`  
+Analyzer: 0 issues · Tests: 29/29
+
+### PR-FONT-FALLBACK — Complete ✅ (commit `3872860`)
+
+- Cairo fallback on all 38 `AtharTypography` `const TextStyle` definitions
+- Cairo fallback on `.arabic`, `.english`, `.mono` extension methods
+- `fontFallback = ['Cairo', 'Roboto', 'Arial', 'sans-serif']` canonical constant added
+
+### PR3 — Prayer Card Refresh — Complete ✅ (commit `1cd4f80`)
+
+- Forest gradient (`#0F3D2E → #1A5A45`), 44pt countdown (light weight), calm active state
+- 16/16 golden tests: AR + EN × 8 scenarios (upcoming, active, nafl-duha, expanded, loading, permission-denied, SE-375×667, progress-50%)
+- Shadow blurRadius 20/8 accepted (canonical, locked); shadow colors correct
+- `flutter analyze`: 0 · `flutter test`: 45/45
+- Verified: `docs/history/pr-reports/CONSOLIDATED_REPORT_PR3.md` + `docs/history/pr-reports/PR3_SIGNOFF.md`
+
+### PR-THEME FINAL — Complete ✅ (commit `bfaf863`, tag `athar-v2-prtheme-complete-final`)
+
+- Wire `app.dart` to `AtharLightTheme.theme` / `AtharDarkTheme.theme` (replaces legacy `AppTheme` stub)
+- 44 × `fontFamilyFallback: AtharTypography.fontFallback` in `athar_light_theme.dart`
+- 44 × `fontFamilyFallback: AtharTypography.fontFallback` in `athar_dark_theme.dart`
+- `DrawerTheme.shape`: `BorderRadius.only` → `BorderRadiusDirectional.only` (RTL fix) in both files
+- Deleted: `app_theme.dart` (legacy stub), `athar_theme.dart` (empty stub)
+- Cleaned: `themes.dart` barrel
+- `flutter analyze`: 0 · `flutter test`: 45/45 · PR3 goldens: 16/16 unchanged
+- Verification: `docs/history/pr-reports/VERIFICATION_PR_THEME.md`
+
+### PR4a — Calendar Visual Refresh ✅ Complete 2026-06-01
+
+Commit `85ada1e`. Tag `athar-v2-pr4a-complete`. RULE 1 fix, token migration, today state, RTL. 2 device-QA gates in Deferred QA Bucket (see `docs/status/MIGRATION_STATE.md`).
+
+### Next PR
+
+> **Not canonical for this domain.**
+> Source of truth: `docs/status/ROADMAP.md` (PR sequence + %).
+> This section is a pointer only — do not restate PR status here.
+> Last reconciled: 2026-06-01
+>
+> **PR5 — Accessibility Settings:** COMPLETE (`6154565`, 2026-06-01)
+> **PR6 — Stats Redesign:** COMPLETE (`2a6a46a`, 2026-06-01)
+> **Next:** PR8 or PR9 (both unblocked). See `docs/status/ROADMAP.md` + `docs/status/NEXT_STEPS.md`.
 
 ---
 

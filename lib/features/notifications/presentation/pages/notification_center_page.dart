@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:athar/core/design_system/tokens.dart';
+import 'package:athar/core/design_system/widgets/athar_display.dart';
 
 class NotificationCenterPage extends StatefulWidget {
   const NotificationCenterPage({super.key});
@@ -124,7 +125,7 @@ class _NotificationCenterPageState extends State<NotificationCenterPage> {
         ],
       ),
       child: ListTile(
-        leading: _getIcon(colorScheme, note.type),
+        leading: _getIcon(context, colorScheme, note.type),
         title: Text(
           note.title,
           style: TextStyle(
@@ -151,21 +152,22 @@ class _NotificationCenterPageState extends State<NotificationCenterPage> {
     );
   }
 
-  Widget _getIcon(ColorScheme colorScheme, String type) {
+  Widget _getIcon(BuildContext context, ColorScheme colorScheme, String type) {
+    final colors = context.colors;
     IconData icon;
     Color color;
     switch (type) {
       case 'project':
         icon = Icons.folder_special;
-        color = Colors.orange;
+        color = colors.accentOrange;
         break;
       case 'task':
         icon = Icons.check_circle;
-        color = Colors.blue;
+        color = colors.accentBlue;
         break;
       case 'health':
         icon = Icons.favorite;
-        color = Colors.red;
+        color = colors.accentRed;
         break;
       default:
         icon = Icons.notifications;
@@ -182,26 +184,9 @@ class _NotificationCenterPageState extends State<NotificationCenterPage> {
   }
 
   Widget _buildEmptyState(ColorScheme colorScheme, AppLocalizations l10n) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.notifications_none_rounded,
-            size: 80.sp,
-            color: colorScheme.outlineVariant,
-          ),
-          Text(
-            l10n.notificationsEmpty,
-            style: TextStyle(color: colorScheme.outline, fontSize: 16.sp),
-          ),
-          AtharGap.md,
-          Text(
-            'ستظهر هنا التنبيهات الجديدة عند وصولها.',
-            style: TextStyle(color: colorScheme.outlineVariant),
-          ),
-        ],
-      ),
+    return AtharEmptyState(
+      icon: Icons.notifications_none_rounded,
+      title: l10n.notificationsEmpty,
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:athar/core/design_system/tokens/athar_radii.dart';
 import 'package:athar/features/focus/presentation/cubit/focus_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -131,12 +132,12 @@ class SharpOilPainter extends CustomPainter {
     islandPath.moveTo(leftX, islandTop + 20); // نبدأ من انحناءة اليسار
     islandPath.arcToPoint(
       Offset(leftX + 20, islandTop),
-      radius: const Radius.circular(20),
+      radius: const Radius.circular(AtharRadii.xl),
     );
     islandPath.lineTo(rightX - 20, islandTop);
     islandPath.arcToPoint(
       Offset(rightX, islandTop + 20),
-      radius: const Radius.circular(20),
+      radius: const Radius.circular(AtharRadii.xl),
     );
 
     // الحافة السفلية المتموجة (الديناميكية)

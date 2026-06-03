@@ -240,14 +240,6 @@ class _AtharButtonState extends State<AtharButton>
   late AnimationController _controller;
   late Animation<double> _scale;
 
-  // Semantic colors — not in ColorScheme
-  static const _successColor = Color(0xFF00B894);
-  static const _onSuccessColor = Colors.white;
-  static const _warningColor = Color(0xFFFDCB6E);
-  static const _onWarningColor = Color(0xFF000000);
-  static const _infoColor = Color(0xFF74B9FF);
-  static const _onInfoColor = Colors.white;
-
   @override
   void initState() {
     super.initState();
@@ -272,7 +264,8 @@ class _AtharButtonState extends State<AtharButton>
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final style = _resolveStyle(colorScheme);
+    final colors = context.colors;
+    final style = _resolveStyle(colorScheme, colors);
 
     Widget button = GestureDetector(
       onTapDown: _isEnabled ? (_) => _controller.forward() : null,
@@ -368,8 +361,8 @@ class _AtharButtonState extends State<AtharButton>
     );
   }
 
-  _Style _resolveStyle(ColorScheme c) {
-    final v = _variantStyle(c);
+  _Style _resolveStyle(ColorScheme c, AtharColors colors) {
+    final v = _variantStyle(c, colors);
     final z = _sizeStyle();
     final custom = widget.customStyle;
     return _Style(
@@ -387,7 +380,7 @@ class _AtharButtonState extends State<AtharButton>
     );
   }
 
-  _VStyle _variantStyle(ColorScheme c) {
+  _VStyle _variantStyle(ColorScheme c, AtharColors colors) {
     switch (widget.variant) {
       case AtharButtonVariant.primary:
         return _VStyle(c.primary, c.onPrimary, null, 0);
@@ -400,11 +393,11 @@ class _AtharButtonState extends State<AtharButton>
       case AtharButtonVariant.danger:
         return _VStyle(c.error, c.onError, null, 0);
       case AtharButtonVariant.success:
-        return const _VStyle(_successColor, _onSuccessColor, null, 0);
+        return _VStyle(colors.success, Colors.white, null, 0);
       case AtharButtonVariant.warning:
-        return const _VStyle(_warningColor, _onWarningColor, null, 0);
+        return _VStyle(colors.warning, Colors.black, null, 0);
       case AtharButtonVariant.info:
-        return const _VStyle(_infoColor, _onInfoColor, null, 0);
+        return _VStyle(colors.info, Colors.white, null, 0);
     }
   }
 

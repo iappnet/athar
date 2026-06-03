@@ -73,7 +73,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                         context: context,
                         title: l10n.workZone,
                         icon: Icons.work_outline_rounded,
-                        color: Colors.blue,
+                        color: context.colors.accentBlue,
                         periods: settings.workPeriodsSafe,
                         workDays: settings.workDaysSafe,
                         availableCategories: availableCategories,
@@ -93,7 +93,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                         context: context,
                         title: l10n.familyTimeHome,
                         icon: Icons.home_rounded,
-                        color: Colors.green,
+                        color: context.colors.accentGreen,
                         periods: settings.familyPeriodsSafe,
                         availableCategories: availableCategories,
                         onUpdatePeriods: (periods) => context
@@ -107,7 +107,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                         context: context,
                         title: l10n.freeTimeZone,
                         icon: Icons.rocket_launch_rounded,
-                        color: Colors.purple,
+                        color: context.colors.accentPurple,
                         periods: settings.freePeriodsSafe,
                         availableCategories: availableCategories,
                         onUpdatePeriods: (periods) => context
@@ -121,7 +121,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                         context: context,
                         title: l10n.quietZoneSettings,
                         icon: Icons.spa_outlined,
-                        color: Colors.teal,
+                        color: context.colors.accentTeal,
                         periods: settings.quietPeriodsSafe,
                         availableCategories: availableCategories,
                         onUpdatePeriods: (periods) {
@@ -137,7 +137,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                         context: context,
                         title: l10n.sleepZone,
                         icon: Icons.bedtime_outlined,
-                        color: Colors.indigo,
+                        color: context.colors.accentIndigo,
                         periods: settings.sleepPeriodsSafe,
                         availableCategories: availableCategories,
                         onUpdatePeriods: (periods) {
@@ -209,7 +209,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
       ),
       child: Row(
         children: [
-          Icon(Icons.auto_awesome, color: colorScheme.surface, size: 28.sp),
+          Icon(Icons.auto_awesome, color: colorScheme.onPrimary, size: 28.sp),
           AtharGap.hLg,
           Expanded(
             child: Column(
@@ -218,7 +218,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                 Text(
                   l10n.enableAutoMode,
                   style: TextStyle(
-                    color: colorScheme.surface,
+                    color: colorScheme.onPrimary,
                     fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
                   ),
@@ -226,7 +226,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                 Text(
                   l10n.changeContextByTime,
                   style: TextStyle(
-                    color: colorScheme.surface.withValues(alpha: 0.7),
+                    color: colorScheme.onPrimary.withValues(alpha: 0.7),
                     fontSize: 12.sp,
                   ),
                 ),
@@ -235,8 +235,8 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
           ),
           Switch(
             value: isEnabled,
-            activeThumbColor: Colors.white,
-            activeTrackColor: Colors.white24,
+            activeThumbColor: colorScheme.onPrimary,
+            activeTrackColor: colorScheme.onPrimary.withValues(alpha: 0.24),
             onChanged: (val) {
               context.read<SettingsCubit>().toggleAutoMode(val);
             },
@@ -267,13 +267,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
         color: colorScheme.surface,
         borderRadius: AtharRadii.radiusLg,
         border: Border.all(color: colorScheme.outlineVariant),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        boxShadow: AtharShadows.card,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -297,7 +291,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                 ],
@@ -356,7 +350,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
               padding: EdgeInsets.symmetric(vertical: 8.h),
               child: Text(
                 l10n.noTimesSetYet,
-                style: TextStyle(fontSize: 12.sp, color: Colors.grey),
+                style: TextStyle(fontSize: 12.sp, color: colorScheme.outline),
               ),
             )
           else
@@ -364,7 +358,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
               final index = entry.key;
               final period = entry.value;
               String categoryLabel = l10n.noCategory;
-              Color categoryColor = Colors.grey;
+              Color categoryColor = colorScheme.outline;
               if (period.categoryId != null) {
                 try {
                   final cat = availableCategories.firstWhere(
@@ -380,7 +374,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                 margin: EdgeInsets.only(bottom: 8.h),
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade50,
+                  color: colorScheme.surfaceContainerLowest,
                   borderRadius: AtharRadii.radiusSm,
                 ),
                 child: Row(
@@ -466,7 +460,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
                     IconButton(
                       icon: Icon(
                         Icons.delete_outline,
-                        color: Colors.red.shade300,
+                        color: colorScheme.error,
                         size: 20.sp,
                       ),
                       onPressed: () {
@@ -509,7 +503,7 @@ class _SmartZonesPageState extends State<SmartZonesPage> {
             onChanged(newSelection);
           },
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
+            duration: AtharAnimations.normalFast,
             width: 36.w,
             height: 36.w,
             decoration: BoxDecoration(

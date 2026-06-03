@@ -18,7 +18,7 @@ class SettingsLoaded extends SettingsState {
   @override
   List<Object?> get props => [
     settings.id,
-    settings.isDarkMode,
+    settings.themePreference,
     settings.isAutoModeEnabled,
     settings.workPeriodsSafe,
     settings.sleepPeriodsSafe,
@@ -39,5 +39,10 @@ class SettingsLoaded extends SettingsState {
     settings.isMedicationNotificationsEnabled,
     settings.lastSyncAt,
     settings.lastSyncError,
+    settings.reduceMotion,
+    settings.disableGyroscope,
+    settings.easternNumerals,
+    settings.showPrayerDotsOnCalendar,
+    settings.focusIntensity,
   ];
 }

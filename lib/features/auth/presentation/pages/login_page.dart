@@ -1,3 +1,5 @@
+import 'package:athar/core/design_system/tokens/athar_radii.dart';
+import 'package:athar/core/design_system/tokens/athar_animations.dart';
 import 'package:athar/core/design_system/organisms/app_bar/athar_app_bar.dart';
 import 'package:athar/core/design_system/widgets/athar_text_field.dart';
 import 'package:athar/core/design_system/widgets/athar_button.dart';
@@ -172,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: AtharRadii.bottomSheet,
       ),
       builder: (_) => _ForgotPasswordSheet(cubit: context.read<AuthCubit>()),
     );
@@ -200,7 +202,7 @@ class _LoginPageState extends State<LoginPage> {
         SignInWithAppleButton(
           onPressed: () => context.read<AuthCubit>().signInWithApple(),
           style: SignInWithAppleButtonStyle.black,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AtharRadii.md),
           height: isTablet ? 52 : 44.h,
         ),
 
@@ -517,7 +519,7 @@ class _ForgotPasswordSheetState extends State<_ForgotPasswordSheet> {
           _buildHeader(colorScheme),
           const SizedBox(height: 20),
           AnimatedSwitcher(
-            duration: const Duration(milliseconds: 250),
+            duration: AtharAnimations.normal,
             transitionBuilder: (child, animation) => FadeTransition(
               opacity: animation,
               child: SlideTransition(
@@ -559,7 +561,7 @@ class _ForgotPasswordSheetState extends State<_ForgotPasswordSheet> {
     };
 
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 200),
+      duration: AtharAnimations.normalFast,
       child: KeyedSubtree(
         key: ValueKey(_step),
         child: Column(
@@ -775,7 +777,7 @@ class _ResetStepIndicator extends StatelessWidget {
           final isPast = stepIndex < currentStep;
           return Expanded(
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
+              duration: AtharAnimations.normalSlow,
               height: 2,
               color: isPast ? colorScheme.primary : colorScheme.outlineVariant,
             ),

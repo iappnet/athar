@@ -25,9 +25,12 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:athar/core/services/deep_link_service.dart';
+import 'package:athar/core/services/onboarding_variant_service.dart';
 import 'package:athar/core/services/widget_data_service.dart';
 import 'package:athar/features/home/presentation/pages/onboarding_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -101,12 +104,21 @@ void main() async {
   // first widget-data push lands in the correct UserDefaults suite.
   await getIt<WidgetDataService>().init();
 
+  // Seed a stable device_id (UUID v4) on first run — used by OnboardingVariantService
+  // to deterministically assign this device to an A/B bucket (25/25/25/25 split).
+  // Must happen before assignOrGet() is called.
+  final prefs = await SharedPreferences.getInstance();
+  if (prefs.getString('device_id') == null) {
+    await prefs.setString('device_id', const Uuid().v4());
+  }
+  final onboardingVariant = OnboardingVariantService(prefs).assignOrGet();
+
   // First-run check: skip splash on first launch so onboarding shows immediately.
   // On all subsequent launches show the splash while background APIs warm up.
   final hasSeenOnboarding = await OnboardingPage.hasBeenSeen();
 
   // ── Render the app immediately — splash screen appears now ────────────────
-  runApp(AtharApp(hasSeenOnboarding: hasSeenOnboarding));
+  runApp(AtharApp(hasSeenOnboarding: hasSeenOnboarding, onboardingVariant: onboardingVariant));
 
   // ── Non-critical init runs concurrently after first frame ─────────────────
   // Notification permission dialog, schedulers, FCM token — all fire after

@@ -1,3 +1,11 @@
+<!--
+CANONICAL-FOR: Confirmed bugs, suspected issues, behavioral quirks, fragile areas
+OWNER:         Claude Code
+PRECEDENCE:    3 (Tier 0 — prevents re-breaking fragile code / re-fixing closed bugs)
+LAST-UPDATED:  2026-06-03 · P7/P8/P9 added (PR-COMPONENT-P1 deferred items)
+LOADS-AT:      Tier 0
+-->
+
 # Athar — Known Problems
 
 Confirmed bugs, suspected issues, and non-obvious behavioral quirks. Updated as issues are found and fixed.
@@ -7,6 +15,27 @@ Confirmed bugs, suspected issues, and non-obvious behavioral quirks. Updated as 
 ## OPEN — Phase 5 Device-Confirmed Bugs
 
 _All P1/P2/P3 have been fixed. Pending physical device verification._
+
+---
+
+## OPEN — Design System v2 (Post-PR1)
+
+### REL-1: UI design-system coverage — all 8 refresh PRs landed; QA gate remains
+
+All 8 UI Coverage Refresh PRs + PR-CLEANUP have shipped (2026-06-03). Surface coverage is now ~63%+ conformant per last audit.
+
+- **Impact:** Release blocker remains until device QA sweep passes. No App Store or external TestFlight submission until the deferred QA bucket (11/11 items) is validated on a physical device.
+- **Dark mode requirement:** All migrated surfaces use `context.colors.*` / `ThemeExtension` tokens — dark-mode adaptation is correct in code. Physical device verification still required (DEVICE-1, PR3-R1, PR3-R2).
+- **B2 closed:** ThemeMode wiring complete in PR-THEME. Dark secondary gradient gap noted in ROADMAP Deferred Risks.
+- **Acceptance criterion (carried forward):** All 11 deferred QA bucket items must pass on device before store submission.
+- **Source:** `design-context/_audit_ui_coverage.md` (2026-06-02) — audit was pre-refresh; exact conformant count deferred to next audit session.
+- **All required refresh PRs shipped:** PR-DS-ATOMS ✅ · PR-TASK-REFRESH ✅ · PR-HABITS-REFRESH ✅ · PR-HEALTH-REFRESH ✅ · PR-SPACE-REFRESH ✅ · PR-SETTINGS-REFRESH ✅ · PR-PRAYER-DETAILS ✅ · PR-SPLASH-ONBOARD-A ✅ · PR-CLEANUP ✅
+
+### B1: Calibri App Store licence unconfirmed
+`assets/fonts/calibri-*.ttf` (3 files) are in the repo and declared in `pubspec.yaml`. Calibri is a Microsoft typeface — its licence for App Store distribution has not been confirmed by the designer.
+- **Impact:** Submission gate only. Development builds and TestFlight internal builds are unaffected.
+- **Action required:** Designer must confirm Calibri licence before any external TestFlight or App Store submission.
+- **Files:** `assets/fonts/calibri-light.ttf`, `assets/fonts/calibri-regular.ttf`, `assets/fonts/calibri-bold.ttf`, `pubspec.yaml`, `lib/core/design_system/tokens/athar_typography.dart`
 
 ---
 
@@ -22,7 +51,46 @@ _All P1/P2/P3 have been fixed. Pending physical device verification._
 
 ---
 
+## OPEN — Prayer Month View Deferred Items
+
+### P5: `_getPrayerShortName()` uses hardcoded Arabic strings (not l10n)
+`lib/features/prayer/presentation/widgets/prayer_month_view.dart` — `_getPrayerShortName()` returns hardcoded Arabic string literals (`'الفجر'`, `'الشروق'`, etc.) instead of using `AppLocalizations`. In English locale the prayer names will still show Arabic.
+- **Impact:** English UI shows Arabic prayer names in the month view's selected-day panel.
+- **Action required:** Replace with `l10n.prayerFajrShort`, `l10n.prayerSunrise`, etc. Requires confirming all short-name keys exist in both ARBs.
+- **Deferred from:** PR-PRAYER-DETAILS (audit note — not in scope without ARB key audit).
+
+### P8: My Day timeline + smart-habits-strip empty states missed in PR-COMPONENT-P1
+Two live empty states in the home feature were not migrated to `AtharEmptyState` in P1:
+- `lib/features/home/presentation/widgets/daily_timeline_widget.dart:224` — `_buildEmptyState()` uses an inline `Column` with a raw `TextStyle` (no fontFamily). This IS the live "My Day" empty state (shown when timeline has no items).
+- `lib/features/home/presentation/pages/smart_habits_strip.dart:179` — `_buildEmptyState()` renders a green success banner (all habits done). TextStyle has no fontFamily.
+- **Action required (P2):** Add fontFamily+fontFallback to both TextStyles; migrate `daily_timeline_widget` empty state to `AtharEmptyState`; `smart_habits_strip` has a custom success-banner layout that should stay but get fontFamily applied.
+- **Deferred from:** PR-COMPONENT-P1 (not on audit list; discovered during doc-note verification after approval).
+
+### P9: `accentAmber` light (#CA8A21) contrast is 2.93:1 vs white — chip/tint use only
+`lib/core/design_system/tokens/athar_colors.dart` — `accentAmber` light value `Color(0xFFCA8A21)` has relative luminance 0.308, giving a 2.93:1 contrast ratio against a plain white surface. This is marginally below WCAG 3.0 (UI component minimum).
+- **Impact:** Acceptable as period-chip border + tinted background (where the chip BG already reduces the white contrast area). NOT acceptable as standalone text/icon color directly on `colorScheme.surface` or `scaffoldBackground`.
+- **Current usage:** Bakur + Duha period chips in `time_slot_picker.dart` (chip border + icon) — fine because the chip itself has a tinted background (`info.color.withValues(alpha:0.2)`).
+- **Action required:** If `accentAmber` is ever used for body text or standalone icons on white, darken light value by ~5–8 L% to reach ≥ 3.0:1. Dark value `Color(0xFFE8B84B)` is fine on dark surfaces (contrast > 6.0:1).
+- **Deferred:** No current over-contrast usage exists; log for designer sign-off before any text use.
+
+### P7: `time_slot_picker.dart` period names are hardcoded Arabic (not l10n)
+`lib/core/design_system/widgets/time_slot_picker.dart` — `_getPeriodInfo()` returns hardcoded Arabic string literals (`'الفجر'`, `'البكور'`, etc.) for `_PeriodInfo.name`. In English locale the period names will still show Arabic.
+- **Impact:** English UI shows Arabic period names in the time slot picker.
+- **Action required:** Change `_getPeriodInfo(AtharTimePeriod)` → `_getPeriodInfo(AtharTimePeriod, AppLocalizations)`, add ARB keys for each period name, pass `l10n` from `_buildPeriodSelector`.
+- **Deferred from:** PR-COMPONENT-P1 (mechanical but requires new ARB keys across all callers — scope deferred to P2).
+
+### P6: `_toArabicNumerals()` in prayer month view ignores `easternNumerals` setting
+`lib/features/prayer/presentation/widgets/prayer_month_view.dart` — `_toArabicNumerals()` always converts digits to Arabic-Indic numerals unconditionally. The `easternNumerals` user setting (in `UserSettings`) is not consulted.
+- **Impact:** Users who disable Eastern Numerals will still see Arabic-Indic digits in the prayer calendar.
+- **Action required:** Read `context.watch<SettingsCubit>().state` in `_buildDayCell` and `_buildMonthGrid` and pass `useArabicNumerals` flag; call `_toArabicNumerals()` only when the setting is enabled.
+- **Deferred from:** PR-PRAYER-DETAILS (isPast dimming also deferred in the same PR).
+
+---
+
 ## RESOLVED — Previously Fixed Issues
+
+### FIXED: B2 — `isAutoModeEnabled` → `ThemeMode` not wired
+Fixed in **PR-THEME** (commit `bfaf863`, tag `athar-v2-prtheme-complete-final`). `UserSettings.isAutoModeEnabled` was superseded by the `ThemePreference` enum (`system` / `light` / `dark`). `app.dart` now uses a 3-way switch driving `AtharLightTheme.theme` / `AtharDarkTheme.theme` / `ThemeMode.system`. The field `isAutoModeEnabled` is no longer the mechanism — do NOT attempt to wire it.
 
 ### FIXED: P1 — Widget locale not updated on language change
 `LocaleCubit.setLocale()` now calls `WidgetDataService.pushLocaleOnly(localeCode)` after writing to secure storage. `pushLocaleOnly` writes `athar_app_locale` to UserDefaults and triggers all three widget extensions to re-render.

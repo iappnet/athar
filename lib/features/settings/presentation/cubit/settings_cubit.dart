@@ -33,6 +33,7 @@ class SettingsCubit extends Cubit<SettingsState> {
     if (state is! SettingsLoaded) emit(SettingsLoading());
 
     await _runPrayerMigrationIfNeeded();
+    await _runThemeMigrationIfNeeded();
 
     await _settingsSubscription?.cancel();
 
@@ -274,6 +275,44 @@ class SettingsCubit extends Cubit<SettingsState> {
     }
   }
 
+  Future<void> updateAthkarTime(String field, String time) async {
+    try {
+      final currentSettings = await _repository.getSettings();
+      if (field == 'morning') {
+        currentSettings.morningAthkarTime = time;
+      } else if (field == 'evening') {
+        currentSettings.eveningAthkarTime = time;
+      } else if (field == 'sleep') {
+        currentSettings.sleepAthkarTime = time;
+      }
+      await _repository.updateSettings(currentSettings);
+      if (currentSettings.isAthkarRemindersEnabled) {
+        final habitScheduler = getIt<HabitNotificationScheduler>();
+        await habitScheduler.scheduleAllAthkar();
+      }
+      loadSettings();
+    } catch (e) {
+      if (kDebugMode) print('❌ Error updating athkar time: $e');
+    }
+  }
+
+  Future<void> toggleAthkarRemindersEnabled(bool enabled) async {
+    try {
+      final currentSettings = await _repository.getSettings();
+      currentSettings.isAthkarRemindersEnabled = enabled;
+      final habitScheduler = getIt<HabitNotificationScheduler>();
+      if (enabled && currentSettings.isAthkarEnabled) {
+        await habitScheduler.scheduleAllAthkar();
+      } else {
+        await habitScheduler.cancelAllAthkar();
+      }
+      await _repository.updateSettings(currentSettings);
+      loadSettings();
+    } catch (e) {
+      if (kDebugMode) print('❌ Error toggling athkar reminders: $e');
+    }
+  }
+
   // ═══════════════════════════════════════════════════════════════════
   // ⏰ الفترات الزمنية
   // ═══════════════════════════════════════════════════════════════════
@@ -366,6 +405,30 @@ class SettingsCubit extends Cubit<SettingsState> {
     }
   }
 
+  Future<void> toggleThemePreference(ThemePreference preference) async {
+    try {
+      final currentSettings = await _repository.getSettings();
+      currentSettings.themePreference = preference;
+      await _repository.updateSettings(currentSettings);
+    } catch (e) {
+      if (kDebugMode) print('❌ Error toggling theme preference: $e');
+    }
+  }
+
+  Future<void> _runThemeMigrationIfNeeded() async {
+    try {
+      final settings = await _repository.getSettings();
+      if (settings.didMigrateThemePreference) return;
+      settings.themePreference =
+          settings.isDarkMode ? ThemePreference.dark : ThemePreference.system;
+      settings.didMigrateThemePreference = true;
+      await _repository.updateSettings(settings);
+      if (kDebugMode) print('🎨 Theme preference migration complete');
+    } catch (e) {
+      if (kDebugMode) print('❌ Theme migration error: $e');
+    }
+  }
+
   Future<void> toggleHijriMode(bool value) async {
     final currentSettings = await _repository.getSettings();
     currentSettings.isHijriMode = value;
@@ -405,6 +468,40 @@ class SettingsCubit extends Cubit<SettingsState> {
         print('❌ Error toggling hide nav on scroll: $e');
       }
     }
+  }
+
+  // ═══════════════════════════════════════════════════════════════════
+  // ♿ إمكانية الوصول
+  // ═══════════════════════════════════════════════════════════════════
+
+  Future<void> toggleReduceMotion(bool value) async {
+    final s = await _repository.getSettings();
+    s.reduceMotion = value;
+    await _repository.updateSettings(s);
+  }
+
+  Future<void> toggleDisableGyroscope(bool value) async {
+    final s = await _repository.getSettings();
+    s.disableGyroscope = value;
+    await _repository.updateSettings(s);
+  }
+
+  Future<void> toggleEasternNumerals(bool value) async {
+    final s = await _repository.getSettings();
+    s.easternNumerals = value;
+    await _repository.updateSettings(s);
+  }
+
+  Future<void> toggleShowPrayerDotsOnCalendar(bool value) async {
+    final s = await _repository.getSettings();
+    s.showPrayerDotsOnCalendar = value;
+    await _repository.updateSettings(s);
+  }
+
+  Future<void> updateFocusIntensity(FocusIntensity intensity) async {
+    final s = await _repository.getSettings();
+    s.focusIntensity = intensity;
+    await _repository.updateSettings(s);
   }
 
   // ═══════════════════════════════════════════════════════════════════

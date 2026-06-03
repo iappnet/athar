@@ -1,9 +1,9 @@
 // lib/features/space/presentation/widgets/pending_invitations_widget.dart
 
+import 'package:athar/core/design_system/tokens.dart';
 import 'package:athar/features/space/presentation/cubit/space_members_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:athar/core/design_system/tokens.dart';
 
 class PendingInvitationsWidget extends StatelessWidget {
   const PendingInvitationsWidget({super.key});
@@ -23,7 +23,7 @@ class PendingInvitationsWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     children: [
-                      Icon(Icons.mail, color: Theme.of(context).primaryColor),
+                      Icon(Icons.mail, color: Theme.of(context).colorScheme.primary),
                       AtharGap.hSm,
                       Text(
                         'دعوات معلقة (${state.invitations.length})',
@@ -38,8 +38,8 @@ class PendingInvitationsWidget extends StatelessWidget {
                 ...state.invitations.map(
                   (invite) => ListTile(
                     leading: CircleAvatar(
-                      backgroundColor: Color(invite.spaceColor ?? 0xFF6200EE),
-                      child: const Icon(Icons.group, color: Colors.white),
+                      backgroundColor: Color(invite.spaceColor ?? Theme.of(context).colorScheme.primary.toARGB32()),
+                      child: Icon(Icons.group, color: Theme.of(context).colorScheme.onPrimary),
                     ),
                     title: Text(invite.spaceName ?? 'مساحة'),
                     subtitle: Text('من: ${invite.inviterName ?? 'مستخدم'}'),
@@ -47,13 +47,13 @@ class PendingInvitationsWidget extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.check, color: Colors.green),
+                          icon: Icon(Icons.check, color: context.colors.success),
                           onPressed: () => context
                               .read<SpaceMembersCubit>()
                               .acceptInvite(invite.token),
                         ),
                         IconButton(
-                          icon: const Icon(Icons.close, color: Colors.red),
+                          icon: Icon(Icons.close, color: Theme.of(context).colorScheme.error),
                           onPressed: () => context
                               .read<SpaceMembersCubit>()
                               .rejectInvite(invite.token),

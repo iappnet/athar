@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<title>Prayer Card · Athar (PR3 reconciled)</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:32px;background:var(--background);font-family:var(--font-en);color:var(--text-primary)}
+  h1{font-size:13px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:var(--text-secondary);margin:0 0 4px}
+  .sub{font-size:24px;font-weight:700;letter-spacing:-0.4px;margin:0 0 6px}
+  .meta{font-size:12px;color:var(--text-tertiary);margin:0 0 28px}
+  .lab{font-size:11px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;color:var(--text-tertiary);margin:0 0 12px}
+  .row{display:grid;grid-template-columns:repeat(2,minmax(380px,460px));gap:28px;margin-bottom:40px}
+  @media(max-width:960px){.row{grid-template-columns:1fr}}
+
+  /* ── Surface: forest gradient + glass overlay ──────────────────── */
+  .prayer{
+    position:relative;border-radius:var(--radius-xxl);padding:20px 22px;color:#fff;overflow:hidden;
+    background:linear-gradient(135deg,#0F3D2E 0%,#1A5A45 100%);
+    box-shadow:0 18px 42px rgba(15,61,46,.32),0 4px 12px rgba(26,90,69,.18);
+    font-family:var(--font-en);
+    isolation:isolate;
+    cursor:pointer;
+  }
+  .prayer.rtl{direction:rtl}
+
+  /* Single static glass overlay — no animation */
+  .prayer::before{
+    content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:
+      radial-gradient(120% 80% at 80% -10%,rgba(237,230,200,.08),transparent 55%),
+      radial-gradient(120% 80% at -10% 110%,rgba(8,40,34,.45),transparent 55%),
+      linear-gradient(180deg,rgba(255,255,255,.06) 0%,rgba(255,255,255,0) 60%);
+    z-index:0;
+  }
+  .prayer::after{
+    content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:0;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 -1px 0 rgba(0,0,0,.12),inset 0 0 0 1px rgba(255,255,255,.10);
+  }
+  .prayer > *{position:relative;z-index:1}
+
+  /* Header row */
+  .head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .head .date .h{font-size:14px;font-weight:700;letter-spacing:.1px;color:#fff}
+  .head .date .g{font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;letter-spacing:.2px}
+  .head .loc{display:inline-flex;align-items:center;gap:5px;color:rgba(255,255,255,.7);font-size:11.5px;font-weight:500;background:rgba(255,255,255,.10);backdrop-filter:blur(8px);padding:5px 9px;border-radius:999px;border:1px solid rgba(255,255,255,.14)}
+
+  /* Hero block — calm, not loud */
+  .hero{margin-top:18px;text-align:center}
+  .hero .lbl{font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,.55)}
+  .hero .name{font-size:22px;font-weight:700;margin-top:4px;letter-spacing:-.2px}
+  .hero .at{font-size:12px;color:rgba(255,255,255,.7);margin-top:2px;font-variant-numeric:tabular-nums;font-family:var(--font-mono)}
+  .hero .clock{
+    margin-top:8px;font-size:44px;font-weight:300;line-height:1;letter-spacing:-1px;
+    font-variant-numeric:tabular-nums;color:#fff;
+    font-family:var(--font-mono)
+  }
+  .hero .clock .sm{font-size:26px;opacity:.55;margin-left:6px}
+  .rtl .hero .clock .sm{margin-left:0;margin-right:6px}
+
+  /* Nafl chip — small, calm, optional */
+  .nafl{margin:12px auto 0;display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14);font-size:11px;font-weight:600;color:rgba(255,255,255,.85)}
+  .nafl::before{content:"";width:5px;height:5px;border-radius:50%;background:#7FE3DA;display:inline-block}
+
+  /* Sunrise/sunset markers */
+  .arc{margin-top:14px;display:flex;align-items:center;justify-content:space-between;font-size:10.5px;color:rgba(255,255,255,.55);font-variant-numeric:tabular-nums;letter-spacing:.3px;font-family:var(--font-mono)}
+  .arc .e{display:inline-flex;align-items:center;gap:5px}
+  .arc svg{opacity:.7}
+
+  /* Progress bar — directionality-aware (no scaleX flip) */
+  .prog{margin-top:8px;height:5px;background:rgba(255,255,255,.14);border-radius:99px;overflow:hidden;display:flex}
+  .rtl .prog{justify-content:flex-end}
+  .prog .fill{height:100%;background:linear-gradient(90deg,rgba(127,227,218,.6),rgba(255,255,255,.6));border-radius:inherit}
+  .rtl .prog .fill{background:linear-gradient(270deg,rgba(127,227,218,.6),rgba(255,255,255,.6))}
+
+  /* All-prayers strip (expanded) */
+  .all{margin-top:14px;display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .all .p{padding:10px 6px 8px;border-radius:14px;text-align:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)}
+  .all .p .n{font-size:10.5px;color:rgba(255,255,255,.6);font-weight:600;letter-spacing:.2px}
+  .all .p .t{font-size:13px;color:#fff;font-weight:500;margin-top:3px;font-variant-numeric:tabular-nums;font-family:var(--font-mono)}
+  .all .p.past{opacity:.45}
+  .all .p.past .t{text-decoration:line-through;text-decoration-color:rgba(255,255,255,.3)}
+  .all .p.next{background:rgba(127,227,218,.14);border-color:rgba(127,227,218,.32)}
+  .all .p.next .n{color:#7FE3DA}
+  .all .p.next .t{font-weight:700}
+
+  /* Active prayer state — calm color/label swap, no animation */
+  .prayer.active .hero .lbl{color:#7FE3DA}
+  .prayer.active .hero .name{font-size:36px;line-height:1.05;margin-top:6px}
+  .prayer.active .hero .clock{display:none}
+  .prayer.active .hero .stamp{display:block;font-size:12px;color:rgba(255,255,255,.7);margin-top:8px;font-family:var(--font-mono)}
+  .prayer .hero .stamp{display:none}
+
+  .notes{background:var(--surface);border:1px solid var(--border-light);border-radius:var(--radius-lg);padding:18px 20px;font-size:13px;line-height:1.6;color:var(--text-secondary);max-width:960px}
+  .notes b{color:var(--text-primary)}
+  .notes ul{margin:8px 0 0;padding-left:20px}
+  .notes li{margin:4px 0}
+  code{font-family:var(--font-mono);font-size:12px;background:var(--surface-variant);padding:1px 6px;border-radius:4px;color:var(--text-primary)}
+</style>
+</head>
+<body>
+
+<h1>03 · Component (PR3 reconciled)</h1>
+<div class="sub">Prayer card · calm, glanceable, spiritual</div>
+<div class="meta">v2 · Reconciled 2026-05-09 · Countdown 44pt · No "ALLAHU AKBAR" moment · Whole card → PrayerDetailsPage · Dhikr surfaces via existing 40-min post-prayer window</div>
+
+<!-- ── A · Compact (default) ────────────────────────────────────────── -->
+<div class="lab">A · Compact (default) — 44pt countdown · whole-card tap target</div>
+<div class="row">
+
+  <!-- Arabic / RTL -->
+  <div class="prayer rtl">
+    <div class="head">
+      <div class="date">
+        <div class="h">١٥ رجب ١٤٤٦</div>
+        <div class="g">الأربعاء، 15 يناير 2025</div>
+      </div>
+      <div class="loc">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.5 7-13a7 7 0 10-14 0c0 5.5 7 13 7 13z"/><circle cx="12" cy="9" r="2.2"/></svg>
+        الرياض
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="lbl">الصلاة القادمة</div>
+      <div class="name">المغرب</div>
+      <div class="at">17:42</div>
+      <div class="clock" id="c1">01:14<span class="sm">:32</span></div>
+    </div>
+
+    <div class="arc">
+      <div class="e">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 18h14"/><path d="M7 14a5 5 0 0110 0"/><path d="M12 5v3M5.6 8.6l2 2M16.4 10.6l2-2"/></svg>
+        شروق 06:32
+      </div>
+      <div class="e">
+        غروب 17:38
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 18h14"/><path d="M7 14a5 5 0 0110 0"/><path d="M12 12V9M5.6 12.6l2-2M16.4 14.6l2 2"/></svg>
+      </div>
+    </div>
+    <div class="prog"><div class="fill" style="width:38%"></div></div>
+  </div>
+
+  <!-- English / LTR -->
+  <div class="prayer">
+    <div class="head">
+      <div class="date">
+        <div class="h">15 Rajab 1446</div>
+        <div class="g">Wed, 15 Jan 2025</div>
+      </div>
+      <div class="loc">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.5 7-13a7 7 0 10-14 0c0 5.5 7 13 7 13z"/><circle cx="12" cy="9" r="2.2"/></svg>
+        Riyadh
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="lbl">Next prayer</div>
+      <div class="name">المغرب · Maghrib</div>
+      <div class="at">17:42</div>
+      <div class="clock" id="c2">01:14<span class="sm">:32</span></div>
+    </div>
+
+    <div class="arc">
+      <div class="e">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 18h14"/><path d="M7 14a5 5 0 0110 0"/><path d="M12 5v3M5.6 8.6l2 2M16.4 10.6l2-2"/></svg>
+        Sunrise 06:32
+      </div>
+      <div class="e">
+        Sunset 17:38
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 18h14"/><path d="M7 14a5 5 0 0110 0"/><path d="M12 12V9M5.6 12.6l2-2M16.4 14.6l2 2"/></svg>
+      </div>
+    </div>
+    <div class="prog"><div class="fill" style="width:38%"></div></div>
+  </div>
+</div>
+
+<!-- ── B · Compact + nafl chip (Duha) ────────────────────────────────── -->
+<div class="lab">B · Compact + nafl chip — Duha window (post-sunrise → pre-Dhuhr)</div>
+<div class="row">
+  <div class="prayer rtl">
+    <div class="head">
+      <div class="date"><div class="h">١٥ رجب ١٤٤٦</div><div class="g">الأربعاء، 15 يناير 2025</div></div>
+      <div class="loc"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.5 7-13a7 7 0 10-14 0c0 5.5 7 13 7 13z"/><circle cx="12" cy="9" r="2.2"/></svg>الرياض</div>
+    </div>
+    <div class="hero">
+      <div class="lbl">الصلاة القادمة</div>
+      <div class="name">الظهر</div>
+      <div class="at">12:18</div>
+      <div class="clock" id="c5">04:42<span class="sm">:11</span></div>
+      <div class="nafl">الضحى · Duha</div>
+    </div>
+    <div class="prog"><div class="fill" style="width:22%"></div></div>
+  </div>
+  <div class="prayer">
+    <div class="head">
+      <div class="date"><div class="h">15 Rajab 1446</div><div class="g">Wed, 15 Jan 2025</div></div>
+      <div class="loc"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.5 7-13a7 7 0 10-14 0c0 5.5 7 13 7 13z"/><circle cx="12" cy="9" r="2.2"/></svg>Riyadh</div>
+    </div>
+    <div class="hero">
+      <div class="lbl">Next prayer</div>
+      <div class="name">الظهر · Dhuhr</div>
+      <div class="at">12:18</div>
+      <div class="clock" id="c6">04:42<span class="sm">:11</span></div>
+      <div class="nafl">الضحى · Duha</div>
+    </div>
+    <div class="prog"><div class="fill" style="width:22%"></div></div>
+  </div>
+</div>
+
+<!-- ── C · Active prayer (calm swap, no animation) ──────────────────── -->
+<div class="lab">C · Active prayer — name promotes to 36pt, "Started at" stamp, no countdown, no animation</div>
+<div class="row">
+  <div class="prayer rtl active">
+    <div class="head">
+      <div class="date"><div class="h">١٥ رجب ١٤٤٦</div><div class="g">الأربعاء، 15 يناير 2025</div></div>
+      <div class="loc"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.5 7-13a7 7 0 10-14 0c0 5.5 7 13 7 13z"/><circle cx="12" cy="9" r="2.2"/></svg>الرياض</div>
+    </div>
+    <div class="hero">
+      <div class="lbl">الآن</div>
+      <div class="name">المغرب</div>
+      <div class="stamp">بدأت ١٧:٤٢</div>
+    </div>
+  </div>
+  <div class="prayer active">
+    <div class="head">
+      <div class="date"><div class="h">15 Rajab 1446</div><div class="g">Wed, 15 Jan 2025</div></div>
+      <div class="loc"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.5 7-13a7 7 0 10-14 0c0 5.5 7 13 7 13z"/><circle cx="12" cy="9" r="2.2"/></svg>Riyadh</div>
+    </div>
+    <div class="hero">
+      <div class="lbl">Now</div>
+      <div class="name">المغرب · Maghrib</div>
+      <div class="stamp">Started at 17:42</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── D · Expanded (opt-in) ─────────────────────────────────────────── -->
+<div class="lab">D · Expanded (opt-in) — all 5 prayers visible, hero stays calm</div>
+<div class="row">
+
+  <!-- Arabic / RTL -->
+  <div class="prayer rtl">
+    <div class="head">
+      <div class="date"><div class="h">١٥ رجب ١٤٤٦</div><div class="g">الأربعاء، 15 يناير 2025</div></div>
+      <div class="loc"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.5 7-13a7 7 0 10-14 0c0 5.5 7 13 7 13z"/><circle cx="12" cy="9" r="2.2"/></svg>الرياض</div>
+    </div>
+    <div class="hero">
+      <div class="lbl">الصلاة القادمة</div>
+      <div class="name">المغرب</div>
+      <div class="clock" id="c3">01:14<span class="sm">:32</span></div>
+    </div>
+    <div class="prog"><div class="fill" style="width:38%"></div></div>
+    <div class="all">
+      <div class="p past"><div class="n">الفجر</div><div class="t">04:52</div></div>
+      <div class="p past"><div class="n">الظهر</div><div class="t">12:18</div></div>
+      <div class="p past"><div class="n">العصر</div><div class="t">15:08</div></div>
+      <div class="p next"><div class="n">المغرب</div><div class="t">17:42</div></div>
+      <div class="p"><div class="n">العشاء</div><div class="t">19:08</div></div>
+    </div>
+    <div class="arc" style="margin-top:12px">
+      <div class="e"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 18h14"/><path d="M7 14a5 5 0 0110 0"/><path d="M12 5v3M5.6 8.6l2 2M16.4 10.6l2-2"/></svg>شروق 06:32</div>
+      <div class="e">غروب 17:38<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 18h14"/><path d="M7 14a5 5 0 0110 0"/><path d="M12 12V9M5.6 12.6l2-2M16.4 14.6l2 2"/></svg></div>
+    </div>
+  </div>
+
+  <!-- English / LTR -->
+  <div class="prayer">
+    <div class="head">
+      <div class="date"><div class="h">15 Rajab 1446</div><div class="g">Wed, 15 Jan 2025</div></div>
+      <div class="loc"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.5 7-13a7 7 0 10-14 0c0 5.5 7 13 7 13z"/><circle cx="12" cy="9" r="2.2"/></svg>Riyadh</div>
+    </div>
+    <div class="hero">
+      <div class="lbl">Next prayer</div>
+      <div class="name">المغرب · Maghrib</div>
+      <div class="clock" id="c4">01:14<span class="sm">:32</span></div>
+    </div>
+    <div class="prog"><div class="fill" style="width:38%"></div></div>
+    <div class="all">
+      <div class="p past"><div class="n">الفجر</div><div class="t">04:52</div></div>
+      <div class="p past"><div class="n">الظهر</div><div class="t">12:18</div></div>
+      <div class="p past"><div class="n">العصر</div><div class="t">15:08</div></div>
+      <div class="p next"><div class="n">المغرب</div><div class="t">17:42</div></div>
+      <div class="p"><div class="n">العشاء</div><div class="t">19:08</div></div>
+    </div>
+    <div class="arc" style="margin-top:12px">
+      <div class="e"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 18h14"/><path d="M7 14a5 5 0 0110 0"/><path d="M12 5v3M5.6 8.6l2 2M16.4 10.6l2-2"/></svg>Sunrise 06:32</div>
+      <div class="e">Sunset 17:38<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 18h14"/><path d="M7 14a5 5 0 0110 0"/><path d="M12 12V9M5.6 12.6l2-2M16.4 14.6l2 2"/></svg></div>
+    </div>
+  </div>
+</div>
+
+<div class="notes">
+  <b>What changed in PR3 reconciliation</b>
+  <ul>
+    <li>Countdown <b>44pt / weight 300</b> — was 64pt. 64pt created emotional urgency and pushed habits/tasks below the fold on small phones.</li>
+    <li>Surface uses <b>forest gradient</b> <code>#0F3D2E → #1A5A45</code> (was indigo→teal). Single static glass overlay — no animated shimmer.</li>
+    <li><b>Whole card is the only CTA</b> — opens the existing <code>PrayerDetailsPage</code> (Today / Week / Month tabs). No separate "Start dhikr" button. Dhikr surfaces via the existing 40-minute post-prayer window already wired in <code>PrayerCubit</code>.</li>
+    <li>Active prayer state: <b>calm color + label swap</b>, no pulse, no scale, no "ALLAHU AKBAR" overlay. The adhan audio is the moment.</li>
+    <li>Nafl chip surfaces <b>Duha</b> (post-sunrise → pre-Dhuhr) and <b>Qiyam</b> (last third of night). One chip max at a time. Optional, opt-in via existing setting.</li>
+    <li>Progress bar is now <b>directionality-aware</b> (uses flex justify, not <code>scaleX(-1)</code>) so the fill anchors to the trailing edge in RTL correctly.</li>
+    <li>Sunrise / sunset values come from <code>PrayerType.sunrise</code> + <code>PrayerType.maghrib</code> already in <code>PrayerCubit</code>. No new data source.</li>
+    <li>Arabic font: <b>Calibri</b> only. Cairo references in earlier drafts are deprecated.</li>
+  </ul>
+</div>
+
+<script>
+// Live ticking countdown — purely cosmetic, all four cards target Maghrib at 17:42
+function fmt(n){return String(n).padStart(2,'0')}
+function tick(){
+  const now=new Date();
+  const target=new Date();target.setHours(17,42,0,0);
+  let s=Math.floor((target-now)/1000);
+  if(s<0)s+=86400;
+  const h=Math.floor(s/3600), m=Math.floor((s%3600)/60), sec=s%60;
+  const main=`${fmt(h)}:${fmt(m)}`, tail=`<span class="sm">:${fmt(sec)}</span>`;
+  ['c1','c2','c3','c4'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=main+tail});
+  // Dhuhr countdown (longer)
+  const dhuhr=new Date();dhuhr.setHours(12,18,0,0);
+  let ds=Math.floor((dhuhr-now)/1000); if(ds<0)ds+=86400;
+  const dh=Math.floor(ds/3600), dm=Math.floor((ds%3600)/60), dsec=ds%60;
+  const dmain=`${fmt(dh)}:${fmt(dm)}`, dtail=`<span class="sm">:${fmt(dsec)}</span>`;
+  ['c5','c6'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=dmain+dtail});
+}
+tick();setInterval(tick,1000);
+</script>
+
+</body></html>

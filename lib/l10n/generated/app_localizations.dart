@@ -1856,6 +1856,120 @@ abstract class AppLocalizations {
   /// **'العشاء'**
   String get isha;
 
+  /// No description provided for @taskTimeLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقت المهمة'**
+  String get taskTimeLabel;
+
+  /// No description provided for @taskTimeChoose.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر وقت المهمة'**
+  String get taskTimeChoose;
+
+  /// No description provided for @taskTimeTypeFixed.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقت محدد'**
+  String get taskTimeTypeFixed;
+
+  /// No description provided for @taskTimeTypeRelativePrayer.
+  ///
+  /// In ar, this message translates to:
+  /// **'نسبي للصلاة'**
+  String get taskTimeTypeRelativePrayer;
+
+  /// No description provided for @taskTimeTypePeriod.
+  ///
+  /// In ar, this message translates to:
+  /// **'فترة زمنية'**
+  String get taskTimeTypePeriod;
+
+  /// No description provided for @taskTimeUnspecified.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير محدد'**
+  String get taskTimeUnspecified;
+
+  /// No description provided for @taskTimePeriodBakur.
+  ///
+  /// In ar, this message translates to:
+  /// **'البكور'**
+  String get taskTimePeriodBakur;
+
+  /// No description provided for @taskTimePeriodMorning.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصباح'**
+  String get taskTimePeriodMorning;
+
+  /// No description provided for @taskTimePeriodNoon.
+  ///
+  /// In ar, this message translates to:
+  /// **'الظهيرة'**
+  String get taskTimePeriodNoon;
+
+  /// No description provided for @taskTimePeriodNight.
+  ///
+  /// In ar, this message translates to:
+  /// **'الليل'**
+  String get taskTimePeriodNight;
+
+  /// No description provided for @taskTimePeriodLastThird.
+  ///
+  /// In ar, this message translates to:
+  /// **'الثلث الأخير'**
+  String get taskTimePeriodLastThird;
+
+  /// No description provided for @taskTimePeriodStart.
+  ///
+  /// In ar, this message translates to:
+  /// **'بداية {period}'**
+  String taskTimePeriodStart(String period);
+
+  /// No description provided for @taskTimePeriodMiddle.
+  ///
+  /// In ar, this message translates to:
+  /// **'منتصف {period}'**
+  String taskTimePeriodMiddle(String period);
+
+  /// No description provided for @taskTimePeriodEnd.
+  ///
+  /// In ar, this message translates to:
+  /// **'نهاية {period}'**
+  String taskTimePeriodEnd(String period);
+
+  /// No description provided for @taskTimePrayerBefore.
+  ///
+  /// In ar, this message translates to:
+  /// **'{minutes} د قبل {prayer}'**
+  String taskTimePrayerBefore(String prayer, int minutes);
+
+  /// No description provided for @taskTimePrayerAfter.
+  ///
+  /// In ar, this message translates to:
+  /// **'{minutes} د بعد {prayer}'**
+  String taskTimePrayerAfter(String prayer, int minutes);
+
+  /// No description provided for @whenSection.
+  ///
+  /// In ar, this message translates to:
+  /// **'متى'**
+  String get whenSection;
+
+  /// No description provided for @detailsSection.
+  ///
+  /// In ar, this message translates to:
+  /// **'التفاصيل'**
+  String get detailsSection;
+
+  /// No description provided for @whenAndWhere.
+  ///
+  /// In ar, this message translates to:
+  /// **'متى وأين'**
+  String get whenAndWhere;
+
   /// No description provided for @timeRemaining.
   ///
   /// In ar, this message translates to:
@@ -1891,6 +2005,18 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تفعيل تذكير الصلاة'**
   String get enablePrayerReminder;
+
+  /// No description provided for @calendarPrayerDots.
+  ///
+  /// In ar, this message translates to:
+  /// **'مواقيت الصلاة في التقويم'**
+  String get calendarPrayerDots;
+
+  /// No description provided for @calendarPrayerDotsSub.
+  ///
+  /// In ar, this message translates to:
+  /// **'إظهار مواقيت الصلاة كنقطة على التقويم الشهري'**
+  String get calendarPrayerDotsSub;
 
   /// No description provided for @reminderBefore.
   ///
@@ -4585,6 +4711,48 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'فشل التحقق من البصمة'**
   String get biometricVerificationFailed;
+
+  /// No description provided for @accessibilitySection.
+  ///
+  /// In ar, this message translates to:
+  /// **'إمكانية الوصول'**
+  String get accessibilitySection;
+
+  /// No description provided for @reduceMotion.
+  ///
+  /// In ar, this message translates to:
+  /// **'تقليل الحركة'**
+  String get reduceMotion;
+
+  /// No description provided for @reduceMotionDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'تقليل الرسوم المتحركة في التطبيق'**
+  String get reduceMotionDesc;
+
+  /// No description provided for @disableGyroscope.
+  ///
+  /// In ar, this message translates to:
+  /// **'إيقاف المؤثرات الحركية'**
+  String get disableGyroscope;
+
+  /// No description provided for @disableGyroscopeDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'إيقاف تفاعل الخلفيات مع حركة الجهاز'**
+  String get disableGyroscopeDesc;
+
+  /// No description provided for @easternNumerals.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأرقام العربية'**
+  String get easternNumerals;
+
+  /// No description provided for @easternNumeralsDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'إظهار الأرقام بصيغة ٠١٢٣ بدلاً من 0123'**
+  String get easternNumeralsDesc;
 
   /// No description provided for @loginOrCreateAccount.
   ///
@@ -7826,6 +7994,78 @@ abstract class AppLocalizations {
   /// **'إعادة'**
   String get focusReset;
 
+  /// No description provided for @focusStatusCompleted.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتملت الجلسة ✓'**
+  String get focusStatusCompleted;
+
+  /// No description provided for @focusNewSession.
+  ///
+  /// In ar, this message translates to:
+  /// **'جلسة جديدة'**
+  String get focusNewSession;
+
+  /// No description provided for @focusExitDialogTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنهاء الجلسة؟'**
+  String get focusExitDialogTitle;
+
+  /// No description provided for @focusExitDialogBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيُفقد تقدم هذه الجلسة'**
+  String get focusExitDialogBody;
+
+  /// No description provided for @focusExitDialogContinue.
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة'**
+  String get focusExitDialogContinue;
+
+  /// No description provided for @focusExitDialogEnd.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنهاء'**
+  String get focusExitDialogEnd;
+
+  /// No description provided for @focusDurationSheetTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر مدة الجلسة'**
+  String get focusDurationSheetTitle;
+
+  /// No description provided for @focusIntensitySection.
+  ///
+  /// In ar, this message translates to:
+  /// **'شدة التركيز'**
+  String get focusIntensitySection;
+
+  /// No description provided for @focusIntensityCalm.
+  ///
+  /// In ar, this message translates to:
+  /// **'هادئ'**
+  String get focusIntensityCalm;
+
+  /// No description provided for @focusIntensityStandard.
+  ///
+  /// In ar, this message translates to:
+  /// **'معتدل'**
+  String get focusIntensityStandard;
+
+  /// No description provided for @focusIntensityIntense.
+  ///
+  /// In ar, this message translates to:
+  /// **'مكثف'**
+  String get focusIntensityIntense;
+
+  /// No description provided for @focusIntensitySectionDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'تتحكم في شدة حركة شاشة التركيز'**
+  String get focusIntensitySectionDesc;
+
   /// No description provided for @notificationsTitle.
   ///
   /// In ar, this message translates to:
@@ -8102,6 +8342,72 @@ abstract class AppLocalizations {
   /// **'شاهد ملخص أدائك وتركيزك'**
   String get statsCardSubtitle;
 
+  /// No description provided for @statsPeriodToday.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم'**
+  String get statsPeriodToday;
+
+  /// No description provided for @statsPeriodLast7Days.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر ٧ أيام'**
+  String get statsPeriodLast7Days;
+
+  /// No description provided for @statsPeriodLast30Days.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر ٣٠ يومًا'**
+  String get statsPeriodLast30Days;
+
+  /// No description provided for @statsKpiTasksDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'المهام المنجزة'**
+  String get statsKpiTasksDone;
+
+  /// No description provided for @statsKpiHabitStreak.
+  ///
+  /// In ar, this message translates to:
+  /// **'السلسلة'**
+  String get statsKpiHabitStreak;
+
+  /// No description provided for @statsKpiUnitDays.
+  ///
+  /// In ar, this message translates to:
+  /// **'يوم'**
+  String get statsKpiUnitDays;
+
+  /// No description provided for @statsKpiHabitRate.
+  ///
+  /// In ar, this message translates to:
+  /// **'معدل العادات'**
+  String get statsKpiHabitRate;
+
+  /// No description provided for @statsKpiFocusMin.
+  ///
+  /// In ar, this message translates to:
+  /// **'التركيز'**
+  String get statsKpiFocusMin;
+
+  /// No description provided for @statsKpiUnitMin.
+  ///
+  /// In ar, this message translates to:
+  /// **'د'**
+  String get statsKpiUnitMin;
+
+  /// No description provided for @statsEmptyPeriod.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا نشاط في هذه الفترة'**
+  String get statsEmptyPeriod;
+
+  /// No description provided for @statsEmptyPeriodSub.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكمل مهامًا أو عادات أو جلسات تركيز لرؤية إحصائياتك'**
+  String get statsEmptyPeriodSub;
+
   /// No description provided for @reminderToggleLabel.
   ///
   /// In ar, this message translates to:
@@ -8233,6 +8539,36 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تغيير الموقع'**
   String get prayerCardChangeLocation;
+
+  /// No description provided for @prayerCardNow.
+  ///
+  /// In ar, this message translates to:
+  /// **'الآن'**
+  String get prayerCardNow;
+
+  /// No description provided for @prayerCardStartedAt.
+  ///
+  /// In ar, this message translates to:
+  /// **'بدأت {time}'**
+  String prayerCardStartedAt(String time);
+
+  /// No description provided for @prayerCardPostPrayerAthkar.
+  ///
+  /// In ar, this message translates to:
+  /// **'أذكار ما بعد الصلاة'**
+  String get prayerCardPostPrayerAthkar;
+
+  /// No description provided for @prayerSunset.
+  ///
+  /// In ar, this message translates to:
+  /// **'الغروب'**
+  String get prayerSunset;
+
+  /// No description provided for @prayerCardEnableLocation.
+  ///
+  /// In ar, this message translates to:
+  /// **'فعّل الموقع لأوقات صلاة دقيقة'**
+  String get prayerCardEnableLocation;
 
   /// No description provided for @prayerLabelUpcoming.
   ///
@@ -8707,6 +9043,282 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'إخفاء الشريط السفلي تلقائياً عند التمرير للأسفل'**
   String get hideNavOnScrollDesc;
+
+  /// No description provided for @athkarSetScreenTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأذكار اليومية'**
+  String get athkarSetScreenTitle;
+
+  /// No description provided for @athkarDhikrCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} ذكر'**
+  String athkarDhikrCount(int count);
+
+  /// No description provided for @athkarApproxMins.
+  ///
+  /// In ar, this message translates to:
+  /// **'~{min} دقيقة'**
+  String athkarApproxMins(int min);
+
+  /// No description provided for @athkarCompletionTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أتممت الورد'**
+  String get athkarCompletionTitle;
+
+  /// No description provided for @athkarCompletionCountAndTime.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} ذكر · {min} دقيقة'**
+  String athkarCompletionCountAndTime(int count, int min);
+
+  /// No description provided for @athkarRemindersTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تذكيرات الأذكار'**
+  String get athkarRemindersTitle;
+
+  /// No description provided for @athkarMorningTime.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقت أذكار الصباح'**
+  String get athkarMorningTime;
+
+  /// No description provided for @athkarEveningTime.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقت أذكار المساء'**
+  String get athkarEveningTime;
+
+  /// No description provided for @athkarSleepTime.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقت أذكار النوم'**
+  String get athkarSleepTime;
+
+  /// No description provided for @onboardingShortWelcomeTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أهلاً بك في أثر'**
+  String get onboardingShortWelcomeTitle;
+
+  /// No description provided for @onboardingShortWelcomeSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المهام والصلاة والتركيز — في مكان واحد.'**
+  String get onboardingShortWelcomeSubtitle;
+
+  /// No description provided for @onboardingShortWelcomeFeatureTasks.
+  ///
+  /// In ar, this message translates to:
+  /// **'المهام'**
+  String get onboardingShortWelcomeFeatureTasks;
+
+  /// No description provided for @onboardingShortWelcomeFeaturePrayer.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصلاة'**
+  String get onboardingShortWelcomeFeaturePrayer;
+
+  /// No description provided for @onboardingShortWelcomeFeatureFocus.
+  ///
+  /// In ar, this message translates to:
+  /// **'التركيز'**
+  String get onboardingShortWelcomeFeatureFocus;
+
+  /// No description provided for @onboardingShortStartTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لنبدأ'**
+  String get onboardingShortStartTitle;
+
+  /// No description provided for @onboardingShortStartSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'يومك، مُنظَّم بهدوء.'**
+  String get onboardingShortStartSubtitle;
+
+  /// No description provided for @onboardingShortStartCta.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ الآن'**
+  String get onboardingShortStartCta;
+
+  /// No description provided for @onboardingExpandedWelcomeTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أهلاً بك في أثر'**
+  String get onboardingExpandedWelcomeTitle;
+
+  /// No description provided for @onboardingExpandedWelcomeSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لحظة لإعداد كل شيء بطريقتك.'**
+  String get onboardingExpandedWelcomeSubtitle;
+
+  /// No description provided for @onboardingExpandedModulesTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'فيم تريد أن يساعدك أثر؟'**
+  String get onboardingExpandedModulesTitle;
+
+  /// No description provided for @onboardingExpandedModulesSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'يمكنك تغيير هذا لاحقًا من الإعدادات.'**
+  String get onboardingExpandedModulesSubtitle;
+
+  /// No description provided for @onboardingExpandedModulesTasksLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'المهام'**
+  String get onboardingExpandedModulesTasksLabel;
+
+  /// No description provided for @onboardingExpandedModulesHabitsLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'العادات'**
+  String get onboardingExpandedModulesHabitsLabel;
+
+  /// No description provided for @onboardingExpandedModulesPrayerLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصلاة'**
+  String get onboardingExpandedModulesPrayerLabel;
+
+  /// No description provided for @onboardingExpandedModulesDhikrLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'الذكر والأذكار'**
+  String get onboardingExpandedModulesDhikrLabel;
+
+  /// No description provided for @onboardingExpandedLocationTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حدّد موقعك'**
+  String get onboardingExpandedLocationTitle;
+
+  /// No description provided for @onboardingExpandedLocationSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لأوقات صلاة دقيقة.'**
+  String get onboardingExpandedLocationSubtitle;
+
+  /// No description provided for @onboardingExpandedLocationUseCurrent.
+  ///
+  /// In ar, this message translates to:
+  /// **'استخدم موقعي الحالي'**
+  String get onboardingExpandedLocationUseCurrent;
+
+  /// No description provided for @onboardingExpandedLocationEnterManual.
+  ///
+  /// In ar, this message translates to:
+  /// **'إدخال يدوي'**
+  String get onboardingExpandedLocationEnterManual;
+
+  /// No description provided for @onboardingExpandedNotificationsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا تفوّت شيئًا'**
+  String get onboardingExpandedNotificationsTitle;
+
+  /// No description provided for @onboardingExpandedNotificationsSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تذكيرات لطيفة للصلاة والمهام والعادات.'**
+  String get onboardingExpandedNotificationsSubtitle;
+
+  /// No description provided for @onboardingExpandedNotificationsAllow.
+  ///
+  /// In ar, this message translates to:
+  /// **'السماح بالإشعارات'**
+  String get onboardingExpandedNotificationsAllow;
+
+  /// No description provided for @onboardingExpandedSpaceTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أين ستعمل؟'**
+  String get onboardingExpandedSpaceTitle;
+
+  /// No description provided for @onboardingExpandedSpaceSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'شخصية بشكل افتراضي. يمكنك إضافة مساحات لاحقًا.'**
+  String get onboardingExpandedSpaceSubtitle;
+
+  /// No description provided for @onboardingExpandedSpaceJustForMe.
+  ///
+  /// In ar, this message translates to:
+  /// **'لي وحدي'**
+  String get onboardingExpandedSpaceJustForMe;
+
+  /// No description provided for @onboardingExpandedSpaceJoinCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'لديك رمز؟ انضم إلى مساحة'**
+  String get onboardingExpandedSpaceJoinCode;
+
+  /// No description provided for @onboardingExpandedSpaceCodeHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'أدخل رمز الدعوة'**
+  String get onboardingExpandedSpaceCodeHint;
+
+  /// No description provided for @onboardingExpandedSpaceJoin.
+  ///
+  /// In ar, this message translates to:
+  /// **'انضمام'**
+  String get onboardingExpandedSpaceJoin;
+
+  /// No description provided for @onboardingExpandedFinishTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'كل شيء جاهز'**
+  String get onboardingExpandedFinishTitle;
+
+  /// No description provided for @onboardingExpandedFinishSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أثر بانتظارك.'**
+  String get onboardingExpandedFinishSubtitle;
+
+  /// No description provided for @onboardingExpandedFinishCta.
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح أثر'**
+  String get onboardingExpandedFinishCta;
+
+  /// No description provided for @onboardingExpandedFinishRecapPrayer.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تفعيل أوقات الصلاة'**
+  String get onboardingExpandedFinishRecapPrayer;
+
+  /// No description provided for @onboardingExpandedFinishRecapDhikr.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تفعيل الذكر والأذكار'**
+  String get onboardingExpandedFinishRecapDhikr;
+
+  /// No description provided for @onboardingExpandedFinishRecapLocation.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تحديد الموقع'**
+  String get onboardingExpandedFinishRecapLocation;
+
+  /// No description provided for @onboardingExpandedFinishRecapNotifications.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تفعيل الإشعارات'**
+  String get onboardingExpandedFinishRecapNotifications;
+
+  /// No description provided for @onboardingExpandedFinishRecapSpace.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم إنشاء مساحتك الشخصية'**
+  String get onboardingExpandedFinishRecapSpace;
 }
 
 class _AppLocalizationsDelegate

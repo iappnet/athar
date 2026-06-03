@@ -48,4 +48,8 @@ abstract class HabitRepository {
 
   /// جلب عادة واحدة بالـ UUID
   Future<HabitModel?> getHabitByUuid(String uuid);
+
+  /// Returns true if at least one active (non-deleted) regular habit exists.
+  /// Used by CalendarMonthCubit to decide whether to show habit dots.
+  Future<bool> hasActiveRegularHabits();
 }

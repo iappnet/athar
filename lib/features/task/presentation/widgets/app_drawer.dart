@@ -3,7 +3,7 @@
 // ✅ MIGRATED - Phase 4 | Part 1 | File 1
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import 'package:athar/features/focus/presentation/pages/focus_page.dart';
+import 'package:athar/features/focus/presentation/screens/focus_screen.dart';
 import 'package:athar/features/habits/presentation/pages/habit_page.dart';
 import 'package:athar/features/stats/presentation/pages/stats_page.dart';
 import 'package:athar/features/task/presentation/cubit/task_cubit.dart';
@@ -133,7 +133,7 @@ class AppDrawer extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const FocusPage(),
+                        builder: (context) => const FocusScreen(),
                       ),
                     );
                   },
@@ -182,6 +182,8 @@ class AppDrawer extends StatelessWidget {
                 fontWeight: FontWeight.w500,
                 height: 1.4,
                 letterSpacing: 0.5,
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
               ).copyWith(color: colorScheme.outline),
               textAlign: TextAlign.center,
             ),
@@ -214,6 +216,8 @@ class AppDrawer extends StatelessWidget {
           fontSize: 14,
           fontWeight: FontWeight.w600,
           height: 1.4,
+          fontFamily: AtharTypography.fontFamily,
+          fontFamilyFallback: AtharTypography.fontFallback,
         ).copyWith(fontWeight: FontWeight.bold),
       ),
       subtitle: subtitle != null
@@ -223,6 +227,8 @@ class AppDrawer extends StatelessWidget {
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
                 height: 1.6,
+                fontFamily: AtharTypography.fontFamily,
+                fontFamilyFallback: AtharTypography.fontFallback,
               ).copyWith(color: colorScheme.onSurfaceVariant),
             )
           : null,
