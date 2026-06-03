@@ -13,20 +13,20 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-03 (PR-SHEET-STANDARD session)
-**Commit:** `2c7dcd5` feat(PR-SHEET-STANDARD): migrate 3 heavy sheets to accordion AtharBottomSheet
-**Part a:** `1e45337` feat(PR-SHEET-STANDARD): AtharBottomSheet hardened container + AtharAccordionSection widget
-**Prior:** `118a494` fix(PR-COMPONENT-P0): component correctness — snackbar/button tokens, Skeleton, RTL avatars, dead-code purge
-**Note:** Part a: new `athar_bottom_sheet.dart` + `athar_accordion_section.dart`; re-export in `athar_dialog.dart`; barrel updated. Part b: 3 heavy sheets migrated (add_task_sheet, unified_add_sheet, add_medicine_sheet); 22 new ARB keys (task-time + section labels); barrierColor on 9 call sites. `flutter analyze` 0 issues. /drift-check PASS.
+**Timestamp:** 2026-06-03 (PR-COMPONENT-P1 session)
+**Commit:** `bb0c33d` feat(PR-COMPONENT-P1): Calibri on DS atoms, accentAmber token, AtharEmptyState across 9 surfaces, time-slot period color tokens
+**Prior:** `2c7dcd5` feat(PR-SHEET-STANDARD): migrate 3 heavy sheets to accordion AtharBottomSheet
+**Prior Part a:** `1e45337` feat(PR-SHEET-STANDARD): AtharBottomSheet hardened container + AtharAccordionSection widget
+**Note:** `accentAmber` token (light `0xFFCA8A21` / dark `0xFFE8B84B`) added to `athar_colors.dart` (all 6 sites); Calibri+fontFallback added to 23 TextStyles across `athar_text_field.dart` (10), `time_slot_picker.dart` (10), `icon_picker.dart` (1), `athar_card.dart` (2); `AtharEmptyState` augmented with Calibri; 7 inline empty states migrated to `AtharEmptyState`; `time_slot_picker` period Colors→accent tokens; 686-line dead block stripped. P7/P8/P9 logged in KNOWN_PROBLEMS. `flutter analyze` 0 issues. /drift-check PASS.
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** PR-SHEET-STANDARD ✅ COMPLETE
-**Last committed:** PR-SHEET-STANDARD Part b · `2c7dcd5`
+**Active PR:** PR-COMPONENT-P1 ✅ COMPLETE
+**Last committed:** PR-COMPONENT-P1 · `bb0c33d`
 **Phase:** Complete. /drift-check PASS. Pushed to remote.
-**Next:** 13/14 feature PRs complete. Remaining: PR-ADHAN (blocked on audio asset B4). All UI Coverage Refresh PRs done. Deferred QA sweep is the final gate before store submission.
+**Next:** 13/14 feature PRs complete. Remaining: PR-ADHAN (blocked on audio asset B4). All UI Coverage Refresh PRs done. PR-COMPONENT-P2 is the logical next component-quality pass (P7/P8/P9 deferred items). Deferred QA sweep is the final gate before store submission.
 
 ---
 

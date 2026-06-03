@@ -2,7 +2,7 @@
 CANONICAL-FOR: Confirmed bugs, suspected issues, behavioral quirks, fragile areas
 OWNER:         Claude Code
 PRECEDENCE:    3 (Tier 0 — prevents re-breaking fragile code / re-fixing closed bugs)
-LAST-UPDATED:  2026-06-01 · B2 closed (PR-THEME fixed) + Stage A
+LAST-UPDATED:  2026-06-03 · P7/P8/P9 added (PR-COMPONENT-P1 deferred items)
 LOADS-AT:      Tier 0
 -->
 
