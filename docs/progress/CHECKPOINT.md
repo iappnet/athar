@@ -2,7 +2,7 @@
 CANONICAL-FOR: Current session state — what is happening right now
 OWNER:         Claude Code
 PRECEDENCE:    2 (wins on "current state" over all plan/roadmap files)
-LAST-UPDATED:  2026-06-03 · PR-CLEANUP complete · 98f4efe
+LAST-UPDATED:  2026-06-03 · PR-COMPONENT-P0 shipped · 118a494
 LOADS-AT:      Tier 0
 -->
 
@@ -13,17 +13,18 @@ LOADS-AT:      Tier 0
 
 ## LAST UPDATED
 
-**Timestamp:** 2026-06-03 (PR-CLEANUP `98f4efe`)
-**Commit:** `98f4efe` refactor(PR-CLEANUP-HYGIENE): residual radii + durations → tokens
-**Prior:** `df5e268` refactor(PR-SPLASH-ONBOARD-A): splash + all onboarding variants → tokens + cream + Calibri
-**Note:** PR-CLEANUP complete — 4-commit sweep (Phase-A `a805aa9`, ORPHANS `da272da`, fix `a3b71ec`, HYGIENE `98f4efe`). ~3134 dead lines deleted. Orphan surfaces migrated (accent tokens for notifications, semantic dhikr colors, AtharAnimations.standard alias added). Row 3+5 color fix (outline→onSurfaceVariant). Residual radii/durations: 10 radii (bottomSheet/xl/xxxs) + 4 durations (normalFast/normalSlow/snackbarVisibleShort) across 8 files. flutter analyze: 0 issues. /drift-check PASS.
+**Timestamp:** 2026-06-03 (PR-SHEET-STANDARD session)
+**Commit:** `2c7dcd5` feat(PR-SHEET-STANDARD): migrate 3 heavy sheets to accordion AtharBottomSheet
+**Part a:** `1e45337` feat(PR-SHEET-STANDARD): AtharBottomSheet hardened container + AtharAccordionSection widget
+**Prior:** `118a494` fix(PR-COMPONENT-P0): component correctness — snackbar/button tokens, Skeleton, RTL avatars, dead-code purge
+**Note:** Part a: new `athar_bottom_sheet.dart` + `athar_accordion_section.dart`; re-export in `athar_dialog.dart`; barrel updated. Part b: 3 heavy sheets migrated (add_task_sheet, unified_add_sheet, add_medicine_sheet); 22 new ARB keys (task-time + section labels); barrierColor on 9 call sites. `flutter analyze` 0 issues. /drift-check PASS.
 
 ---
 
 ## CURRENT PR + PHASE
 
-**Active PR:** PR-CLEANUP ✅ COMPLETE
-**Last committed:** PR-CLEANUP-HYGIENE · `98f4efe`
+**Active PR:** PR-SHEET-STANDARD ✅ COMPLETE
+**Last committed:** PR-SHEET-STANDARD Part b · `2c7dcd5`
 **Phase:** Complete. /drift-check PASS. Pushed to remote.
 **Next:** 13/14 feature PRs complete. Remaining: PR-ADHAN (blocked on audio asset B4). All UI Coverage Refresh PRs done. Deferred QA sweep is the final gate before store submission.
 
@@ -113,6 +114,30 @@ LOADS-AT:      Tier 0
 
 ---
 
+## DONE — PR-COMPONENT-P0 (2026-06-03)
+
+- ✅ SNACKBAR: `athar_feedback.dart` — 4 hardcoded hex consts deleted; `_getVariantColors` now takes `AtharColors? colors`; `context.colors.info/success/warning` used in `show()`; `semanticColors` optional param added to `showWithMessenger()`; 2 call sites in `task_page.dart` + `unified_tasks_page.dart` updated to pass `context.colors`
+- ✅ SHIMMER DELETED: `AtharShimmer` + `_AtharShimmerState` (125 lines, 0 external call sites) removed from `athar_feedback.dart`
+- ✅ SKELETON BARREL: `AtharSkeleton` added to `tokens.dart` barrel; 2 direct imports in `task_page.dart` + `space_page.dart` removed (now covered by barrel)
+- ✅ BUTTON HEX: `athar_button.dart` — 6 static const color lines deleted; `_variantStyle` accepts `AtharColors colors`; success/warning/info → `colors.success`/`colors.warning`/`colors.info`
+- ✅ AVATAR RTL: `athar_display.dart` — 2× `Positioned(right:0)` → `PositionedDirectional(end:0)` (badge + online dot); 2× `Positioned(left:)` → `PositionedDirectional(start:)` (AvatarGroup avatars + overflow count); `SizedBox` in AvatarGroup now has computed `width:` for correct RTL stack bounds
+- ✅ AVATAR HEX: `_successColor = Color(0xFF00B894)` deleted; online dot → `colors.success` inline
+- ✅ DEAD CODE DELETED: `athar_selection.dart` (0 importers; confirmed only definition of AtharSwitch/AtharChip/AtharBadge/AtharCheckbox — **P2 build candidates**); `atoms/buttons/app_button.dart` (dead AtharButton duplicate); `atoms/inputs/app_text_field.dart`; `molecules/tiles/settings_tile.dart` (1-line stub)
+- ✅ WIDGETS BARREL: removed dead `export 'athar_selection.dart'` from `widgets/widgets.dart`
+- ✅ RadioGroup clarification: `RadioGroup<T>` at `athar_selection.dart:217` was a VALID Flutter 3.44.1 symbol. "Compile error" from audit was a false alarm — file was dead-code (0 importers), not broken
+- ✅ `flutter analyze` 0 issues
+- ✅ COMMITTED `118a494` + pushed
+
+## DONE — COMPONENT INVENTORY AUDIT (2026-06-03)
+
+- ✅ `design-context/_audit_components.md` — full component inventory audit written (read-only session)
+- ✅ 25 component types enumerated across `design_system/widgets/`, `atoms/`, `molecules/`, `organisms/`
+- ✅ State coverage matrix: 6 interactive component types (buttons, fields, toggles, chips, checkboxes, radio)
+- ✅ 8 duplication clusters identified (A–H): dual shimmer systems, dead atom button, raw sheets×12, raw dialogs×6, etc.
+- ✅ 12 sizing/structure issues catalogued (no tablet max-width on sheets, cramped padding, hardcoded heights)
+- ✅ 24 un-specced atom types found (not in COMPONENT_SPECS.md)
+- ✅ P0 findings (audit): `RadioGroup<T>` — clarified as dead-code, not a compile error; `AtharSnackbar` + `AtharButton` dark-mode hardcoded hex — **fixed PR-COMPONENT-P0**; `AtharAvatarGroup` RTL `Positioned(left:)` — **fixed PR-COMPONENT-P0**; `SettingsTile` empty file — **deleted PR-COMPONENT-P0**
+
 ## DONE — AUDIT SESSION
 
 - ✅ `design-context/_audit_accessibility.md` — PR5 audit complete (11 files read, no Dart touched)
@@ -196,8 +221,28 @@ LOADS-AT:      Tier 0
 
 ---
 
+## DONE — PR-SHEET-STANDARD (2026-06-03)
+
+- ✅ NEW `lib/core/design_system/widgets/athar_bottom_sheet.dart` — hardened container: 92% maxHeight, pinned 3-part Column (header + Expanded scroll + actions row), `AtharRadii.bottomSheet`, grabber gated on `showDragHandle`, tablet floating card (≥600dp, maxWidth 480, all-4-corner radius), `barrierColor: Colors.black.withValues(alpha: 0.45)` in `show()`, scrim standardised
+- ✅ NEW `lib/core/design_system/molecules/sections/athar_accordion_section.dart` — `AtharAccordionSection` + public `AtharAccordionSectionState`; `expand()` / `collapse()` / `isExpanded`; `AnimatedAlign(heightFactor)` + `ClipRect` keeps child in tree for `Form.validate()` Guard #2; live red dot (required + summaryValue empty); chevron `RotationTransition`
+- ✅ `lib/core/design_system/widgets/athar_dialog.dart` — `export 'athar_bottom_sheet.dart'` re-export added; old AtharBottomSheet class removed
+- ✅ `lib/core/design_system/widgets/widgets.dart` — barrel: `athar_bottom_sheet.dart` + `athar_accordion_section.dart` added
+- ✅ `lib/features/task/presentation/widgets/add_task_sheet.dart` — 3 accordion sections (What/When/Details); Islamic TimeSlotPicker; bug #1 fixed (hardcoded Arabic → 22 ARB keys); Guard #1 auto-expand on empty title
+- ✅ `lib/features/task/presentation/widgets/unified_add_sheet.dart` — 3 accordion sections per entity track (Task/Medicine/Appointment); `_resetAccordionKeys()` on type change (Option A reset); Guard #1+#2 (FormKey validates collapsed sections)
+- ✅ `lib/features/health/presentation/widgets/add_medicine_sheet.dart` — 3 accordion sections (What/Schedule/Supply); bug #2 fixed (ElevatedButton → AtharButton); Guard #1 auto-expand on empty name
+- ✅ `lib/l10n/app_ar.arb` + `lib/l10n/app_en.arb` — 22 new keys: 16 task-time keys + `whenSection` / `detailsSection` / `whenAndWhere`; `taskTimePrayerBefore/After` reordered to minutes-first natural Arabic
+- ✅ AR byte-verified: 19 keys, no direction marks, no double-spaces, all spot checks PASS
+- ✅ `flutter gen-l10n` run; 9 parent call sites (main_page ×3, medicines_page ×2, task_page, unified_tasks_page, project_details_page ×2) updated with `barrierColor`
+- ✅ `flutter analyze` 0 issues. COMMITTED Part a `1e45337` + Part b `2c7dcd5` + pushed
+
+---
+
 ## WORKING TREE STATE
 
-**Status:** Clean — PR-CLEANUP 4 commits committed + pushed
+**Status:** Clean — PR-SHEET-STANDARD 2 commits committed + pushed
 **flutter analyze:** 0 issues
-**Last commit:** `98f4efe` refactor(PR-CLEANUP-HYGIENE): residual radii + durations → tokens
+**Last commit:** `2c7dcd5` feat(PR-SHEET-STANDARD): migrate 3 heavy sheets to accordion AtharBottomSheet
+
+---
+
+## DONE — PR-COMPONENT-P0 (2026-06-03)

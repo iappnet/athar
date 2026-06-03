@@ -56,6 +56,9 @@ CANONICAL-SINCE: 2026-06-01
 | **PR-CLEANUP-PHASE-A** — Delete ~3134 lines of commented-out dead code: main_page.dart (1636L), dashboard_page.dart (1090L), statistics_card.dart (82L), smart_habits_strip.dart (777L dead missed in earlier sweep) | `a805aa9` | (in branch) | ✅ `flutter analyze` 0 issues | 2026-06-03 |
 | **PR-CLEANUP-ORPHANS** — Orphan surface token migration: accent palette (notifications: accentOrange/Blue/Red); semantic dhikr colors (shadow/outlineVariant/surfaceContainerHighest/error/success/onSurface/onSurfaceVariant); Duration migrations (snackbarVisibleShort, normalSlow×2, normalFast); AtharAnimations.standard alias added; dashboard_page 2s→snackbarVisibleShort; dhikr outline→onSurfaceVariant fix (row 3+5) | `da272da` · fix `a3b71ec` | (in branch) | ✅ `flutter analyze` 0 issues | 2026-06-03 |
 | **PR-CLEANUP-HYGIENE** — Residual radii + durations in 8 already-done feature files: 10 radii (bottomSheet/xl/xxxs) across project_details, add_task_sheet, general_settings, focus_screen, liquid_background; 4 durations (normalFast/normalSlow/snackbarVisibleShort) across task_details, add_task_sheet, habit_page, smart_zones. Kept raw: 500ms (no token), 1s system/ticker, 2s artistic, 3s snackbar, focus_cubit 300ms (cubit layer boundary) | `98f4efe` | (in branch) | ✅ `flutter analyze` 0 issues · 8 files changed | 2026-06-03 |
+| **PR-COMPONENT-P0** — Snackbar hex→tokens; AtharShimmer deleted (0 importers); AtharSkeleton added to barrel; AtharButton hex→tokens; AvatarGroup RTL Positioned→PositionedDirectional; dead files deleted (athar_selection.dart, app_button.dart, app_text_field.dart, settings_tile.dart) | `118a494` | (in branch) | ✅ `flutter analyze` 0 issues · RadioGroup clarified as dead-code | 2026-06-03 |
+| **PR-SHEET-STANDARD Part a** — New `athar_bottom_sheet.dart` (92% maxHeight, pinned header+actions, tablet card, barrierColor scrim); new `athar_accordion_section.dart` (expand/collapse/isExpanded, AnimatedAlign+ClipRect, live red dot, chevron); re-export in `athar_dialog.dart`; barrel updated | `1e45337` | (in branch) | ✅ `flutter analyze` 0 issues | 2026-06-03 |
+| **PR-SHEET-STANDARD Part b** — 3 heavy sheets migrated to accordion AtharBottomSheet (add_task_sheet, unified_add_sheet, add_medicine_sheet); 22 new ARB keys (16 task-time + whenSection/detailsSection/whenAndWhere); taskTimePrayerBefore/After minutes-first; 9 parent call sites barrierColor; Guard #1 auto-expand on required-field save; Guard #2 FormKey validates collapsed sections | `2c7dcd5` | (in branch) | ✅ `flutter analyze` 0 issues · AR byte-verified | 2026-06-03 |
 
 ---
 
@@ -99,15 +102,15 @@ CANONICAL-SINCE: 2026-06-01
 
 ## Active PR
 
-**PR-CLEANUP** — ✅ Complete (2026-06-03) · final commit `98f4efe`. 4 commits total. All 13/14 scoped feature PRs + 8/8 UI Coverage Refresh PRs done. Remaining: PR-ADHAN (blocked on audio asset B4).
+**PR-SHEET-STANDARD** — ✅ Complete (2026-06-03) · Part a `1e45337` + Part b `2c7dcd5`. AtharBottomSheet hardened container + AtharAccordionSection widget + 3 heavy sheets migrated. See CHECKPOINT.md for full details.
 
 ---
 
 ## Current Working Tree State
 
 ```
-flutter analyze → 0 issues (pre-existing task_page.dart + project_details_page.dart warnings suppressed inline)
-PR-SPACE-REFRESH complete. Last commit: 6d3b303. See CHECKPOINT.md for full state.
+flutter analyze → 0 issues
+PR-SHEET-STANDARD complete. Last commit: 2c7dcd5. See CHECKPOINT.md for full state.
 ```
 
 ---
